@@ -31,5 +31,14 @@ namespace BussinesLogicTest
             bool resultado = unUsuario.Validar_Contrasena(contrasena);
             Assert.IsFalse(resultado);
         }
+        [TestMethod]
+        public void Contrasena_Contiene_Mayuscula()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Contrasena = "contrasena";
+            string contrasena = unUsuario.Contrasena;
+            bool resultado = unUsuario.Validar_Contrasena(contrasena);
+            Assert.IsFalse(resultado);
+        }
     }
 }
