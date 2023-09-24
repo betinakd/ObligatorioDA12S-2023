@@ -11,7 +11,11 @@ namespace BussinesLogic
         public string Contrasena { get; set; }
 
         public bool Validar_Contrasena(string contrasena)
-        {          
+        {   
+            if(contrasena.Length>30)
+            {
+                return false;
+            }
             return contrasena.Length>=10;
         }
     }
