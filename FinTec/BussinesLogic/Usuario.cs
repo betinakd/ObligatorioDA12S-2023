@@ -8,5 +8,13 @@ namespace BussinesLogic
 {
     public class Usuario
     {
+        public string Contrasena { get; set; }
+
+        public bool Validar_Contrasena(string c)
+        {
+            throw new NotImplementedException();
+        }
     }
+
+
 }
