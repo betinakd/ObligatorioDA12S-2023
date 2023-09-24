@@ -1,0 +1,38 @@
+﻿@page "/home"
+@layout VacioLayout
+<PageTitle>FinTec Home</PageTitle>
+<BodyHome />
+
+@page "/mi-pagina"
+@using Microsoft.AspNetCore.Components.Web
+
+<button @onclick="MostrarSeccion1">Mostrar Sección 1</button>
+<button @onclick="MostrarSeccion2">Mostrar Sección 2</button>
+
+@if (mostrarSeccion1)
+{
+    <p>Contenido de la Sección 1</p>
+}
+
+@if (mostrarSeccion2)
+{
+    <p>Contenido de la Sección 2</p>
+    <p>ggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg</p>
+}
+
+@code {
+    private bool mostrarSeccion1 = false;
+    private bool mostrarSeccion2 = false;
+
+    private void MostrarSeccion1()
+    {
+        mostrarSeccion1 = true;
+        mostrarSeccion2 = false;
+    }
+
+    private void MostrarSeccion2()
+    {
+        mostrarSeccion1 = false;
+        mostrarSeccion2 = true;
+    }
+}
