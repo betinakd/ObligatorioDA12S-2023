@@ -10,9 +10,9 @@ namespace BussinesLogic
     {
         public string Contrasena { get; set; }
 
-        public bool Validar_Contrasena(string c)
+        public bool Validar_Contrasena(string contrasena)
         {          
-            return c.Length>=10;
+            return contrasena.Length>=10;
         }
     }
 
