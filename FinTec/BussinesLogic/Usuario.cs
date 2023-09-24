@@ -11,8 +11,8 @@ namespace BussinesLogic
         public string Contrasena { get; set; }
 
         public bool Validar_Contrasena(string c)
-        {
-            throw new NotImplementedException();
+        {          
+            return c.Length>=10;
         }
     }
 
