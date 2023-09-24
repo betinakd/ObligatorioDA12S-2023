@@ -1,9 +1,34 @@
 ﻿@page "/registro"
+@layout RegistroLayout
 <PageTitle>FinTec Registro de Usuario</PageTitle>
-<TituloFintec TituloVerde="FinTec" TituloNegro="Registro" Subtitulo="Registre su usuario"/>
-<InputRegistro InputType="email" Label="Email" Placeholder="ejemplo@email.com" />
-<InputRegistro InputType="password" Label="Contraseña" Placeholder="Contraseña" />
-<InputRegistro InputType="input" Label="Nombre" Placeholder="Nombre" />
-<InputRegistro InputType="input" Label="Apellido" Placeholder="Apellido" />
-<InputRegistro InputType="input" Label="Dirección" Placeholder="Dirección" />
-<BotonVerdeAgua NombreBoton="Registro"/>
+
+<div style="text-align: center; margin-top: 3rem; margin-bottom: 3rem;">
+	<TituloFintec TituloVerde="FinTec" TituloNegro="Registro" Subtitulo="Registre su usuario en la app de ahorro mas importante de America Latina" />
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<InputRegistro InputType="email" Label="Email" Placeholder="ejemplo@email.com" />
+	</div>
+	<div class="col-md-6">
+		<InputRegistro InputType="password" Label="Contraseña" Placeholder="Contraseña" Id="password" />
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<InputRegistro InputType="input" Label="Nombre" Placeholder="Nombre" Id="nombre" />
+	</div>
+	<div class="col-md-6">
+		<InputRegistro InputType="input" Label="Apellido" Placeholder="Apellido" Id="apellido" />
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<InputRegistro InputType="input" Label="Dirección" Placeholder="Dirección" Id="direccion" esValido=true Error="no se puede"/>
+	</div>
+</div>
+
+<BotonVerdeAgua NombreBoton="Registro" />
+
