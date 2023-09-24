@@ -1,9 +1,17 @@
 ﻿<div class="mb-6">
-    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">@Label</label>
-    <input type="@InputType" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="@Placeholder" required>
+    <label for=@Id class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">@Label</label>
+    <input type="@InputType" id=@Id class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="@Placeholder" required>
+    @if (!esValido)
+    {
+        <p class="mt-2 text-sm text-red-600">@Error</p>
+    }
 </div>
 @code {
     [Parameter] public string? Label { get; set; }
     [Parameter] public string? Placeholder { get; set; }
     [Parameter] public string? InputType { get; set; }
+    [Parameter] public string? Id { get; set; }
+    [Parameter] public string? Error { get; set; }
+    // Este parametro es true por defecto, si se pone en false, se mostrara el error
+    [Parameter] public bool esValido { get; set; } = true;
 }
