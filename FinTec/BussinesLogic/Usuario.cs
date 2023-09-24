@@ -16,6 +16,13 @@ namespace BussinesLogic
             {
                 return false;
             }
+            else
+            {
+                if (contrasena.All(char.IsLower))
+                {
+                    return false;
+                }
+            }
             return EsContrasenaMayorIgualADiez(contrasena);
         }
 
