@@ -22,5 +22,14 @@ namespace BussinesLogicTest
             Assert.IsTrue(resultado);
         }
 
+        [TestMethod]
+        public void Contrasena_Maximo_Treinta()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Contrasena = "1234567890123456789012345678901";
+            string contrasena = unUsuario.Contrasena;
+            bool resultado = unUsuario.Validar_Contrasena(contrasena);
+            Assert.IsFalse(resultado);
+        }
     }
 }
