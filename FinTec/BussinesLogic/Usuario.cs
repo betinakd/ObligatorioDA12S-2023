@@ -16,14 +16,18 @@ namespace BussinesLogic
             {
                 return false;
             }
-            else
+
+            if (SonTodasMinusculas(contrasena))
             {
-                if (contrasena.All(char.IsLower))
-                {
-                    return false;
-                }
-            }
+                return false;
+            } 
+
             return EsContrasenaMayorIgualADiez(contrasena);
+        }
+
+        private static bool SonTodasMinusculas(string contrasena)
+        {
+            return contrasena.All(char.IsLower);
         }
 
         private static bool EsContrasenaMayorIgualADiez(string contrasena)
