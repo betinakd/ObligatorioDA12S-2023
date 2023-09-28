@@ -43,7 +43,7 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        public void Validar_Correo()
+        public void Validar_Correo_Contiene_Arroba()
         {
             Usuario unUsuario = new Usuario();
             unUsuario.Correo = "usfhu@dicsdc";

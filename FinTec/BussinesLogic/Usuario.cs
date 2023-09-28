@@ -26,7 +26,12 @@ namespace BussinesLogic
             return EsContrasenaMayorIgualADiez(contrasena);
         }
         public bool Validar_Correo(string correo)
-        {         
+        {
+            return ContieneArroba(correo);
+        }
+
+        private static bool ContieneArroba(string correo)
+        {
             return correo.Contains("@");
         }
 
