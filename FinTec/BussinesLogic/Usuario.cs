@@ -26,8 +26,8 @@ namespace BussinesLogic
             return EsContrasenaMayorIgualADiez(contrasena);
         }
         public bool Validar_Correo(string correo)
-        {
-           throw new NotImplementedException();       
+        {         
+            return correo.Contains("@");
         }
 
         private static bool SonTodasMinusculas(string contrasena)
