@@ -12,6 +12,8 @@ namespace BussinesLogic
         public string Contrasena { get; set; }
         public string Correo { get; set; }
 
+        private const string _patron = @".+\.com$";
+
         public bool Validar_Contrasena(string contrasena)
         {
             if (EsContrasenaMayorATreinta(contrasena))
@@ -28,12 +30,16 @@ namespace BussinesLogic
         }
         public bool Validar_Correo(string correo)
         {
-            string patron = @".+\.com$";
-            if (!Regex.IsMatch(correo, patron))
+            if (!ContienePuntoCom(correo))
             {
                 return false;
             }
             return ContieneArroba(correo);
+        }
+
+        private static bool ContienePuntoCom(string correo)
+        {
+            return Regex.IsMatch(correo, _patron);
         }
 
         private static bool ContieneArroba(string correo)
