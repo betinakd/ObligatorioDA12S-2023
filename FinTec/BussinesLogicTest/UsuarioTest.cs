@@ -31,6 +31,7 @@ namespace BussinesLogicTest
             bool resultado = unUsuario.Validar_Contrasena(contrasena);
             Assert.IsFalse(resultado);
         }
+
         [TestMethod]
         public void Contrasena_Contiene_Mayuscula()
         {
@@ -39,6 +40,16 @@ namespace BussinesLogicTest
             string contrasena = unUsuario.Contrasena;
             bool resultado = unUsuario.Validar_Contrasena(contrasena);
             Assert.IsFalse(resultado);
+        }
+
+        [TestMethod]
+        public void Validar_Correo()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Correo = "usfhu@dicsdc";
+            string correo = unUsuario.Correo;
+            bool resultado = unUsuario.Validar_Correo(correo);
+            Assert.IsTrue(resultado);
         }
     }
 }

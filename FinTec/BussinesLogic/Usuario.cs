@@ -9,6 +9,7 @@ namespace BussinesLogic
     public class Usuario
     {
         public string Contrasena { get; set; }
+        public string Correo { get; set; }
 
         public bool Validar_Contrasena(string contrasena)
         {
@@ -23,6 +24,10 @@ namespace BussinesLogic
             } 
 
             return EsContrasenaMayorIgualADiez(contrasena);
+        }
+        public bool Validar_Correo(string correo)
+        {
+           throw new NotImplementedException();       
         }
 
         private static bool SonTodasMinusculas(string contrasena)
