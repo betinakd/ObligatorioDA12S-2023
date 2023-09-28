@@ -46,10 +46,20 @@ namespace BussinesLogicTest
         public void Validar_Correo_Contiene_Arroba()
         {
             Usuario unUsuario = new Usuario();
-            unUsuario.Correo = "usfhu@dicsdc";
+            unUsuario.Correo = "usfhu@dicsdc.com";
             string correo = unUsuario.Correo;
             bool resultado = unUsuario.Validar_Correo(correo);
             Assert.IsTrue(resultado);
+        }
+
+        [TestMethod]
+        public void Validar_Correo_No_Coincide_PuntoCom()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Correo = "usfhud@icsdc.comfwef";
+            string correo = unUsuario.Correo;            
+            bool resultado = unUsuario.Validar_Correo(correo);
+            Assert.IsFalse(resultado);
         }
     }
 }
