@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BussinesLogic
@@ -27,6 +28,11 @@ namespace BussinesLogic
         }
         public bool Validar_Correo(string correo)
         {
+            string patron = @".+\.com$";
+            if (!Regex.IsMatch(correo, patron))
+            {
+                return false;
+            }
             return ContieneArroba(correo);
         }
 
