@@ -7,7 +7,22 @@ namespace Domain
     {
         public string Contrasena { get; set; }
         public string Correo { get; set; }
-        public string Nombre { get; set; }
+        private string _nombre;
+        public string Nombre
+        {
+            get
+            {
+                return _nombre;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new RequiredPropertyException("El nombre es requerido");
+                }
+                _nombre = value;
+            }
+        }
 
         private const string _patron = @".+\.com$";
 
