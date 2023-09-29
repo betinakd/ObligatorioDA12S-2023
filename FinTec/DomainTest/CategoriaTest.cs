@@ -33,5 +33,12 @@ namespace DomainTest
 		{
 			categoria.Nombre = null;
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCategoriaException))]
+		public void Excepcion_Categoria_Tiene_Nombre_Vacio()
+		{
+			categoria.Nombre = "";
+		}
 	}
 }
