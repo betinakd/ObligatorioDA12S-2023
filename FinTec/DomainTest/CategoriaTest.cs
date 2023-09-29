@@ -53,5 +53,12 @@ namespace DomainTest
 			categoria.EstadoActivo=true;
 			Assert.IsTrue(categoria.EstadoActivo);
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Tipo_Costo()
+		{
+			categoria.Tipo = TipoCategoria.Costo;
+			Assert.AreEqual(TipoCategoria.Costo, categoria.Tipo);
+		}
 	}
 }
