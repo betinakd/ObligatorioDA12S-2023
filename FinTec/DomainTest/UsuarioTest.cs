@@ -68,8 +68,15 @@ namespace DomainTest
         public void Nombre_Usuario_Vacio()
         {
             Usuario unUsuario = new Usuario();
-            unUsuario.Nombre = "";
-            
+            unUsuario.Nombre = "";            
+        }
+
+        [TestMethod]
+        public void Obtener_Usuario()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Nombre = "Maxi";
+            Assert.AreEqual("Maxi", unUsuario.Nombre);
         }
     }
 }
