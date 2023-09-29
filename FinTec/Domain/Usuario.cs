@@ -24,6 +24,8 @@ namespace Domain
             }
         }
 
+        public string Apellido { get; set; }
+
         private const string _patron = @".+\.com$";
 
         public bool Validar_Contrasena(string contrasena)

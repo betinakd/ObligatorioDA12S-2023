@@ -78,5 +78,13 @@ namespace DomainTest
             unUsuario.Nombre = "Maxi";
             Assert.AreEqual("Maxi", unUsuario.Nombre);
         }
+
+        [ExpectedException(typeof(RequiredPropertyException))]
+        [TestMethod]
+        public void Apellido_Usuario_Vacio()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Apellido = "";
+        }
     }
 }
