@@ -24,7 +24,22 @@ namespace Domain
             }
         }
 
-        public string Apellido { get; set; }
+        private string _apellido;
+        public string Apellido
+        {
+            get
+            {
+                return _apellido;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new RequiredPropertyException("El apellido es requerido");
+                }
+                _apellido = value;
+            }
+        }
 
         private const string _patron = @".+\.com$";
 
