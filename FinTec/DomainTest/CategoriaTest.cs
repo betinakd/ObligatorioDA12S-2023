@@ -40,5 +40,11 @@ namespace DomainTest
 		{
 			categoria.Nombre = "";
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_FechaCreacion()
+		{
+			Assert.IsNotNull(categoria.FechaCreacion);
+		}
 	}
 }
