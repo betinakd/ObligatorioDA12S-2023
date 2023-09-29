@@ -26,5 +26,12 @@ namespace DomainTest
 			categoria.Nombre = nombre;
 			Assert.AreEqual(nombre, categoria.Nombre);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCategoriaException))]
+		public void Excepcion_Categoria_Tiene_Nombre_Nulo()
+		{
+			categoria.Nombre = null;
+		}
 	}
 }
