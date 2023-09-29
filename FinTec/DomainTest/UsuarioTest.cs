@@ -1,6 +1,6 @@
-﻿using BussinesLogic;
+﻿using Domain;
 
-namespace BussinesLogicTest
+namespace DomainTest
 {
     [TestClass]
     public class UsuarioTest
