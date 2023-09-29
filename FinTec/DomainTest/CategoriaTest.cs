@@ -46,5 +46,12 @@ namespace DomainTest
 		{
 			Assert.IsNotNull(categoria.FechaCreacion);
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Estado_Activo()
+		{
+			categoria.EstadoActivo=true;
+			Assert.IsTrue(categoria.EstadoActivo);
+		}
 	}
 }
