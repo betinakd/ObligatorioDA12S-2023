@@ -10,7 +10,7 @@ namespace Domain
 			get { return _nombre; }
 			set
 			{
-				if (value == null)
+				if (string.IsNullOrEmpty(value))
 				{
 					throw new DomainCategoriaException("El nombre de la categoría no puede ser vacío");
 				}
