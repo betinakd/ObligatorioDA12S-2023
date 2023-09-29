@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.DomainExceptions;
 
 namespace DomainTest
 {
@@ -60,6 +61,15 @@ namespace DomainTest
             string correo = unUsuario.Correo;            
             bool resultado = unUsuario.Validar_Correo(correo);
             Assert.IsFalse(resultado);
+        }
+
+        [ExpectedException(typeof(RequiredPropertyException))]
+        [TestMethod]
+        public void Nombre_Usuario_Vacio()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Nombre = "";
+            
         }
     }
 }

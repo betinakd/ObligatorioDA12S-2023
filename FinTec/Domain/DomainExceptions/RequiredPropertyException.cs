@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.DomainExceptions
 {
-    internal class RequiredPropertyException : Exception
+    public class RequiredPropertyException : Exception
     {
         public RequiredPropertyException(string message) : base(message)
         {

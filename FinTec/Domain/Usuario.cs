@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-
+using Domain.DomainExceptions;
 
 namespace Domain
 {
@@ -7,6 +7,7 @@ namespace Domain
     {
         public string Contrasena { get; set; }
         public string Correo { get; set; }
+        public string Nombre { get; set; }
 
         private const string _patron = @".+\.com$";
 
