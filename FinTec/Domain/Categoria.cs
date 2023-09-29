@@ -7,7 +7,7 @@ namespace Domain
 		private string _nombre;
 		private readonly DateTime _fechaCreacion = DateTime.Now;
 		public bool EstadoActivo { get; set; }
-
+		public TipoCategoria Tipo { get; set; }
 		public string Nombre
 		{
 			get { return _nombre; }
@@ -28,5 +28,11 @@ namespace Domain
 		public Categoria()
 		{
 		}
+	}
+
+	public enum TipoCategoria
+	{
+		Costo,
+		Ingreso
 	}
 }
