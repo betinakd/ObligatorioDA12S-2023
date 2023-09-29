@@ -18,5 +18,13 @@ namespace DomainTest
 		{
 			Assert.IsNotNull(categoria);
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Nombre()
+		{
+			string nombre = "CategoriaPrueba";
+			categoria.Nombre = nombre;
+			Assert.AreEqual(nombre, categoria.Nombre);
+		}
 	}
 }
