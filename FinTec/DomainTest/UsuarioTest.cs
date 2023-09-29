@@ -86,5 +86,13 @@ namespace DomainTest
             Usuario unUsuario = new Usuario();
             unUsuario.Apellido = "";
         }
+
+        [TestMethod]
+        public void Obtener_Usuario_Apellido()
+        {
+            Usuario unUsuario = new Usuario();
+            unUsuario.Apellido = "Gimenez";
+            Assert.AreEqual("Gimenez", unUsuario.Apellido);
+        }
     }
 }
