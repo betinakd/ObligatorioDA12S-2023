@@ -4,7 +4,19 @@ namespace Domain
 {
 	public class Categoria
 	{
-		public string Nombre { get; set; }
+		private string _nombre;
+		public string Nombre
+		{
+			get { return _nombre; }
+			set
+			{
+				if (value == null)
+				{
+					throw new DomainCategoriaException("El nombre de la categoría no puede ser vacío");
+				}
+				_nombre = value;
+			}
+		}
 		public Categoria()
 		{
 		}
