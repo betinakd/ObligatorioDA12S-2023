@@ -32,5 +32,13 @@ namespace DomainTest
             var objetivo = new ObjetivosDeGastos();
             objetivo.Titulo = "";
         }
+
+        [TestMethod]
+        public void Monto_Maximo()
+        {
+            var objetivo = new ObjetivosDeGastos();
+            objetivo.MontoMaximo = 1000;
+            Assert.AreEqual(1000, objetivo.MontoMaximo);
+        }
     }
 }
