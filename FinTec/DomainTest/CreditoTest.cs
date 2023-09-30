@@ -42,5 +42,16 @@ namespace DomainTest
 			cuentaCredito.NumeroTarjeta = "1234";
 			Assert.AreEqual("1234", cuentaCredito.NumeroTarjeta);
 		}
+
+		[TestMethod]
+		public void Credito_Numero_Tarjeta_Menor_Cuatro_Digitos()
+		{
+			Credito cuentaCredito = new Credito();
+
+			Assert.ThrowsException<DomainCuentaException>(() =>
+			{
+				cuentaCredito.NumeroTarjeta = "123";
+			});
+		}
 	}
 }
