@@ -42,7 +42,7 @@ namespace DomainTest
 
 		[TestMethod]
 		[ExpectedException(typeof(NotImplementedException))]
-		public void Recibir_Deposito()
+		public void Excepcion_Recibir_Deposito()
 		{
 			cuenta.RecibirDeposito(100);
 		}

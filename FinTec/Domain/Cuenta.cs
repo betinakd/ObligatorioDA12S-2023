@@ -16,5 +16,10 @@
 		public Cuenta()
 		{
 		}
+
+		public void RecibirDeposito(decimal monto)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
