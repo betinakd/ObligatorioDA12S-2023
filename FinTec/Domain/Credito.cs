@@ -64,5 +64,10 @@
 		{
 			CreditoDisponible += monto;
 		}
+
+		public override void EgresoMonetario(double monto)
+		{
+			CreditoDisponible -= monto;
+		}
 	}
 }
