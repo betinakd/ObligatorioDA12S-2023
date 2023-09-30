@@ -8,6 +8,19 @@ namespace Domain
 {
     public class Transaccion
     {
-        public string Titulo { get; set; }
+        private string _titulo;
+        public string Titulo
+        {
+            get 
+            { 
+                return _titulo; 
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    throw new ArgumentException("El titulo no puede ser vacio");
+                _titulo = value;
+            }
+        }
     }
 }
