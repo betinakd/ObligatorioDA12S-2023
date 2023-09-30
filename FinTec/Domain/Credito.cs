@@ -31,6 +31,10 @@
 				{
 					throw new DomainCuentaException("El número de tarjeta no puede tener menos de 4 caracteres");
 				}
+				if (value.Length > 4)
+				{
+					throw new DomainCuentaException("El número de tarjeta no puede tener menos de 4 caracteres");
+				}
 				_numeroTarjeta = value;
 			}
 		}
