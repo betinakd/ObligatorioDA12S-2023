@@ -77,5 +77,17 @@ namespace DomainTest
             transaccion.CuentaMonetaria = cuenta;
             Assert.AreEqual(cuenta, transaccion.CuentaMonetaria);
         }
+
+        [TestMethod]
+        public void Categoria_Transaccion() 
+        {
+            var transaccion = new Transaccion();
+            Categoria categoria = new Categoria();
+            categoria.Nombre = "Categoria1";
+            categoria.Tipo = TipoCategoria.Costo;
+            categoria.EstadoActivo = true;
+            transaccion.CategoriaTransaccion = categoria;
+            Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
+        }
     }
 }
