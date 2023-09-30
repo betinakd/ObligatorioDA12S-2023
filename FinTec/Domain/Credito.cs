@@ -18,6 +18,7 @@
 				_bancoEmisor = value;
 			}
 		}
+		public string NumeroTarjeto { set; get; }
 		public Credito()
 		{
 		}
