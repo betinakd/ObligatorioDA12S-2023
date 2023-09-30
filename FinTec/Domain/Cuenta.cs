@@ -17,14 +17,14 @@
 		{
 		}
 
-		public virtual void IngresoMonetario(decimal monto)
+		public virtual void IngresoMonetario(double monto)
 		{
-			throw new NotImplementedException();
+			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
 		}
 
-		public virtual void EgresoMonetario(decimal monto)
+		public virtual void EgresoMonetario(double monto)
 		{
-			throw new NotImplementedException();
+			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
 		}
 	}
 }
