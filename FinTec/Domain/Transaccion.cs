@@ -27,6 +27,19 @@ namespace Domain
         {
             get { return _fechaCreacion; }
         }
-        public double Monto { get; set; }
+        private double _monto;
+        public double Monto
+        {
+            get
+            {
+                return _monto;
+            }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("El monto debe ser mayor a cero");
+                _monto = value;
+            }
+        }
     }
 }
