@@ -50,5 +50,14 @@ namespace DomainTest
             transaccion.Monto = monto;
             Assert.AreEqual(monto, transaccion.Monto);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Monto_Mayor_Cero() 
+        {
+            var transaccion = new Transaccion();
+            double monto = 0;
+            transaccion.Monto = monto;
+        }
     }
 }
