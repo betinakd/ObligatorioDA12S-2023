@@ -4,12 +4,12 @@ namespace DomainTest
 	[TestClass]
 	public class AhorroTest
 	{
-		private Cuenta cuentaAhorro;
+		private Ahorro cuentaAhorro;
 
 		[TestInitialize]
 		public void Inicializar()
 		{
-			Cuenta cuentaAhorro = new Ahorro();
+			cuentaAhorro = new Ahorro();
 		}
 
 		[TestMethod]
