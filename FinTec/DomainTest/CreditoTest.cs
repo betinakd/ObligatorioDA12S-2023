@@ -53,5 +53,16 @@ namespace DomainTest
 				cuentaCredito.NumeroTarjeta = "123";
 			});
 		}
+
+		[TestMethod]
+		public void Excepcion_Numero_Tarjeta_Mayor_Cuatro_Digitos()
+		{
+			Credito cuentaCredito = new Credito();
+
+			Assert.ThrowsException<DomainCuentaException>(() =>
+			{
+				cuentaCredito.NumeroTarjeta = "12345";
+			});
+		}
 	}
 }
