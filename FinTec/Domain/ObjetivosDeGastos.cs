@@ -22,5 +22,6 @@ namespace Domain
                 _titulo = value;
             }
         }
+        public double MontoMaximo { get; set; }
     }
 }
