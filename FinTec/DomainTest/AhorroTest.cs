@@ -33,5 +33,12 @@ namespace DomainTest
 			string nombre = "";
 			cuentaAhorro.Nombre = nombre;
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_Monto_Decimal() { 
+			double monto = 100.01;
+			cuentaAhorro.Monto = monto;
+			Assert.AreEqual(monto, cuentaAhorro.Monto);
+		}
 	}
 }
