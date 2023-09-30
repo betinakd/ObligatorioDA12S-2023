@@ -89,5 +89,17 @@ namespace DomainTest
             transaccion.CategoriaTransaccion = categoria;
             Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Categoria_Inactiva_Transaccion()
+        {
+            var transaccion = new Transaccion();
+            Categoria categoria = new Categoria();
+            categoria.Nombre = "Categoria1";
+            categoria.Tipo = TipoCategoria.Costo;
+            categoria.EstadoActivo = false;
+            transaccion.CategoriaTransaccion = categoria;            
+        }
     }
 }
