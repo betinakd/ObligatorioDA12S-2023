@@ -43,6 +43,19 @@ namespace Domain
         }
         public TipoCambiario Moneda { get; set; }
         public Cuenta CuentaMonetaria { get; set; }
-        public Categoria CategoriaTransaccion { get; set; }
+        private Categoria _categoria;
+        public Categoria CategoriaTransaccion
+        {
+            get
+            {
+                return _categoria;
+            }
+            set
+            {
+                if (value.EstadoActivo == false)
+                    throw new ArgumentException("La categoria tiene que estar activa");
+                _categoria = value;
+            }
+        }
     }
 }
