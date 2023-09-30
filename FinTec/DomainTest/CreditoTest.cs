@@ -42,7 +42,5 @@ namespace DomainTest
 			cuentaCredito.NumeroTarjeta = "1234";
 			Assert.AreEqual("1234", cuentaCredito.NumeroTarjeta);
 		}
-
-		[TestMethod]
 	}
 }
