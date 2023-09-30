@@ -17,12 +17,12 @@
 		{
 		}
 
-		public void IngresoMonetario(decimal monto)
+		public virtual void IngresoMonetario(decimal monto)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void EgresoMonetario(decimal monto)
+		public virtual void EgresoMonetario(decimal monto)
 		{
 			throw new NotImplementedException();
 		}
