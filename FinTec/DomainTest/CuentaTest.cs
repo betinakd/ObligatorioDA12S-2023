@@ -33,5 +33,11 @@ namespace DomainTest
 			cuenta.Moneda = TipoCambiario.Dolar;
 			Assert.AreEqual(cuenta.Moneda, TipoCambiario.Dolar);
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_FechaCreacion()
+		{
+			Assert.IsNotNull(cuenta.FechaCreacion);
+		}
 	}
 }
