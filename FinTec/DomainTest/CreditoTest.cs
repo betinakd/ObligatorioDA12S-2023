@@ -98,7 +98,15 @@ namespace DomainTest
 			cuentaCredito.CreditoDisponible = 0;
 			cuentaCredito.IngresoMonetario(100);
 			Assert.AreEqual(100, cuentaCredito.CreditoDisponible);
-		}	
+		}
+
+		[TestMethod]
+		public void Obtener_FechaCiere()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
+			Assert.AreEqual(new System.DateTime(2020, 1, 1), cuentaCredito.FechaCierre);
+		}
 
 	}
 }
