@@ -18,5 +18,21 @@ namespace DomainTest
 			cuentaCredito.BancoEmisor = "BancoEmisorPrueba";
 			Assert.AreEqual("BancoEmisorPrueba", cuentaCredito.BancoEmisor);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCuentaException))]
+		public void Excepcion_Credito_Tiene_Banco_Emisor_Vacio()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.BancoEmisor = "";
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCuentaException))]
+		public void Excepcion_Credito_Tiene_Banco_Emisor_Nulo()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.BancoEmisor = null;
+		}
 	}
 }
