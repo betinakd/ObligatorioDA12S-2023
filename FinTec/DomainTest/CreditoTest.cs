@@ -84,5 +84,12 @@ namespace DomainTest
 			});
 		}
 
+		[TestMethod]
+		public void Credito_Tiene_FechaCierre() 
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
+		}
+
 	}
 }
