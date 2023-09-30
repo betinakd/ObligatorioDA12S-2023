@@ -4,6 +4,7 @@
 	{
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
+		private double _creditoDisponible;
 		public string BancoEmisor
 		{
 			get
@@ -38,7 +39,21 @@
 				_numeroTarjeta = value;
 			}
 		}
-		public double CreditoDisponible { set; get; }
+		public double CreditoDisponible
+		{
+			get
+			{
+				return _creditoDisponible;
+			}
+			set
+			{
+				if (value < 0)
+				{
+					throw new DomainCuentaException("El crédito disponible no puede ser negativo");
+				}
+				_creditoDisponible = value;
+			}
+		}
 
 		public Credito()
 		{
