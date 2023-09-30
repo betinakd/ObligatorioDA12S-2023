@@ -24,5 +24,13 @@ namespace DomainTest
             objetivo.Titulo = "Objetivo 1";
             Assert.AreEqual("Objetivo 1", objetivo.Titulo);
         }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
+        public void Tiene_Titulo_Vacio()
+        {
+            var objetivo = new ObjetivosDeGastos();
+            objetivo.Titulo = "";
+        }
     }
 }
