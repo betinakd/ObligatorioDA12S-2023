@@ -95,6 +95,7 @@ namespace DomainTest
 		public void Credito_Tiene_IngresoMonetario()
 		{
 			Credito cuentaCredito = new Credito();
+			cuentaCredito.CreditoDisponible = 0;
 			cuentaCredito.IngresoMonetario(100);
 			Assert.AreEqual(100, cuentaCredito.CreditoDisponible);
 		}	
