@@ -40,5 +40,20 @@ namespace DomainTest
             objetivo.MontoMaximo = 1000;
             Assert.AreEqual(1000, objetivo.MontoMaximo);
         }
+
+        [TestMethod]
+        public void  Aplicar_Ojetivo_Categoria()
+        {
+            var objetivo = new ObjetivosDeGastos();
+            var categoria = new Categoria();
+            var categorias = new List<Categoria>();
+            categoria.EstadoActivo=true;
+            categoria.Tipo=TipoCategoria.Ingreso;
+            categoria.Nombre="Sueldo";
+            categorias.Add(categoria);
+            objetivo.Categorias=categorias;
+            var resultado = objetivo.Categorias;
+            Assert.AreEqual(categorias, resultado);
+        }
     }
 }
