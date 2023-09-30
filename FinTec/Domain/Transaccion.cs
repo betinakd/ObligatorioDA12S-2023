@@ -8,5 +8,6 @@ namespace Domain
 {
     public class Transaccion
     {
+        public string Titulo { get; set; }
     }
 }
