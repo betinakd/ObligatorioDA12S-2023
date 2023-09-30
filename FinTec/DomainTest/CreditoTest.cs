@@ -34,5 +34,13 @@ namespace DomainTest
 			Credito cuentaCredito = new Credito();
 			cuentaCredito.BancoEmisor = null;
 		}
+
+		[TestMethod]
+		public void Credito_Tiene_Numero_Tarjeta()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.NumeroTarjeta = "1234";
+			Assert.AreEqual("1234", cuentaCredito.NumeroTarjeta);
+		}
 	}
 }
