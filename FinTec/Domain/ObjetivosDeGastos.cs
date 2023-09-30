@@ -23,5 +23,6 @@ namespace Domain
             }
         }
         public double MontoMaximo { get; set; }
+        public List<Categoria> Categorias { get; set; }
     }
 }
