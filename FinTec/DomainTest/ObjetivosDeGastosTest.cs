@@ -16,5 +16,13 @@ namespace DomainTest
             var objetivo = new ObjetivosDeGastos();
             Assert.IsNotNull(objetivo);
         }
+
+        [TestMethod]
+        public void Tiene_Titulo()
+        {
+            var objetivo = new ObjetivosDeGastos();
+            objetivo.Titulo = "Objetivo 1";
+            Assert.AreEqual("Objetivo 1", objetivo.Titulo);
+        }
     }
 }
