@@ -21,5 +21,10 @@
 		{
 			throw new NotImplementedException();
 		}
+
+		public void EgresoMonetario(decimal monto)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
