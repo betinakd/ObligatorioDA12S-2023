@@ -44,7 +44,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Credito_Numero_Tarjeta_Menor_Cuatro_Digitos()
+		public void Excepcion_Numero_Tarjeta_Menor_Cuatro_Digitos()
 		{
 			Credito cuentaCredito = new Credito();
 
