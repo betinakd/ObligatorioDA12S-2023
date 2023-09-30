@@ -26,5 +26,12 @@ namespace DomainTest
 			cuenta.Moneda = TipoCambiario.PesosUruguayos;
 			Assert.AreEqual(cuenta.Moneda, TipoCambiario.PesosUruguayos);
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_Moneda_Dolar()
+		{
+			cuenta.Moneda = TipoCambiario.Dolar;
+			Assert.AreEqual(cuenta.Moneda, TipoCambiario.Dolar);
+		}
 	}
 }
