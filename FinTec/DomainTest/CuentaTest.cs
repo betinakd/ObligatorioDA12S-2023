@@ -39,5 +39,12 @@ namespace DomainTest
 		{
 			Assert.IsNotNull(cuenta.FechaCreacion);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Recibir_Deposito()
+		{
+			cuenta.RecibirDeposito(100);
+		}
 	}
 }
