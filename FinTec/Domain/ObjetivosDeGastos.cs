@@ -8,5 +8,6 @@ namespace Domain
 {
     public class ObjetivosDeGastos
     {
+        public string Titulo { get; set; }
     }
 }
