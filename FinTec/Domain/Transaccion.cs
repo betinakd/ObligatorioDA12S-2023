@@ -22,5 +22,10 @@ namespace Domain
                 _titulo = value;
             }
         }
+        private readonly DateTime _fechaCreacion = DateTime.Now;
+        public DateTime FechaTransaccion
+        {
+            get { return _fechaCreacion; }
+        }
     }
 }
