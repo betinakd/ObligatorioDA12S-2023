@@ -64,5 +64,13 @@ namespace DomainTest
 				cuentaCredito.NumeroTarjeta = "12345";
 			});
 		}
+
+		[TestMethod]
+		public void Credito_Tiene_CreditoDisponible()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.CreditoDisponible = 1000;
+			Assert.AreEqual(1000, cuentaCredito.CreditoDisponible);
+		}
 	}
 }
