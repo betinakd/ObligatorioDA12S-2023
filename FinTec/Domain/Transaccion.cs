@@ -42,5 +42,6 @@ namespace Domain
             }
         }
         public TipoCambiario Moneda { get; set; }
+        public Cuenta CuentaMonetaria { get; set; }
     }
 }
