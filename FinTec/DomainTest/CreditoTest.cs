@@ -72,5 +72,17 @@ namespace DomainTest
 			cuentaCredito.CreditoDisponible = 1000;
 			Assert.AreEqual(1000, cuentaCredito.CreditoDisponible);
 		}
+
+		[TestMethod]
+		public void Excepcion_CreditoDisponible_Negativo()
+		{
+			Credito cuentaCredito = new Credito();
+
+			Assert.ThrowsException<DomainCuentaException>(() =>
+			{
+				cuentaCredito.CreditoDisponible = -1.1;
+			});
+		}
+
 	}
 }
