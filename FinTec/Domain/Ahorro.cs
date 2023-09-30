@@ -18,6 +18,7 @@
 				_nombre = value;
 			}
 		}
+		public double Monto { get; set; }
 		public Ahorro()
 		{
 		}
