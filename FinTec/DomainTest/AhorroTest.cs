@@ -17,5 +17,13 @@ namespace DomainTest
 		{
 			Assert.IsNotNull(cuentaAhorro);
 		}
+
+		[TestMethod]
+		public void CuentaAhorro_Tiene_Nombre()
+		{
+			string nombre = "CuentaAhorroPrueba";
+			cuentaAhorro.Nombre = nombre;
+			Assert.AreEqual(nombre, cuentaAhorro.Nombre);
+		}
 	}
 }
