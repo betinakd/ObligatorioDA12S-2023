@@ -34,5 +34,12 @@ namespace DomainTest
             string titulo = "";
             transaccion.Titulo = titulo;
         }
+
+        [TestMethod]
+        public void Tiene_Fecha_Transaccion() 
+        {
+            var transaccion = new Transaccion();
+            Assert.IsNotNull(transaccion.FechaTransaccion);
+        }
     }
 }
