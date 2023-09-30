@@ -25,5 +25,13 @@ namespace DomainTest
 			cuentaAhorro.Nombre = nombre;
 			Assert.AreEqual(nombre, cuentaAhorro.Nombre);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCuentaException))]
+		public void Excepcion_CuentaAhorro_Tiene_Nombre_Vacio()
+		{
+			string nombre = "";
+			cuentaAhorro.Nombre = nombre;
+		}
 	}
 }
