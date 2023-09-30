@@ -46,5 +46,12 @@ namespace DomainTest
 		{
 			cuenta.IngresoMonetario(100);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Excepcion_Realizar_Deposito()
+		{
+			cuenta.EgresoMonetario(100);
+		}
 	}
 }
