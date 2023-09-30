@@ -25,5 +25,14 @@ namespace DomainTest
             transaccion.Titulo= titulo;
             Assert.AreEqual(titulo,transaccion.Titulo);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Titulo_Transaccion_Vacio()
+        {
+            var transaccion = new Transaccion();
+            string titulo = "";
+            transaccion.Titulo = titulo;
+        }
     }
 }
