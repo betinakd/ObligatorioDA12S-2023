@@ -5,6 +5,7 @@
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
 		private double _creditoDisponible;
+		public DateTime FechaCierre { get; set; }	
 		public string BancoEmisor
 		{
 			get
