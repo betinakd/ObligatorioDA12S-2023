@@ -5,7 +5,7 @@
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
 		private double _creditoDisponible;
-		public DateTime FechaCierre { get; set; }	
+		public DateTime FechaCierre { get; set; }
 		public string BancoEmisor
 		{
 			get
@@ -59,7 +59,6 @@
 		public Credito()
 		{
 		}
-
 		public override void IngresoMonetario(double monto)
 		{
 			CreditoDisponible += monto;
