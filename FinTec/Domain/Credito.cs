@@ -1,6 +1,6 @@
 ﻿namespace Domain
 {
-	public class Credito
+	public class Credito : Cuenta
 	{
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
@@ -58,6 +58,11 @@
 
 		public Credito()
 		{
+		}
+
+		public override void IngresoMonetario(double monto)
+		{
+			CreditoDisponible += monto;
 		}
 	}
 }
