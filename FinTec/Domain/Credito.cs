@@ -6,13 +6,13 @@
 		private string _numeroTarjeta;
 		public string BancoEmisor
 		{
-			get 
+			get
 			{
 				return _bancoEmisor;
 			}
 			set
-			{ 
-				if(string.IsNullOrEmpty(value))
+			{
+				if (string.IsNullOrEmpty(value))
 				{
 					throw new DomainCuentaException("El banco emisor no puede ser vacío");
 				}
@@ -38,6 +38,8 @@
 				_numeroTarjeta = value;
 			}
 		}
+		public double CreditoDisponible { set; get; }
+
 		public Credito()
 		{
 		}
