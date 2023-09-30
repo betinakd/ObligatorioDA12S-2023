@@ -27,5 +27,6 @@ namespace Domain
         {
             get { return _fechaCreacion; }
         }
+        public double Monto { get; set; }
     }
 }
