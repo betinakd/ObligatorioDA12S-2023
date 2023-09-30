@@ -14,9 +14,11 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Nueva_Cuenta()
+		public void Nueva_Cuenta_No_Nula()
 		{
 			Assert.IsNotNull(cuenta);
 		}
+
+		
 	}
 }
