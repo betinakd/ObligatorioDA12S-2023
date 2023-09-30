@@ -40,5 +40,13 @@ namespace DomainTest
 			cuentaAhorro.Monto = monto;
 			Assert.AreEqual(monto, cuentaAhorro.Monto);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCuentaException))]
+		public void Excepcion_CuentaAhorro_Monto_Negativo()
+		{
+			double monto = -100.01;
+			cuentaAhorro.Monto = monto;
+		}
 	}
 }
