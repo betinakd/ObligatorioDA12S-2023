@@ -17,7 +17,7 @@
 		{
 		}
 
-		public void RecibirDeposito(decimal monto)
+		public void IngresoMonetario(decimal monto)
 		{
 			throw new NotImplementedException();
 		}

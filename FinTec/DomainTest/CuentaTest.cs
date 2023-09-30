@@ -44,7 +44,7 @@ namespace DomainTest
 		[ExpectedException(typeof(NotImplementedException))]
 		public void Excepcion_Recibir_Deposito()
 		{
-			cuenta.RecibirDeposito(100);
+			cuenta.IngresoMonetario(100);
 		}
 	}
 }
