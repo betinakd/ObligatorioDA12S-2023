@@ -99,6 +99,14 @@ namespace DomainTest
 			cuentaCredito.IngresoMonetario(100);
 			Assert.AreEqual(100, cuentaCredito.CreditoDisponible);
 		}
+		[TestMethod]
+		public void Credito_Tiene_EgresoMonetario()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.CreditoDisponible = 1000;
+			cuentaCredito.EgresoMonetario(100);
+			Assert.AreEqual(900, cuentaCredito.CreditoDisponible);
+		}
 
 		[TestMethod]
 		public void Obtener_FechaCiere()
