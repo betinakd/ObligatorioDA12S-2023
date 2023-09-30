@@ -85,7 +85,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Credito_Tiene_FechaCierre() 
+		public void Credito_Tiene_FechaCierre()
 		{
 			Credito cuentaCredito = new Credito();
 			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
@@ -114,6 +114,17 @@ namespace DomainTest
 			Credito cuentaCredito = new Credito();
 			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
 			Assert.AreEqual(new System.DateTime(2020, 1, 1), cuentaCredito.FechaCierre);
+		}
+
+		[TestMethod]
+		public void Credito_Tiene_ToString()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.BancoEmisor = "BancoEmisorPrueba";
+			cuentaCredito.NumeroTarjeta = "1234";
+			cuentaCredito.CreditoDisponible = 1000;
+			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
+			Assert.AreEqual("BancoEmisorPrueba/n 1234/n 1000/n 01/01/2020 00:00:00/n", cuentaCredito.ToString());
 		}
 
 	}
