@@ -2,7 +2,8 @@
 {
 	public enum TipoCambiario
 	{
-		PesosUruguayos
+		PesosUruguayos,
+		Dolar
 	}
 	public class Cuenta
 	{
