@@ -8,6 +8,14 @@
 		private List<Usuario> _usuariosInvitados = new List<Usuario>();
 		private List<Transaccion> _transacciones = new List<Transaccion>();
 		private List<Objetivo> _objetivos = new List<Objetivo>();
+		private List<Cambio> _cambios = new List<Cambio>();
+		public List<Cambio> Cambios
+		{
+			get
+			{
+				return _cambios;
+			}
+		}
 		public List<Objetivo> Objetivos
 		{
 			get
