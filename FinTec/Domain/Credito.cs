@@ -71,7 +71,7 @@
 
 		public override string ToString()
 		{
-			return $"{BancoEmisor}/n {NumeroTarjeta}/n {CreditoDisponible}/n {FechaCierre}/n";
+			return $"{base.ToString()}/n{BancoEmisor}/n {NumeroTarjeta}/n {CreditoDisponible}/n {FechaCierre}/n";
 		}
 	}
 }

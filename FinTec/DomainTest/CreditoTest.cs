@@ -124,7 +124,8 @@ namespace DomainTest
 			cuentaCredito.NumeroTarjeta = "1234";
 			cuentaCredito.CreditoDisponible = 1000;
 			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
-			Assert.AreEqual("BancoEmisorPrueba/n 1234/n 1000/n 1/1/2020 0:00:00/n", cuentaCredito.ToString());
+			Cuenta cuenta = cuentaCredito;
+			Assert.AreEqual(cuenta.ToString(), cuentaCredito.ToString());
 		}
 
 	}

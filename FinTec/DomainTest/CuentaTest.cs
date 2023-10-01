@@ -62,5 +62,6 @@ namespace DomainTest
 			string fecha = DateTime.Now.ToString();
 			Assert.AreEqual(cuenta.ToString(), "Pesos Uruguayos/n"+fecha+"/n");
 		}	
+
 	}
 }
