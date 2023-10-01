@@ -14,5 +14,6 @@ namespace Domain
             get { return _fechaDeCambio; }
         }
         public TipoCambiario Moneda { get; set; }
+        public double Pesos { get; set; }
     }
 }
