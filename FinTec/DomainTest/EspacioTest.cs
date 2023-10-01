@@ -140,6 +140,18 @@ namespace DomainTest
 			espacio.AgregarCuenta(cuenta);
 			Assert.AreEqual(espacio.Cuentas.Count, 1);
 			Assert.AreEqual(espacio.Cuentas[0], cuenta);
-		}	
+		}
+
+		[TestMethod]
+		public void Espacio_Inicializa_Lista_Categorias_Vacia()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			espacio.Admin = usuario;
+			List<Categoria> categorias = espacio.Categorias;
+			Assert.IsInstanceOfType(categorias, typeof(List<Categoria>));
+			Assert.IsNotNull(categorias);
+			Assert.AreEqual(categorias.Count, 0);
+		}
 	}
 }
