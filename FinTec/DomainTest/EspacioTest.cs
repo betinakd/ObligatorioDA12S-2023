@@ -189,5 +189,17 @@ namespace DomainTest
 			Assert.AreEqual(espacio.Transacciones.Count, 1);
 			Assert.AreEqual(espacio.Transacciones[0], transaccion);
 		}
+
+		[TestMethod]
+		public void Espacio_Inicializa_Lista_Objetivos_Vacia()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			espacio.Admin = usuario;
+			List<ObjetivosDeGastos> objetivos = espacio.Objetivos;
+			Assert.IsInstanceOfType(objetivos, typeof(List<ObjetivosDeGastos>));
+			Assert.IsNotNull(objetivos);
+			Assert.AreEqual(objetivos.Count, 0);
+		}	
 	}
 }
