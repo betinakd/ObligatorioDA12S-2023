@@ -129,5 +129,17 @@ namespace DomainTest
 			Assert.IsNotNull(cuentas);
 			Assert.AreEqual(cuentas.Count, 0);
 		}
+
+		[TestMethod]
+		public void Espacio_Agregar_Cuenta()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			var cuenta = new Cuenta();
+			espacio.Admin = usuario;
+			espacio.AgregarCuenta(cuenta);
+			Assert.AreEqual(espacio.Cuentas.Count, 1);
+			Assert.AreEqual(espacio.Cuentas[0], cuenta);
+		}	
 	}
 }
