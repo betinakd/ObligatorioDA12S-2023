@@ -6,7 +6,14 @@
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List <Categoria> _categorias = new List<Categoria>();
 		private List<Usuario> _usuariosInvitados = new List<Usuario>();
-
+		private List<Transaccion> _transacciones = new List<Transaccion>();
+		public List<Transaccion> Transacciones
+		{
+			get
+			{
+				return _transacciones;
+			}
+		}
 		public List<Categoria> Categorias
 		{
 			get
