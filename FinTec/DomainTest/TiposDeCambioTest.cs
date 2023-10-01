@@ -16,5 +16,12 @@ namespace DomainTest
             var tipoDeCambio = new TiposDeCambio();
             Assert.IsNotNull(tipoDeCambio);
         }
+
+        [TestMethod]
+        public void TipoDeCambio_TieneFecha()
+        {
+            var tipoDeCambio = new TiposDeCambio();
+            Assert.IsNotNull(tipoDeCambio.FechaDeCambio);
+        }
     }
 }
