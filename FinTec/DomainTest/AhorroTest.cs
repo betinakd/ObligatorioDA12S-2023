@@ -48,5 +48,15 @@ namespace DomainTest
 			double monto = -100.01;
 			cuentaAhorro.Monto = monto;
 		}
+
+		[TestMethod]
+		public void CuentaAhorro_Tiene_ToString()
+		{
+			Ahorro cuentaAhorro = new Ahorro();
+			cuentaAhorro.Nombre = "CuentaAhorroPrueba";
+			cuentaAhorro.Monto = 100.01;
+			Cuenta cuenta = cuentaAhorro;
+			Assert.AreEqual(cuenta.ToString()+ "CuentaAhorroPrueba" + "/n" + DateTime.Now.ToString() + "/n", cuentaAhorro.ToString());
+		}
 	}
 }
