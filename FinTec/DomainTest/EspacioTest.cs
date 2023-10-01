@@ -104,6 +104,18 @@ namespace DomainTest
 			CollectionAssert.AreEqual(espacio.UsuariosInvitados, resultado);
 		}
 
-
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Espacio_Invitar_Usuario_Ya_Presente()
+		{
+			var espacio = new Espacio();
+			Usuario usuario = new Usuario();
+			Usuario usuario2 = new Usuario();
+			List<Usuario> usuarios = new List<Usuario>();
+			usuarios.Add(usuario);
+			espacio.Admin = usuario2;
+			espacio.UsuariosInvitados = usuarios;
+			espacio.InvitarUsuario(usuario);
+		}
 	}
 }
