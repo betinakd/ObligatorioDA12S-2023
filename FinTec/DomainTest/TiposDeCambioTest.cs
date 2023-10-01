@@ -31,5 +31,13 @@ namespace DomainTest
             tipoDeCambio.Moneda = TipoCambiario.Dolar;
             Assert.AreEqual(TipoCambiario.Dolar, tipoDeCambio.Moneda);
         }
+
+        [TestMethod]
+        public void Valor_Moneda_PesosUy()
+        {
+            var tipoDeCambio = new TiposDeCambio();
+            tipoDeCambio.Pesos = 200;
+            Assert.AreEqual(200, tipoDeCambio.Pesos);
+        }
     }
 }
