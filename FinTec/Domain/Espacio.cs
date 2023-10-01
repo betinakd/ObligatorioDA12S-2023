@@ -3,6 +3,7 @@
 	public class Espacio
 	{
 		private Usuario _admin;
+		public List<Usuario> UsuariosInvitados { get; set; }
 		public Usuario Admin
 		{
 			get
