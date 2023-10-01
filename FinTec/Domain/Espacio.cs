@@ -36,6 +36,8 @@
 
 		public void cambiarAdmin(Usuario nuevoAdmin)
 		{
+			if (!UsuariosInvitados.Contains(nuevoAdmin))
+				throw new DomainEspacioException("El nuevo administrador no puede estar en la lista de invitados");
 			UsuariosInvitados.Add(Admin);
 			Admin = nuevoAdmin;
 			UsuariosInvitados.Remove(nuevoAdmin);
