@@ -213,5 +213,16 @@ namespace DomainTest
 			Assert.AreEqual(espacio.Objetivos[0], objetivo);
 		}
 
+		[TestMethod]
+		public void Espacio_Inicializa_Lista_Cambio_Vacia()
+		{ 
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			espacio.Admin = usuario;
+			List<Cambio> cambios = espacio.Cambios;
+			Assert.IsInstanceOfType(cambios, typeof(List<Cambio>));
+			Assert.IsNotNull(cambios);
+			Assert.AreEqual(cambios.Count, 0);
+		}
 	}
 }
