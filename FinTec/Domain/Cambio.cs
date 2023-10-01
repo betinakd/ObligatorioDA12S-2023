@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class TiposDeCambio
+    public class Cambio
     {
         private readonly DateTime _fechaDeCambio = DateTime.Now;
         public DateTime FechaDeCambio

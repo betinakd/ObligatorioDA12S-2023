@@ -8,26 +8,26 @@ using Domain;
 namespace DomainTest
 {
     [TestClass]
-    public class TiposDeCambioTest
+    public class CambioTest
     {
         [TestMethod]
         public void Nuevo_TipoDeCambio()
         {
-            var tipoDeCambio = new TiposDeCambio();
+            var tipoDeCambio = new Cambio();
             Assert.IsNotNull(tipoDeCambio);
         }
 
         [TestMethod]
         public void TipoDeCambio_TieneFecha()
         {
-            var tipoDeCambio = new TiposDeCambio();
+            var tipoDeCambio = new Cambio();
             Assert.IsNotNull(tipoDeCambio.FechaDeCambio);
         }
 
         [TestMethod]
         public void Tipo_Dolar()
         {
-            var tipoDeCambio = new TiposDeCambio();
+            var tipoDeCambio = new Cambio();
             tipoDeCambio.Moneda = TipoCambiario.Dolar;
             Assert.AreEqual(TipoCambiario.Dolar, tipoDeCambio.Moneda);
         }
@@ -35,7 +35,7 @@ namespace DomainTest
         [TestMethod]
         public void Valor_Moneda_PesosUy()
         {
-            var tipoDeCambio = new TiposDeCambio();
+            var tipoDeCambio = new Cambio();
             tipoDeCambio.Pesos = 200;
             Assert.AreEqual(200, tipoDeCambio.Pesos);
         }

@@ -212,5 +212,6 @@ namespace DomainTest
 			Assert.AreEqual(espacio.Objetivos.Count, 1);
 			Assert.AreEqual(espacio.Objetivos[0], objetivo);
 		}
+
 	}
 }
