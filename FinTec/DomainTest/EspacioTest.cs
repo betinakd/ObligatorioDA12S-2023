@@ -71,5 +71,22 @@ namespace DomainTest
 			CollectionAssert.DoesNotContain(espacio.UsuariosInvitados, usuario2);
 			CollectionAssert.Contains(espacio.UsuariosInvitados, usuario);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_CambiarAdmin_No_Presente_Usuarios_Invitados()
+		{
+			var espacio = new Espacio();
+			Usuario usuario = new Usuario();
+			Usuario usuario2 = new Usuario();
+			List<Usuario> usuarios = new List<Usuario>();
+
+			// Creamos lista de usuarios invitados con el usuario2 incluido
+			espacio.UsuariosInvitados = usuarios;
+			// Hacemos admin al usuario
+			espacio.Admin = usuario;
+			// Cambiamos de admin a usuario2 por lo que usuario deberia estar en la lista de invitados y usuario2 no
+			espacio.cambiarAdmin(usuario2);
+		}
 	}
 }
