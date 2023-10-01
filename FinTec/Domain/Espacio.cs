@@ -3,7 +3,7 @@
 	public class Espacio
 	{
 		private Usuario _admin;
-		private List<Usuario> _usuariosInvitados;
+		private List<Usuario> _usuariosInvitados = new List<Usuario>();
 		public List<Usuario> UsuariosInvitados
 		{
 			get
