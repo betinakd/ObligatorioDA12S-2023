@@ -58,5 +58,10 @@
 				throw new DomainEspacioException("El usuario ya esta invitado");
 			UsuariosInvitados.Add(usuario);
 		}
+
+		public void AgregarCuenta(Cuenta cuenta)
+		{
+			_cuentas.Add(cuenta);	
+		}
 	}
 }
