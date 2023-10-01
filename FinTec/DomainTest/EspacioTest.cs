@@ -1,4 +1,5 @@
-﻿namespace DomainTest
+﻿using Domain;
+namespace DomainTest
 {
 	[TestClass]
 	public class EspacioTest
