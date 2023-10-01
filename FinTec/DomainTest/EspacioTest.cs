@@ -224,5 +224,17 @@ namespace DomainTest
 			Assert.IsNotNull(cambios);
 			Assert.AreEqual(cambios.Count, 0);
 		}
+
+		[TestMethod]
+		public void Espacio_Agregar_Cambio()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			var cambio = new Cambio();
+			espacio.Admin = usuario;
+			espacio.AgregarCambio(cambio);
+			Assert.AreEqual(espacio.Cambios.Count, 1);
+			Assert.AreEqual(espacio.Cambios[0], cambio);
+		}
 	}
 }
