@@ -28,5 +28,16 @@ namespace DomainTest
 			var espacio = new Espacio();
 			espacio.Admin = null;
 		}
+
+		[TestMethod]
+		public void Espacio_Tiene_UsuariosInvitados() 
+		{
+			var espacio = new Espacio();
+			Usuario usuario = new Usuario();
+			List<Usuario> usuarios = new List<Usuario>();
+			espacio.Admin = usuario;
+			espacio.UsuariosInvitados = usuarios;
+			Assert.AreEqual(espacio.UsuariosInvitados,usuarios);
+		}
 	}
 }
