@@ -7,6 +7,14 @@
 		private List <Categoria> _categorias = new List<Categoria>();
 		private List<Usuario> _usuariosInvitados = new List<Usuario>();
 		private List<Transaccion> _transacciones = new List<Transaccion>();
+		private List<ObjetivosDeGastos> _objetivos = new List<ObjetivosDeGastos>();
+		public List<ObjetivosDeGastos> Objetivos
+		{
+			get
+			{
+				return _objetivos;
+			}
+		}
 		public List<Transaccion> Transacciones
 		{
 			get
