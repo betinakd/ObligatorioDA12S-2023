@@ -8,5 +8,10 @@ namespace Domain
 {
     public class TiposDeCambio
     {
+        private readonly DateTime _fechaDeCambio = DateTime.Now;
+        public DateTime FechaDeCambio
+        {
+            get { return _fechaDeCambio; }
+        }
     }
 }
