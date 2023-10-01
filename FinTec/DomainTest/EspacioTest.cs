@@ -88,5 +88,18 @@ namespace DomainTest
 			// Cambiamos de admin a usuario2 por lo que usuario deberia estar en la lista de invitados y usuario2 no
 			espacio.cambiarAdmin(usuario2);
 		}
+
+		[TestMethod]
+		public void Espacio_Invitar_Usuario() 
+		{
+			var espacio = new Espacio();
+			Usuario usuario = new Usuario();
+			Usuario usuario2 = new Usuario();
+			List<Usuario> usuarios = new List<Usuario>();
+			usuarios.Add(usuario);
+			espacio.Admin = usuario2;
+			espacio.UsuariosInvitados = usuarios;
+			espacio.invitarUsuario(usuario);
+		}
 	}
 }
