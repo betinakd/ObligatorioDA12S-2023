@@ -6,6 +6,7 @@
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List <Categoria> _categorias = new List<Categoria>();
 		private List<Usuario> _usuariosInvitados = new List<Usuario>();
+
 		public List<Categoria> Categorias
 		{
 			get

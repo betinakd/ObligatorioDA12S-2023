@@ -172,7 +172,7 @@ namespace DomainTest
 			var espacio = new Espacio();
 			var usuario = new Usuario();
 			espacio.Admin = usuario;
-			List<Transaccion> transacciones = transacciones.Transacciones;
+			List<Transaccion> transacciones = espacio.Transacciones;
 			Assert.IsInstanceOfType(transacciones, typeof(List<Transaccion>));
 			Assert.IsNotNull(transacciones);
 			Assert.AreEqual(transacciones.Count, 0);
