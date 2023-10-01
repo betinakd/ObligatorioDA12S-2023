@@ -177,5 +177,17 @@ namespace DomainTest
 			Assert.IsNotNull(transacciones);
 			Assert.AreEqual(transacciones.Count, 0);
 		}
+
+		[TestMethod]
+		public void Espacio_Agregar_Transaccion()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			var transaccion = new Transaccion();
+			espacio.Admin = usuario;
+			espacio.AgregarTransaccion(transaccion);
+			Assert.AreEqual(espacio.Transacciones.Count, 1);
+			Assert.AreEqual(espacio.Transacciones, transaccion);
+		}
 	}
 }
