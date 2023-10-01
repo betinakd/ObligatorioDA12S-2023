@@ -3,14 +3,14 @@
 	public class Espacio
 	{
 		private Usuario _admin;
-		private List<Cuenta> cuentas = new List<Cuenta>();
+		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Usuario> _usuariosInvitados = new List<Usuario>();
 
 		public List<Cuenta> Cuentas
 		{
 			get
 			{
-				return cuentas;
+				return _cuentas;
 			}
 		}
 		public List<Usuario> UsuariosInvitados
