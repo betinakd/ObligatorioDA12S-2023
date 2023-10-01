@@ -99,7 +99,7 @@ namespace DomainTest
 			usuarios.Add(usuario);
 			espacio.Admin = usuario2;
 			espacio.UsuariosInvitados = usuarios;
-			espacio.invitarUsuario(usuario);
+			espacio.InvitarUsuario(usuario);
 		}
 	}
 }
