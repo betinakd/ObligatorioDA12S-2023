@@ -108,5 +108,10 @@
 			_objetivos.Add(objetivo);
 		}
 
+		public void AgregarCambio(Cambio cambio)
+		{
+			_cambios.Add(cambio);
+		}
+
 	}
 }
