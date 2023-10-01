@@ -20,5 +20,13 @@ namespace DomainTest
 			espacio.Admin = usuario;
 			Assert.AreEqual(espacio.Admin,usuario);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Espacio_Tiene_Admin_Nulo()
+		{			
+			var espacio = new Espacio();
+			espacio.Admin = null;
+		}
 	}
 }
