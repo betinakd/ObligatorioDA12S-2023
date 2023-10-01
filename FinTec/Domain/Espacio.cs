@@ -95,5 +95,10 @@
 			_transacciones.Add(transaccion);
 		}
 
+		public void AgregarObjetivo(Objetivo objetivo) 
+		{
+			_objetivos.Add(objetivo);
+		}
+
 	}
 }
