@@ -117,5 +117,17 @@ namespace DomainTest
 			espacio.UsuariosInvitados = usuarios;
 			espacio.InvitarUsuario(usuario);
 		}
+
+		[TestMethod]
+		public void Espacio_Inicializa_Lista_Cuentas_Vacia() 
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			espacio.Admin = usuario;
+			List<Cuenta> cuentas = espacio.Cuentas;
+			Assert.IsInstanceOfType(cuentas, typeof(List<Cuenta>));
+			Assert.IsNotNull(cuentas);
+			Assert.AreEqual(cuentas.Count, 0);
+		}
 	}
 }
