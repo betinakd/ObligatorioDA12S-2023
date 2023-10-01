@@ -82,6 +82,9 @@
 		{
 			_categorias.Add(categoria);
 		}
-
+		public void AgregarTransaccion(Transaccion transaccion)
+		{
+			_transacciones.Add(transaccion);
+		}
 	}
 }
