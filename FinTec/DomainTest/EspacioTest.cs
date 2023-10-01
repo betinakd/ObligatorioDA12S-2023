@@ -95,11 +95,15 @@ namespace DomainTest
 			var espacio = new Espacio();
 			Usuario usuario = new Usuario();
 			Usuario usuario2 = new Usuario();
+			List<Usuario> resultado = new List<Usuario>();
+			resultado.Add(usuario);
 			List<Usuario> usuarios = new List<Usuario>();
-			usuarios.Add(usuario);
 			espacio.Admin = usuario2;
 			espacio.UsuariosInvitados = usuarios;
 			espacio.InvitarUsuario(usuario);
+			CollectionAssert.AreEqual(espacio.UsuariosInvitados, resultado);
 		}
+
+
 	}
 }
