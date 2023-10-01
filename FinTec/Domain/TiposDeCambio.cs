@@ -13,5 +13,6 @@ namespace Domain
         {
             get { return _fechaDeCambio; }
         }
+        public TipoCambiario Moneda { get; set; }
     }
 }
