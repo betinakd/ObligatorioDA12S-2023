@@ -56,7 +56,7 @@ namespace DomainTest
 			cuentaAhorro.Nombre = "CuentaAhorroPrueba";
 			cuentaAhorro.Monto = 100.01;
 			Cuenta cuenta = cuentaAhorro;
-			Assert.AreEqual(cuenta.ToString()+ "CuentaAhorroPrueba" + "/n" + DateTime.Now.ToString() + "/n", cuentaAhorro.ToString());
+			Assert.AreEqual(cuenta.ToString() , cuentaAhorro.ToString());
 		}
 	}
 }

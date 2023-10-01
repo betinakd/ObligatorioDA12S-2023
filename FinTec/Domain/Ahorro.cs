@@ -37,7 +37,10 @@
 		public Ahorro()
 		{
 		}
-
+		public override string ToString()
+		{
+			return $"{base.ToString()}/n{Nombre}/n {FechaCreacion}/n {Monto}";
+		}
 	}
 }
 
