@@ -42,5 +42,10 @@
 			Admin = nuevoAdmin;
 			UsuariosInvitados.Remove(nuevoAdmin);
 		}
+
+		public void InvitarUsuario(Usuario usuario)
+		{
+			UsuariosInvitados.Add(usuario);
+		}
 	}
 }
