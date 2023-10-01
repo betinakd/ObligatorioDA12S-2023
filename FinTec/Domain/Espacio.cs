@@ -70,5 +70,10 @@
 		{
 			_cuentas.Add(cuenta);	
 		}
+		public void AgregarCategoria(Categoria categoria)
+		{
+			_categorias.Add(categoria);
+		}
+
 	}
 }
