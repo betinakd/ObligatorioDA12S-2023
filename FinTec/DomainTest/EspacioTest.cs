@@ -196,10 +196,11 @@ namespace DomainTest
 			var espacio = new Espacio();
 			var usuario = new Usuario();
 			espacio.Admin = usuario;
-			List<ObjetivosDeGastos> objetivos = espacio.Objetivos;
-			Assert.IsInstanceOfType(objetivos, typeof(List<ObjetivosDeGastos>));
+			List<Objetivo> objetivos = espacio.Objetivos;
+			Assert.IsInstanceOfType(objetivos, typeof(List<Objetivo>));
 			Assert.IsNotNull(objetivos);
 			Assert.AreEqual(objetivos.Count, 0);
-		}	
+		}
+
 	}
 }

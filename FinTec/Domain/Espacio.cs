@@ -4,11 +4,11 @@
 	{
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
-		private List <Categoria> _categorias = new List<Categoria>();
+		private List<Categoria> _categorias = new List<Categoria>();
 		private List<Usuario> _usuariosInvitados = new List<Usuario>();
 		private List<Transaccion> _transacciones = new List<Transaccion>();
-		private List<ObjetivosDeGastos> _objetivos = new List<ObjetivosDeGastos>();
-		public List<ObjetivosDeGastos> Objetivos
+		private List<Objetivo> _objetivos = new List<Objetivo>();
+		public List<Objetivo> Objetivos
 		{
 			get
 			{
@@ -84,7 +84,7 @@
 
 		public void AgregarCuenta(Cuenta cuenta)
 		{
-			_cuentas.Add(cuenta);	
+			_cuentas.Add(cuenta);
 		}
 		public void AgregarCategoria(Categoria categoria)
 		{
@@ -94,5 +94,6 @@
 		{
 			_transacciones.Add(transaccion);
 		}
+
 	}
 }

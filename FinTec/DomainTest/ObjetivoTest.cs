@@ -8,19 +8,19 @@ using Domain;
 namespace DomainTest
 {
     [TestClass]
-    public class ObjetivosDeGastosTest
+    public class ObjetivoTest
     {
         [TestMethod]
         public void Nuevo_Objetivo()
         {
-            var objetivo = new ObjetivosDeGastos();
+            var objetivo = new Objetivo();
             Assert.IsNotNull(objetivo);
         }
 
         [TestMethod]
         public void Tiene_Titulo()
         {
-            var objetivo = new ObjetivosDeGastos();
+            var objetivo = new Objetivo();
             objetivo.Titulo = "Objetivo 1";
             Assert.AreEqual("Objetivo 1", objetivo.Titulo);
         }
@@ -29,14 +29,14 @@ namespace DomainTest
         [TestMethod]
         public void Tiene_Titulo_Vacio()
         {
-            var objetivo = new ObjetivosDeGastos();
+            var objetivo = new Objetivo();
             objetivo.Titulo = "";
         }
 
         [TestMethod]
         public void Monto_Maximo()
         {
-            var objetivo = new ObjetivosDeGastos();
+            var objetivo = new Objetivo();
             objetivo.MontoMaximo = 1000;
             Assert.AreEqual(1000, objetivo.MontoMaximo);
         }
@@ -44,7 +44,7 @@ namespace DomainTest
         [TestMethod]
         public void  Aplicar_Ojetivo_Categoria()
         {
-            var objetivo = new ObjetivosDeGastos();
+            var objetivo = new Objetivo();
             var categoria = new Categoria();
             var categorias = new List<Categoria>();
             categoria.EstadoActivo=true;

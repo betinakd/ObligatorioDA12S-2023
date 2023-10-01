@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class ObjetivosDeGastos
+    public class Objetivo
     {
         private string _titulo;
         public string Titulo 
