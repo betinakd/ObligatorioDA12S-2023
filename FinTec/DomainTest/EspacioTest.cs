@@ -187,7 +187,7 @@ namespace DomainTest
 			espacio.Admin = usuario;
 			espacio.AgregarTransaccion(transaccion);
 			Assert.AreEqual(espacio.Transacciones.Count, 1);
-			Assert.AreEqual(espacio.Transacciones, transaccion);
+			Assert.AreEqual(espacio.Transacciones[0], transaccion);
 		}
 	}
 }
