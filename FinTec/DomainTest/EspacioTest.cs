@@ -201,6 +201,16 @@ namespace DomainTest
 			Assert.IsNotNull(objetivos);
 			Assert.AreEqual(objetivos.Count, 0);
 		}
-
+		[TestMethod]
+		public void Espacio_Agregar_Objetivo()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			var objetivo = new Objetivo();
+			espacio.Admin = usuario;
+			espacio.AgregarObjetivo(objetivo);
+			Assert.AreEqual(espacio.Objetivos.Count, 1);
+			Assert.AreEqual(espacio.Objetivos[0], objetivo);
+		}
 	}
 }
