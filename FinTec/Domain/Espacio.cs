@@ -33,5 +33,12 @@
 		public Espacio()
 		{
 		}
+
+		public void cambiarAdmin(Usuario nuevoAdmin)
+		{
+			UsuariosInvitados.Add(Admin);
+			Admin = nuevoAdmin;
+			UsuariosInvitados.Remove(nuevoAdmin);
+		}
 	}
 }
