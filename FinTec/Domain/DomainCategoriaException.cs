@@ -1,8 +1,8 @@
 ﻿namespace Domain
 {
-	public class DomainCategoriaException : Exception
+	public class DomainEspacioException : Exception
 	{
-		public DomainCategoriaException(string message) : base(message)
+		public DomainEspacioException(string message) : base(message)
 		{
 		}
 	}
