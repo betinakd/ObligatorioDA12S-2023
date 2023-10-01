@@ -23,5 +23,13 @@ namespace DomainTest
             var tipoDeCambio = new TiposDeCambio();
             Assert.IsNotNull(tipoDeCambio.FechaDeCambio);
         }
+
+        [TestMethod]
+        public void Tipo_Dolar()
+        {
+            var tipoDeCambio = new TiposDeCambio();
+            tipoDeCambio.Moneda = TipoCambiario.Dolar;
+            Assert.AreEqual(TipoCambiario.Dolar, tipoDeCambio.Moneda);
+        }
     }
 }
