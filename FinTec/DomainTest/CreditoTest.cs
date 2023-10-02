@@ -178,5 +178,29 @@ namespace DomainTest
 			Assert.IsTrue(credito1.Equals(credito2));
 		}
 
+		public void Credito_Equals_Diferente_BancoEmisor()
+		{
+
+			var credito1 = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			var credito2 = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBancoEmisor",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			Assert.IsFalse(credito1.Equals(credito2));
+		}
+
 	}
 }
