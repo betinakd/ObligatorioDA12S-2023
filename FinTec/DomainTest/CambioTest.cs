@@ -39,5 +39,20 @@ namespace DomainTest
             tipoDeCambio.Pesos = 200;
             Assert.AreEqual(200, tipoDeCambio.Pesos);
         }
+
+        [TestMethod]
+        public void Equals_Moneda_Null_Object_False()
+        {
+			var tipoDeCambio = new Cambio() 
+            {
+                Moneda = TipoCambiario.Dolar,
+                Pesos = 50,
+			};
+
+			object objeto = new();
+            Assert.IsFalse(tipoDeCambio.Equals(objeto));
+			Assert.IsFalse(tipoDeCambio.Equals(null));
+            Assert.IsTrue(tipoDeCambio.Equals(tipoDeCambio));
+		}
     }
 }
