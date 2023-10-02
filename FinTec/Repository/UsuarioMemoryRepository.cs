@@ -7,7 +7,7 @@ using Domain;
 
 namespace Repository
 {
-    public class UsuarioMemoryRepository
+    public class UsuarioMemoryRepository : IRepository<Usuario>
     {
         private readonly List<Usuario> _usuarios = new List<Usuario>();
         public Usuario Add(Usuario oneElement)
