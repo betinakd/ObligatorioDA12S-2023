@@ -241,5 +241,15 @@ namespace DomainTest
 			espacio.AgregarCuenta(credito1);
 			espacio.AgregarCuenta(credito2);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Se_Agrega_Admin_Como_Invitado()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			espacio.Admin = usuario;
+			espacio.InvitarUsuario(usuario);
+		}
 	}
 }
