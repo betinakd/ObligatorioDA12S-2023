@@ -36,5 +36,15 @@ namespace Repository
             }
             return usuario;
         }
+
+        public void Delete(string id)
+        {
+            var usuario = Find(u => u.Correo == id);
+            if (usuario != null)
+            {
+                _usuarios.Remove(usuario);
+            }
+        }
+
     }
 }
