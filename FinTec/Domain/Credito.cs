@@ -74,6 +74,13 @@
 			string baseString = base.ToString();
 			return $"{baseString}{CreditoDisponible}\n{NumeroTarjeta}\n{BancoEmisor}\n{FechaCierre}\n";
 		}
+		public override bool Equals(object? obj)
+		{
+			if (obj == null || GetType() != obj.GetType()) { 
+				return false;
+			}
+			return true;	
+		}
 
 	}
 }
