@@ -256,5 +256,27 @@ namespace DomainTest
 			espacio.AgregarCuenta(ahorro1);
 			espacio.AgregarCuenta(ahorro2);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Agregar_Cuenta_Credito_Repetida()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			Credito credito1 = new Credito()
+			{
+				BancoEmisor = "Banco1",
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			Credito credito2 = new Credito()
+			{
+				BancoEmisor = "Banco1",
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			espacio.AgregarCuenta(credito1);
+			espacio.AgregarCuenta(credito2);
+		}
 	}
 }
