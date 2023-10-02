@@ -18,11 +18,12 @@ namespace Domain
 
         public override bool Equals(object obj)
         {
-			if (obj == null || GetType() != obj.GetType() )
+			if (obj == null || GetType() != obj.GetType())
             {
                 return false;
 			}
-			return true;
+            Cambio cambio = (Cambio) obj;  
+			return FechaDeCambio == cambio.FechaDeCambio;
 		}
     }
 }
