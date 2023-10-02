@@ -48,7 +48,8 @@
 			{
 				return false;
 			}
-			return true;
+			Ahorro ahorro = (Ahorro) obj;
+			return Nombre == ahorro.Nombre;
 		}
 	}
 }
