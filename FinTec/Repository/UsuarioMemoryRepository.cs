@@ -46,5 +46,10 @@ namespace Repository
             }
         }
 
+        public IList<Usuario> FindAll()
+        {
+            return _usuarios;
+        }
+
     }
 }
