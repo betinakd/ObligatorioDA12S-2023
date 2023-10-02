@@ -133,5 +133,25 @@ namespace DomainTest
 			Assert.AreEqual(resultadoEsperado, resultado);
 		}
 
+		[TestMethod]
+		public void Credito_Equals_Null()
+		{
+
+			var credito = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			Object objeto = null;
+			var objeto2 = new Object();
+			
+			Assert.IsFalse(credito.Equals(objeto));
+			Assert.IsFalse(credito.Equals(objeto2));
+		}
+
 	}
 }
