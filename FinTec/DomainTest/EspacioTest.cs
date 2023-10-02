@@ -1,4 +1,6 @@
 ﻿using Domain;
+using System.ComponentModel.DataAnnotations;
+
 namespace DomainTest
 {
 	[TestClass]
@@ -247,7 +249,11 @@ namespace DomainTest
 		public void Excepcion_Se_Agrega_Admin_Como_Invitado()
 		{
 			var espacio = new Espacio();
-			var usuario = new Usuario();
+			var usuario = new Usuario()
+			{
+				Correo = "mail@ejemplo.com",
+				Contrasena = "123456789T",
+			};
 			espacio.Admin = usuario;
 			espacio.InvitarUsuario(usuario);
 		}
