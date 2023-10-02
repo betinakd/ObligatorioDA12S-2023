@@ -41,6 +41,15 @@
 		{
 			return $"{base.ToString()}/n{Nombre}/n {FechaCreacion}/n {Monto}";
 		}
+
+		public override bool Equals(object? obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
+			return true;
+		}
 	}
 }
 
