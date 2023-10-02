@@ -8,10 +8,11 @@ namespace Domain
 {
     public class Cambio
     {
-        private readonly DateTime _fechaDeCambio = DateTime.Now.Date;
+        private DateTime _fechaDeCambio = DateTime.Now.Date;
         public DateTime FechaDeCambio
         {
             get { return _fechaDeCambio; }
+            set { _fechaDeCambio = value; }
         }
         public TipoCambiario Moneda { get; set; }
         public double Pesos { get; set; }
