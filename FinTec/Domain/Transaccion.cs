@@ -18,7 +18,7 @@ namespace Domain
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new ArgumentException("El titulo no puede ser vacio");
+                    throw new DomainTransaccionException("El titulo no puede ser vacio");
                 _titulo = value;
             }
         }
@@ -37,7 +37,7 @@ namespace Domain
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("El monto debe ser mayor a cero");
+                    throw new DomainTransaccionException("El monto debe ser mayor a cero");
                 _monto = value;
             }
         }
@@ -53,7 +53,7 @@ namespace Domain
             set
             {
                 if (value.EstadoActivo == false)
-                    throw new ArgumentException("La categoria tiene que estar activa");
+                    throw new DomainTransaccionException("La categoria tiene que estar activa");
                 _categoria = value;
             }
         }

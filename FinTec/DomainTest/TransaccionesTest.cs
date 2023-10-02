@@ -27,7 +27,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DomainTransaccionException))]
         public void Titulo_Transaccion_Vacio()
         {
             var transaccion = new Transaccion();
@@ -52,7 +52,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DomainTransaccionException))]
         public void Monto_Mayor_Cero() 
         {
             var transaccion = new Transaccion();
@@ -91,7 +91,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DomainTransaccionException))]
         public void Categoria_Inactiva_Transaccion()
         {
             var transaccion = new Transaccion();
