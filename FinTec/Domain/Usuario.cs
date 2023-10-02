@@ -58,7 +58,16 @@ namespace Domain
             return contrasena.Length > 30;
         }
 
-        
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            };
+
+            Usuario user = (Usuario)obj;
+            return Correo == user.Correo;
+        }
     }
 
 
