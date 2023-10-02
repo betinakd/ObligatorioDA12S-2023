@@ -77,7 +77,7 @@
 		public void InvitarUsuario(Usuario usuario)
 		{
 			if (UsuariosInvitados.Contains(usuario) || usuario.Equals(Admin))
-				throw new DomainEspacioException("El usuario ya esta invitado");
+				throw new DomainEspacioException("El usuario ya se encuentra presente en el espacio.");
 			UsuariosInvitados.Add(usuario);
 		}
 
