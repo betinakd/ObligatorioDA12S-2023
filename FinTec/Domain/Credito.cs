@@ -79,7 +79,8 @@
 			if (obj == null || GetType() != obj.GetType()) { 
 				return false;
 			}
-			return true;	
+			Credito credito = (Credito)obj;
+			return BancoEmisor == credito.BancoEmisor;	
 		}
 
 	}
