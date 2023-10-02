@@ -298,5 +298,32 @@ namespace DomainTest
 			Espacio espacio = new Espacio();
 			espacio.AgregarTransaccion(transaccion);
 		}
+
+		[TestMethod]
+		public void Excepcion_Se_Agrega_Transaccion_Dolares_Con_Cambio_Fecha()
+		{
+			Transaccion transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.Dolar,
+				},
+			};
+			Espacio espacio = new Espacio();
+			Cambio cambio = new Cambio();
+			espacio.AgregarCambio(cambio);
+			espacio.AgregarTransaccion(transaccion);
+			Assert.AreEqual(espacio.Transacciones.Count, 1);
+		}
 	}
 }
