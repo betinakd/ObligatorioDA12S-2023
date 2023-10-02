@@ -82,14 +82,14 @@ namespace DomainTest
 			// Tienen la fecha de hoy por defecto
 			var tipoDeCambio1 = new Cambio()
 			{
-                FechaCambio = DateTime.Now.Date,
+                FechaDeCambio = DateTime.Now.Date,
 				Moneda = TipoCambiario.Dolar,
 				Pesos = 50,
 			};
 
 			var tipoDeCambio2 = new Cambio()
 			{
-                FechaCambio = DateTime.Now.Date.AddDays(-2),
+                FechaDeCambio = DateTime.Now.Date.AddDays(-2),
 				Moneda = TipoCambiario.Dolar,
 				Pesos = 51,
 			};
