@@ -75,5 +75,21 @@ namespace DomainTest
             Assert.IsFalse(unUsuario.Equals(objeto2));
             Assert.IsTrue(unUsuario.Equals(unUsuario));
         }
+
+        [TestMethod]
+        public void Usuario_Equals_Diferentes()
+        {
+            Usuario user1 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "usfhud@icsdc.comfwef",
+            };
+            Usuario user2 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "12345@icsdc.comsds",
+            };
+            Assert.IsFalse(!user1.Equals(user2));
+        }
     }
 }

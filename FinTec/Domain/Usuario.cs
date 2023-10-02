@@ -57,6 +57,8 @@ namespace Domain
         {
             return contrasena.Length > 30;
         }
+
+        
     }
 
 
