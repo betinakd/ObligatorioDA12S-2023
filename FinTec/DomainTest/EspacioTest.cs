@@ -148,7 +148,23 @@ namespace DomainTest
 		{
 			var espacio = new Espacio();
 			var usuario = new Usuario();
-			var transaccion = new Transaccion();
+			var transaccion = new Transaccion()
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Transaccion",
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.PesosUruguayos,
+				},
+			};
 			espacio.Admin = usuario;
 			espacio.AgregarTransaccion(transaccion);
 			Assert.AreEqual(espacio.Transacciones.Count, 1);
@@ -269,6 +285,7 @@ namespace DomainTest
 				Monto = 100,
 				CategoriaTransaccion = new Categoria()
 				{
+					EstadoActivo = true,
 					Nombre = "Categoria",
 					Tipo = TipoCategoria.Costo,
 				},
