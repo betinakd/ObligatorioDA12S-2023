@@ -6,7 +6,7 @@
 
         T? Update (T updateEntity);
 
-        void Delete (int id);
+        void Delete (string id);
 
         T? Find(Func<T,bool> filter);
 
