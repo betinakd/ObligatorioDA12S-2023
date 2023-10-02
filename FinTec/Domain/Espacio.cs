@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using System.Linq;
+
+namespace Domain
 {
 	public class Espacio
 	{
@@ -93,6 +95,8 @@
 		}
 		public void AgregarTransaccion(Transaccion transaccion)
 		{
+			if (!_cambios.Contains(new Cambio()))
+				throw new DomainEspacioException("No hay cotización cambiaria de dolar para la fecha de hoy");
 			_transacciones.Add(transaccion);
 		}
 
