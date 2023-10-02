@@ -54,5 +54,26 @@ namespace DomainTest
 			Assert.IsFalse(tipoDeCambio.Equals(null));
             Assert.IsTrue(tipoDeCambio.Equals(tipoDeCambio));
 		}
-    }
+
+		[TestMethod]
+		public void Equals_Cambio_MismaFecha_True()
+		{
+            // Tienen la fecha de hoy por defecto
+			var tipoDeCambio1 = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 50,
+			};
+
+			var tipoDeCambio2 = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 51,
+			};
+
+            bool resultado = tipoDeCambio1.Equals(tipoDeCambio2);
+
+			Assert.IsTrue(resultado);
+		}
+	}
 }
