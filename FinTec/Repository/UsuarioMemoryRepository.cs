@@ -25,5 +25,16 @@ namespace Repository
         {
             return _usuarios.FirstOrDefault(filter);
         }
+
+        public Usuario? Update(Usuario updateEntity)
+        {
+            var usuario = Find(u => u.Correo == updateEntity.Correo);
+            if (usuario != null)
+            {
+                usuario.Contrasena = updateEntity.Contrasena;
+                usuario.Correo = updateEntity.Correo;
+            }
+            return usuario;
+        }
     }
 }
