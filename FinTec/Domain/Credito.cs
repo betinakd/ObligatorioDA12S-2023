@@ -80,8 +80,8 @@
 				return false;
 			}
 			Credito credito = (Credito)obj;
-			return BancoEmisor == credito.BancoEmisor;	
+			return BancoEmisor == credito.BancoEmisor && NumeroTarjeta == credito.NumeroTarjeta;	
 		}
-
+		
 	}
 }
