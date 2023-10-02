@@ -60,8 +60,17 @@ namespace DomainTest
 			Cuenta cuenta = new Cuenta();
 			cuenta.Moneda = TipoCambiario.PesosUruguayos;
 			string fecha = DateTime.Now.ToString();
-			Assert.AreEqual(cuenta.ToString(), "Pesos Uruguayos/n"+fecha+"/n");
-		}	
+			Assert.AreEqual(cuenta.ToString(), "Pesos Uruguayos\n" + fecha+ "\n");
+		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_ToString_Dolar()
+		{
+			Cuenta cuenta = new Cuenta();
+			cuenta.Moneda = TipoCambiario.Dolar;
+			string fecha = DateTime.Now.ToString();
+			Assert.AreEqual(cuenta.ToString(), "Dolar\n" + fecha + "\n");
+		}
 
 	}
 }

@@ -39,7 +39,7 @@
 			{
 				moneda = "Dolar";
 			}
-			return moneda + "/n" + fecha + "/n";
+			return moneda + "\n" + fecha + "\n";
 		}
 	}
 }
