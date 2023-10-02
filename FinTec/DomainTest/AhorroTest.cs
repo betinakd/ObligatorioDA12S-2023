@@ -58,5 +58,23 @@ namespace DomainTest
 			Cuenta cuenta = cuentaAhorro;
 			Assert.AreEqual(cuenta.ToString() , cuentaAhorro.ToString());
 		}
+
+		[TestMethod]
+		public void Ahorro_Equals_Null()
+		{
+			var credito = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01,
+			};
+
+			Object objeto = null;
+			var objeto2 = new Object();
+
+			Assert.IsFalse(credito.Equals(objeto));
+			Assert.IsFalse(credito.Equals(objeto2));
+			Assert.IsTrue(credito.Equals(credito));
+		}
 	}
 }
