@@ -76,5 +76,45 @@ namespace DomainTest
 			Assert.IsFalse(credito.Equals(objeto2));
 			Assert.IsTrue(credito.Equals(credito));
 		}
+
+		[TestMethod]
+		public void Ahorro_Equals_True_Igual_Nombre()
+		{
+			var credito = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01,
+			};
+
+			var credito2 = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01,
+			};
+
+			Assert.IsTrue(credito.Equals(credito2));
+		}
+
+		[TestMethod]
+		public void Ahorro_Equals_False_Diferente_Nombre()
+		{
+			var credito = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01,
+			};
+
+			var credito2 = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba2",
+				Monto = 100.01,
+			};
+
+			Assert.IsFalse(credito.Equals(credito2));
+		}
 	}
 }
