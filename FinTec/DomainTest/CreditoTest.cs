@@ -154,6 +154,7 @@ namespace DomainTest
 			Assert.IsTrue(credito.Equals(credito));
 		}
 
+		[TestMethod]
 		public void Credito_Equals_Igual_BancoEmisor()
 		{
 
@@ -178,6 +179,7 @@ namespace DomainTest
 			Assert.IsTrue(credito1.Equals(credito2));
 		}
 
+		[TestMethod]
 		public void Credito_Equals_Diferente_BancoEmisor()
 		{
 
@@ -202,5 +204,53 @@ namespace DomainTest
 			Assert.IsFalse(credito1.Equals(credito2));
 		}
 
+		[TestMethod]
+		public void Credito_Equals_Diferente_NumTarjeta()
+		{
+			var credito1 = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1236",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			var credito2 = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			Assert.IsFalse(credito1.Equals(credito2));
+		}
+
+		[TestMethod]
+		public void Credito_Equals_Igual_NumTarjeta()
+		{
+
+			var credito1 = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			var credito2 = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			Assert.IsTrue(credito1.Equals(credito2));
+		}
 	}
 }
