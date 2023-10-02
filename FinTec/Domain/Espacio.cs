@@ -74,15 +74,6 @@
 		{
 		}
 
-		public void cambiarAdmin(Usuario nuevoAdmin)
-		{
-			if (!UsuariosInvitados.Contains(nuevoAdmin))
-				throw new DomainEspacioException("Solo puede cambiar a administrador a alguien presente en lista de usuarios del espacio");
-			UsuariosInvitados.Add(Admin);
-			Admin = nuevoAdmin;
-			UsuariosInvitados.Remove(nuevoAdmin);
-		}
-
 		public void InvitarUsuario(Usuario usuario)
 		{
 			if (UsuariosInvitados.Contains(usuario))
