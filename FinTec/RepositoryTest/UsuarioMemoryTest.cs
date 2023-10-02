@@ -1,4 +1,5 @@
 using Domain;
+using Repository;
 namespace RepositoryTest
 {
     [TestClass]
