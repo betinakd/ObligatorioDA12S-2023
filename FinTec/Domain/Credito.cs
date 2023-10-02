@@ -74,5 +74,6 @@
 			string baseString = base.ToString();
 			return $"{baseString}{CreditoDisponible}\n{NumeroTarjeta}\n{BancoEmisor}\n{FechaCierre}\n";
 		}
+
 	}
 }

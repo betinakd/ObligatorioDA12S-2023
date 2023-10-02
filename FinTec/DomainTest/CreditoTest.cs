@@ -119,13 +119,18 @@ namespace DomainTest
 		[TestMethod]
 		public void Credito_Tiene_ToString()
 		{
-			Credito cuentaCredito = new Credito();
-			cuentaCredito.BancoEmisor = "BancoEmisorPrueba";
-			cuentaCredito.NumeroTarjeta = "1234";
-			cuentaCredito.CreditoDisponible = 1000;
-			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
-			Cuenta cuenta = cuentaCredito;
-			Assert.AreEqual(cuenta.ToString(), cuentaCredito.ToString());
+			var credito = new Credito
+			{ 
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+			string fechaAhora = System.DateTime.Now.ToString();
+			string resultadoEsperado = "Pesos Uruguayos\n"+fechaAhora+"\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
+			string resultado = credito.ToString();
+			Assert.AreEqual(resultadoEsperado, resultado);
 		}
 
 	}
