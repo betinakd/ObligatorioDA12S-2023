@@ -89,7 +89,7 @@ namespace DomainTest
                 Contrasena = "1234567890",
                 Correo = "12345@icsdc.comsds",
             };
-            Assert.IsFalse(!user1.Equals(user2));
+            Assert.IsFalse(user1.Equals(user2));
         }
 
         [TestMethod]
