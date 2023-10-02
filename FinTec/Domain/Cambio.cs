@@ -8,7 +8,7 @@ namespace Domain
 {
     public class Cambio
     {
-        private readonly DateTime _fechaDeCambio = DateTime.Now;
+        private readonly DateTime _fechaDeCambio = DateTime.Now.Date;
         public DateTime FechaDeCambio
         {
             get { return _fechaDeCambio; }
