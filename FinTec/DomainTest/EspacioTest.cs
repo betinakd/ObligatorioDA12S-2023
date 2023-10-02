@@ -257,5 +257,29 @@ namespace DomainTest
 			espacio.Admin = usuario;
 			espacio.InvitarUsuario(usuario);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Se_Agrega_Transaccion_Dolares_Sin_Cambio_Fecha() 
+		{
+			Transaccion transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.Dolar,
+				},
+			};
+			Espacio espacio = new Espacio();
+			espacio.AgregarTransaccion(transaccion);
+		}
 	}
 }
