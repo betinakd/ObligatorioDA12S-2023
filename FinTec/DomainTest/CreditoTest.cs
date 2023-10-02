@@ -151,6 +151,7 @@ namespace DomainTest
 			
 			Assert.IsFalse(credito.Equals(objeto));
 			Assert.IsFalse(credito.Equals(objeto2));
+			Assert.IsTrue(credito.Equals(credito));
 		}
 
 	}
