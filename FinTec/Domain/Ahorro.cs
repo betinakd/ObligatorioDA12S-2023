@@ -37,6 +37,20 @@
 		public Ahorro()
 		{
 		}
+		public override string ToString()
+		{
+			return $"{base.ToString()}/n{Nombre}/n {FechaCreacion}/n {Monto}";
+		}
+
+		public override bool Equals(object? obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
+			Ahorro ahorro = (Ahorro) obj;
+			return Nombre == ahorro.Nombre;
+		}
 	}
 }
 

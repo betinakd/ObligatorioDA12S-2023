@@ -7,7 +7,7 @@
 	}
 	public class Cuenta
 	{
-		public TipoCambiario Moneda { get; set; } 
+		public TipoCambiario Moneda { get; set; }
 		private readonly DateTime _fechaCreacion = DateTime.Now;
 		public DateTime FechaCreacion
 		{
@@ -25,6 +25,21 @@
 		public virtual void EgresoMonetario(double monto)
 		{
 			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+		}
+
+		public override string ToString()
+		{
+			string fecha = DateTime.Now.ToString();
+			string moneda = "";
+			if (Moneda == TipoCambiario.PesosUruguayos)
+			{
+				moneda = "Pesos Uruguayos";
+			}
+			else
+			{
+				moneda = "Dolar";
+			}
+			return moneda + "\n" + fecha + "\n";
 		}
 	}
 }
