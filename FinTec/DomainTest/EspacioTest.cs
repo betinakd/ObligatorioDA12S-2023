@@ -90,7 +90,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Espacio_Invitar_Usuario() 
+		public void Espacio_Invitar_Usuario()
 		{
 			var espacio = new Espacio();
 			Usuario usuario = new Usuario();
@@ -119,7 +119,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Espacio_Inicializa_Lista_Cuentas_Vacia() 
+		public void Espacio_Inicializa_Lista_Cuentas_Vacia()
 		{
 			var espacio = new Espacio();
 			var usuario = new Usuario();
@@ -215,7 +215,7 @@ namespace DomainTest
 
 		[TestMethod]
 		public void Espacio_Inicializa_Lista_Cambio_Vacia()
-		{ 
+		{
 			var espacio = new Espacio();
 			var usuario = new Usuario();
 			espacio.Admin = usuario;
@@ -235,6 +235,26 @@ namespace DomainTest
 			espacio.AgregarCambio(cambio);
 			Assert.AreEqual(espacio.Cambios.Count, 1);
 			Assert.AreEqual(espacio.Cambios[0], cambio);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Agregar_Cuenta_Ahorro_Repetida()
+		{
+			var espacio = new Espacio();
+			var usuario = new Usuario();
+			Ahorro ahorro1 = new Ahorro()
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "Banco1",
+			};
+			Ahorro ahorro2 = new Ahorro()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Nombre = "Banco1",
+			};
+			espacio.AgregarCuenta(ahorro1);
+			espacio.AgregarCuenta(ahorro2);
 		}
 	}
 }
