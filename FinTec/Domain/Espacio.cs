@@ -92,6 +92,8 @@
 
 		public void AgregarCuenta(Cuenta cuenta)
 		{
+			if(Cuentas.Contains(cuenta))
+				throw new DomainEspacioException("La cuenta ya esta agregada");
 			_cuentas.Add(cuenta);
 		}
 		public void AgregarCategoria(Categoria categoria)
