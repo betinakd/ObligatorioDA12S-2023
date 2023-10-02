@@ -95,7 +95,8 @@ namespace Domain
 		}
 		public void AgregarTransaccion(Transaccion transaccion)
 		{
-			if (!_cambios.Contains(new Cambio()))
+			Cambio cambioHoy = new Cambio();
+			if (!_cambios.Contains(cambioHoy) && transaccion.Moneda == TipoCambiario.Dolar)
 				throw new DomainEspacioException("No hay cotización cambiaria de dolar para la fecha de hoy");
 			_transacciones.Add(transaccion);
 		}
