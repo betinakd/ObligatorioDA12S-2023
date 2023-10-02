@@ -91,5 +91,21 @@ namespace DomainTest
             };
             Assert.IsFalse(!user1.Equals(user2));
         }
+
+        [TestMethod]
+        public void Usuario_Equals_Iguales()
+        {
+            Usuario usuario1 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "mateo@gmail.com",
+            };
+            Usuario usuario2 = new Usuario()
+            {
+                Contrasena = "234567891",
+                Correo = "mateo@gmail.com",
+            };
+            Assert.IsTrue(usuario1.Equals(usuario2));
+        }
     }
 }
