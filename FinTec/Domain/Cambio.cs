@@ -23,7 +23,7 @@ namespace Domain
                 return false;
 			}
             Cambio cambio = (Cambio) obj;  
-			return FechaDeCambio == cambio.FechaDeCambio;
+			return FechaDeCambio.Date == cambio.FechaDeCambio.Date;
 		}
     }
 }
