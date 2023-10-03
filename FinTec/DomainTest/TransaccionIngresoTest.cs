@@ -67,5 +67,15 @@ namespace DomainTest
             transaccion.Moneda = TipoCambiario.Dolar;
             Assert.AreEqual(TipoCambiario.Dolar, transaccion.Moneda);
         }
+
+        [TestMethod]
+        public void Cuenta_TransaccionI()
+        {
+            var transaccion = new TransaccionIngreso();
+            Cuenta cuenta = new Cuenta();
+            cuenta.Moneda = TipoCambiario.Dolar;
+            transaccion.CuentaMonetaria = cuenta;
+            Assert.AreEqual(cuenta, transaccion.CuentaMonetaria);
+        }
     }
 }
