@@ -42,7 +42,22 @@ namespace Domain
             }
         }
         public virtual TipoCambiario Moneda { get; set; }
-        public virtual Cuenta CuentaMonetaria { get; set; }
+
+        private Cuenta _cuenta;
+        public virtual Cuenta CuentaMonetaria
+        {
+            get
+            {
+                return _cuenta;
+            }
+            set
+            {
+                if (value.Moneda != Moneda)
+                    throw new DomainTransaccionException("La cuenta tiene que ser del tipo de la moneda");
+                _cuenta = value;
+            }
+        }
+
         private Categoria _categoria;
         public virtual Categoria CategoriaTransaccion
         {
