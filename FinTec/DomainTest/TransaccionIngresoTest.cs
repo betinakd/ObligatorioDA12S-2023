@@ -16,5 +16,14 @@ namespace DomainTest
             var transaccion = new TransaccionIngreso();
             Assert.IsNotNull(transaccion);
         }
+
+        [TestMethod]
+        public void Titulo_TransaccionIngreso()
+        {
+            var transaccion = new TransaccionIngreso();
+            string titulo = "Transaccion1";
+            transaccion.Titulo = titulo;
+            Assert.AreEqual(titulo, transaccion.Titulo);
+        }
     }
 }
