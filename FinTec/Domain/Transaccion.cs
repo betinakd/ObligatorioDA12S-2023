@@ -9,7 +9,7 @@ namespace Domain
     public class Transaccion
     {
         private string _titulo;
-        public virtual string Titulo
+        public string Titulo
         {
             get 
             { 
@@ -23,12 +23,12 @@ namespace Domain
             }
         }
         private readonly DateTime _fechaCreacion = DateTime.Now;
-        public virtual DateTime FechaTransaccion
+        public DateTime FechaTransaccion
         {
             get { return _fechaCreacion; }
         }
         private double _monto;
-        public virtual double Monto
+        public double Monto
         {
             get
             {
@@ -41,10 +41,10 @@ namespace Domain
                 _monto = value;
             }
         }
-        public virtual TipoCambiario Moneda { get; set; }
+        public TipoCambiario Moneda { get; set; }
 
         private Cuenta _cuenta;
-        public virtual Cuenta CuentaMonetaria
+        public Cuenta CuentaMonetaria
         {
             get
             {
