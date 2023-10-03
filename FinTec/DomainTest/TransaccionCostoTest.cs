@@ -17,7 +17,7 @@ namespace DomainTest
             var transaccion = new TransaccionCosto();
             Categoria categoria = new Categoria();
             categoria.Nombre = "Categoria1";
-            categoria.Tipo = TipoCategoria.Costo;
+            categoria.Tipo = TipoCategoria.Ingreso;
             categoria.EstadoActivo = true;
             transaccion.CategoriaTransaccion = categoria;
         }
