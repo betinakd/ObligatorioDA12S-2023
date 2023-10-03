@@ -21,5 +21,30 @@ namespace DomainTest
             categoria.EstadoActivo = true;
             transaccion.CategoriaTransaccion = categoria;
         }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainTransaccionException))]
+        public void Categoria_Inactiva_TransaccionC()
+        {
+            var transaccion = new TransaccionIngreso();
+            Categoria categoria = new Categoria();
+            categoria.Nombre = "Categoria1";
+            categoria.Tipo = TipoCategoria.Ingreso;
+            categoria.EstadoActivo = false;
+            transaccion.CategoriaTransaccion = categoria;
+        }
+
+        [TestMethod]
+        public void Categoria_Transaccion()
+        {
+            var transaccion = new TransaccionIngreso();
+            Categoria categoria = new Categoria();
+            categoria.Nombre = "Categoria1";
+            categoria.Tipo = TipoCategoria.Ingreso;
+            categoria.EstadoActivo = true;
+            transaccion.CategoriaTransaccion = categoria;
+            Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
+        }
     }
 }
