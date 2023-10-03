@@ -43,5 +43,7 @@ namespace Domain
                 _monto = value;
             }
         }
+
+        public TipoCambiario Moneda { get; set; }
     }
 }
