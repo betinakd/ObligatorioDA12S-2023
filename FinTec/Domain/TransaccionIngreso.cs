@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class TransaccionIngreso
+    public class TransaccionIngreso : Transaccion
     {
         private string _titulo;
-        public string Titulo
+        public override string Titulo
         {
             get
             {
@@ -24,13 +24,13 @@ namespace Domain
         }
 
         private readonly DateTime _fechaCreacion = DateTime.Now;
-        public DateTime FechaTransaccion
+        public override DateTime FechaTransaccion
         {
             get { return _fechaCreacion; }
         }
 
         private double _monto;
-        public double Monto
+        public override double Monto
         {
             get
             {
@@ -44,12 +44,12 @@ namespace Domain
             }
         }
 
-        public TipoCambiario Moneda { get; set; }
+        public override TipoCambiario Moneda { get; set; }
 
-        public Cuenta CuentaMonetaria { get; set; }
+        public override Cuenta CuentaMonetaria { get; set; }
 
         private Categoria _categoria;
-        public Categoria CategoriaTransaccion
+        public override Categoria CategoriaTransaccion
         {
             get
             {
