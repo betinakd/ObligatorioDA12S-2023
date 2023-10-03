@@ -16,5 +16,10 @@ namespace BussinesLogic
         {
             _repository = repository;
         }
+
+        public Usuario AddUsuario(Usuario oneElement)
+        {
+            return _repository.Add(oneElement);
+        }
     }
 }
