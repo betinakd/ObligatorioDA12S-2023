@@ -41,5 +41,14 @@ namespace DomainTest
             var transaccion = new TransaccionIngreso();
             Assert.IsNotNull(transaccion.FechaTransaccion);
         }
+
+        [TestMethod]
+        public void Monto_TransaccionI()
+        {
+            var transaccion = new TransaccionIngreso();
+            double monto = 100;
+            transaccion.Monto = monto;
+            Assert.AreEqual(monto, transaccion.Monto);
+        }
     }
 }
