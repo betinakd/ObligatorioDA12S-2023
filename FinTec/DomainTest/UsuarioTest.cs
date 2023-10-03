@@ -61,5 +61,51 @@ namespace DomainTest
             bool resultado = unUsuario.Validar_Correo(correo);
             Assert.IsFalse(resultado);
         }
+
+        [TestMethod]
+        public void Usuario_Equals_Null()
+        {
+            Usuario unUsuario = new Usuario { 
+                Contrasena = "1234567890",
+                Correo = "usfhud@icsdc.comfwef",
+            };
+            Object objeto = null;
+            var objeto2 = new Object();
+            Assert.IsFalse(unUsuario.Equals(objeto));
+            Assert.IsFalse(unUsuario.Equals(objeto2));
+            Assert.IsTrue(unUsuario.Equals(unUsuario));
+        }
+
+        [TestMethod]
+        public void Usuario_Equals_Diferentes()
+        {
+            Usuario user1 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "usfhud@icsdc.comfwef",
+            };
+            Usuario user2 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "12345@icsdc.comsds",
+            };
+            Assert.IsFalse(user1.Equals(user2));
+        }
+
+        [TestMethod]
+        public void Usuario_Equals_Iguales()
+        {
+            Usuario usuario1 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "mateo@gmail.com",
+            };
+            Usuario usuario2 = new Usuario()
+            {
+                Contrasena = "234567891",
+                Correo = "mateo@gmail.com",
+            };
+            Assert.IsTrue(usuario1.Equals(usuario2));
+        }
     }
 }
