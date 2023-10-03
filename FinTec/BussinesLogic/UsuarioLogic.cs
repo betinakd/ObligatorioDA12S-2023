@@ -10,5 +10,11 @@ namespace BussinesLogic
 {
     public class UsuarioLogic
     {
+        private readonly IRepository<Usuario> _repository;
+
+        public UsuarioLogic(IRepository<Usuario> repository)
+        {
+            _repository = repository;
+        }
     }
 }
