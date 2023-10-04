@@ -35,5 +35,10 @@ namespace BussinesLogic
         {
             return _repository.FindAll();
         }
+
+        public void DeleteUsuario(string id)
+        {
+            _repository.Delete(id);
+        }
     }
 }
