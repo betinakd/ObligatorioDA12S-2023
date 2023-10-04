@@ -97,5 +97,26 @@ namespace BussinesLogicTest
             Assert.IsNotNull(usuarios);
             Assert.AreEqual(1, usuarios.Count);
         }
+
+        [TestMethod]
+        public void Actualizar_Usuario()
+        {
+            IRepository<Usuario> repository = new UsuarioMemoryRepository();
+            UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
+            Usuario usuario1 = new Usuario();
+            usuario1.Correo = "xx@yy.com";
+            usuario1.Contrasena = "123456780A";
+            Usuario usuario2 = new Usuario();
+            usuario2.Correo = "xxxx@yyyy.com";
+            usuario2.Contrasena = "123456789A";
+            usuarioLogic.AddUsuario(usuario1);
+            usuarioLogic.AddUsuario(usuario2);
+            usuario1.Contrasena = "123456789B";
+            usuarioLogic.UpdateUsuario(usuario1);
+            var usuarios = usuarioLogic.FindAllUsuario();
+            Assert.IsNotNull(usuarios);
+            Assert.AreEqual(2, usuarios.Count);
+            Assert.AreEqual("123456789B", usuarios[0].Contrasena);
+        }
     }
 }
