@@ -44,8 +44,20 @@ namespace BussinesLogicTest
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
             Usuario usuario1 = new Usuario();
-            usuario1.Correo = "xxxx@yyyy.co";
+            usuario1.Correo = "xxxx@yyyy.com";
             usuario1.Contrasena = "1234567890";
+            usuarioLogic.AddUsuario(usuario1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Correo_invalido_UL()
+        {
+            IRepository<Usuario> repository = new UsuarioMemoryRepository();
+            UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
+            Usuario usuario1 = new Usuario();
+            usuario1.Correo = "xxxx@yyyy.co";
+            usuario1.Contrasena = "123456789A";
             usuarioLogic.AddUsuario(usuario1);
         }
     }
