@@ -60,5 +60,23 @@ namespace BussinesLogicTest
             usuario1.Contrasena = "123456789A";
             usuarioLogic.AddUsuario(usuario1);
         }
+
+        [TestMethod]
+        public void Buscar_Todos_Usuarios()
+        {
+            IRepository<Usuario> repository = new UsuarioMemoryRepository();
+            UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
+            Usuario usuario1 = new Usuario();
+            usuario1.Correo = "xx@yy.com";
+            usuario1.Contrasena = "123456789A";
+            Usuario usuario2 = new Usuario();
+            usuario2.Correo = "xxxx@yyyy.com";
+            usuario2.Contrasena = "123456789A";
+            usuarioLogic.AddUsuario(usuario1);
+            usuarioLogic.AddUsuario(usuario2);
+            var usuarios = usuarioLogic.FindAll();
+            Assert.IsNotNull(usuarios);
+            Assert.AreEqual(2, usuarios.Count);
+        }
     }
 }
