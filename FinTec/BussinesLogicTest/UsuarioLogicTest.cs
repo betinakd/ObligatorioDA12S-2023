@@ -27,7 +27,7 @@ namespace BussinesLogicTest
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
             Usuario usuario = new Usuario();
             usuario.Correo = "xxxx@yyyy.com";
-            usuario.Contrasena = "1234";
+            usuario.Contrasena = "123456789A";
             usuarioLogic.AddUsuario(usuario);
             var usuarioAgregado = repository.Find(u=> u.Correo == usuario.Correo);
             bool resultado = usuario.Equals(usuarioAgregado);
@@ -35,6 +35,18 @@ namespace BussinesLogicTest
             Assert.AreEqual(usuario.Correo, usuarioAgregado.Correo);
             Assert.AreEqual(usuario.Contrasena, usuarioAgregado.Contrasena);
             Assert.IsTrue(resultado);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Contrasena_invalida_UL()
+        {
+            IRepository<Usuario> repository = new UsuarioMemoryRepository();
+            UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
+            Usuario usuario1 = new Usuario();
+            usuario1.Correo = "xxxx@yyyy.co";
+            usuario1.Contrasena = "1234567890";
+            usuarioLogic.AddUsuario(usuario1);
         }
     }
 }
