@@ -118,5 +118,19 @@ namespace BussinesLogicTest
             Assert.AreEqual(2, usuarios.Count);
             Assert.AreEqual("123456789B", usuarios[0].Contrasena);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Actualizar_Usuario_Correo_Invalido()
+        {
+            IRepository<Usuario> repository = new UsuarioMemoryRepository();
+            UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
+            Usuario usuario1 = new Usuario();
+            usuario1.Correo = "xxxx@yyyy.com";
+            usuario1.Contrasena = "123456780A";
+            usuarioLogic.AddUsuario(usuario1);
+            usuario1.Correo = "xxxx@yyyy.co";
+            usuarioLogic.UpdateUsuario(usuario1);
+        }
     }
 }
