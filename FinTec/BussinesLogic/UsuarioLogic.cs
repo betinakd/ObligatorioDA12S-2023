@@ -23,6 +23,11 @@ namespace BussinesLogic
             return _repository.Add(oneElement);
         }
 
+        public Usuario? UpdateUsuario(Usuario updateEntity)
+        {
+            return _repository.Update(updateEntity);
+        }
+
         private static void ValidarCorreoYContrasena(Usuario oneElement)
         {
             if (!oneElement.Validar_Contrasena(oneElement.Contrasena))
