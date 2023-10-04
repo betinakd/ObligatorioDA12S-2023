@@ -19,6 +19,12 @@ namespace BussinesLogic
 
         public Usuario AddUsuario(Usuario oneElement)
         {
+            ValidarCorreoYContrasena(oneElement);
+            return _repository.Add(oneElement);
+        }
+
+        private static void ValidarCorreoYContrasena(Usuario oneElement)
+        {
             if (!oneElement.Validar_Contrasena(oneElement.Contrasena))
             {
                 throw new Exception("La contraseña no es valida");
@@ -27,9 +33,7 @@ namespace BussinesLogic
             {
                 throw new Exception("El correo no es valido");
             }
-            return _repository.Add(oneElement);
         }
-
 
         public IList<Usuario> FindAllUsuario()
         {
