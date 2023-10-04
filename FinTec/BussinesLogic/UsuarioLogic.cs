@@ -19,6 +19,10 @@ namespace BussinesLogic
 
         public Usuario AddUsuario(Usuario oneElement)
         {
+            if (!oneElement.Validar_Contrasena(oneElement.Contrasena))
+            {
+                throw new Exception("La contraseña no es valida");
+            }
             return _repository.Add(oneElement);
         }
     }
