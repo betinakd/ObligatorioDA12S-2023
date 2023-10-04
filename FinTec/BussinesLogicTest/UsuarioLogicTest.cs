@@ -132,5 +132,19 @@ namespace BussinesLogicTest
             usuario1.Correo = "xxxx@yyyy.co";
             usuarioLogic.UpdateUsuario(usuario1);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void Actualizar_Usuario_Contrasena_Invalida()
+        {
+            IRepository<Usuario> repository = new UsuarioMemoryRepository();
+            UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
+            Usuario usuario1 = new Usuario();
+            usuario1.Correo = "xxxx@yyyy.com";
+            usuario1.Contrasena = "123456780A";
+            usuarioLogic.AddUsuario(usuario1);
+            usuario1.Contrasena = "1234567890";
+            usuarioLogic.UpdateUsuario(usuario1);
+        }
     }
 }
