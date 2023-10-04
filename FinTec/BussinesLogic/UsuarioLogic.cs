@@ -23,6 +23,10 @@ namespace BussinesLogic
             {
                 throw new Exception("La contraseña no es valida");
             }
+            if (!oneElement.Validar_Correo(oneElement.Correo))
+            {
+                throw new Exception("El correo no es valido");
+            }
             return _repository.Add(oneElement);
         }
     }
