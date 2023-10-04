@@ -45,7 +45,7 @@ namespace Domain
 
         private static bool SonTodasMinusculas(string contrasena)
         {
-            return contrasena.All(char.IsLower);
+            return contrasena.ToLower() == contrasena;
         }
 
         private static bool EsContrasenaMayorIgualADiez(string contrasena)

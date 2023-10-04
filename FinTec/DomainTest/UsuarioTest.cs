@@ -16,7 +16,7 @@ namespace DomainTest
         public void Contrasena_Minimo_Diez()
         {
             Usuario unUsuario = new Usuario();
-            unUsuario.Contrasena = "1234567890";
+            unUsuario.Contrasena = "1234567890A";
             string contrasena = unUsuario.Contrasena;
             bool resultado = unUsuario.Validar_Contrasena(contrasena);
             Assert.IsTrue(resultado);
