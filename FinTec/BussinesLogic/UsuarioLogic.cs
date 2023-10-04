@@ -25,6 +25,10 @@ namespace BussinesLogic
 
         public Usuario? UpdateUsuario(Usuario updateEntity)
         {
+            if (!updateEntity.Validar_Correo(updateEntity.Correo))
+            {
+                throw new Exception("El correo no es valido");
+            }
             return _repository.Update(updateEntity);
         }
 
