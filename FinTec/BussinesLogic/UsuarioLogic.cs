@@ -29,5 +29,11 @@ namespace BussinesLogic
             }
             return _repository.Add(oneElement);
         }
+
+
+        public IList<Usuario> FindAllUsuario()
+        {
+            return _repository.FindAll();
+        }
     }
 }

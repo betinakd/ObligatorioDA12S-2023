@@ -74,7 +74,7 @@ namespace BussinesLogicTest
             usuario2.Contrasena = "123456789A";
             usuarioLogic.AddUsuario(usuario1);
             usuarioLogic.AddUsuario(usuario2);
-            var usuarios = usuarioLogic.FindAll();
+            var usuarios = usuarioLogic.FindAllUsuario();
             Assert.IsNotNull(usuarios);
             Assert.AreEqual(2, usuarios.Count);
         }
