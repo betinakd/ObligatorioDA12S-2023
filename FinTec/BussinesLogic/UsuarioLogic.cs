@@ -29,6 +29,10 @@ namespace BussinesLogic
             {
                 throw new Exception("El correo no es valido");
             }
+            if (!updateEntity.Validar_Contrasena(updateEntity.Contrasena))
+            {
+                throw new Exception("La contraseña no es valida");
+            }
             return _repository.Update(updateEntity);
         }
 
