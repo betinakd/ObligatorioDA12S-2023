@@ -94,5 +94,20 @@ namespace RepositoryTest
             Assert.IsNotNull(espacioAgregado2);
             Assert.AreEqual(espacio1, espacioAgregado2);
         }
+
+        [TestMethod]
+        public void Buscar_Todos_Espacios()
+        {
+            var espacio1 = new Espacio();
+            espacio1.Admin = _admin;
+            var espacio2 = new Espacio();
+            espacio2.Admin = _admin;
+            var repository = new EspacioMemoryRepository();
+            var espacioAgregado1 = repository.Add(espacio1);
+            var espacioAgregado2 = repository.Add(espacio2);
+            var espacios = repository.FindAll();
+            Assert.IsNotNull(espacios);
+            Assert.AreEqual(2, espacios.Count);
+        }
     }
 }
