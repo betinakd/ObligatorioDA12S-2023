@@ -38,7 +38,7 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(DomainUsuarioException))]
         public void Contrasena_invalida_UL()
         {
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
@@ -50,8 +50,8 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void Correo_invalido_UL()
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void Correo_invalido_UL()
         {
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
@@ -120,8 +120,8 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void Actualizar_Usuario_Correo_Invalido()
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void Actualizar_Usuario_Correo_Invalido()
         {
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
@@ -134,16 +134,16 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(DomainUsuarioException))]
         public void Actualizar_Usuario_Contrasena_Invalida()
         {
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
             Usuario usuario1 = new Usuario();
             usuario1.Correo = "xxxx@yyyy.com";
-            usuario1.Contrasena = "123456780A";
+            usuario1.Contrasena = "123456780Ab";
             usuarioLogic.AddUsuario(usuario1);
-            usuario1.Contrasena = "1234567890";
+            usuario1.Contrasena = "1234";
             usuarioLogic.UpdateUsuario(usuario1);
         }
 

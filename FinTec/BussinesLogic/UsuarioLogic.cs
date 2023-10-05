@@ -24,18 +24,8 @@ namespace BussinesLogic
             return _repository.Update(updateEntity);
         }
 
-		public Usuario AddUsuario(Usuario oneElement)
-		{
-			var usuario = _repository.Find(u => u.Correo == oneElement.Correo);
-			if (usuario != null)
-			{
-				throw new Exception("El usuario ya existe");
-			}
-			_repository.Add(oneElement);
-			return oneElement;
-		}
 
-		private static void ValidarCorreoYContrasena(Usuario oneElement)
+        private void ValidarCorreoYContrasena(Usuario oneElement)
         {
             if (!oneElement.Validar_Contrasena(oneElement.Contrasena))
             {
