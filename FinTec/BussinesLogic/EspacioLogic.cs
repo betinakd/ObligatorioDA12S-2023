@@ -33,5 +33,10 @@ namespace BussinesLogic
         {
             _repository.Delete(oneElement.Admin.Correo);
         }
+
+        public IList<Espacio> FindAllEspacios()
+        {
+            return _repository.FindAll();
+        }
     }
 }
