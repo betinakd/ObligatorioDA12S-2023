@@ -25,5 +25,15 @@ namespace Repository
         {
             return _espacios;
         }
+
+        public Espacio? Update(Espacio updateEntity)
+        {
+            var espacio = Find(u => u.Admin == updateEntity.Admin);
+            if (espacio != null)
+            {               
+                espacio.Admin = updateEntity.Admin;
+            }
+            return espacio;
+        }
     }
 }
