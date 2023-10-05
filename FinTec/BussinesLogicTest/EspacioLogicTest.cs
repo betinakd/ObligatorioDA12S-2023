@@ -45,65 +45,31 @@ namespace BussinesLogicTest
 
         [TestMethod]
         public void Nuevo_EspacioLogic()
-        {
-            IRepository<Espacio> repository = new EspacioMemoryRepository();
-            EspacioLogic espacioLogic = new EspacioLogic(repository);
+        {           
             Assert.IsNotNull(espacioLogic);
         }
 
         [TestMethod]
         public void Agregar_Espacio()
         {
-            IRepository<Espacio> repository = new EspacioMemoryRepository();
-            EspacioLogic espacioLogic = new EspacioLogic(repository);
-            Espacio espacio = new Espacio();
-            espacio.Admin = new Usuario()
-            {
-                Correo = "xx@yy.com",
-                Contrasena = "123456789A",
-            };
-            espacioLogic.AddEspacio(espacio);
-            Assert.IsTrue(repository.FindAll().Contains(espacio));
+            espacioLogic.AddEspacio(espacio1);
+            Assert.IsTrue(repository.FindAll().Contains(espacio1));
         }
 
         [TestMethod]
         public void Eliminar_Espacio()
         {
-            IRepository<Espacio> repository = new EspacioMemoryRepository();
-            EspacioLogic espacioLogic = new EspacioLogic(repository);
-            Espacio espacio = new Espacio();
-            espacio.Admin = new Usuario()
-            {
-                Correo = "xx@yy.com",
-                Contrasena = "123456789A",
-            };
-            espacioLogic.AddEspacio(espacio);
-            espacioLogic.DeleteEspacio(espacio);
-            Assert.IsFalse(repository.FindAll().Contains(espacio));
+            espacioLogic.AddEspacio(espacio1);
+            espacioLogic.DeleteEspacio(espacio1);
+            Assert.IsFalse(repository.FindAll().Contains(espacio1));
         }
 
         [TestMethod]
         public void Buscar_Todos_Espacios()
         {
-            IRepository<Espacio> repository = new EspacioMemoryRepository();
-            EspacioLogic espacioLogic = new EspacioLogic(repository);
-            Espacio espacio = new Espacio();
-            espacio.Admin = new Usuario()
-            {
-                Correo = "xx@yy.com",
-                Contrasena = "123456789A",
-
-            };
-            Espacio espacio2 = new Espacio();
-            espacio2.Admin = new Usuario()
-            {
-                Correo = "xxxx@yyyy.com",
-                Contrasena = "123456789B",
-
-            };  
-            espacioLogic.AddEspacio(espacio);
+            espacioLogic.AddEspacio(espacio1);
             espacioLogic.AddEspacio(espacio2);
-            Assert.IsTrue(repository.FindAll().Contains(espacio));
+            Assert.IsTrue(repository.FindAll().Contains(espacio1));
             Assert.IsTrue(repository.FindAll().Contains(espacio2));
         }
     }
