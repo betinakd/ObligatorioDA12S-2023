@@ -46,6 +46,9 @@ namespace BussinesLogic
                 {
                     return usuario;
                 }
+                else { 
+                    throw new BussinesLogicUsuarioException("La contraseña no es valida, porfavor ingresela nuevamente.");
+                }
             }
             else
             {
