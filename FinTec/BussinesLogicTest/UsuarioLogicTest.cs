@@ -165,5 +165,47 @@ namespace BussinesLogicTest
             Assert.AreEqual(usuario1.Correo, usuario.Correo);
             Assert.AreEqual(usuario1.Contrasena, usuario.Contrasena);
         }
-    }
+
+		[TestMethod]
+		public void Agregar_Usuario_Valido()
+		{
+			var usuario1 = new Usuario
+			{
+				Correo = "Juan@xxxx.com",
+				Contrasena = "123456",
+			};
+			var usuario2 = new Usuario
+			{
+				Correo = "Juann@xxxx.com",
+				Contrasena = "123456",
+			};
+			var repository = new UsuarioMemoryRepository();
+			var usuarioAgregado1 = repository.Add(usuario1);
+			var usuarioAgregado2 = repository.Add(usuario2);
+			Assert.IsNotNull(usuarioAgregado1);
+			Assert.AreEqual(usuario1, usuarioAgregado1);
+			Assert.IsNotNull(usuarioAgregado2);
+			Assert.AreEqual(usuario2, usuarioAgregado2);
+		}
+
+		[ExpectedException(typeof(Exception))]
+		[TestMethod]
+		public void Agregar_Usuario_Invalido_Duplicado()
+		{
+			var usuario1 = new Usuario
+			{
+				Correo = "Juan@xxxx.com",
+				Contrasena = "123456",
+			};
+			var usuario2 = new Usuario
+			{
+				Contrasena = "123456",
+				Correo = "Juan@xxxx.com"
+			};
+			var repository = new UsuarioMemoryRepository();
+			var usuarioAgregado1 = repository.Add(usuario1);
+			var usuarioAgregado2 = repository.Add(usuario2);
+		}
+
+	}
 }
