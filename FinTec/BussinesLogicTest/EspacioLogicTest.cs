@@ -57,6 +57,14 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BusinessLogicEspacioException))]
+        public void Agregar_Espacio_Duplicado()
+        {
+            espacioLogic.AddEspacio(espacio1);
+            espacioLogic.AddEspacio(espacio1);
+        }
+
+        [TestMethod]
         public void Eliminar_Espacio()
         {
             espacioLogic.AddEspacio(espacio1);
