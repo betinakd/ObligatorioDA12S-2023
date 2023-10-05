@@ -134,7 +134,7 @@ namespace RepositoryTest
             espacio1.Admin = _admin;
             var repository = new EspacioMemoryRepository();
             var espacioAgregado1 = repository.Add(espacio1);
-            repository.Delete(_admin);
+            repository.Delete(espacio1.Admin.Correo);
             var espacioAgregado2 = repository.Find(e => e.Admin == _admin);
             Assert.IsNull(espacioAgregado2);
         }

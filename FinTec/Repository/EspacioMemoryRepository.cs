@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class EspacioMemoryRepository
+    public class EspacioMemoryRepository 
     {
         private readonly List<Espacio> _espacios = new List<Espacio>();
         public Espacio Add(Espacio oneElement)
@@ -36,9 +36,9 @@ namespace Repository
             return espacio;
         }
 
-        public void Delete(Usuario id)
+        public void Delete(string id)
         {
-            var espacio = Find(u => u.Admin == id);
+            var espacio = Find(u => u.Admin.Correo == id);
             if (espacio != null)
             {
                 _espacios.Remove(espacio);
