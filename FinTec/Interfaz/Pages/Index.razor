@@ -1,14 +1,14 @@
 ﻿@inject NavigationManager NavigationManager
 
-
-
 @using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @page "/"
 @layout LoginLayout
 
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+
 <PageTitle>FinTec Ingreso de Usuario</PageTitle>
 
 <TituloFintec TituloVerde="FinTec" />
@@ -77,6 +77,7 @@
 				};
 			UsuarioLogic.AddUsuario(test);
 
+
 			Espacio espacio = new Espacio()
 				{
 					Nombre = $"Espacio Principal {test.Nombre}",
@@ -84,6 +85,7 @@
 
 
 				};
+
 		}catch(Exception e)
 		{
 			Console.WriteLine(e.Message);
