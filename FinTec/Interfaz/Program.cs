@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Repository;
 using Domain;
 using BussinesLogic;
+using Microsoft.AspNetCore.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
