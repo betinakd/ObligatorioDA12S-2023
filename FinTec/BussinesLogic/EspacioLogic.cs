@@ -38,5 +38,10 @@ namespace BussinesLogic
         {
             return _repository.FindAll();
         }
+
+        public Espacio? FindEspacio(string id)
+        {
+            return _repository.Find(u => u.Admin.Correo == id);
+        }
     }
 }
