@@ -335,5 +335,21 @@ namespace DomainTest
 			espacio.Nombre = "Espacio";
 			Assert.AreEqual(espacio.Nombre, "Espacio");
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Espacio_Tiene_Nombre_Nulo()
+		{
+			var espacio = new Espacio();
+			espacio.Nombre = null;
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Espacio_Tiene_Nombre_Vacio()
+		{
+			var espacio = new Espacio();
+			espacio.Nombre = null;
+		}
 	}
 }
