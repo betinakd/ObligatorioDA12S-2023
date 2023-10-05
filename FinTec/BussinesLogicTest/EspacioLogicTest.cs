@@ -81,5 +81,30 @@ namespace BussinesLogicTest
             espacioLogic.DeleteEspacio(espacio);
             Assert.IsFalse(repository.FindAll().Contains(espacio));
         }
+
+        [TestMethod]
+        public void Buscar_Todos_Espacios()
+        {
+            IRepository<Espacio> repository = new EspacioMemoryRepository();
+            EspacioLogic espacioLogic = new EspacioLogic(repository);
+            Espacio espacio = new Espacio();
+            espacio.Admin = new Usuario()
+            {
+                Correo = "xx@yy.com",
+                Contrasena = "123456789A",
+
+            };
+            Espacio espacio2 = new Espacio();
+            espacio2.Admin = new Usuario()
+            {
+                Correo = "xxxx@yyyy.com",
+                Contrasena = "123456789B",
+
+            };  
+            espacioLogic.AddEspacio(espacio);
+            espacioLogic.AddEspacio(espacio2);
+            Assert.IsTrue(repository.FindAll().Contains(espacio));
+            Assert.IsTrue(repository.FindAll().Contains(espacio2));
+        }
     }
 }
