@@ -325,5 +325,13 @@ namespace DomainTest
 			espacio.AgregarTransaccion(transaccion);
 			Assert.AreEqual(espacio.Transacciones.Count, 1);
 		}
+
+		[TestMethod]
+		public void Espacio_Tiene_Nombre()
+		{
+			var espacio = new Espacio();
+			espacio.Nombre = "Espacio";
+			Assert.AreEqual(espacio.Nombre, "Espacio");
+		}
 	}
 }
