@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,11 @@ namespace Repository
 {
     public class EspacioMemoryRepository
     {
+        private readonly List<Espacio> _espacios = new List<Espacio>();
+        public Espacio Add(Espacio oneElement)
+        {
+            _espacios.Add(oneElement);
+            return oneElement;
+        }
     }
 }
