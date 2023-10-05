@@ -81,27 +81,27 @@ namespace Domain
             return ContieneArroba(correo);
         }
 
-        private static bool ContienePuntoCom(string correo)
+        private bool ContienePuntoCom(string correo)
         {
             return Regex.IsMatch(correo, _patron);
         }
 
-        private static bool ContieneArroba(string correo)
+        private bool ContieneArroba(string correo)
         {
             return correo.Contains("@");
         }
 
-        private static bool SonTodasMinusculas(string contrasena)
+        private  bool SonTodasMinusculas(string contrasena)
         {
             return contrasena.ToLower() == contrasena;
         }
 
-        private static bool EsContrasenaMayorIgualADiez(string contrasena)
+        private bool EsContrasenaMayorIgualADiez(string contrasena)
         {
             return contrasena.Length >= 10;
         }
 
-        private static bool EsContrasenaMayorATreinta(string contrasena)
+        private bool EsContrasenaMayorATreinta(string contrasena)
         {
             return contrasena.Length > 30;
         }
