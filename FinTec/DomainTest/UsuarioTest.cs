@@ -147,6 +147,14 @@ namespace DomainTest
 			Assert.IsTrue(usuario1.Equals(usuario2));
 
 		}
+
+		[TestMethod]
+		public void Usuario_Tiene_Direccion()
+		{
+			Usuario usuario = new Usuario();
+			usuario.Direccion = "direccion";
+			Assert.AreEqual(usuario.Direccion, "direccion");
+		}
 	}
 }
 
