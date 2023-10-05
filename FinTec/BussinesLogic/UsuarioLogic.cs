@@ -17,17 +17,25 @@ namespace BussinesLogic
             _repository = repository;
         }
 
-		public Usuario AddUsuario(Usuario oneElement)
-		{
+        public Usuario AddUsuario(Usuario oneElement)
+        {
             IList<Usuario> usuarios = _repository.FindAll();
             bool existe = usuarios.Contains(oneElement);
-			if (existe)
-			{
-				throw new BussinesLogicUsuarioException("El usuario ya existe");
-			}
-			_repository.Add(oneElement);
-			return oneElement;
+            if (existe)
+            {
+                throw new BussinesLogicUsuarioException("El usuario ya existe");
+            }
+            _repository.Add(oneElement);
+            return oneElement;
+        }
+
+        public bool ExisteCorreoUsuario(string correo)
+		{
+			IList<Usuario> usuarios = _repository.FindAll();
+			bool existe = usuarios?.Any(u => u.Correo == correo) ?? false;
+			return existe;
 		}
+
 
 		public Usuario? UpdateUsuario(Usuario updateEntity)
         {
