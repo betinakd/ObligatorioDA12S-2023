@@ -35,5 +35,14 @@ namespace Repository
             }
             return espacio;
         }
+
+        public void Delete(Usuario id)
+        {
+            var espacio = Find(u => u.Admin == id);
+            if (espacio != null)
+            {
+                _espacios.Remove(espacio);
+            }
+        }
     }
 }
