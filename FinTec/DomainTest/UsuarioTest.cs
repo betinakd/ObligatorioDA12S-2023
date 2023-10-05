@@ -17,7 +17,7 @@ namespace DomainTest
         public void Contrasena_Minimo_Diez()
         {
             Usuario unUsuario = new Usuario();
-            unUsuario.Contrasena = "1234567890";
+            unUsuario.Contrasena = "1234567890A";
             string contrasena = unUsuario.Contrasena;
             bool resultado = unUsuario.Validar_Contrasena(contrasena);
             Assert.IsTrue(resultado);
@@ -63,8 +63,8 @@ namespace DomainTest
             Assert.IsFalse(resultado);
         }
 
-        [ExpectedException(typeof(RequiredPropertyException))]
         [TestMethod]
+        [ExpectedException(typeof(RequiredPropertyException))]
         public void Nombre_Usuario_Vacio()
         {
             Usuario unUsuario = new Usuario();
@@ -78,9 +78,9 @@ namespace DomainTest
             unUsuario.Nombre = "Maxi";
             Assert.AreEqual("Maxi", unUsuario.Nombre);
         }
-
-        [ExpectedException(typeof(RequiredPropertyException))]
+        
         [TestMethod]
+        [ExpectedException(typeof(RequiredPropertyException))]        
         public void Apellido_Usuario_Vacio()
         {
             Usuario unUsuario = new Usuario();
@@ -93,6 +93,52 @@ namespace DomainTest
             Usuario unUsuario = new Usuario();
             unUsuario.Apellido = "Gimenez";
             Assert.AreEqual("Gimenez", unUsuario.Apellido);
+
+        [TestMethod]
+        public void Usuario_Equals_Null()
+        {
+            Usuario unUsuario = new Usuario { 
+                Contrasena = "1234567890",
+                Correo = "usfhud@icsdc.comfwef",
+            };
+            Object objeto = null;
+            var objeto2 = new Object();
+            Assert.IsFalse(unUsuario.Equals(objeto));
+            Assert.IsFalse(unUsuario.Equals(objeto2));
+            Assert.IsTrue(unUsuario.Equals(unUsuario));
+        }
+
+        [TestMethod]
+        public void Usuario_Equals_Diferentes()
+        {
+            Usuario user1 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "usfhud@icsdc.comfwef",
+            };
+            Usuario user2 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "12345@icsdc.comsds",
+            };
+            Assert.IsFalse(user1.Equals(user2));
+        }
+
+        [TestMethod]
+        public void Usuario_Equals_Iguales()
+        {
+            Usuario usuario1 = new Usuario
+            {
+                Contrasena = "1234567890",
+                Correo = "mateo@gmail.com",
+            };
+            Usuario usuario2 = new Usuario()
+            {
+                Contrasena = "234567891",
+                Correo = "mateo@gmail.com",
+            };
+            Assert.IsTrue(usuario1.Equals(usuario2));
+
         }
     }
 }

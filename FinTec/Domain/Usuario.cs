@@ -78,7 +78,7 @@ namespace Domain
 
         private static bool SonTodasMinusculas(string contrasena)
         {
-            return contrasena.All(char.IsLower);
+            return contrasena.ToLower() == contrasena;
         }
 
         private static bool EsContrasenaMayorIgualADiez(string contrasena)
@@ -89,6 +89,17 @@ namespace Domain
         private static bool EsContrasenaMayorATreinta(string contrasena)
         {
             return contrasena.Length > 30;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            };
+
+            Usuario user = (Usuario)obj;
+            return Correo == user.Correo;
         }
     }
 
