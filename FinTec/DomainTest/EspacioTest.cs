@@ -351,5 +351,13 @@ namespace DomainTest
 			var espacio = new Espacio();
 			espacio.Nombre = null;
 		}
+
+		[TestMethod]
+		public void Static_Contador_De_Id() {
+			var espacio = new Espacio();
+			var espacio2 = new Espacio();
+			espacio.Id = 1;
+			espacio2.Id = 2;
+		}
 	}
 }
