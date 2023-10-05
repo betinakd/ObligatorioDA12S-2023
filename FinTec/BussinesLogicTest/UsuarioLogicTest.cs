@@ -20,9 +20,9 @@ namespace BussinesLogicTest
 		[TestInitialize]
 		public void Setup()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
-			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
-			Usuario usuario1 = new Usuario()
+			repository = new UsuarioMemoryRepository();
+			usuarioLogic = new UsuarioLogic(repository);
+			usuario1 = new Usuario()
 			{
 				Correo = "hola@gmail.com",
 				Nombre = "Juan",
@@ -31,7 +31,7 @@ namespace BussinesLogicTest
 				Direccion = "street 56 av rety"
 			};
 
-			Usuario usuario2 = new Usuario()
+			usuario2 = new Usuario()
 			{
 				Correo = "holaSoy2@gmail.com",
 				Nombre = "Alberto",
@@ -245,9 +245,10 @@ namespace BussinesLogicTest
 		{
 			usuarioLogic.AddUsuario(usuario1);
 			bool resultadoPositivo = usuarioLogic.ExisteCorreoUsuario("hola@gmail.com");
-			bool resultadoNegativo = usuarioLogic.ExisteCorreoUsuario("holaaaaa@gmail.com")
+			bool resultadoNegativo = usuarioLogic.ExisteCorreoUsuario("holaaaaa@gmail.com");
 			Assert.IsTrue(resultadoPositivo);
 			Assert.IsFalse(resultadoNegativo);
+
 		}
 
 
