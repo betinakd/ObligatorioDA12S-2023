@@ -59,6 +59,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(DomainUsuarioException))]
 		public void Validar_Correo_No_Coincide_PuntoCom()
 		{
 			Usuario unUsuario = new Usuario();

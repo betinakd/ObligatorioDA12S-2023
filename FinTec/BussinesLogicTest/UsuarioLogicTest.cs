@@ -50,8 +50,8 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void Correo_invalido_UL()
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void Correo_invalido_UL()
         {
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
@@ -120,8 +120,8 @@ namespace BussinesLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception))]
-        public void Actualizar_Usuario_Correo_Invalido()
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void Actualizar_Usuario_Correo_Invalido()
         {
             IRepository<Usuario> repository = new UsuarioMemoryRepository();
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);

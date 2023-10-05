@@ -3,9 +3,9 @@ using Domain.DomainExceptions;
 
 namespace Domain
 {
-    public class Usuario
-    {
-        private string _contrasena;
+	public class Usuario
+	{
+		private string _contrasena;
 		public string Contrasena
 		{
 			get
@@ -21,102 +21,119 @@ namespace Domain
 				_contrasena = value;
 			}
 		}
-		public string Correo { get; set; }
-        private string _nombre;
-        public string Nombre
-        {
-            get
-            {
-                return _nombre;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new DomainUsuarioException("El nombre es requerido");
-                }
-                _nombre = value;
-            }
-        }
+		private string _correo;
 
-        private string _apellido;
-        public string Apellido
-        {
-            get
-            {
-                return _apellido;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new DomainUsuarioException("El apellido es requerido");
-                }
-                _apellido = value;
-            }
-        }
+		public string Correo
+		{
+			get { return _correo; }
+			set
+			{
+				if (Validar_Correo(value))
+				{
+					_correo = value;
+				}
+				else
+				{
+					throw new DomainUsuarioException("El correo electrónico no es válido");
+				}
+			}
+		}
 
-        private const string _patron = @".+\.com$";
+		private string _nombre;
+		public string Nombre
+		{
+			get
+			{
+				return _nombre;
+			}
+			set
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					throw new DomainUsuarioException("El nombre es requerido");
+				}
+				_nombre = value;
+			}
+		}
 
-        public bool Validar_Contrasena(string contrasena)
-        {
-            if (EsContrasenaMayorATreinta(contrasena))
-            {
-                return false;
-            }
+		private string _apellido;
+		public string Apellido
+		{
+			get
+			{
+				return _apellido;
+			}
+			set
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					throw new DomainUsuarioException("El apellido es requerido");
+				}
+				_apellido = value;
+			}
+		}
 
-            if (SonTodasMinusculas(contrasena))
-            {
-                return false;
-            } 
+		private const string _patron = @".+\.com$";
 
-            return EsContrasenaMayorIgualADiez(contrasena);
-        }
-        public bool Validar_Correo(string correo)
-        {
-            if (!ContienePuntoCom(correo))
-            {
-                return false;
-            }
-            return ContieneArroba(correo);
-        }
+		public bool Validar_Contrasena(string contrasena)
+		{
+			if (EsContrasenaMayorATreinta(contrasena))
+			{
+				return false;
+			}
 
-        private bool ContienePuntoCom(string correo)
-        {
-            return Regex.IsMatch(correo, _patron);
-        }
+			if (SonTodasMinusculas(contrasena))
+			{
+				return false;
+			}
 
-        private bool ContieneArroba(string correo)
-        {
-            return correo.Contains("@");
-        }
+			return EsContrasenaMayorIgualADiez(contrasena);
+		}
+		public bool Validar_Correo(string correo)
+		{
+			if (!ContienePuntoCom(correo))
+			{
+				return false;
+			}
+			return ContieneArroba(correo);
+		}
 
-        private  bool SonTodasMinusculas(string contrasena)
-        {
-            return contrasena.ToLower() == contrasena;
-        }
+		private bool ContienePuntoCom(string correo)
+		{
+			return Regex.IsMatch(correo, _patron);
+		}
 
-        private bool EsContrasenaMayorIgualADiez(string contrasena)
-        {
-            return contrasena.Length >= 10;
-        }
+		private bool ContieneArroba(string correo)
+		{
+			return correo.Contains("@");
+		}
 
-        private bool EsContrasenaMayorATreinta(string contrasena)
-        {
-            return contrasena.Length > 30;
-        }
+		private bool SonTodasMinusculas(string contrasena)
+		{
+			return contrasena.ToLower() == contrasena;
+		}
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-            {
-                return false;
-            };
+		private bool EsContrasenaMayorIgualADiez(string contrasena)
+		{
+			return contrasena.Length >= 10;
+		}
 
-            Usuario user = (Usuario)obj;
-            return Correo == user.Correo;
-        }
-    }
+		private bool EsContrasenaMayorATreinta(string contrasena)
+		{
+			return contrasena.Length > 30;
+		}
+
+		public override bool Equals(object? obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			};
+
+			Usuario user = (Usuario)obj;
+			return Correo == user.Correo;
+		}
+	}
 
 
 }
