@@ -1,4 +1,6 @@
-﻿@using BussinesLogic;
+﻿@inject NavigationManager NavigationManager
+
+@using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @page "/"
@@ -62,6 +64,8 @@
 		{
 			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Email, Contrasena);
 			ErrorMensaje = "Usuario Correcto";
+			NavigationManager.NavigateTo($"/home?Correo={usuarioLogeado.Correo}&Contrasena={usuarioLogeado.Contrasena}");
+
 
 		}
 		catch (BussinesLogicUsuarioException e)
