@@ -11,7 +11,22 @@ namespace Domain
 		private List<Transaccion> _transacciones = new List<Transaccion>();
 		private List<Objetivo> _objetivos = new List<Objetivo>();
 		private List<Cambio> _cambios = new List<Cambio>();
-		public string Nombre { get; set; }
+		private string _nombre;
+		public string Nombre
+		{
+			get
+			{
+				return _nombre;
+			}
+			set
+			{
+				if (string.IsNullOrEmpty(value))
+				{
+					throw new DomainEspacioException("El espacio debe tener un nombre");
+				}
+				_nombre = value;
+			}
+		}
 		public List<Cambio> Cambios
 		{
 			get
@@ -86,7 +101,7 @@ namespace Domain
 
 		public void AgregarCuenta(Cuenta cuenta)
 		{
-			if(Cuentas.Contains(cuenta))
+			if (Cuentas.Contains(cuenta))
 				throw new DomainEspacioException("La cuenta ya esta agregada");
 			_cuentas.Add(cuenta);
 		}
@@ -102,7 +117,7 @@ namespace Domain
 			_transacciones.Add(transaccion);
 		}
 
-		public void AgregarObjetivo(Objetivo objetivo) 
+		public void AgregarObjetivo(Objetivo objetivo)
 		{
 			_objetivos.Add(objetivo);
 		}
