@@ -1,6 +1,7 @@
 ﻿@using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
 @page "/registro"
 @layout RegistroLayout
 <PageTitle>FinTec Registro de Usuario</PageTitle>
@@ -72,6 +73,13 @@
 					Correo = Email,
 					Contrasena = Password
 				};
+			Espacio espacioPrincipal = new Espacio()
+				{
+					Nombre = $"Espacio Principal {usuario.Nombre}",
+					Admin = usuario,
+				};
+			EspacioLogic.AddEspacio(espacioPrincipal);
+
 			LimpiarInputs();
 			try
 			{
@@ -83,7 +91,7 @@
 				LimpiarInputs();
 				ErrorMensaje = exception.Message;
 			}
-			
+
 		}
 		catch (DomainUsuarioException exception)
 		{
