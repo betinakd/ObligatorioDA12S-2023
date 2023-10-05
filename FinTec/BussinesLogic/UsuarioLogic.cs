@@ -47,6 +47,10 @@ namespace BussinesLogic
                     return usuario;
                 }
             }
+            else
+            {
+                throw new BussinesLogicUsuarioException("El usuario no existe");
+            }
             return null;
 		}
 
