@@ -4,6 +4,8 @@ namespace Domain
 {
 	public class Espacio
 	{
+		private static int _contadorId = 1;
+		public int Id { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Categoria> _categorias = new List<Categoria>();
@@ -90,6 +92,7 @@ namespace Domain
 		}
 		public Espacio()
 		{
+			Id = _contadorId++;
 		}
 
 		public void InvitarUsuario(Usuario usuario)
