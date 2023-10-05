@@ -20,5 +20,10 @@ namespace Repository
         {
             return _espacios.FirstOrDefault(filter);
         }
+
+        public IList<Espacio> FindAll()
+        {
+            return _espacios;
+        }
     }
 }
