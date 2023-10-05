@@ -6,6 +6,7 @@ namespace Domain
 	public class Usuario
 	{
 		private string _contrasena;
+		public string Direccion { get; set; }
 		public string Contrasena
 		{
 			get
