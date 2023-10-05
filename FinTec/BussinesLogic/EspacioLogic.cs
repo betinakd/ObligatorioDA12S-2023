@@ -21,7 +21,10 @@ namespace BussinesLogic
         {
             IList<Espacio> espacios = _repository.FindAll();
             bool existe = espacios.Contains(oneElement);
-            
+            if (existe)
+            {
+                throw new BusinessLogicEspacioException("El espacio ya existe");
+            }
             _repository.Add(oneElement);
             return oneElement;
         }
