@@ -50,5 +50,20 @@ namespace BussinesLogicTest
             EspacioLogic espacioLogic = new EspacioLogic(repository);
             Assert.IsNotNull(espacioLogic);
         }
+
+        [TestMethod]
+        public void Agregar_Espacio()
+        {
+            IRepository<Espacio> repository = new EspacioMemoryRepository();
+            EspacioLogic espacioLogic = new EspacioLogic(repository);
+            Espacio espacio = new Espacio();
+            espacio.Admin = new Usuario()
+            {
+                Correo = "xx@yy.com",
+                Contrasena = "123456789A",
+            };
+            espacioLogic.AddEspacio(espacio);
+            Assert.IsTrue(repository.FindAll().Contains(espacio));
+        }
     }
 }
