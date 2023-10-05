@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class EspacioMemoryRepository 
+    public class EspacioMemoryRepository : IRepository<Espacio>
     {
         private readonly List<Espacio> _espacios = new List<Espacio>();
         public Espacio Add(Espacio oneElement)
