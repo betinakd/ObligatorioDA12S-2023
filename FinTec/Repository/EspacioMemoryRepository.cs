@@ -15,5 +15,10 @@ namespace Repository
             _espacios.Add(oneElement);
             return oneElement;
         }
+
+        public Espacio? Find(Func<Espacio, bool> filter)
+        {
+            return _espacios.FirstOrDefault(filter);
+        }
     }
 }
