@@ -55,6 +55,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+
 		public void Espacio_Invitar_Usuario()
 		{
 			var espacio = new Espacio();

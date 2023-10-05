@@ -5,8 +5,23 @@ namespace Domain
 {
     public class Usuario
     {
-        public string Contrasena { get; set; }
-        public string Correo { get; set; }
+        private string _contrasena;
+		public string Contrasena
+		{
+			get
+			{
+				return _contrasena;
+			}
+			set
+			{
+				if (!Validar_Contrasena(value))
+				{
+					throw new DomainUsuarioException("La contraseña no es válida");
+				}
+				_contrasena = value;
+			}
+		}
+		public string Correo { get; set; }
         private string _nombre;
         public string Nombre
         {

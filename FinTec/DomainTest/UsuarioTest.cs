@@ -14,6 +14,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+
 		public void Contrasena_Minimo_Diez()
 		{
 			Usuario unUsuario = new Usuario();
@@ -24,6 +25,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(DomainUsuarioException))]
+
 		public void Contrasena_Maximo_Treinta()
 		{
 			Usuario unUsuario = new Usuario();
@@ -34,6 +37,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(DomainUsuarioException))]
+
 		public void Contrasena_Contiene_Mayuscula()
 		{
 			Usuario unUsuario = new Usuario();
@@ -99,8 +104,8 @@ namespace DomainTest
 		{
 			Usuario unUsuario = new Usuario
 			{
-				Contrasena = "1234567890",
-				Correo = "usfhud@icsdc.comfwef",
+				Contrasena = "T5r1234567890",
+				Correo = "usfhud@icsdc.com",
 			};
 			Object objeto = null;
 			var objeto2 = new Object();
@@ -114,13 +119,13 @@ namespace DomainTest
 		{
 			Usuario user1 = new Usuario
 			{
-				Contrasena = "1234567890",
-				Correo = "usfhud@icsdc.comfwef",
+				Contrasena = "1234567890Tyyy",
+				Correo = "usfhud@icsdc.com",
 			};
 			Usuario user2 = new Usuario
 			{
-				Contrasena = "1234567890",
-				Correo = "12345@icsdc.comsds",
+				Contrasena = "1234567890Tyyy",
+				Correo = "12345@icsdc.com",
 			};
 			Assert.IsFalse(user1.Equals(user2));
 		}
@@ -130,12 +135,12 @@ namespace DomainTest
 		{
 			Usuario usuario1 = new Usuario
 			{
-				Contrasena = "1234567890",
+				Contrasena = "1234567890Yuu",
 				Correo = "mateo@gmail.com",
 			};
 			Usuario usuario2 = new Usuario()
 			{
-				Contrasena = "234567891",
+				Contrasena = "234567891Yuu",
 				Correo = "mateo@gmail.com",
 			};
 			Assert.IsTrue(usuario1.Equals(usuario2));
