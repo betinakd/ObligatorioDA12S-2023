@@ -272,5 +272,14 @@ namespace BussinesLogicTest
 			Usuario usuario = usuarioLogic.UsuarioByCorreoContrasena("", "");
 		}
 
+		[TestMethod]
+		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		public void Excepcion_Ingreso_Correo_Valido_Contrasena_No_Existente()
+		{
+			usuarioLogic.AddUsuario(usuario1);
+			usuarioLogic.AddUsuario(usuario2);
+			Usuario usuario = usuarioLogic.UsuarioByCorreoContrasena("hola@gmail.com", "");
+		}
+
 	}
 }
