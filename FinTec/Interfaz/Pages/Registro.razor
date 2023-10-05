@@ -11,7 +11,7 @@
 
 <div class="row">
 	<div class="col-md-6">
-		<InputRegistro InputType="email" Label="Email" Placeholder="ejemplo@email.com" />
+		<InputRegistro InputType="email" Label="Email" Placeholder="ejemplo@email.com" @bind-value="Email" />
 	</div>
 	<div class="col-md-6">
 		<InputRegistro InputType="password" Label="Contraseña" Placeholder="Contraseña" Id="password" />
@@ -34,5 +34,29 @@
 </div>
 
 <div class="mb-4">
-	<BotonVerdeAgua NombreBoton="Registro" />
+	<BotonVerdeAgua NombreBoton="Registro" ClickIngreso="ClickIngreso" />
 </div>
+
+@code {
+	private string Email { get; set; }
+	private string Password { get; set; }
+	private string Nombre { get; set; }
+	private string Apellido { get; set; }
+	private string Direccion { get; set; }
+	private Usuario Usuario { get; set; }
+
+	public void ClickIngreso()
+	{
+		Usuario = new Usuario
+		{
+			Correo = Email,
+			Contrasena = Password,
+			Nombre = Nombre,
+			Apellido = Apellido,
+			Direccion = Direccion
+		};
+		UsuarioLogic.AddUsuario(Usuario);
+	}
+
+
+}
