@@ -5,6 +5,8 @@
 @inject UsuarioLogic UsuarioLogic;
 @page "/"
 @layout LoginLayout
+
+
 <PageTitle>FinTec Ingreso de Usuario</PageTitle>
 
 <TituloFintec TituloVerde="FinTec" />
@@ -58,6 +60,24 @@
 		Contrasena = "";
 	}
 
+	protected override void OnInitialized()
+	{
+		try
+		{
+			Usuario test = new Usuario()
+				{
+					Nombre = "Hola",
+					Apellido = "Hola",
+					Correo = "hola@gmail.com",
+					Contrasena = "HOLAhola123",
+					Direccion = "Hola"
+				};
+			UsuarioLogic.AddUsuario(test);
+		}catch(Exception e)
+		{
+			Console.WriteLine(e.Message);
+		}
+	}
 	public void ClickLogin()
 	{
 		try
