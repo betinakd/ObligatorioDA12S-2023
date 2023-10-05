@@ -57,7 +57,7 @@ namespace BussinesLogicTest
             UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
             Usuario usuario1 = new Usuario();
             usuario1.Correo = "xxxx@yyyy.co";
-            usuario1.Contrasena = "123456789A";
+            usuario1.Contrasena = "123456789Aa";
             usuarioLogic.AddUsuario(usuario1);
         }
 
@@ -172,39 +172,42 @@ namespace BussinesLogicTest
 			var usuario1 = new Usuario
 			{
 				Correo = "Juan@xxxx.com",
-				Contrasena = "123456",
+				Contrasena = "123456gggU__u",
 			};
 			var usuario2 = new Usuario
 			{
 				Correo = "Juann@xxxx.com",
-				Contrasena = "123456",
+				Contrasena = "123456ggggU",
 			};
 			var repository = new UsuarioMemoryRepository();
-			var usuarioAgregado1 = repository.Add(usuario1);
-			var usuarioAgregado2 = repository.Add(usuario2);
+			var logica = new UsuarioLogic(repository);
+			var usuarioAgregado1 = logica.AddUsuario(usuario1);
+			var usuarioAgregado2 = logica.AddUsuario(usuario2);
 			Assert.IsNotNull(usuarioAgregado1);
 			Assert.AreEqual(usuario1, usuarioAgregado1);
 			Assert.IsNotNull(usuarioAgregado2);
 			Assert.AreEqual(usuario2, usuarioAgregado2);
 		}
 
-		[ExpectedException(typeof(Exception))]
+		
 		[TestMethod]
+		[ExpectedException(typeof(BussinesLogicUsuarioException))]
 		public void Agregar_Usuario_Invalido_Duplicado()
 		{
 			var usuario1 = new Usuario
 			{
 				Correo = "Juan@xxxx.com",
-				Contrasena = "123456",
+				Contrasena = "123456aasaU",
 			};
 			var usuario2 = new Usuario
 			{
-				Contrasena = "123456",
+				Contrasena = "123456aasaU",
 				Correo = "Juan@xxxx.com"
 			};
 			var repository = new UsuarioMemoryRepository();
-			var usuarioAgregado1 = repository.Add(usuario1);
-			var usuarioAgregado2 = repository.Add(usuario2);
+			var logica = new UsuarioLogic(repository);
+            logica.AddUsuario(usuario1);
+            logica.AddUsuario(usuario2);
 		}
 
 	}

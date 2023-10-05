@@ -17,8 +17,19 @@ namespace BussinesLogic
             _repository = repository;
         }
 
+		public Usuario AddUsuario(Usuario oneElement)
+		{
+            IList<Usuario> usuarios = _repository.FindAll();
+            bool existe = usuarios.Contains(oneElement);
+			if (existe)
+			{
+				throw new BussinesLogicUsuarioException("El usuario ya existe");
+			}
+			_repository.Add(oneElement);
+			return oneElement;
+		}
 
-        public Usuario? UpdateUsuario(Usuario updateEntity)
+		public Usuario? UpdateUsuario(Usuario updateEntity)
         {
             ValidarCorreoYContrasena(updateEntity);
             return _repository.Update(updateEntity);

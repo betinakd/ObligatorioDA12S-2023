@@ -27,25 +27,6 @@ namespace RepositoryTest
             Assert.AreEqual(usuario2, usuarioAgregado2);   
         }
 
-        [ExpectedException(typeof(Exception))]
-        [TestMethod]
-        public void Agregar_Usuario_Duplicado()
-        {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuuuuuu",
-            };
-            var usuario2 = new Usuario
-            {
-                Contrasena = "123456Yuuuuuuu",
-                Correo = "Juan@xxxx.com"
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            var usuarioAgregado2 = repository.Add(usuario2);
-        }
-
         [TestMethod]
         public void Actualizar_Usuario()
         {

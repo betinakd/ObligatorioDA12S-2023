@@ -12,11 +12,6 @@ namespace Repository
         private readonly List<Usuario> _usuarios = new List<Usuario>();
         public Usuario Add(Usuario oneElement)
         {
-            var usuario = Find(u => u.Correo == oneElement.Correo);
-            if (usuario != null)
-            {
-                throw new Exception("El usuario ya existe");
-            }
             _usuarios.Add(oneElement);
             return oneElement;
         }
