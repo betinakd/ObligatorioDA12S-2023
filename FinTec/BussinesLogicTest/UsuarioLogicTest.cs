@@ -263,5 +263,14 @@ namespace BussinesLogicTest
 			Assert.IsTrue(contrasenaIgual);
 		}
 
+		[TestMethod]
+		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		public void Excepcion_Ingreso_Correo_No_Existente()
+		{
+			usuarioLogic.AddUsuario(usuario1);
+			usuarioLogic.AddUsuario(usuario2);
+			Usuario usuario = usuarioLogic.UsuarioByCorreoContrasena("", "");
+		}
+
 	}
 }
