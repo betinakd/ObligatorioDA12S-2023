@@ -27,7 +27,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DomainTransaccionException))]
         public void Titulo_Transaccion_Vacio()
         {
             var transaccion = new Transaccion();
@@ -52,7 +52,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DomainTransaccionException))]
         public void Monto_Mayor_Cero() 
         {
             var transaccion = new Transaccion();
@@ -73,7 +73,8 @@ namespace DomainTest
         {
             var transaccion = new Transaccion();
             Cuenta cuenta = new Cuenta();
-            cuenta.Moneda = TipoCambiario.Dolar;           
+            cuenta.Moneda = TipoCambiario.Dolar;
+            transaccion.Moneda = TipoCambiario.Dolar;
             transaccion.CuentaMonetaria = cuenta;
             Assert.AreEqual(cuenta, transaccion.CuentaMonetaria);
         }
@@ -91,7 +92,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(DomainTransaccionException))]
         public void Categoria_Inactiva_Transaccion()
         {
             var transaccion = new Transaccion();
@@ -100,6 +101,18 @@ namespace DomainTest
             categoria.Tipo = TipoCategoria.Costo;
             categoria.EstadoActivo = false;
             transaccion.CategoriaTransaccion = categoria;            
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainTransaccionException))]
+        public void Tipo_Moneda_Distinto_Cuenta()
+        {
+            var transaccion = new Transaccion();
+            Cuenta cuenta = new Cuenta();
+            cuenta.Moneda = TipoCambiario.Dolar;
+            transaccion.Moneda = TipoCambiario.PesosUruguayos;
+            transaccion.CuentaMonetaria = cuenta;
+            Assert.AreEqual(cuenta.Moneda, transaccion.Moneda);
         }
     }
 }

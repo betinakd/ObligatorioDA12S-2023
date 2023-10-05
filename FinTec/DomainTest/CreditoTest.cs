@@ -129,6 +129,7 @@ namespace DomainTest
 			};
 			string fechaAhora = System.DateTime.Now.ToString();
 			string resultadoEsperado = "Pesos Uruguayos\n"+fechaAhora+"\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
+
 			string resultado = credito.ToString();
 			Assert.AreEqual(resultadoEsperado, resultado);
 		}

@@ -1,5 +1,9 @@
 ﻿@inject NavigationManager NavigationManager
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+
+
+>>>>>>> origin/dev
 @using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
@@ -105,3 +109,32 @@
 	}
 }
 
+@code {
+	public string Email { get; set; } = "";
+	public string Contrasena { get; set; } = "";
+	public string ErrorMensaje { get; set; } = "";
+
+	public void LimpiarInputs()
+	{
+		Email = "";
+		Contrasena = "";
+	}
+
+	public void ClickLogin()
+	{
+		try
+		{
+			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Email, Contrasena);
+			ErrorMensaje = "Usuario Correcto";
+			NavigationManager.NavigateTo($"/home?Correo={usuarioLogeado.Correo}&Contrasena={usuarioLogeado.Contrasena}");
+
+
+		}
+		catch (BussinesLogicUsuarioException e)
+		{
+			ErrorMensaje = e.Message;
+		}
+
+		LimpiarInputs();
+	}
+}

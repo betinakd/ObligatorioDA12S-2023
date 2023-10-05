@@ -18,7 +18,7 @@ namespace Domain
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new ArgumentException("El titulo no puede ser vacio");
+                    throw new DomainTransaccionException("El titulo no puede ser vacio");
                 _titulo = value;
             }
         }
@@ -37,14 +37,29 @@ namespace Domain
             set
             {
                 if (value <= 0)
-                    throw new ArgumentException("El monto debe ser mayor a cero");
+                    throw new DomainTransaccionException("El monto debe ser mayor a cero");
                 _monto = value;
             }
         }
         public TipoCambiario Moneda { get; set; }
-        public Cuenta CuentaMonetaria { get; set; }
+
+        private Cuenta _cuenta;
+        public Cuenta CuentaMonetaria
+        {
+            get
+            {
+                return _cuenta;
+            }
+            set
+            {
+                if (value.Moneda != Moneda)
+                    throw new DomainTransaccionException("La cuenta tiene que ser del tipo de la moneda");
+                _cuenta = value;
+            }
+        }
+
         private Categoria _categoria;
-        public Categoria CategoriaTransaccion
+        public virtual Categoria CategoriaTransaccion
         {
             get
             {
@@ -53,7 +68,7 @@ namespace Domain
             set
             {
                 if (value.EstadoActivo == false)
-                    throw new ArgumentException("La categoria tiene que estar activa");
+                    throw new DomainTransaccionException("La categoria tiene que estar activa");
                 _categoria = value;
             }
         }
