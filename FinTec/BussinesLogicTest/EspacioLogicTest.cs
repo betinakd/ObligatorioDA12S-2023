@@ -72,5 +72,14 @@ namespace BussinesLogicTest
             Assert.IsTrue(repository.FindAll().Contains(espacio1));
             Assert.IsTrue(repository.FindAll().Contains(espacio2));
         }
+
+        [TestMethod]
+        public void Buscar_Espacio()
+        {
+            espacioLogic.AddEspacio(espacio1);
+            espacioLogic.AddEspacio(espacio2);
+            Assert.AreEqual(espacio1, espacioLogic.FindEspacio(espacio1.Admin.Correo));
+            Assert.AreEqual(espacio2, espacioLogic.FindEspacio(espacio2.Admin.Correo));
+        }
     }
 }
