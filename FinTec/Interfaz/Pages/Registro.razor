@@ -5,58 +5,53 @@
 @layout RegistroLayout
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 
+
 <div style="text-align: center; margin-bottom: 3rem;">
 	<TituloFintec TituloVerde="FinTec" TituloNegro="Registro" Subtitulo="Registre su usuario en la app de ahorro mas importante de America Latina" />
 </div>
 
 <div class="row">
 	<div class="col-md-6">
-		<InputRegistro InputType="email" Label="Email" Placeholder="ejemplo@email.com" @bind-value="Email" />
+		<label class="">Email</label>
+		<input @bind="Email" class="input-estilo" placeholder="ejemplo@email.com" />
 	</div>
 	<div class="col-md-6">
-		<InputRegistro InputType="password" Label="Contraseña" Placeholder="Contraseña" Id="password" />
+		<label class="">Contraseña</label>
+		<input @bind="Password" type="password" class="input-estilo" placeholder="Contraseña" />
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-6">
-		<InputRegistro InputType="input" Label="Nombre" Placeholder="Nombre" Id="nombre" />
+		<label class="">Nombre</label>
+		<input @bind="Nombre" class="input-estilo" placeholder="Nombre" />
 	</div>
 	<div class="col-md-6">
-		<InputRegistro InputType="input" Label="Apellido" Placeholder="Apellido" Id="apellido" />
+		<label class="">Apellido</label>
+		<input @bind="Apellido" class="input-estilo" placeholder="Apellido" />
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<InputRegistro InputType="input" Label="Dirección" Placeholder="Dirección" Id="direccion" esValido=true Error="no se puede" />
+		<label class="">Dirección</label>
+		<input @bind="Direccion" class="input-estilo" placeholder="Dirección" />
 	</div>
 </div>
 
 <div class="mb-4">
-	<BotonVerdeAgua NombreBoton="Registro" ClickIngreso="ClickIngreso" />
+	<BotonVerdeAgua NombreBoton="Registro" ClickIngreso="ClickRegistro"/>
 </div>
 
 @code {
-	private string Email { get; set; }
-	private string Password { get; set; }
-	private string Nombre { get; set; }
-	private string Apellido { get; set; }
-	private string Direccion { get; set; }
-	private Usuario Usuario { get; set; }
+	public string? Email { get; set; } = "";
+	public string? Password { get; set; } = "";
+	public string Nombre { get; set; } = "";
+	public string Apellido { get; set; } = "";
+	public string Direccion { get; set; } = "";
 
-	public void ClickIngreso()
+	public void ClickRegistro()
 	{
-		Usuario = new Usuario
-		{
-			Correo = Email,
-			Contrasena = Password,
-			Nombre = Nombre,
-			Apellido = Apellido,
-			Direccion = Direccion
-		};
-		UsuarioLogic.AddUsuario(Usuario);
+		Email="hiii";
 	}
-
-
 }

@@ -1,0 +1,26 @@
+﻿.input-estilo {
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3125rem;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    &.focus
+
+{
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+&.dark {
+    background-color: #333;
+    border-color: #555;
+    color: #fff;
+    &::placeholder
+
+{
+    color: #888;
+}
+
+}
+}
