@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager NavigationManager
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
 @using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
@@ -46,7 +46,7 @@
 		<BotonVerdeAgua NombreBoton="Ingreso" ClickIngreso="ClickLogin" />
 	</div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 @code {
 	public string Email { get; set; } = "";
 	public string Contrasena { get; set; } = "";
@@ -76,3 +76,4 @@
 		LimpiarInputs();
 	}
 }
+
