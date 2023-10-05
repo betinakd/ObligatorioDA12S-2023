@@ -36,6 +36,19 @@ namespace BussinesLogic
 			return existe;
 		}
 
+		public Usuario UsuarioByCorreoContrasena(string correo, string contrasena)
+		{
+            if (ExisteCorreoUsuario(correo))
+            {
+                Usuario usuario = _repository.Find(u => u.Correo == correo);
+
+                if (usuario.Contrasena == contrasena)
+                {
+                    return usuario;
+                }
+            }
+            return null;
+		}
 
 		public Usuario? UpdateUsuario(Usuario updateEntity)
         {
