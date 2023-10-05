@@ -28,5 +28,10 @@ namespace BussinesLogic
             _repository.Add(oneElement);
             return oneElement;
         }
+
+        public void DeleteEspacio(Espacio oneElement)
+        {
+            _repository.Delete(oneElement.Admin.Correo);
+        }
     }
 }
