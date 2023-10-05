@@ -251,6 +251,17 @@ namespace BussinesLogicTest
 
 		}
 
+		[TestMethod]
+		public void Ingreso_Correo_Contrasena_Valida_Entrega_Usuario()
+		{
+			usuarioLogic.AddUsuario(usuario1);
+			usuarioLogic.AddUsuario(usuario2);
+			Usuario usuario = usuarioLogic.UsuarioByCorreoContrasena("hola@gmail.com", "123456789Aaa");
+			bool resultado = usuario.Equals(usuario1);
+			bool contrasenaIgual = usuario.Contrasena == usuario1.Contrasena;
+			Assert.IsTrue(resultado);
+			Assert.IsTrue(contrasenaIgual);
+		}
 
 	}
 }
