@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using Repository;
+using BussinesLogic;
 
 
 namespace BussinesLogicTest
@@ -26,8 +27,8 @@ namespace BussinesLogicTest
             {
                 Admin = new Usuario()
                 {
-                    Correo = "",
-                    Contrasena = "",
+                    Correo = "xx@yy.com",
+                    Contrasena = "123456789A",
                 }
             };
 
@@ -35,8 +36,8 @@ namespace BussinesLogicTest
             { 
                 Admin = new Usuario()
                 {
-                    Correo = "",
-                    Contrasena = "",
+                    Correo = "xxxx@yyyy.com",
+                    Contrasena = "123456789B",
                 }
             };
         }
