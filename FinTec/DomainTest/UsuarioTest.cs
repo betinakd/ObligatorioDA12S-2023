@@ -64,7 +64,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(RequiredPropertyException))]
+		[ExpectedException(typeof(DomainUsuarioException))]
 		public void Nombre_Usuario_Vacio()
 		{
 			Usuario unUsuario = new Usuario();
@@ -80,7 +80,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(RequiredPropertyException))]
+		[ExpectedException(typeof(DomainUsuarioException))]
 		public void Apellido_Usuario_Vacio()
 		{
 			Usuario unUsuario = new Usuario();

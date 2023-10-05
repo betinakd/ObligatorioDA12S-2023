@@ -18,7 +18,7 @@ namespace Domain
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new RequiredPropertyException("El nombre es requerido");
+                    throw new DomainUsuarioException("El nombre es requerido");
                 }
                 _nombre = value;
             }
@@ -35,7 +35,7 @@ namespace Domain
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new RequiredPropertyException("El apellido es requerido");
+                    throw new DomainUsuarioException("El apellido es requerido");
                 }
                 _apellido = value;
             }
