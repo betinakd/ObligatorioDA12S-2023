@@ -1,24 +1,33 @@
-﻿@page "/home/{Id:int}/{Correo}/CrearEspacio"
+﻿@page "/home/{Id:int}/{Correo}/CrearEspacios"
 @inject NavigationManager NavigationManager
 
 @using BussinesLogic
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
-
+@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 
-<input type="text" placeholder="Nombre">
-<button>Crear Nuevo Espacio</button>
+<input type="text" placeholder="Nombre" @bind="NombreI">
+<button @onclick="ClickCrearEspacio">Crear Nuevo Espacio</button>
 
 @code {
-	[Parameter] public int Id { get; set; }
-	[Parameter] public string Correo { get; set; }
-	public List<Espacio> espacios { get; set; } = new List<Espacio>();
 
-	protected override void OnInitialized()
+	public string NombreI { get; set; }
+	public List<Espacio> espacios { get; set; } = new List<Espacio>();
+	public Usuario usuario { get; set; } = new Usuario();
+	[Parameter] public string Correo { get; set; }
+	[Parameter] public int Id { get; set; }
+	private void ClickCrearEspacio()
 	{
-		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		usuario = UsuarioLogic.FindUsuario(Correo);
+		Espacio espacio = new Espacio()
+			{
+				Admin = usuario,
+				Nombre = NombreI
+			};
+		EspacioLogic.AddEspacio(espacio);
+		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 	}
 }
