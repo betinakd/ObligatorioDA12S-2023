@@ -25,7 +25,7 @@ namespace DomainTest
         {
             var categoria = new Categoria();
             CategoriaGasto cg = new CategoriaGasto(categoria);
-            Assert.AreNotEqual(cg.Categoria, categoria);
+            Assert.AreEqual(cg.Categoria, categoria);
         }
     }
 }
