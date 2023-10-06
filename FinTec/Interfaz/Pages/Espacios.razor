@@ -12,12 +12,15 @@
 {
 	<div class="card">
 		<div class="card-body">
-			<h5 class="card-title">@espacio.Nombre</h5>
-			<p class="card-text">@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
+			<h5 class="card-title"><strong>Nombre</strong>@espacio.Nombre</h5>
+			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
 			<button class="btn btn-primary" href="/home/{Id:int}/{Correo}">Ingresar</button>
+			<button class="btn btn-primary">Cambiar Nombre</button>
 		</div>
 	</div>
 }
+
+<a class="btn btn-success btn-sm" href="/home/@Id/@Correo/Espacios">Crear Espacio</a>
 
 
 @code {
@@ -29,4 +32,5 @@
 	{
 		espacios = EspacioLogic.EspaciosByCorreo(Correo);
 	}
+
 }
