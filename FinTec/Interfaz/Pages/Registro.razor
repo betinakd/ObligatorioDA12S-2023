@@ -4,6 +4,7 @@
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
 @page "/registro"
 @layout RegistroLayout
 <PageTitle>FinTec Registro de Usuario</PageTitle>
@@ -88,7 +89,8 @@
 				UsuarioLogic.AddUsuario(usuario);
 				EspacioLogic.AddEspacio(espacioPrincipal);
 				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
-
+				Persistencia.Id=espacioPrincipal.Id;
+                Persistencia.Correo=usuario.Correo;
 				ErrorMensaje = "";
 			}
 			catch (Exception exception)

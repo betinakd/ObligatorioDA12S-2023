@@ -3,6 +3,7 @@
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
 
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -17,10 +18,10 @@
 
 
 <div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">@bannerNombreEspacio</h4>
+    <h4 class="alert-heading">@EspacioLogic.FindEspacio(Persistencia.Id).Nombre</h4>
     <p> Bienvenido a este espacio</p>
     <hr>
-    <p class="mb-0"><strong>Admin:</strong>@bannerAdminNombre @bannerAdminApellido</p>
+    <p class="mb-0"><strong>Admin:</strong>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre @EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido</p>
 </div>
 
 
@@ -30,8 +31,8 @@
             <NavLink class="nav-link" href="#" @onclick="CambiarEspacio">
                 <span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
             </NavLink>
-            <NavLink class="nav-link" href="/home/{Id:int}/{Correo}/Espacios" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
+            <NavLink class="nav-link" href="#" @onclick="ClickUsuarios" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Usuarios
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -72,41 +73,19 @@
 
     protected override void OnInitialized()
     {
-        var uri = new Uri(NavigationManager.Uri);
-        var segments = uri.Segments;
-
-        try
-        {
-            // El valor del parámetro de ruta está en el cuarto segmento de la URL
-            idEspacio = segments[2].TrimEnd('/'); // Elimina cualquier barra diagonal adicional
-            int idE = int.Parse(idEspacio);
-            espacio = EspacioLogic.FindEspacio(idE);
-            bannerNombreEspacio = espacio.Nombre;
-            bannerAdminNombre = espacio.Admin.Nombre;
-            bannerAdminApellido = espacio.Admin.Apellido;
-
-            // Configurar id y correo
-            Id = idE; // Asigna el valor del ID
-            Correo = segments[3]; // Asigna el correo deseado
-        }
-        catch (Exception)
-        {
-            bannerNombreEspacio = "La cadena no es un número válido.";
-        }
+        
     }
 
     private void CambiarEspacio()
     {
-        // Puedes acceder a Id y Correo aquí
-        int id = Id; // Utiliza la propiedad Id
-        string correo = Correo; // Utiliza la propiedad Correo
 
-        string newHref = $"/home/{id}/{correo}/Espacios";
+        string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Espacios";
         NavigationManager.NavigateTo(newHref);
     }
 
-    private void MiMetodoDeClic()
+    private void ClickUsuarios()
     {
-        // Código que se ejecutará cuando se haga clic en el botón
+        string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Usuarios";
+        NavigationManager.NavigateTo(newHref);
     }
 }

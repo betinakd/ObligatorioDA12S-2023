@@ -5,6 +5,7 @@
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 
@@ -14,13 +15,13 @@
 		<div class="card-body">
 			<h5 class="card-title"><strong>Nombre</strong>@espacio.Nombre</h5>
 			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
-			<button class="btn btn-primary" href="/home/{Id:int}/{Correo}">Ingresar</button>
+			<button class="btn btn-primary" onclick="ClickCambiarEspacio(espacio)">Cambiar de Espacio</button>
 			<button class="btn btn-primary">Cambiar Nombre</button>
 		</div>
 	</div>
 }
 
-<a class="btn btn-success btn-sm" href="/home/@Id/@Correo/Espacios">Crear Espacio</a>
+<a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios">Crear Espacio</a>
 
 
 @code {
@@ -30,7 +31,12 @@
 
 	protected override void OnInitialized()
 	{
-		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		espacios = EspacioLogic.EspaciosByCorreo(Persistencia.Correo);
 	}
 
+	public void ClickCambiarEspacio(Espacio espacio)
+	{
+		Persistencia.Id = espacio.Id;
+		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+	}
 }
