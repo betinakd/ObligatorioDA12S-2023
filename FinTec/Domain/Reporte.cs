@@ -49,5 +49,28 @@ namespace Domain
             }
             return ret;
         }
+
+        /*
+            Reporte de gastos por categoría dentro del mes, para todos los gastos del mes seleccionado, 
+            se debe mostrar el total gastado por categoría, como también el % sobre el total de gasto. 
+            Ejemplo:
+            Para el mes de Setiembre: 
+                - Educación: 20.000 => 40% 
+                - Salidas: 10.000 =>20% 
+                - Ropa: 10.000 => 20% 
+                - Supermercado: 10.000 => 20% 
+        */
+        /*
+        Estrategia:
+            - Recorrer lista de categorias de MiEspacio
+            - Calcular el total gastado por mes
+            - Recorrer lista de transacciones de MiEspacio y filtrarlas por el mes
+            - Solo elijo las transacciones que pertenecen a la categoria y uso su monto gastado
+        Nota: Crear clase "custom" que guarde [Categoria, montoUsado, Porcentaje]
+        */
+        public void ReporteGastosCategoriaPorMes(int mes)
+        {
+
+        }
     }
 }
