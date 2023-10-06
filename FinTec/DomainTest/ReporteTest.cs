@@ -30,5 +30,16 @@ namespace DomainTest
             miReporte.User = _user;
             Assert.IsNotNull(miReporte.User);
         }
+
+        [TestMethod]
+        public void Reporte_Mismo_Usuario_Espacio()
+        {
+            var _espacio = new Espacio();
+            Usuario _user = new Usuario();
+            _espacio.Admin = _user;
+            Reporte _reporte = new Reporte();
+            _reporte.User = _user;
+            Assert.AreNotEqual(_reporte.User, _espacio.Admin);
+        }
     }
 }
