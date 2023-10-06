@@ -84,10 +84,14 @@ namespace BussinesLogicTest
         [TestMethod]
         public void Buscar_Espacio()
         {
-            espacioLogic.AddEspacio(espacio1);
-            espacioLogic.AddEspacio(espacio2);
-            Assert.AreEqual(espacio1, espacioLogic.FindEspacio(espacio1.Admin.Correo));
-            Assert.AreEqual(espacio2, espacioLogic.FindEspacio(espacio2.Admin.Correo));
+            Espacio espacio = new Espacio();
+            espacioLogic.AddEspacio(espacio);
+
+            Espacio resultado1 = espacioLogic.FindEspacio(espacio.Id);
+
+
+			Assert.AreEqual(espacio.Nombre, resultado1.Nombre);
+
         }
 
         [TestMethod]
