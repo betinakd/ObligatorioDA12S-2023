@@ -359,5 +359,19 @@ namespace DomainTest
 			espacio.Id = 1;
 			espacio2.Id = 2;
 		}
+
+		[TestMethod]
+		public void Recibe_Correo_Retorna_True_Si_Usuario_Pertenece_Espacio() {
+			var espacio = new Espacio()
+			{
+				Admin = new Usuario()
+				{
+					Correo = "holaaaa@gmail.com",
+					Contrasena = "123456789A",
+				}
+			};
+			bool resultado = espacio.PerteneceCorreo("holaaaa@gmail.com");
+			Assert.IsTrue(resultado);
+		}
 	}
 }
