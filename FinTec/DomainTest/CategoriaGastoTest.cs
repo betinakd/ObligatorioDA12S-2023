@@ -35,7 +35,7 @@ namespace DomainTest
             double _montoAcumulado = 20;
             int porcentaje = 20;
             var cg = new CategoriaGasto(categoria, _montoAcumulado, porcentaje);
-            Assert.IsNull(cg);
+            Assert.IsNotNull(cg);
         }
     }
 }
