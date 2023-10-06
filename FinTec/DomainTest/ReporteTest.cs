@@ -39,7 +39,7 @@ namespace DomainTest
             _espacio.Admin = _user;
             Reporte _reporte = new Reporte();
             _reporte.User = _user;
-            Assert.AreNotEqual(_reporte.User, _espacio.Admin);
+            Assert.AreEqual(_reporte.User, _espacio.Admin);
         }
     }
 }
