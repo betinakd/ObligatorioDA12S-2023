@@ -87,7 +87,8 @@
 			{
 				UsuarioLogic.AddUsuario(usuario);
 				EspacioLogic.AddEspacio(espacioPrincipal);
-				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}&{usuario.Correo}");
+				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
+
 				ErrorMensaje = "";
 			}
 			catch (Exception exception)

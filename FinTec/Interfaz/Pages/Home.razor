@@ -5,17 +5,22 @@
 @inject EspacioLogic EspacioLogic;
 @using Domain
 
-@page "/home/{Id}/{Correo}"
+@page "/home/{Id:int}/{Correo}"
 
-<PageTitle>FinTec Home @Correo</PageTitle>
+<PageTitle>FinTec Home</PageTitle>
 <p>Id: @Id</p>
-<p>Correo: @Correo</p>
+
+
 
 @code {
-    [Parameter] public string Id { get; set; }
-    [Parameter] public string Correo { get; set; }
+	[Parameter]
+	public int Id { get; set; }
+	[Parameter]
+	public string Correo { get; set; }
 
-    // Resto del código de la página...
-}
+protected override void OnInitialized()
+	{
+	
+	}
 
 }
