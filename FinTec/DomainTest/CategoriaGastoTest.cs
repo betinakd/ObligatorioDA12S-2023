@@ -45,7 +45,7 @@ namespace DomainTest
             int _porcentaje = 15;
             Categoria _categoria = new Categoria();
             var cg = new CategoriaGasto(_categoria, _montoAcumulado, _porcentaje);
-            Assert.AreNotEqual(cg.MontoUsado, cg.Porcentaje);
+            Assert.AreEqual(cg.MontoUsado, cg.Porcentaje);
         }
     }
 }
