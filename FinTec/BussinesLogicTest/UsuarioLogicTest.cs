@@ -281,5 +281,15 @@ namespace BussinesLogicTest
 			Usuario usuario = usuarioLogic.UsuarioByCorreoContrasena("hola@gmail.com", "");
 		}
 
+		[TestMethod]
+		public void Recibe_Correo_Retorna_Usuario()
+		{
+			usuarioLogic.AddUsuario(usuario1);
+			usuarioLogic.AddUsuario(usuario2);
+			Usuario usuario = usuarioLogic.UsuarioByCorreo("hola@gmail.com");
+			bool resultado = usuario.Equals(usuario1);
+			Assert.IsTrue(resultado);
+		}
+
 	}
 }
