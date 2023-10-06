@@ -6,6 +6,38 @@ namespace DomainTest
 	[TestClass]
 	public class EspacioTest
 	{
+		private Usuario usuario1;
+		private Usuario usuario2;
+		private Espacio espacio1;
+		private Categoria categoria1;
+		private Categoria categoria2;
+		[TestInitialize]
+		public void Setup()
+		{
+
+
+			usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+
+			usuario2 = new Usuario()
+			{
+				Correo = "holaSoy2@gmail.com",
+				Nombre = "Alberto",
+				Apellido = "Rodriguez",
+				Contrasena = "123tttt9Aaa",
+				Direccion = "street 67 av white"
+			};
+
+			espacio1 = new Espacio() { Admin = usuario1, Nombre = "Espacio1" };
+			categoria1 = new Categoria() { Nombre = "Categoria1", Tipo = TipoCategoria.Costo, EstadoActivo = true };
+			categoria2 = new Categoria() { Nombre = "Categoria2", Tipo = TipoCategoria.Costo, EstadoActivo = true };
+		}
 		[TestMethod]
 		public void Nueva_Espacio_No_Nulo()
 		{
@@ -372,6 +404,14 @@ namespace DomainTest
 			};
 			bool resultado = espacio.PerteneceCorreo("holaaaa@gmail.com");
 			Assert.IsTrue(resultado);
+		}
+
+		[TestMethod]
+		public void Borrar_Categoria_Espacio()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			espacio1.BorrarCategoria(categoria1);
+			Assert.AreEqual(espacio1.Categorias.Count, 0);
 		}
 	}
 }
