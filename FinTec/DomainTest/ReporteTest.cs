@@ -10,7 +10,7 @@ namespace DomainTest
         {
             var rep1 = new Reporte();
 
-            Assert.IsNull(rep1);
+            Assert.IsNotNull(rep1);
         }
     }
 }
