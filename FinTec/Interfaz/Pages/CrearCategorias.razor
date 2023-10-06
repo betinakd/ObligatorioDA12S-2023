@@ -1,0 +1,25 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearCategorias"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+<EspacioActual></EspacioActual>
+
+
+
+<input type="text" placeholder="Nombre Categoria">
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+
+
+}

@@ -1,0 +1,25 @@
+﻿@page "/home/{Id:int}/{Correo}/Categorias"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+<EspacioActual></EspacioActual>
+
+
+
+<a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCategorias">Crear Categoria Nueva</a>
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+
+
+}
