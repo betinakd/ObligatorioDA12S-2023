@@ -28,7 +28,7 @@
         
         public bool MontoCumpido()
         {
-            return MontoEsperado <= MontoAcumulado;
+            return MontoEsperado < MontoAcumulado;
         }
     }
 }

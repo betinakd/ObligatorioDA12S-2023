@@ -15,10 +15,19 @@ namespace DomainTest
         [TestMethod]
         public void ObjetivoGasto_Cumple()
         {
-            int valorEsperado = 5;
-            int valorAcumulado = 4;
+            double valorEsperado = 5;
+            double valorAcumulado = 4;
             var _objetivoGasto = new ObjetivoGasto(valorEsperado, valorAcumulado);
-            Assert.IsFalse(_objetivoGasto.MontoCumpido());
+            Assert.IsTrue(_objetivoGasto.MontoCumpido());
+        }
+
+        [TestMethod]
+        public void ObjetivoGasto_No_Cumple()
+        {
+            double valorEsperado = 5;
+            double valorAcumulado = 7;
+            var _objetivoGasto = new ObjetivoGasto(valorEsperado, valorAcumulado);
+            Assert.IsTrue(_objetivoGasto.MontoCumpido());
         }
     }
 }
