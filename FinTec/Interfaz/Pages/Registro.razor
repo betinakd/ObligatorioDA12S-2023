@@ -1,4 +1,5 @@
 ﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
+@inject NavigationManager NavigationManager;
 @using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
@@ -79,13 +80,15 @@
 					Nombre = $"Espacio Principal {usuario.Nombre}",
 					Admin = usuario,
 				};
-			EspacioLogic.AddEspacio(espacioPrincipal);
+
 
 			LimpiarInputs();
 			try
 			{
 				UsuarioLogic.AddUsuario(usuario);
-				ErrorMensaje = "Usuario agregado con exito";
+				EspacioLogic.AddEspacio(espacioPrincipal);
+				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}&{usuario.Correo}");
+				ErrorMensaje = "";
 			}
 			catch (Exception exception)
 			{
