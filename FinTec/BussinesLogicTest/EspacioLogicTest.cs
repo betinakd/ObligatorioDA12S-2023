@@ -89,5 +89,13 @@ namespace BussinesLogicTest
             Assert.AreEqual(espacio1, espacioLogic.FindEspacio(espacio1.Admin.Correo));
             Assert.AreEqual(espacio2, espacioLogic.FindEspacio(espacio2.Admin.Correo));
         }
+
+        [TestMethod]
+        public void Retorna_Lista_Espacios_Recibiendo_Correo_Valido() { 
+            espacioLogic.AddEspacio(espacio1);
+			espacioLogic.AddEspacio(espacio2);
+            List<Espacio> espacios = espacioLogic.EspaciosByCorreo("xx@yy.com");
+            Assert.IsTrue(espacios.Count == 1);
+        }
     }
 }
