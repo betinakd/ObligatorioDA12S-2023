@@ -28,8 +28,20 @@ namespace BussinesLogic
             _repository.Add(oneElement);
             return oneElement;
         }
-
-        public void DeleteEspacio(Espacio oneElement)
+		public List<Espacio> EspaciosByCorreo(string correo)
+		{
+			IList<Espacio> espacios = _repository.FindAll();
+			List<Espacio> espaciosUsuario = new List<Espacio>();
+			foreach (Espacio espacio in espacios)
+			{
+				if (espacio.PerteneceCorreo(correo))
+				{
+					espaciosUsuario.Add(espacio);
+				}
+			}
+			return espaciosUsuario;
+		}
+		public void DeleteEspacio(Espacio oneElement)
         {
             _repository.Delete(oneElement.Admin.Correo);
         }
@@ -43,5 +55,7 @@ namespace BussinesLogic
         {
             return _repository.Find(u => u.Admin.Correo == id);
         }
+
+
     }
 }
