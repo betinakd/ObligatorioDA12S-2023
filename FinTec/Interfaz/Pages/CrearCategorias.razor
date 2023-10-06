@@ -40,11 +40,12 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg = "";
-	private string tipoIngresoSeleccionado;
-	private string estadoSeleccionado;
+	private string tipoIngresoSeleccionado = "Ingreso";
+	private string estadoSeleccionado = "Activa";
 	private string nombreCategoria;
 	private bool estadoActivo;
 	private TipoCategoria tipo;
+
 	private void ClickCrear()
 	{
 		// Aquí puedes acceder a los valores seleccionados y al valor del campo de texto
@@ -94,7 +95,7 @@
 			ErrorMsg = e.Message;
 
 		}
-
+		Console.WriteLine(tipo);
 
 	}
 }
