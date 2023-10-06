@@ -1,0 +1,44 @@
+﻿@page "/home/{Id:int}/{Correo}/CategoriaIngreso"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+
+<PageTitle>FinTec Categoria Ingreso de Usuario</PageTitle>
+
+<h3>Categoria Ingreso</h3>
+
+Agregar Categoria: <input type="text" name="Categoria" id="Categoria" /><br />
+<button class="btn btn-success btn-sm">Agregar</button>
+
+
+@foreach (var espacio in espacios)
+{
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title"><strong>Nombre</strong>@espacio.Categorias.</h5>
+			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
+			<button class="btn btn-primary" href="/home/{Id:int}/{Correo}">Ingresar</button>
+			<button class="btn btn-primary">Cambiar Nombre</button>
+		</div>
+	</div>
+}
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public List<Espacio> espacios { get; set; } = new List<Espacio>();
+
+	protected override void OnInitialized()
+	{
+		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+	}
+
+	protected void AgregarCategoria()
+	{
+		//EspacioLogic.AgregarCategoria();
+		
+	}
+}

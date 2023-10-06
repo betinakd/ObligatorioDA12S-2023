@@ -34,6 +34,9 @@
                 <span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
             </NavLink>
         </div>
+        <NavLink class="nav-link" href="#" @onclick="Categoria">
+            <span class="oi oi-home" aria-hidden="true"></span> Categoria Ingreso
+        </NavLink>
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="oi oi-plus" aria-hidden="true"></span> Counter
@@ -102,6 +105,16 @@
         string correo = Correo; // Utiliza la propiedad Correo
 
         string newHref = $"/home/{id}/{correo}/Espacios";
+        NavigationManager.NavigateTo(newHref);
+    }
+
+    private void Categoria()
+    {
+        // Puedes acceder a Id y Correo aquí
+        int id = Id; // Utiliza la propiedad Id
+        string correo = Correo; // Utiliza la propiedad Correo
+
+        string newHref = $"/home/{id}/{correo}/CategoriaIngreso";
         NavigationManager.NavigateTo(newHref);
     }
 
