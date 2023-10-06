@@ -75,17 +75,19 @@
 					Correo = Email,
 					Contrasena = Password
 				};
-			Espacio espacioPrincipal = new Espacio()
-				{
-					Nombre = $"Espacio Principal {usuario.Nombre}",
-					Admin = usuario,
-				};
+
 
 
 			LimpiarInputs();
 			try
 			{
 				UsuarioLogic.AddUsuario(usuario);
+				Espacio espacioPrincipal = new Espacio()
+					{
+						Nombre = $"Espacio Principal {usuario.Nombre}",
+						Admin = usuario,
+					};
+				usuario.IdEspacioPrincipal = espacioPrincipal.Id;
 				EspacioLogic.AddEspacio(espacioPrincipal);
 				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
 
