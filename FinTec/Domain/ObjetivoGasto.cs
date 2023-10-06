@@ -1,10 +1,15 @@
-﻿namespace Domain
+﻿using Domain;
+
+namespace Domain
 {
     public class ObjetivoGasto
     {
+        private Objetivo _objetivo;
         private double _montoEsperado;
         private double _montoAcumulado;
 
+
+        public Objetivo Objetivo { get { return _objetivo; } set { _objetivo = value; } }
         public double MontoEsperado { set { _montoEsperado = value; } get { return _montoEsperado; } }
         public double MontoAcumulado { set { _montoAcumulado = value; } get { return _montoAcumulado; } }
         
