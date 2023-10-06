@@ -9,14 +9,12 @@ namespace Domain
     public class Reporte
     {
         private Usuario _user;
-        public Espacio _MiEspacio { set; get; }
+        private Espacio _MiEspacio;
+
+        public Espacio MiEspacio { get { return _MiEspacio; } set { _MiEspacio = value; } }
 
         public Usuario User { get { return _user; } set { _user = value; } }
 
-        /*public Espacio MiEspacio
-        {
-            set { _MiEspacio = value; }
-            get { return _MiEspacio; }
-        }*/
+        //public
     }
 }

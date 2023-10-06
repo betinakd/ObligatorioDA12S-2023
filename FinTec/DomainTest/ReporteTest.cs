@@ -18,8 +18,8 @@ namespace DomainTest
         {
             var _EspacioRepo = new Espacio();
             Reporte miReporte = new Reporte();
-            miReporte._MiEspacio = _EspacioRepo;
-            Assert.AreEqual(miReporte._MiEspacio, _EspacioRepo);
+            miReporte.MiEspacio = _EspacioRepo;
+            Assert.AreEqual(miReporte.MiEspacio, _EspacioRepo);
         }
 
         [TestMethod]
@@ -40,6 +40,12 @@ namespace DomainTest
             Reporte _reporte = new Reporte();
             _reporte.User = _user;
             Assert.AreEqual(_reporte.User, _espacio.Admin);
+        }
+
+        [TestMethod]
+        public void algo()
+        {
+
         }
     }
 }
