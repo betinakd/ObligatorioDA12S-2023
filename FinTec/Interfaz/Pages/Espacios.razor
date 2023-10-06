@@ -28,8 +28,9 @@
 				@if (mostrarInput)
 				{
 					<input type="text" @bind="nuevoNombre" />
-					<p style="color:red">@ErrorMsg</p>
+					
 					<button class="btn btn-primary" @onclick="() => CambiarNombre(espacio)">Guardar</button>
+					<p style="color:red">@ErrorMsg</p>
 				}
 			}
 		</div>
@@ -45,7 +46,7 @@
 	[Parameter] public string Correo { get; set; }
 	public List<Espacio> espacios { get; set; } = new List<Espacio>();
 	public Usuario usuario { get; set; } = new Usuario();
-	public string? ErrorMsg { get; set; };
+	public string? ErrorMsg { get; set; }
 	protected override void OnInitialized()
 	{
 
@@ -85,11 +86,11 @@
 			espacio.Nombre = nuevoNombre;
 			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 			ErrorMsg = "";
+			mostrarInput = false;
 		}
 		catch (DomainEspacioException e)
 		{
 			ErrorMsg = e.Message;
-		}
-		mostrarInput = false;
+		}	
 	}
 }
