@@ -27,8 +27,6 @@ namespace Domain
         {
             DateTime _actualDate = DateTime.Now;
             int _mesActual = _actualDate.Month;
-            //recorrer la lista de objetivos del Espacio, los obj me dan el titulo y la lista de categorias
-            //tengo que recorrer la lista de las transacciones de este mes para poder calcular el monto para ver si me pase o no
             List<ObjetivoGasto> ret = new List<ObjetivoGasto>();
             List<Objetivo> objetivos = MiEspacio.Objetivos;
             foreach (Objetivo o in objetivos)
@@ -59,14 +57,14 @@ namespace Domain
                 - Salidas: 10.000 =>20% 
                 - Ropa: 10.000 => 20% 
                 - Supermercado: 10.000 => 20% 
-        */
-        /*
-        Estrategia:
-            - Recorrer lista de categorias de MiEspacio
-            - Calcular el total gastado por mes
-            - Recorrer lista de transacciones de MiEspacio y filtrarlas por el mes
-            - Solo elijo las transacciones que pertenecen a la categoria y uso su monto gastado
-        Nota: Crear clase "custom" que guarde [Categoria, montoUsado, Porcentaje]
+
+            Estrategia:
+                - Recorrer lista de categorias de MiEspacio
+                - Calcular el total gastado por mes
+                - Recorrer lista de transacciones de MiEspacio y filtrarlas por el mes
+                - Solo elijo las transacciones que pertenecen a la categoria y uso su monto gastado
+
+            Nota: Crear clase "custom" que guarde [Categoria, montoUsado, Porcentaje]
         */
         public void ReporteGastosCategoriaPorMes(int mes)
         {

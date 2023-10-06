@@ -42,10 +42,5 @@ namespace DomainTest
             Assert.AreEqual(_reporte.User, _espacio.Admin);
         }
 
-        [TestMethod]
-        public void algo()
-        {
-
-        }
     }
 }
