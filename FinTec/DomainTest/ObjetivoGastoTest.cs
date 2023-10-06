@@ -29,5 +29,13 @@ namespace DomainTest
             var _objetivoGasto = new ObjetivoGasto(valorEsperado, valorAcumulado);
             Assert.IsFalse(_objetivoGasto.MontoCumpido());
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_No_Vacio_Un_Atributo()
+        {
+            double _valorEsperado = 1;
+            var _objetivoGasto = new ObjetivoGasto(_valorEsperado);
+            Assert.IsNull(_objetivoGasto);
+        }
     }
 }
