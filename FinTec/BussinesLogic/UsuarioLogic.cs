@@ -90,5 +90,10 @@ namespace BussinesLogic
         {
             return _repository.Find(u => u.Correo == id);
         }
+
+        public Usuario? UsuarioByCorreo(string correo)
+        {
+			return _repository.Find(u => u.Correo == correo);
+		}
     }
 }
