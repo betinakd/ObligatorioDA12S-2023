@@ -1,0 +1,59 @@
+﻿@page "/home/{Id:int}/{Correo}/Usuarios"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Usuarios</PageTitle>
+<h3>Usuarios</h3>
+
+@if (Persistencia.Correo == espacios.FirstOrDefault()?.Admin.Correo)
+{
+    <a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearUsuarios">Agregar Usuarios</a>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Usuarios invitados</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in espacios.FirstOrDefault()?.UsuariosInvitados ?? new List<Usuario>())
+        {
+            <tr>
+                <td>@usuario.Nombre</td>
+                <td>@usuario.Correo</td>
+                <td>
+                    @if (usuario.Correo != Persistencia.Correo)
+                    {
+                        <button class="btn btn-danger btn-sm">Eliminar</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Correo { get; set; }
+    public List<Espacio> espacios { get; set; } = new List<Espacio>();
+
+    protected override void OnInitialized()
+    {
+        espacios = EspacioLogic.EspaciosByCorreo(Persistencia.Correo);
+    }
+
+    public void ClickCambiarEspacio(Espacio espacio)
+    {
+        Persistencia.Id = espacio.Id;
+        NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+    }
+}

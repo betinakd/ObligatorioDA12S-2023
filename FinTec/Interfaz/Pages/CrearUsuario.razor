@@ -1,0 +1,54 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearEspacios"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+
+
+<input @bind="inputNombre" type="text" placeholder="Nombre de Usuario">
+<input @bind="inputApellido" type="text" placeholder="Apellido de Usuario">
+<input @bind="inputDireccion" type="text" placeholder="Direccion de Usuario">
+<input @bind="inputCorreo" type="text" placeholder="Correo de Usuario">
+<input @bind="inputContrasena" type="text" placeholder="contrasena de Usuario">
+
+<button @onclick="() => ClickCrearUsuario()">Crear Nuevo Usuario</button>
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	[Parameter] public string inputNombre { get; set; }
+	[Parameter] public string inputApellido { get; set; }
+	[Parameter] public string inputDireccion { get; set; }
+	[Parameter] public string inputCorreo { get; set; }
+	[Parameter] public string inputContrasena { get; set; }
+
+
+	public List<Espacio> espacios { get; set; } = new List<Espacio>();
+	public Usuario usuario { get; set; } = new Usuario();
+	protected override void OnInitialized()
+	{
+		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
+	}
+
+	private void ClickCrearUsuario()
+	{
+		Usuario usuario = new Usuario()
+			{
+				Nombre = inputNombre,
+				Apellido = inputApellido,
+				Direccion = inputDireccion,
+				Correo = inputCorreo,
+				Contrasena = inputContrasena,
+			};
+		UsuarioLogic.AddUsuario(usuario);
+		NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Usuarios");
+
+	}
+}
+

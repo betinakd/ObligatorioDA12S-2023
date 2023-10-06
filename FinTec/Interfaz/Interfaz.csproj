@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Usuarios.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Pages\Registro - Copia.razor.css" />
     <None Remove="Pages\Registro.razor.css" />
   </ItemGroup>
@@ -17,6 +21,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BussinesLogic\BussinesLogic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Usuarios.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Usuarios.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Usuarios.razor" />
   </ItemGroup>
 
 </Project>
