@@ -16,12 +16,21 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"><strong>Nombre de la Categoría:</strong> @categoria.Nombre</h5>
-            <p><strong>Tipo de Ingreso:</strong> @categoria.Tipo</p>
-            <p><strong>Estado:</strong> @categoria.EstadoActivo</p>
+            @if (categoria.Tipo == TipoCategoria.Ingreso)
+            {
+                <p><strong>Tipo de Ingreso:</strong> Ingreso</p>
+            }
+            else if (categoria.Tipo == TipoCategoria.Costo)
+            {
+                <p><strong>Tipo de Ingreso:</strong> Costo</p>
+            }
+            <p><strong>Estado:</strong> @(categoria.EstadoActivo ? "Activo" : "Inactivo")</p>
             <button class="btn btn-primary" @onclick="() => ModificarCategoria(categoria)">Modificar</button>
         </div>
     </div>
 }
+
+
 <a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCategorias">Crear Categoria Nueva</a>
 
 

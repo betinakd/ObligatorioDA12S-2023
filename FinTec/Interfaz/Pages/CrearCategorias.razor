@@ -81,6 +81,8 @@
 			{
 				Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
 				espacioActual.AgregarCategoria(nuevaCategoria);
+				string newHref = $"/home/{Id}/{Correo}/Categorias";
+				NavigationManager.NavigateTo(newHref);
 			}
 			catch (DomainCategoriaException e)
 			{
@@ -93,7 +95,6 @@
 
 		}
 
-		string newHref = $"/home/{Id}/{Correo}/Categorias";
-		NavigationManager.NavigateTo(newHref);
+
 	}
 }
