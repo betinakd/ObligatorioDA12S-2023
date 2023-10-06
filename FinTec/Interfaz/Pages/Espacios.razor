@@ -15,7 +15,10 @@
 			<h5 class="card-title"><strong>Nombre</strong>@espacio.Nombre</h5>
 			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
 			<button class="btn btn-primary" href="/home/{Id:int}/{Correo}">Ingresar</button>
-			<button class="btn btn-primary">Cambiar Nombre</button>
+			@if (espacio.Admin.Correo == Correo)
+			{
+				<button class="btn btn-primary" @onclick="() => ClickCambiarNombre(espacio)">Cambiar Nombre</button>
+			}
 		</div>
 	</div>
 }
@@ -27,10 +30,21 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public List<Espacio> espacios { get; set; } = new List<Espacio>();
-
+	public Usuario usuario { get; set; } = new Usuario();
 	protected override void OnInitialized()
 	{
 		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
+	}
+
+	private void ClickCambiarNombre(Espacio espacio)
+	{
+		// Cambiar el nombre del espacio
+		espacio.Nombre = "HOLA";
+
+		// Redireccionar a otra página
+		string newHref = $"/home/{Id}/{Correo}/Espacios";
+		NavigationManager.NavigateTo(newHref);
 	}
 
 }
