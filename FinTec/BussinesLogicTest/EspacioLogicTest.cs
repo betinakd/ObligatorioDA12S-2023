@@ -89,7 +89,6 @@ namespace BussinesLogicTest
 
             Espacio resultado1 = espacioLogic.FindEspacio(espacio.Id);
 
-
 			Assert.AreEqual(espacio.Nombre, resultado1.Nombre);
 
         }

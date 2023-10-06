@@ -14,9 +14,18 @@
 	</div>
 </div>
 
+
+<div class="alert alert-success" role="alert">
+	<h4 class="alert-heading">Well done!</h4>
+	<p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+	<hr>
+	<p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+</div>
+
+
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 	<nav class="flex-column">
-		<p>@nombreDelEspacio</p>
+		<p>@idEspacio</p>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
 				<span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
@@ -46,17 +55,27 @@
 		collapseNavMenu = !collapseNavMenu;
 	}
 
-	public string nombreDelEspacio { get; set; } = "";
-
+	public string idEspacio { get; set; } = "";
+	public string nombreDelUsuario { get; set; } = "";
 	protected override void OnInitialized()
 	{
 		var uri = new Uri(NavigationManager.Uri);
 		var segments = uri.Segments;
 
-		if (segments.Length > 2)
+		try
 		{
-			// El valor del parámetro de ruta está en el tercer segmento de la URL
-			nombreDelEspacio = segments[2];
+			if (segments.Length > 3)
+			{
+				// El valor del parámetro de ruta está en el tercer segmento de la URL
+				idEspacio = segments[2];
+			}
+			int numero = int.Parse(idEspacio);
 		}
+		catch (FormatException)
+		{
+			Console.WriteLine("La cadena no es un número válido.");
+		}
+
+
 	}
 }
