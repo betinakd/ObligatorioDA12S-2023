@@ -8,19 +8,32 @@
 @page "/home/{Id:int}/{Correo}"
 
 <PageTitle>FinTec Home</PageTitle>
-<p>Id: @Id</p>
 
 
+@foreach (var espacio in Espacios)
+{
+        <tr>
+            <td>Espacio: @espacio.Nombre</td>
+            <td>Nombre del Admin: @espacio.Admin.Nombre</td>
+
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+       </tr>
+        
+}
 
 @code {
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
 	public string Correo { get; set; }
+	public List<Espacio>? Espacios { get; set; }
 
-protected override void OnInitialized()
+	protected override void OnInitialized()
 	{
-	
+		Espacios = EspacioLogic.EspaciosByCorreo(Correo);
 	}
+
+
+
 
 }
