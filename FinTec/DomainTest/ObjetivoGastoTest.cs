@@ -35,7 +35,7 @@ namespace DomainTest
         {
             double _valorEsperado = 1;
             var _objetivoGasto = new ObjetivoGasto(_valorEsperado);
-            Assert.IsNull(_objetivoGasto);
+            Assert.IsNotNull(_objetivoGasto);
         }
     }
 }
