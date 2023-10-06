@@ -132,8 +132,14 @@ namespace Domain
 
 		public bool PerteneceCorreo(string correo)
 		{
-			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Correo == correo));				
+			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Correo == correo));
 		}
 
+		public void BorrarCategoria(Categoria categoria) {
+			if (Categorias.Contains(categoria))
+			{
+				Categorias.Remove(categoria);
+			}
+		}
 	}
 }
