@@ -8,7 +8,10 @@ namespace Domain
 {
     public class Reporte
     {
+        private Usuario _user;
         public Espacio _MiEspacio { set; get; }
+
+        public Usuario User { get { return _user; } set { _user = value; } }
 
         /*public Espacio MiEspacio
         {

@@ -19,7 +19,8 @@ namespace DomainTest
             var _EspacioRepo = new Espacio();
             Reporte miReporte = new Reporte();
             miReporte._MiEspacio = _EspacioRepo;
-            Assert.AreNotEqual(miReporte._MiEspacio, _EspacioRepo);
+            Assert.AreEqual(miReporte._MiEspacio, _EspacioRepo);
         }
+
     }
 }
