@@ -8,14 +8,12 @@ namespace Domain
 {
     public class Reporte
     {
-        private int _contadorId = 1;
-        private int _id;
-        private Espacio? _MiEspacio;
+        public Espacio _MiEspacio { set; get; }
 
-        public Espacio MiEspacio
+        /*public Espacio MiEspacio
         {
             set { _MiEspacio = value; }
             get { return _MiEspacio; }
-        }
+        }*/
     }
 }
