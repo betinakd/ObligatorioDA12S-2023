@@ -16,8 +16,8 @@
 
 
 <div class="alert alert-success" role="alert">
-	<h4 class="alert-heading">Well done!</h4>
-	<p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+	<h4 class="alert-heading">@bannerNombreEspacio</h4>
+	<p> Bienvenido a este espacio</p>
 	<hr>
 	<p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
 </div>
@@ -25,7 +25,6 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
 	<nav class="flex-column">
-		<p>@idEspacio</p>
 		<div class="nav-item px-3">
 			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
 				<span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
@@ -57,6 +56,8 @@
 
 	public string idEspacio { get; set; } = "";
 	public string nombreDelUsuario { get; set; } = "";
+	public string bannerNombreEspacio { get; set; } = "";
+	public Usuario usuario { get; set; } = new Usuario();
 	protected override void OnInitialized()
 	{
 		var uri = new Uri(NavigationManager.Uri);
@@ -64,18 +65,15 @@
 
 		try
 		{
-			if (segments.Length > 3)
-			{
-				// El valor del parámetro de ruta está en el tercer segmento de la URL
-				idEspacio = segments[2];
-			}
-			int numero = int.Parse(idEspacio);
+				// El valor del parámetro de ruta está en el cuarto segmento de la URL
+				idEspacio = segments[2].TrimEnd('/'); // Elimina cualquier barra diagonal adicional
+				int idE = int.Parse(idEspacio);
+				var espacio = EspacioLogic.FindEspacio(idE);
+				bannerNombreEspacio = espacio.Nombre;
 		}
-		catch (FormatException)
+		catch (Exception)
 		{
-			Console.WriteLine("La cadena no es un número válido.");
+			bannerNombreEspacio = "La cadena no es un número válido.";
 		}
-
-
 	}
 }
