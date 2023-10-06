@@ -160,8 +160,8 @@ namespace DomainTest
 		public void Usuario_Tiene_idEspacioPrincipal()
 		{
 			Usuario usuario = new Usuario();
-			usuario.idEspacioPrincipal = 1;
-			Assert.AreEqual(usuario.idEspacioPrincipal, 1);
+			usuario.IdEspacioPrincipal = 1;
+			Assert.AreEqual(usuario.IdEspacioPrincipal, 1);
 		}
 	}
 }
