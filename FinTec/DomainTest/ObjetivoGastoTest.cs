@@ -8,7 +8,7 @@ namespace DomainTest
         public void ObjetivoGasto_No_Vacio()
         {
             var _objetivoGasto = new ObjetivoTest();
-            Assert.IsNull(_objetivoGasto);
+            Assert.IsNotNull(_objetivoGasto);
         }
     }
 }
