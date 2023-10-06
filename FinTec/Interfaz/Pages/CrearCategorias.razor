@@ -11,15 +11,89 @@
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 <EspacioActual></EspacioActual>
 
+<div class="form-group">
+	<label for="nombreCategoria">Nombre de la Categoría:</label>
+	<input type="text" id="nombreCategoria" class="form-control" @bind="nombreCategoria" />
+</div>
 
+<div class="form-group">
+	<label>Tipo de Ingreso:</label>
+	<select class="form-control" @bind="tipoIngresoSeleccionado">
+		<option value="Ingreso">Ingreso</option>
+		<option value="Costo">Costo</option>
+	</select>
+</div>
 
-<input type="text" placeholder="Nombre Categoria">
+<div class="form-group">
+	<label>Estado:</label>
+	<select class="form-control" @bind="estadoSeleccionado">
+		<option value="Activa">Activa</option>
+		<option value="Inactiva">Inactiva</option>
+	</select>
+</div>
 
+<p style="color:red">@ErrorMsg</p>
+<button class="btn btn-primary" @onclick="ClickCrear">Crear</button>
 
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
+	private string ErrorMsg = "";
+	private string tipoIngresoSeleccionado;
+	private string estadoSeleccionado;
+	private string nombreCategoria;
+	private bool estadoActivo;
+	private TipoCategoria tipo;
+	private void ClickCrear()
+	{
+		// Aquí puedes acceder a los valores seleccionados y al valor del campo de texto
 
+		switch (estadoSeleccionado)
+		{
+			case "Activa":
+				estadoActivo = true;
+				break;
+			case "Inactiva":
+				estadoActivo = false;
+				break;
+		}
 
+		switch (tipoIngresoSeleccionado)
+		{
+			case "Ingreso":
+				tipo = TipoCategoria.Ingreso;
+				break;
+			case "Costo":
+				tipo = TipoCategoria.Costo;
+				break;
+		}
+		try
+		{
+			Categoria nuevaCategoria = new Categoria
+				{
+					Nombre = nombreCategoria,
+					Tipo = tipo,
+					EstadoActivo = estadoActivo
+				};
+
+			try
+			{
+				Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
+				espacioActual.AgregarCategoria(nuevaCategoria);
+			}
+			catch (DomainCategoriaException e)
+			{
+				ErrorMsg = e.Message;
+			}
+		}
+		catch (DomainCategoriaException e)
+		{
+			ErrorMsg = e.Message;
+
+		}
+
+		string newHref = $"/home/{Id}/{Correo}/Categorias";
+		NavigationManager.NavigateTo(newHref);
+	}
 }

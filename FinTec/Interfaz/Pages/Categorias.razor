@@ -11,8 +11,17 @@
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 <EspacioActual></EspacioActual>
 
-
-
+@foreach (var categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
+{
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title"><strong>Nombre de la Categoría:</strong> @categoria.Nombre</h5>
+            <p><strong>Tipo de Ingreso:</strong> @categoria.Tipo</p>
+            <p><strong>Estado:</strong> @categoria.EstadoActivo</p>
+            <button class="btn btn-primary" @onclick="() => ModificarCategoria(categoria)">Modificar</button>
+        </div>
+    </div>
+}
 <a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCategorias">Crear Categoria Nueva</a>
 
 
@@ -21,5 +30,11 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 
+    private void ModificarCategoria(Categoria categoria)
+    {
+        // Aquí puedes realizar acciones específicas para modificar la categoría seleccionada
+        // Puedes utilizar la variable 'categoria' para acceder a los datos de la categoría
+        // Por ejemplo, puedes redireccionar a una página de edición de categoría con los datos de 'categoria'
 
+    }
 }
