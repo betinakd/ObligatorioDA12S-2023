@@ -6,74 +6,107 @@
 
 
 <div class="top-row ps-3 navbar navbar-dark">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="">FinTec</a>
-		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-	</div>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">FinTec</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
 </div>
 
 
+
 <div class="alert alert-success" role="alert">
-	<h4 class="alert-heading">@bannerNombreEspacio</h4>
-	<p> Bienvenido a este espacio</p>
-	<hr>
-	<p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+    <h4 class="alert-heading">@bannerNombreEspacio</h4>
+    <p> Bienvenido a este espacio</p>
+    <hr>
+    <p class="mb-0"><strong>Admin:</strong>@bannerAdminNombre @bannerAdminApellido</p>
 </div>
 
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-	<nav class="flex-column">
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-				<span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="counter">
-				<span class="oi oi-plus" aria-hidden="true"></span> Counter
-			</NavLink>
-		</div>
-		<div class="nav-item px-3">
-			<NavLink class="nav-link" href="fetchdata">
-				<span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-			</NavLink>
-		</div>
-	</nav>
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="#" @onclick="CambiarEspacio">
+                <span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
+            </NavLink>
+            <NavLink class="nav-link" href="/home/{Id:int}/{Correo}/Espacios" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="fetchdata">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+    </nav>
 </div>
 
 @code {
-	// Demonstrates how a parent component can supply parameters
-	private bool collapseNavMenu = true;
+    // Demonstrates how a parent component can supply parameters
+    private bool collapseNavMenu = true;
 
-	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-	private void ToggleNavMenu()
-	{
-		collapseNavMenu = !collapseNavMenu;
-	}
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
 
-	public string idEspacio { get; set; } = "";
-	public string nombreDelUsuario { get; set; } = "";
-	public string bannerNombreEspacio { get; set; } = "";
-	public Usuario usuario { get; set; } = new Usuario();
-	protected override void OnInitialized()
-	{
-		var uri = new Uri(NavigationManager.Uri);
-		var segments = uri.Segments;
+    public string idEspacio { get; set; } = "";
+    public string nombreDelUsuario { get; set; } = "";
+    public string bannerNombreEspacio { get; set; } = "";
+    public string bannerAdminNombre { get; set; } = "";
+    public string bannerAdminApellido { get; set; } = "";
+    public Espacio espacio { get; set; } = new Espacio();
+    public Usuario usuario { get; set; } = new Usuario();
 
-		try
-		{
-				// El valor del parámetro de ruta está en el cuarto segmento de la URL
-				idEspacio = segments[2].TrimEnd('/'); // Elimina cualquier barra diagonal adicional
-				int idE = int.Parse(idEspacio);
-				var espacio = EspacioLogic.FindEspacio(idE);
-				bannerNombreEspacio = espacio.Nombre;
-		}
-		catch (Exception)
-		{
-			bannerNombreEspacio = "La cadena no es un número válido.";
-		}
-	}
+    // Propiedades para id y correo
+    public int Id { get; set; }
+    public string Correo { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var segments = uri.Segments;
+
+        try
+        {
+            // El valor del parámetro de ruta está en el cuarto segmento de la URL
+            idEspacio = segments[2].TrimEnd('/'); // Elimina cualquier barra diagonal adicional
+            int idE = int.Parse(idEspacio);
+            espacio = EspacioLogic.FindEspacio(idE);
+            bannerNombreEspacio = espacio.Nombre;
+            bannerAdminNombre = espacio.Admin.Nombre;
+            bannerAdminApellido = espacio.Admin.Apellido;
+
+            // Configurar id y correo
+            Id = idE; // Asigna el valor del ID
+            Correo = segments[3]; // Asigna el correo deseado
+        }
+        catch (Exception)
+        {
+            bannerNombreEspacio = "La cadena no es un número válido.";
+        }
+    }
+
+    private void CambiarEspacio()
+    {
+        // Puedes acceder a Id y Correo aquí
+        int id = Id; // Utiliza la propiedad Id
+        string correo = Correo; // Utiliza la propiedad Correo
+
+        string newHref = $"/home/{id}/{correo}/Espacios";
+        NavigationManager.NavigateTo(newHref);
+    }
+
+    private void MiMetodoDeClic()
+    {
+        // Código que se ejecutará cuando se haga clic en el botón
+    }
 }

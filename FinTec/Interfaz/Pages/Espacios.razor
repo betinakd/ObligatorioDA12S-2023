@@ -1,0 +1,32 @@
+﻿@page "/home/{Id:int}/{Correo}/Espacios"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+
+@foreach (var espacio in espacios)
+{
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title">@espacio.Nombre</h5>
+			<p class="card-text">@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
+			<button class="btn btn-primary" href="/home/{Id:int}/{Correo}">Ingresar</button>
+		</div>
+	</div>
+}
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public List<Espacio> espacios { get; set; } = new List<Espacio>();
+
+	protected override void OnInitialized()
+	{
+		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+	}
+}
