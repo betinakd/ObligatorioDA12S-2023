@@ -130,5 +130,10 @@ namespace Domain
 			_cambios.Add(cambio);
 		}
 
+		public bool PerteneceCorreo(string correo)
+		{
+			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Correo == correo));				
+		}
+
 	}
 }
