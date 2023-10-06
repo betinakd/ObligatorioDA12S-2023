@@ -37,5 +37,15 @@ namespace DomainTest
             var cg = new CategoriaGasto(categoria, _montoAcumulado, porcentaje);
             Assert.IsNotNull(cg);
         }
+
+        [TestMethod]
+        public void CategoriaGasto_Mismos_Valores_Monto_Porcentaje()
+        {
+            double _montoAcumulado = 15;
+            int _porcentaje = 15;
+            Categoria _categoria = new Categoria();
+            var cg = new CategoriaGasto(_categoria, _montoAcumulado, _porcentaje);
+            Assert.AreNotEqual(cg.MontoUsado, cg.Porcentaje);
+        }
     }
 }
