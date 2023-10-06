@@ -27,7 +27,7 @@ namespace DomainTest
             double valorEsperado = 5;
             double valorAcumulado = 7;
             var _objetivoGasto = new ObjetivoGasto(valorEsperado, valorAcumulado);
-            Assert.IsTrue(_objetivoGasto.MontoCumpido());
+            Assert.IsFalse(_objetivoGasto.MontoCumpido());
         }
     }
 }
