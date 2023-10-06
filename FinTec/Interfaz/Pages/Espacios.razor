@@ -10,19 +10,30 @@
 
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 <EspacioActual></EspacioActual>
+
 @foreach (var espacio in espacios)
 {
 	<div class="card">
 		<div class="card-body">
 			<h5 class="card-title"><strong>Nombre</strong>@espacio.Nombre</h5>
+			@if (espacio.Admin.Correo == Persistencia.Correo)
+			{
+				<p>Soy admin</p>
+			}
 			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
 			<button class="btn btn-primary" @onclick="() => ClickCambiarEspacio(espacio)">Cambiar de Espacio</button>
-
-			<button class="btn btn-primary">Cambiar Nombre</button>
+			@if (espacio.Admin.Correo == Persistencia.Correo)
+			{
+				<button class="btn btn-primary" @onclick="MostrarInput">Cambiar Nombre</button>
+				@if (mostrarInput)
+				{
+					<input type="text" @bind="nuevoNombre" />
+					<button class="btn btn-primary" @onclick="() => CambiarNombre(espacio)">Guardar</button>
+				}
+			}
 		</div>
 	</div>
 }
-
 
 <a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios">Crear Espacio</a>
 
@@ -55,5 +66,27 @@
 		Persistencia.Id = espacio.Id;
 		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 		Console.WriteLine("ClickCambiarEspacio ejecutado"); // Agrega esta línea
+	}
+
+	private bool mostrarInput = false;
+	private string nuevoNombre = string.Empty;
+
+	private void MostrarInput()
+	{
+		mostrarInput = !mostrarInput;
+	}
+
+	private void CambiarNombre(Espacio espacio)
+	{
+		try
+		{
+			espacio.Nombre = nuevoNombre;
+			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+		}
+		catch (Exception e)
+		{
+			Console.WriteLine(e.Message);
+		}
+		mostrarInput = false;
 	}
 }

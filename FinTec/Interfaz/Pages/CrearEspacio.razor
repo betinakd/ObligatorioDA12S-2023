@@ -11,13 +11,14 @@
 
 
 <input @bind="inputNombre" type="text" placeholder="Nombre de Espacio">
-
+<p style="color:red">@ErrorMsg</p>
 <button @onclick="() => ClickCrearUsuario()">Crear Nuevo Espacio</button>
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	[Parameter] public string inputNombre { get; set; }
+	[Parameter] public string ErrorMsg { get; set; }
 	public List<Espacio> espacios { get; set; } = new List<Espacio>();
 	public Usuario usuario { get; set; } = new Usuario();
 	protected override void OnInitialized()
@@ -28,13 +29,20 @@
 
 	private void ClickCrearUsuario()
 	{
+		try{
 		Espacio espacio = new Espacio()
 			{
 				Nombre = inputNombre,
 				Admin = usuario,
 			};
-		EspacioLogic.AddEspacio(espacio);
-		NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
+
+			EspacioLogic.AddEspacio(espacio);
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
+		}
+		catch (DomainEspacioException e)
+		{
+			ErrorMsg = e.Message;
+		}
 
 	}
 }
