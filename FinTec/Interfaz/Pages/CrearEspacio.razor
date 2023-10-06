@@ -9,17 +9,30 @@
 
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 
-<input type="text" placeholder="Nombre de Espacio">
+<input @bind="inputNombre" type="text" placeholder="Nombre de Espacio">
 
-<button >Crear Nuevo Espacio</button>
+<button @onclick="() => ClickCrearUsuario()">Crear Nuevo Espacio</button>
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
+	[Parameter] public string inputNombre { get; set; }
 	public List<Espacio> espacios { get; set; } = new List<Espacio>();
-
+	public Usuario usuario { get; set; } = new Usuario();
 	protected override void OnInitialized()
 	{
 		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
+	}
+
+	private void ClickCrearUsuario()
+	{
+		Espacio espacio = new Espacio()
+			{
+				Nombre = inputNombre,
+				Admin = usuario,
+			};
+		EspacioLogic.AddEspacio(espacio);
+		NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
 	}
 }
