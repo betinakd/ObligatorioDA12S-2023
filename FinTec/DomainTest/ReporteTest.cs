@@ -28,7 +28,7 @@ namespace DomainTest
             var _user = new Usuario();
             Reporte miReporte = new Reporte();
             miReporte.User = _user;
-            Assert.IsNull(miReporte.User);
+            Assert.IsNotNull(miReporte.User);
         }
     }
 }
