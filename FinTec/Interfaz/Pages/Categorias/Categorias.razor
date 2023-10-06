@@ -27,6 +27,9 @@
 			}
 			<p><strong>Estado:</strong> @(categoria.EstadoActivo ? "Activo" : "Inactivo")</p>
 			<button class="btn btn-primary" @onclick="() => ModificarCategoria(categoria)">Modificar</button>
+			<p>
+				<a class="btn btn-danger btn-sm" @onclick="() => EliminarCategoria(categoria)" href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
+			</p>
 		</div>
 	</div>
 }
@@ -41,5 +44,10 @@
 	private void ModificarCategoria(Categoria categoria)
 	{
 
+	}
+
+	private void EliminarCategoria(Categoria categoria)
+	{
+		EspacioLogic.FindEspacio(Id).Categorias.Remove(categoria);
 	}
 }
