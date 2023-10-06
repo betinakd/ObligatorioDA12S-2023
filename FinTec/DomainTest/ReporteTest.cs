@@ -22,5 +22,13 @@ namespace DomainTest
             Assert.AreEqual(miReporte._MiEspacio, _EspacioRepo);
         }
 
+        [TestMethod]
+        public void Reporte_Usuario_No_Nulo()
+        {
+            var _user = new Usuario();
+            Reporte miReporte = new Reporte();
+            miReporte.User = _user;
+            Assert.IsNull(miReporte.User);
+        }
     }
 }
