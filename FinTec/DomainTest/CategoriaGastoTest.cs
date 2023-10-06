@@ -9,7 +9,7 @@ namespace DomainTest
         public void CategoriaGasto_No_Nulo()
         {
             var _categoria = new CategoriaGasto();
-            Assert.IsNull(_categoria);
+            Assert.IsNotNull(_categoria);
         }
     }
 }
