@@ -4,88 +4,78 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
+@inject IJSRuntime JSRuntime
 
 
 <div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">FinTec</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-
-
-<div class="alert alert-success" role="alert">
-    <h4 class="alert-heading">@EspacioLogic.FindEspacio(Persistencia.Id).Nombre</h4>
-    <p> Bienvenido a este espacio</p>
-    <hr>
-    <p class="mb-0"><strong>Admin:</strong>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre @EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido</p>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="">FinTec</a>
+		<button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+	</div>
 </div>
 
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="#" @onclick="CambiarEspacio">
-                <span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
-            </NavLink>
-            <NavLink class="nav-link" href="#" @onclick="ClickUsuarios" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Usuarios
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
+	<nav class="flex-column">
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="#" @onclick="CambiarEspacio">
+				<span class="oi oi-home" aria-hidden="true"></span> Cambiar Espacio
+			</NavLink>
+			<NavLink class="nav-link" href="#" @onclick="ClickUsuarios" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Usuarios
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="counter">
+				<span class="oi oi-plus" aria-hidden="true"></span> Counter
+			</NavLink>
+		</div>
+		<div class="nav-item px-3">
+			<NavLink class="nav-link" href="fetchdata">
+				<span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+			</NavLink>
+		</div>
+	</nav>
 </div>
 
 @code {
-    // Demonstrates how a parent component can supply parameters
-    private bool collapseNavMenu = true;
+	// Demonstrates how a parent component can supply parameters
+	private bool collapseNavMenu = true;
 
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+	private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
+	private void ToggleNavMenu()
+	{
+		collapseNavMenu = !collapseNavMenu;
+	}
 
-    public string idEspacio { get; set; } = "";
-    public string nombreDelUsuario { get; set; } = "";
-    public string bannerNombreEspacio { get; set; } = "";
-    public string bannerAdminNombre { get; set; } = "";
-    public string bannerAdminApellido { get; set; } = "";
-    public Espacio espacio { get; set; } = new Espacio();
-    public Usuario usuario { get; set; } = new Usuario();
 
-    // Propiedades para id y correo
-    public int Id { get; set; }
-    public string Correo { get; set; }
+	public Espacio espacio { get; set; } = new Espacio();
+	public Usuario usuario { get; set; } = new Usuario();
 
-    protected override void OnInitialized()
-    {
-        
-    }
+	// Propiedades para id y correo
+	public int Id { get; set; }
+	public string Correo { get; set; }
 
-    private void CambiarEspacio()
-    {
+	protected override void OnInitialized()
+	{
 
-        string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Espacios";
-        NavigationManager.NavigateTo(newHref);
-    }
+	}
 
-    private void ClickUsuarios()
-    {
-        string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Usuarios";
-        NavigationManager.NavigateTo(newHref);
-    }
+	private void CambiarEspacio()
+	{
+
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Espacios";
+		NavigationManager.NavigateTo(newHref);
+		JSRuntime.InvokeVoidAsync("location.reload");
+	}
+
+	private void ClickUsuarios()
+	{
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Usuarios";
+		NavigationManager.NavigateTo(newHref);
+	}
+
 }

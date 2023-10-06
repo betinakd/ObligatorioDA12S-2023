@@ -1,5 +1,6 @@
 ﻿@page "/home/{Id:int}/{Correo}/Espacios"
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
 
 @using BussinesLogic
 @using Domain
@@ -8,14 +9,15 @@
 @inject Persistencia Persistencia;
 
 <PageTitle>FinTec Registro de Usuario</PageTitle>
-
+<EspacioActual></EspacioActual>
 @foreach (var espacio in espacios)
 {
 	<div class="card">
 		<div class="card-body">
 			<h5 class="card-title"><strong>Nombre</strong>@espacio.Nombre</h5>
 			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
-			<button class="btn btn-primary" onclick="ClickCambiarEspacio(espacio)">Cambiar de Espacio</button>
+			<button class="btn btn-primary" @onclick="() => ClickCambiarEspacio(espacio)">Cambiar de Espacio</button>
+
 			<button class="btn btn-primary">Cambiar Nombre</button>
 		</div>
 	</div>
@@ -38,5 +40,6 @@
 	{
 		Persistencia.Id = espacio.Id;
 		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+		Console.WriteLine("ClickCambiarEspacio ejecutado"); // Agrega esta línea
 	}
 }
