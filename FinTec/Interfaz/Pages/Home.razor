@@ -3,13 +3,14 @@
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
 @using Domain
 
 @page "/home/{Id:int}/{Correo}"
 
 <PageTitle>FinTec Home</PageTitle>
 
-
+<p>@Persistencia.Correo</p>
 @foreach (var espacio in Espacios)
 {
         <tr>

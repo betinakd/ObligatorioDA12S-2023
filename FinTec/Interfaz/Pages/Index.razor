@@ -4,6 +4,7 @@
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
 @page "/"
 @layout LoginLayout
 
@@ -87,7 +88,7 @@
 
 
 				};
-				EspacioLogic.AddEspacio(espacio);
+			EspacioLogic.AddEspacio(espacio);
 		}catch(Exception e)
 		{
 			Console.WriteLine(e.Message);
@@ -100,6 +101,9 @@
 			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Correo , Password);
 			ErrorMsg = "Usuario Correcto";
 			NavigationManager.NavigateTo($"/home/{usuarioLogeado.IdEspacioPrincipal}/{usuarioLogeado.Correo}");
+			Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
+			Persistencia.Correo=usuarioLogeado.Correo;
+			Console.WriteLine(Persistencia.Correo);
 
 		}
 		catch (BussinesLogicUsuarioException e)
