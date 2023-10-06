@@ -3,6 +3,7 @@
 @using BussinesLogic;
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
 @page "/"
 @layout LoginLayout
 
@@ -69,6 +70,7 @@
 		{
 			Usuario test = new Usuario()
 				{
+					IdEspacioPrincipal = 1,
 					Nombre = "Hola",
 					Apellido = "Hola",
 					Correo = "hola@gmail.com",
@@ -97,7 +99,7 @@
 		{
 			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Correo , Password);
 			ErrorMsg = "Usuario Correcto";
-			NavigationManager.NavigateTo($"/home?Correo={usuarioLogeado.Correo}&Contrasena={usuarioLogeado.Contrasena}");
+			NavigationManager.NavigateTo($"/home/{usuarioLogeado.IdEspacioPrincipal}/{usuarioLogeado.Correo}");
 
 		}
 		catch (BussinesLogicUsuarioException e)

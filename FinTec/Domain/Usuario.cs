@@ -5,6 +5,7 @@ namespace Domain
 {
 	public class Usuario
 	{
+		public int IdEspacioPrincipal { get; set; }
 		private string _contrasena;
 		public string Direccion { get; set; }
 		public string Contrasena

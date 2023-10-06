@@ -155,6 +155,14 @@ namespace DomainTest
 			usuario.Direccion = "direccion";
 			Assert.AreEqual(usuario.Direccion, "direccion");
 		}
+
+		[TestMethod]
+		public void Usuario_Tiene_idEspacioPrincipal()
+		{
+			Usuario usuario = new Usuario();
+			usuario.IdEspacioPrincipal = 1;
+			Assert.AreEqual(usuario.IdEspacioPrincipal, 1);
+		}
 	}
 }
 
