@@ -17,7 +17,7 @@ namespace DomainTest
         {
             Categoria cat = new Categoria();
             var categoria = new CategoriaGasto(cat);
-            Assert.IsNull(categoria.Categoria);
+            Assert.IsNotNull(categoria.Categoria);
         }
     }
 }
