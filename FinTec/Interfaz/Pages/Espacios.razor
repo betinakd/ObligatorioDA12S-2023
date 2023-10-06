@@ -23,17 +23,31 @@
 	</div>
 }
 
+
 <a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios">Crear Espacio</a>
+
 
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public List<Espacio> espacios { get; set; } = new List<Espacio>();
-
+	public Usuario usuario { get; set; } = new Usuario();
 	protected override void OnInitialized()
 	{
-		espacios = EspacioLogic.EspaciosByCorreo(Persistencia.Correo);
+
+		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
+	}
+
+	private void ClickCambiarNombre(Espacio espacio)
+	{
+		// Cambiar el nombre del espacio
+		espacio.Nombre = "HOLA";
+
+		// Redireccionar a otra página
+		string newHref = $"/home/{Id}/{Correo}/Espacios";
+		NavigationManager.NavigateTo(newHref);
 	}
 
 	public void ClickCambiarEspacio(Espacio espacio)
