@@ -12,10 +12,8 @@ namespace Domain
         public double MontoUsado { get { return _montoUsado; } set { _montoUsado = value;} }
         public int Porcentaje { get { return _porcentaje; } set { _porcentaje = value; } }
 
-        public CategoriaGasto()
-        {
+        public CategoriaGasto(){}
 
-        }
         public CategoriaGasto(Categoria c) 
         {
             _categoria = c;
