@@ -439,5 +439,25 @@ namespace DomainTest
 			espacio1.AgregarTransaccion(transaccion);
 			espacio1.BorrarCategoria(categoria1);
 		}
+
+		[TestMethod]
+		//[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Recibe_Cambio_Dos_Fechas_Iguales()
+		{
+			Cambio cambio1 = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 100,
+				FechaDeCambio = new System.DateTime(2018, 10, 10),
+			};
+			Cambio cambio2 = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 10,
+				FechaDeCambio = new System.DateTime(2018, 10, 10),
+			};
+			espacio1.AgregarCambio(cambio1);
+			espacio1.AgregarCambio(cambio2);
+		}
 	}
 }
