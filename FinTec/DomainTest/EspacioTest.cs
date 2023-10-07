@@ -456,5 +456,12 @@ namespace DomainTest
             espacio1.AsignarId();
             Assert.AreEqual(espacio1.Id, 1);
         }
+
+        [TestMethod]
+        public void Pertenece_Usuario_By_Correo_No_Admin()
+        {
+            espacio1.InvitarUsuario(usuario2);
+            Assert.IsTrue(espacio1.PerteneceCorreo(usuario2.Correo));
+        }
     }
 }
