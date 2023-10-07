@@ -98,5 +98,13 @@ namespace DomainTest
 
 			Assert.IsFalse(resultado);
 		}
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainCambioException))]
+        public void Valor_Moneda_PesosUy_Negativo()
+        {
+			var tipoDeCambio = new Cambio();
+			tipoDeCambio.Pesos = -200;
+		}
 	}
 }
