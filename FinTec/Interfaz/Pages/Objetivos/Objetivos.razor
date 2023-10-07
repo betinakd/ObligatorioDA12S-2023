@@ -9,6 +9,23 @@
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 <EspacioActual></EspacioActual>
 
+@foreach (var objetivos in EspacioLogic.FindEspacio(Persistencia.Id).Objetivos)
+{
+	<div class="card">
+		<div class="card-body">
+			<h5 class="card-title"><strong>Titulo del objetivo:</strong> @objetivos.Titulo</h5>
+			<p><strong>Monto maximo de gasto por mes:</strong>@objetivos.MontoMaximo</p>
+			@foreach(var categoria in objetivos.Categorias)
+			{
+				<p><strong>Categoria:</strong>@categoria.Nombre</p>
+			}
+			<p style="color:red">@ErrorMsg</p>
+			
+		</div>
+	</div>
+}
+
+
 <a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearObjetivos">Crear Objetivos</a>
 
 
@@ -16,5 +33,8 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+	private List<Categoria> categoriasSeleccionada;
+	
 
 }

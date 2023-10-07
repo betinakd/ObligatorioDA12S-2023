@@ -10,13 +10,67 @@
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 <EspacioActual></EspacioActual>
 
+<div class="form-group">
+    <label for="tituloObjetivo">Nombre de la Categoría:</label>
+    <input type="text" id="tituloObjetivo" class="form-control" @bind="tituloObjetivo" />
+</div>
 
-<p style="color:red">Error pone el mensaje</p>
-<button class="btn btn-primary">Crear</button>
+<div class="form-group">
+    <label for="montoObjetivo">Monto máximo de gasto por mes:</label>
+    <input type="number" id="montoObjetivo" class="form-control" @bind="montoObjetivo" />
+</div>
 
+<div class="form-group">
+    <label>Aplicar objetivo a las categorías:</label>
+    <select class="form-control" @bind="categoriasSeleccionadas" multiple>
+        @foreach (var categoria in categorias)
+        {
+            <option value="@categoria.Nombre">@categoria.Nombre</option>
+        }
+    </select>
+</div>
+
+<p style="color:red">@ErrorMsg</p>
+<button class="btn btn-primary" @onclick="Crear">Crear</button>
 
 @code {
-	[Parameter] public int Id { get; set; }
-	[Parameter] public string Correo { get; set; }
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Correo { get; set; }
+    private string ErrorMsg = "";
+    private string tituloObjetivo;
+    private double montoObjetivo;
+    private List<string> categoriasSeleccionadas = new List<string>();
+    private List<Categoria> categorias;
 
+    protected override void OnInitialized()
+    {
+        // Cargar la lista de categorías desde el espacio
+        categorias = EspacioLogic.FindEspacio(Persistencia.Id).Categorias;
+    }
+
+    private void Crear()
+    {
+        try
+        {
+            // Crear un nuevo objetivo con los valores ingresados
+            Objetivo nuevoObjetivo = new Objetivo
+                {
+                    Titulo = tituloObjetivo,
+                    MontoMaximo = montoObjetivo,
+                    Categorias = categoriasSeleccionadas.Select(nombre => new Categoria { Nombre = nombre }).ToList()
+                };
+
+            // Agregar el objetivo al espacio actual
+            Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
+            espacioActual.AgregarObjetivo(nuevoObjetivo);
+
+            // Redireccionar a la página de Objetivos
+            string newHref = $"/home/{Id}/{Correo}/Objetivos";
+            NavigationManager.NavigateTo(newHref);
+        }
+        catch (DomainCategoriaException e)
+        {
+            ErrorMsg = e.Message;
+        }
+    }
 }
