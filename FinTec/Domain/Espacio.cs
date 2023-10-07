@@ -141,12 +141,16 @@ namespace Domain
 		public void BorrarCategoria(Categoria categoria) {
 			if (Categorias.Contains(categoria))
 			{
-				if (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)))
+				if (TransaccionesContieneCategoria(categoria))
 					throw new DomainEspacioException("No se puede borrar una categoria que tiene transacciones asociadas");
 				Categorias.Remove(categoria);
 			}
 		}
-		public static void AumentarContadorId()
+
+		public bool TransaccionesContieneCategoria(Categoria categoria) {
+			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
+        }
+        public static void AumentarContadorId()
 		{
 			_contadorId++;
 		}
