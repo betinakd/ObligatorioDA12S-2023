@@ -1,0 +1,62 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearCuentaAhorro"
+@inject NavigationManager NavigationManager
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic
+@inject EspacioLogic EspacioLogic
+@inject Persistencia Persistencia
+
+<PageTitle>FinTec Crear Cuenta Ahorro</PageTitle>
+<EspacioActual></EspacioActual>
+
+<h1>Crear Cuenta de Ahorro</h1>
+
+<form>
+    <div class="form-group">
+        <label for="nombre">Nombre de la cuenta:</label>
+        <input type="text" class="form-control" id="nombre" @bind="Nombre">
+    </div>
+    <div class="form-group">
+        <label for="monto">Saldo inicial:</label>
+        <input type="number" class="form-control" id="monto" @bind="Monto">
+    </div>
+    <div class="form-group">
+        <label for="moneda">Moneda:</label>
+        <select class="form-control" id="moneda" @bind="Moneda">
+            <option value="PesosUruguayos">Pesos Uruguayos</option>
+            <option value="Dolar">Dólar</option>
+        </select>
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="CrearCuenta">Crear Cuenta de Ahorro</button>
+</form>
+
+<p style="color:red">@ErrorMsg</p>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Correo { get; set; }
+    public string ErrorMsg { get; set; }
+    public string Nombre { get; set; }
+    public double Monto { get; set; }
+    public TipoCambiario Moneda { get; set; }
+    
+    private void CrearCuenta()
+    {
+        try{
+            // Crear la cuenta de ahorro
+            var nuevaCuentaAhorro = new Ahorro
+                {
+                    Moneda = Moneda,
+                    Nombre = Nombre,
+                    Monto = Monto
+                };
+
+            EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaAhorro);
+            NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg = ex.Message;
+        }
+    }
+}

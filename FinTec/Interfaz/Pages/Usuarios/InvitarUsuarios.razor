@@ -1,0 +1,63 @@
+﻿@page "/home/{Id:int}/{Correo}/InvitarUsuarios"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Usuarios</PageTitle>
+<EspacioActual></EspacioActual>
+
+<h1>Seleccione el usuario que desea invitar :</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in UsuarioLogic.FindAllUsuario())
+        {
+            @if (!EspacioLogic.FindEspacio(Persistencia.Id).PerteneceCorreo(usuario.Correo) && EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
+            {
+                <tr>
+                    <td>@usuario.Nombre</td>
+                    <td>@usuario.Correo</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => AgregarUsuario(usuario)">Agregar Usuario</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<p style="color:red">@ErrorMsg</p>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Correo { get; set; }
+    public string ErrorMsg { get; set; }
+
+    private void AgregarUsuario(Usuario usuario)
+    {
+        try
+        {
+            // Agrega lógica para agregar el usuario al espacio aquí
+            // Por ejemplo, puedes llamar a un método en EspacioLogic
+            // para agregar el usuario al espacio actual.
+            EspacioLogic.FindEspacio(Persistencia.Id).InvitarUsuario(usuario);
+
+            // Redirige a la página de invitación de usuarios o realiza alguna otra acción después de agregar el usuario.
+            NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
+        }
+        catch (Exception ex)
+        {
+            ErrorMsg = ex.Message;
+        }
+    }
+}

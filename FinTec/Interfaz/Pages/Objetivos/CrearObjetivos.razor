@@ -1,0 +1,22 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearObjetivos"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+<EspacioActual></EspacioActual>
+
+
+<p style="color:red">Error pone el mensaje</p>
+<button class="btn btn-primary">Crear</button>
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+
+}

@@ -4,7 +4,6 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
-@inject IJSRuntime JSRuntime
 
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -28,6 +27,18 @@
 			</NavLink>
 			<NavLink class="nav-link" href="#" @onclick="ClickCategorias" Match="NavLinkMatch.All">
 				<span class="oi oi-home" aria-hidden="true"></span> Categorias
+			</NavLink>
+			<NavLink class="nav-link" href="#" @onclick="ClickObjetivos" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Objetivos
+			</NavLink>
+			<NavLink class="nav-link" href="#" @onclick="ClickTipoCambio" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Tipo Cambiario
+			</NavLink>
+			<NavLink class="nav-link" href="#" @onclick="ClickCuentas" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Cuentas
+			</NavLink>
+			<NavLink class="nav-link" href="#" @onclick="ClickTransacciones" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Transacciones
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
@@ -72,7 +83,6 @@
 
 		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Espacios";
 		NavigationManager.NavigateTo(newHref);
-		JSRuntime.InvokeVoidAsync("location.reload");
 	}
 
 	private void ClickUsuarios()
@@ -86,4 +96,29 @@
 		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Categorias";
 		NavigationManager.NavigateTo(newHref);
 	}
+
+	private void ClickObjetivos()
+	{
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Objetivos";
+		NavigationManager.NavigateTo(newHref);
+	}
+
+	private void ClickTipoCambio()
+	{
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/TipoCambiario";
+		NavigationManager.NavigateTo(newHref);
+	}
+
+	private void ClickCuentas()
+	{
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Cuentas";
+		NavigationManager.NavigateTo(newHref);
+	}
+
+	private void ClickTransacciones()
+	{
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones";
+		NavigationManager.NavigateTo(newHref);
+	}
+
 }

@@ -1,0 +1,70 @@
+﻿@page "/home/{Id:int}/{Correo}/AgregarTipoCambiario"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Agregar Tipo Cambiario</PageTitle>
+<EspacioActual></EspacioActual>
+
+<h1>Agregar Tipo Cambiario</h1>
+
+<form>
+	<div class="form-group">
+		<label for="moneda">Moneda:</label>
+		<input type="text" class="form-control" id="moneda" value="Dolar" readonly />
+	</div>
+	<div class="form-group">
+		<label for="valorPesos">Valor en Pesos Uruguayos:</label>
+		<input type="number" class="form-control" id="valorPesos" @bind="Pesos">
+	</div>
+	<div class="form-group">
+		<label for="fecha">Fecha:</label>
+		<input type="date" class="form-control" id="fecha" @bind="FechaDeCambio">
+	</div>
+	<p style="color:red">@ErrorMsg</p>
+	<button type="button" class="btn btn-primary" @onclick="AgregarCambio">Agregar Tipo Cambiario</button>
+</form>
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+	public string Moneda { get; set; }
+	public double Pesos { get; set; }
+	public DateTime FechaDeCambio { get; set; } = DateTime.Now;
+
+
+	private Cambio nuevoCambio = new Cambio();
+
+	private void AgregarCambio()
+	{
+		try
+		{
+			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+			Cambio cambio = new Cambio()
+				{
+					Moneda = Domain.TipoCambiario.Dolar,
+					Pesos = Pesos,
+					FechaDeCambio = FechaDeCambio.Date
+				};
+			try
+			{
+				espacio.AgregarCambio(cambio);
+				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
+			}
+			catch (DomainEspacioException ex)
+			{
+				ErrorMsg = ex.Message;
+			}
+		}
+		catch (DomainCambioException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+}

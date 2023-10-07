@@ -1,0 +1,23 @@
+﻿@page "/home/{Id:int}/{Correo}/Transacciones"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Tipo Cambiario</PageTitle>
+<EspacioActual></EspacioActual>
+<h1>Lista de Transacciones del espacio:</h1>
+
+<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccion">Crear Transacción</a>
+<p style="color:red">@ErrorMsg</p>
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+
+}

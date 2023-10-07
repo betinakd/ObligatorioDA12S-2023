@@ -1,0 +1,89 @@
+﻿@page "/home/{Id:int}/{Correo}/Cuentas"
+@inject NavigationManager NavigationManager
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic
+@inject EspacioLogic EspacioLogic
+@inject Persistencia Persistencia
+
+<PageTitle>FinTec Cuentas</PageTitle>
+<EspacioActual></EspacioActual>
+<a class="btn btn-danger btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaAhorro">Crear Cuenta Ahorro</a>
+<a class="btn btn-danger btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaCredito">Crear Cuenta Credito</a>
+<p style="color:red">@ErrorMsg</p>
+<h2>Cuentas de Ahorro:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Monto</th>
+            <th>Fecha de Creación</th>
+            <th>Moneda</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Ahorro))
+        {
+            <tr>
+                <td>@cuentaAhorro.Nombre</td>
+                <td>@cuentaAhorro.Monto</td>
+                <td>@cuentaAhorro.FechaCreacion</td>
+                <td>@cuentaAhorro.Moneda</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => ModificarCuenta(cuentaAhorro)">Modificar</button>
+                    <button class="btn btn-danger" @onclick="() => EliminarCuenta(cuentaAhorro)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Cuentas de Crédito:</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Banco Emisor</th>
+            <th>Número de Tarjeta</th>
+            <th>Crédito Disponible</th>
+            <th>Moneda</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Cierre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Credito))
+        {
+            <tr>
+                <td>@cuentaCredito.BancoEmisor</td>
+                <td>@cuentaCredito.NumeroTarjeta</td>
+                <td>@cuentaCredito.CreditoDisponible</td>
+                <td>@cuentaCredito.Moneda</td>
+                <td>@cuentaCredito.FechaCreacion</td>
+                <td>@cuentaCredito.FechaCierre</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="() => ModificarCuenta(cuentaCredito)">Modificar</button>
+                    <button class="btn btn-danger" @onclick="() => EliminarCuenta(cuentaCredito)">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p style="color:red">@ErrorMsg</p>
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Correo { get; set; }
+    public string ErrorMsg { get; set; }
+
+    private void ModificarCuenta(Cuenta cuenta)
+    {
+        // Implementa la lógica para la modificación de la cuenta
+    }
+
+    private void EliminarCuenta(Cuenta cuenta)
+    {
+        var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+        //Implementar en bussines logic
+        espacio.Cuentas.Remove(cuenta);      
+    }
+}

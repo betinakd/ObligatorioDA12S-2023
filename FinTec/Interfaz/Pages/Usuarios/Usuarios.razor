@@ -1,0 +1,78 @@
+﻿@page "/home/{Id:int}/{Correo}/Usuarios"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+<EspacioActual></EspacioActual>
+<h1>Lista de usuarios en el espacio actual:</h1>
+<table>
+	<thead>
+		<tr>
+			<th>Nombre</th>
+			<th>Apellido</th>
+			<th>Correo</th>
+			<th>Acciones</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre</td>
+			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido</td>
+			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo</td>
+			<td style="color:red">
+				Admin
+			</td>
+		</tr>
+		@foreach (var usuario in EspacioLogic.FindEspacio(Persistencia.Id).UsuariosInvitados)
+		{
+			<tr>
+				<td>@usuario.Nombre</td>
+				<td>@usuario.Apellido</td>
+				<td>@usuario.Correo</td>
+				@if (EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
+				{
+					<td>
+						<button class="btn btn-primary" @onclick="() => EliminarUsuario(usuario)">Eliminar</button>
+					</td>
+				}
+				else
+				{
+					<td>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>
+
+<p style="color:red">@ErrorMsg</p>
+<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/InvitarUsuarios">Invitar Usuarios</a>
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+
+	private void EliminarUsuario(Usuario usuario)
+	{
+		try
+		{
+			// Agrega lógica para eliminar al usuario del espacio aquí
+			// Por ejemplo, puedes llamar a un método en EspacioLogic
+			// para eliminar al usuario del espacio actual.
+			EspacioLogic.FindEspacio(Persistencia.Id).UsuariosInvitados.Remove(usuario);
+
+			// Recarga la página para reflejar los cambios
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Usuarios", true);
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+}

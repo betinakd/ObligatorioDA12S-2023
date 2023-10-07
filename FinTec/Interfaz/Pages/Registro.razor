@@ -88,6 +88,7 @@
 			{
 				UsuarioLogic.AddUsuario(usuario);
 				EspacioLogic.AddEspacio(espacioPrincipal);
+				usuario.IdEspacioPrincipal = espacioPrincipal.Id;
 				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
 				Persistencia.Id=espacioPrincipal.Id;
                 Persistencia.Correo=usuario.Correo;
