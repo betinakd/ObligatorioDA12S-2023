@@ -1,0 +1,19 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearCuentaAhorro"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Crear Cuenta Ahorro</PageTitle>
+<EspacioActual></EspacioActual>
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+
+}

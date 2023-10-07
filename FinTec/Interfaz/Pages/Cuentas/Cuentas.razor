@@ -1,0 +1,81 @@
+﻿@page "/home/{Id:int}/{Correo}/Cuentas"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Cuentas</PageTitle>
+<EspacioActual></EspacioActual>
+
+<a class="btn btn-danger btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaAhorro">Crear Cuenta Ahorro</a>
+<a class="btn btn-danger btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaCredito">Crear Cuenta Ahorro</a>
+<p style="color:red">@ErrorMsg</p>
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+	public double inputValor { get; set; }
+	public bool modificarValor { get; set; } = false;
+
+	private void AgregarCambio()
+	{
+		try
+		{
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+
+	private Cambio cambioEliminar;
+	private Cambio cambioModificar;
+
+	private void SeleccionarCambioAEliminar(Cambio cambio)
+	{
+		cambioEliminar = cambio;
+		EliminarCambio();
+	}
+	private void SeleccionarCambioModificar(Cambio cambio)
+	{
+		modificarValor = !modificarValor;
+		cambioModificar = cambio;
+	}
+
+	private void EliminarCambio()
+	{
+		try
+		{
+			if (cambioEliminar != null)
+			{
+				EspacioLogic.FindEspacio(Persistencia.Id).Cambios.Remove(cambioEliminar);
+				cambioEliminar = null;
+			}
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+
+	private void ModificarValor(Cambio cambio)
+	{
+		try
+		{
+			if (cambioModificar != null)
+			{
+				cambioModificar.Pesos = inputValor;
+			}
+			modificarValor = !modificarValor;
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+}
