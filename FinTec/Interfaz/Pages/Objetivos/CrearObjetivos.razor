@@ -51,7 +51,7 @@
 
     }
 
-    
+
     private void UpdateCategoriasSeleccionadas(ChangeEventArgs e)
     {
         var selectedValues = e.Value as IEnumerable<string>;
@@ -66,25 +66,35 @@
 
             // Crear un nuevo objetivo con los valores ingresados
             foreach (var categoria in categoriasSeleccionadas)
-			{
-				categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
-			}
-            
-
-            Objetivo nuevoObjetivo = new Objetivo
+            {
+                categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
+            }
+            if (categorias2.Count == 0)
+            {
+                throw new DomainCategoriaException("Debe seleccionar al menos una categoría");
+            }
+                try
                 {
+                    Objetivo nuevoObjetivo = new Objetivo
+                    {
+
                     Titulo = tituloObjetivo,
                     MontoMaximo = montoObjetivo,
                     Categorias = categorias2
-                };
+                    };
+                    // Agregar el objetivo al espacio actual
+                    Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
+                    espacioActual.AgregarObjetivo(nuevoObjetivo);
 
-            // Agregar el objetivo al espacio actual
-            Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
-            espacioActual.AgregarObjetivo(nuevoObjetivo);
-
-            // Redireccionar a la página de Objetivos
-            string newHref = $"/home/{Id}/{Correo}/Objetivos";
-            NavigationManager.NavigateTo(newHref);
+                    // Redireccionar a la página de Objetivos
+                    string newHref = $"/home/{Id}/{Correo}/Objetivos";
+                    NavigationManager.NavigateTo(newHref);
+                }
+                    catch(ArgumentException e)
+                {
+                    ErrorMsg = e.Message;
+			    }
+            
         }
         catch (DomainCategoriaException e)
         {
