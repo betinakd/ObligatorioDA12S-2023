@@ -25,17 +25,9 @@
 				<td>@cambio.Moneda</td>
 				<td>@cambio.Pesos</td>
 				<td>@cambio.FechaDeCambio</td>
-				@if (EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
-				{
-					<td>
-						<button class="btn btn-primary">Eliminar</button>
-					</td>
-				}
-				else
-				{
-					<td>
-					</td>
-				}
+				<td>
+					<button class="btn btn-primary" @onclick="() => SeleccionarCambioAEliminar(cambio)">Eliminar</button>
+				</td>
 			</tr>
 		}
 	</tbody>
@@ -54,6 +46,34 @@
 	{
 		try
 		{
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+
+	private Cambio CambioAEliminar;
+
+	private void SeleccionarCambioAEliminar(Cambio cambio)
+	{
+		CambioAEliminar = cambio;
+		EliminarCambio();
+	}
+	private void SeleccionarCambioModificar(Cambio cambio)
+	{
+		CambioAEliminar = cambio;
+	}
+
+	private void EliminarCambio()
+	{
+		try
+		{
+			if (CambioAEliminar != null)
+			{
+				EspacioLogic.FindEspacio(Persistencia.Id).Cambios.Remove(CambioAEliminar);
+				CambioAEliminar = null;
+			}
 		}
 		catch (Exception ex)
 		{
