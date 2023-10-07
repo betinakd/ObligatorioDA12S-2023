@@ -127,6 +127,8 @@ namespace Domain
 
 		public void AgregarCambio(Cambio cambio)
 		{
+			if(_cambios.Contains(cambio))
+				throw new DomainEspacioException("Ya existe un cambio para la fecha.");
 			_cambios.Add(cambio);
 		}
 
