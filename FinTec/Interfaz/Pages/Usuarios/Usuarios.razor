@@ -9,29 +9,47 @@
 <PageTitle>FinTec Registro de Usuario</PageTitle>
 <EspacioActual></EspacioActual>
 <h1>Lista de usuarios en el espacio actual:</h1>
-@* <table class="table">
+<table>
 	<thead>
 		<tr>
 			<th>Nombre</th>
+			<th>Apellido</th>
 			<th>Correo</th>
 			<th>Acciones</th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var usuario in UsuarioLogic.GetUsuarios())
+		<tr>
+			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre</td>
+			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido</td>
+			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo</td>
+			<td>
+			</td>
+		</tr>
+		@foreach (var usuario in EspacioLogic.FindEspacio(Persistencia.Id).UsuariosInvitados)
 		{
 			<tr>
 				<td>@usuario.Nombre</td>
+				<td>@usuario.Apellido</td>
 				<td>@usuario.Correo</td>
-				<td>
-					<button class="btn btn-primary">Eliminar</button>
-				</td>
+				@if (EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
+				{
+					<td>
+						<button class="btn btn-primary">Eliminar</button>
+					</td>
+				}
+				else
+				{
+					<td>
+					</td>
+				}
 			</tr>
 		}
-	</tbody> *@
+	</tbody>
+</table>
+
 <p style="color:red"></p>
 <a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/InvitarUsuarios">Invitar Usuarios</a>
-
 
 
 @code {
