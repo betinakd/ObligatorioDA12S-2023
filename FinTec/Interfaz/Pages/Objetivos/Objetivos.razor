@@ -1,0 +1,20 @@
+﻿@page "/home/{Id:int}/{Correo}/Objetivos"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Registro de Usuario</PageTitle>
+<EspacioActual></EspacioActual>
+
+<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearObjetivos">Crear Objetivos</a>
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+
+}
