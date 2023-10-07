@@ -441,7 +441,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		//[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_Recibe_Cambio_Dos_Fechas_Iguales()
 		{
 			Cambio cambio1 = new Cambio()
