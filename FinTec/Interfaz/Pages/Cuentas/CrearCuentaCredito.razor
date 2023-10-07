@@ -1,48 +1,78 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCuentaCredito"
-@inject NavigationManager NavigationManager;
+@inject NavigationManager NavigationManager
 @using BussinesLogic
 @using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
+@inject UsuarioLogic UsuarioLogic
+@inject EspacioLogic EspacioLogic
+@inject Persistencia Persistencia
 
-<PageTitle>FinTec Crear Cuenta Credito</PageTitle>
-
+<PageTitle>FinTec Crear Cuenta de Crédito</PageTitle>
 <EspacioActual></EspacioActual>
+
+<h1>Crear Cuenta de Crédito</h1>
+
+<form>
+	<div class="form-group">
+		<label for="bancoEmisor">Banco Emisor:</label>
+		<input type="text" class="form-control" id="bancoEmisor" @bind="BancoEmisor">
+	</div>
+	<div class="form-group">
+		<label for="numeroTarjeta">Número de Tarjeta:</label>
+		<input type="text" class="form-control" id="numeroTarjeta" @bind="NumeroTarjeta">
+	</div>
+	<div class="form-group">
+		<label for="creditoDisponible">Crédito Disponible:</label>
+		<input type="number" class="form-control" id="creditoDisponible" @bind="CreditoDisponible">
+	</div>
+	<div class="form-group">
+		<label for="moneda">Moneda:</label>
+		<select class="form-control" id="moneda" @bind="Moneda">
+			<option value="PesosUruguayos">Pesos Uruguayos</option>
+			<option value="Dolar">Dólar</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="fechaCierre">Fecha de Cierre:</label>
+		<input type="date" class="form-control" id="fechaCierre" @bind="FechaCierre">
+	</div>
+	<button type="button" class="btn btn-primary" @onclick="CrearCuenta">Crear Cuenta de Crédito</button>
+</form>
+
+<p style="color:red">@ErrorMsg</p>
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	public string Moneda { get; set; }
-	public double Pesos { get; set; }
-	public DateTime FechaDeCambio { get; set; } = DateTime.Now;
+	public string BancoEmisor { get; set; }
+	public string NumeroTarjeta { get; set; }
+	public double CreditoDisponible { get; set; }
+	public TipoCambiario Moneda { get; set; }
+	public DateTime FechaCierre { get; set; } = DateTime.Now;
 
-
-	private Cambio nuevoCambio = new Cambio();
-
-	private void AgregarCambio()
+	private void CrearCuenta()
 	{
 		try
 		{
-			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-			Cambio cambio = new Cambio()
+			var nuevaCuentaCredito = new Credito
 				{
-					Moneda = Domain.TipoCambiario.Dolar,
-					Pesos = Pesos,
-					FechaDeCambio = FechaDeCambio.Date
+					BancoEmisor = BancoEmisor,
+					NumeroTarjeta = NumeroTarjeta,
+					CreditoDisponible = CreditoDisponible,
+					Moneda = Moneda,
+					FechaCierre = FechaCierre
 				};
 			try
 			{
-				espacio.AgregarCambio(cambio);
-				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
+				EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaCredito);
+				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
 			}
-			catch (DomainEspacioException ex)
+			catch (Exception ex)
 			{
 				ErrorMsg = ex.Message;
 			}
 		}
-		catch (DomainCambioException ex)
+		catch (DomainCuentaException ex)
 		{
 			ErrorMsg = ex.Message;
 		}
