@@ -4,7 +4,6 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
-@inject IJSRuntime JSRuntime
 
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -31,6 +30,9 @@
 			</NavLink>
 			<NavLink class="nav-link" href="#" @onclick="ClickObjetivos" Match="NavLinkMatch.All">
 				<span class="oi oi-home" aria-hidden="true"></span> Objetivos
+			</NavLink>
+			<NavLink class="nav-link" href="#" @onclick="ClickTipoCambio" Match="NavLinkMatch.All">
+				<span class="oi oi-home" aria-hidden="true"></span> Tipo Cambiario
 			</NavLink>
 		</div>
 		<div class="nav-item px-3">
@@ -75,7 +77,6 @@
 
 		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Espacios";
 		NavigationManager.NavigateTo(newHref);
-		JSRuntime.InvokeVoidAsync("location.reload");
 	}
 
 	private void ClickUsuarios()
@@ -95,5 +96,12 @@
 		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/Objetivos";
 		NavigationManager.NavigateTo(newHref);
 	}
+
+	private void ClickTipoCambio()
+	{
+		string newHref = $"/home/{Persistencia.Id}/{Persistencia.Correo}/TipoCambiario";
+		NavigationManager.NavigateTo(newHref);
+	}
+	
 
 }
