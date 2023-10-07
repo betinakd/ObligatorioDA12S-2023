@@ -71,7 +71,6 @@
 		{
 			Usuario test = new Usuario()
 				{
-					IdEspacioPrincipal = 1,
 					Nombre = "Hola",
 					Apellido = "Hola",
 					Correo = "hola@gmail.com",
@@ -88,6 +87,7 @@
 
 
 				};
+			test.IdEspacioPrincipal = espacio.Id;
 			EspacioLogic.AddEspacio(espacio);
 		}catch(Exception e)
 		{
