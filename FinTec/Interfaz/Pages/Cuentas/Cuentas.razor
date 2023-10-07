@@ -82,6 +82,8 @@
 
     private void EliminarCuenta(Cuenta cuenta)
     {
-        // Implementa la lógica para la eliminación de la cuenta
+        var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+        //Implementar en bussines logic
+        espacio.Cuentas.Remove(cuenta);      
     }
 }
