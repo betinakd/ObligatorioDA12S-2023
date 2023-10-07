@@ -1,7 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Categorias"
-@inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
-
+@inject NavigationManager NavigationManager;
 @using BussinesLogic
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
@@ -26,6 +24,24 @@
 				<p><strong>Tipo de Ingreso:</strong> Costo</p>
 			}
 			<p><strong>Estado:</strong> @(categoria.EstadoActivo ? "Activo" : "Inactivo")</p>
+			@if (activadoModificar)
+			{
+				<div class="form-group">
+					<label>Tipo de Ingreso:</label>
+					<select class="form-control" @bind="tipoIngresoSeleccionado">
+						<option value="Ingreso">Ingreso</option>
+						<option value="Costo">Costo</option>
+					</select>
+				</div>
+
+				<div class="form-group">
+					<label>Estado:</label>
+					<select class="form-control" @bind="estadoSeleccionado">
+						<option value="Activa">Activa</option>
+						<option value="Inactiva">Inactiva</option>
+					</select>
+				</div>
+			}
 			<p style="color:red">@ErrorMsg</p>
 			<button class="btn btn-primary" @onclick="() => ModificarCategoria(categoria)">Modificar</button>
 			<p>
@@ -42,10 +58,46 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
+	public bool activadoModificar { get; set; } = false;
+	public string tipoIngresoSeleccionado = "Ingreso";
+	public string estadoSeleccionado = "Activa";
+	private bool estadoActivo;
+	private TipoCategoria tipo;
 
 	private void ModificarCategoria(Categoria categoria)
 	{
 
+
+		switch (estadoSeleccionado)
+		{
+			case "Activa":
+				estadoActivo = true;
+				break;
+			case "Inactiva":
+				estadoActivo = false;
+				break;
+		}
+
+		switch (tipoIngresoSeleccionado)
+		{
+			case "Ingreso":
+				tipo = TipoCategoria.Ingreso;
+				break;
+			case "Costo":
+				tipo = TipoCategoria.Costo;
+				break;
+		}
+
+		try
+		{
+			categoria.EstadoActivo = estadoActivo;
+			categoria.Tipo = tipo;
+		}
+		catch (DomainEspacioException e)
+		{
+			ErrorMsg = e.Message;
+		}
+		activadoModificar = !activadoModificar;
 	}
 
 	private void EliminarCategoria(Categoria categoria)
