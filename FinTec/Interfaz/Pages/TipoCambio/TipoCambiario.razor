@@ -28,7 +28,18 @@
 				<td>
 					<button class="btn btn-primary" @onclick="() => SeleccionarCambioAEliminar(cambio)">Eliminar</button>
 				</td>
+				<td>
+					<button class="btn btn-primary" @onclick="() => SeleccionarCambioModificar(cambio)">Modificar</button>
+				</td>
 			</tr>
+			@if (modificarValor && cambioModificar == cambio)
+			{
+				<label for="idModificar">
+					Modificar Valor:
+				</label>
+				<input id="idModificar" type="number" @bind="inputValor">
+				<button class="btn btn-primary" @onclick="() => ModificarValor(cambio)">Modificar</button>
+			}
 		}
 	</tbody>
 </table>
@@ -41,6 +52,8 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
+	public double inputValor { get; set; }
+	public bool modificarValor { get; set; } = false;
 
 	private void AgregarCambio()
 	{
@@ -53,27 +66,45 @@
 		}
 	}
 
-	private Cambio CambioAEliminar;
+	private Cambio cambioEliminar;
+	private Cambio cambioModificar;
 
 	private void SeleccionarCambioAEliminar(Cambio cambio)
 	{
-		CambioAEliminar = cambio;
+		cambioEliminar = cambio;
 		EliminarCambio();
 	}
 	private void SeleccionarCambioModificar(Cambio cambio)
 	{
-		CambioAEliminar = cambio;
+		modificarValor = !modificarValor;
+		cambioModificar = cambio;
 	}
 
 	private void EliminarCambio()
 	{
 		try
 		{
-			if (CambioAEliminar != null)
+			if (cambioEliminar != null)
 			{
-				EspacioLogic.FindEspacio(Persistencia.Id).Cambios.Remove(CambioAEliminar);
-				CambioAEliminar = null;
+				EspacioLogic.FindEspacio(Persistencia.Id).Cambios.Remove(cambioEliminar);
+				cambioEliminar = null;
 			}
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+
+	private void ModificarValor(Cambio cambio)
+	{
+		try
+		{
+			if (cambioModificar != null)
+			{
+				cambioModificar.Pesos = inputValor;
+			}
+			modificarValor = !modificarValor;
 		}
 		catch (Exception ex)
 		{
