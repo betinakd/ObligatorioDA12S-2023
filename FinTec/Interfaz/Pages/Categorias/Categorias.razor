@@ -26,6 +26,7 @@
 				<p><strong>Tipo de Ingreso:</strong> Costo</p>
 			}
 			<p><strong>Estado:</strong> @(categoria.EstadoActivo ? "Activo" : "Inactivo")</p>
+			<p style="color:red">@ErrorMsg</p>
 			<button class="btn btn-primary" @onclick="() => ModificarCategoria(categoria)">Modificar</button>
 			<p>
 				<a class="btn btn-danger btn-sm" @onclick="() => EliminarCategoria(categoria)" href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
@@ -40,6 +41,7 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
 
 	private void ModificarCategoria(Categoria categoria)
 	{
@@ -48,6 +50,13 @@
 
 	private void EliminarCategoria(Categoria categoria)
 	{
-		EspacioLogic.FindEspacio(Id).Categorias.Remove(categoria);
+		try
+		{
+			EspacioLogic.FindEspacio(Id).BorrarCategoria(categoria);
+		}
+		catch (DomainEspacioException e)
+		{
+			ErrorMsg = e.Message;
+		}
 	}
 }
