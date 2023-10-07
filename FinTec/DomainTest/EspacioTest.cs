@@ -450,5 +450,12 @@ namespace DomainTest
 			espacio1.AgregarCambio(cambio1);
 			espacio1.AgregarCambio(cambio2);
 		}
+
+		[TestMethod]
+		public void Suma_Uno_A_Contador_Static_Y_Lo_Asigna_A_Id()
+		{
+			espacio1.AsignarId();
+			Assert.AreEqual(espacio1.Id, 1);
+        }
 	}
 }
