@@ -36,7 +36,7 @@
 				@if (EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
 				{
 					<td>
-						<button class="btn btn-primary">Eliminar</button>
+						<button class="btn btn-primary" @onclick="() => EliminarUsuario(usuario)">Eliminar</button>
 					</td>
 				}
 				else
@@ -49,12 +49,30 @@
 	</tbody>
 </table>
 
-<p style="color:red"></p>
+<p style="color:red">@ErrorMsg</p>
 <a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/InvitarUsuarios">Invitar Usuarios</a>
 
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
 
+	private void EliminarUsuario(Usuario usuario)
+	{
+		try
+		{
+			// Agrega lógica para eliminar al usuario del espacio aquí
+			// Por ejemplo, puedes llamar a un método en EspacioLogic
+			// para eliminar al usuario del espacio actual.
+			EspacioLogic.FindEspacio(Persistencia.Id).UsuariosInvitados.Remove(usuario);
+
+			// Recarga la página para reflejar los cambios
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Usuarios", true);
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
 }
