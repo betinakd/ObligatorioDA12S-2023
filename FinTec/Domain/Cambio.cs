@@ -25,8 +25,8 @@ namespace Domain
 			}
 			set
 			{
-				if (value > 0)
-					throw new Exception("El monto en pesos uruguayos debe ser mayor a 0");
+				if (value <= 0)
+					throw new DomainCambioException("El monto en pesos uruguayos debe ser mayor a 0");
 				_pesos = value;
 			}
 		}
