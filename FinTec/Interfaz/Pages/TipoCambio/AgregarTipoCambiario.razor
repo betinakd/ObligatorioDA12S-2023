@@ -62,7 +62,7 @@
 				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
 			}
 		}
-		catch (DomainCategoriaException ex)
+		catch (DomainCambioException ex)
 		{
 			ErrorMsg = ex.Message;
 		}
