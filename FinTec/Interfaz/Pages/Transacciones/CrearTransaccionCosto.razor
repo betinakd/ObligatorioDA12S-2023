@@ -1,0 +1,129 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionCosto"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Agregar Tipo Cambiario</PageTitle>
+<EspacioActual></EspacioActual>
+
+<h1>Crear Transacción:</h1>
+
+<p style="color:red">@ErrorMsg</p>
+
+
+<form>
+    <div class="form-group">
+		<label for="titulo">Titulo:</label>
+	    <input type="text" class="form-control" id="titulo" @bind="Titulo">
+    </div>
+
+    <div class="form-group">
+		<label for="monto">Monto:</label>
+		<input type="number" class="form-control" id="monto" @bind="Monto">
+    </div>
+
+    <div class="form-group">
+        <label for="categoria">Categoría:</label>
+        <select class="form-control" id="categoria" @onchange="SeleccionarCategoria">
+            @foreach (Categoria categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
+            {
+                if (categoria.Tipo.ToString() == "Costo")
+                {
+                    <option value="@categoria.Nombre">@categoria.Nombre</option>
+                }
+
+
+            }
+        </select>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label for="cuenta">Cuentas de credito:</label>
+        <select class="form-control" id="cuenta" @onchange="SeleccionarCuenta">
+            @foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Credito))
+            {
+                <option value="@cuentaCredito.Moneda">@cuentaCredito.Moneda.ToString()</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="cuenta">Cuentas de ahorro:</label>
+        <select class="form-control" id="cuenta" @onchange="SeleccionarCuenta">
+            @foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Ahorro))
+            {
+                <option value="@cuentaAhorro.Moneda">@cuentaAhorro.Moneda.ToString()</option>
+            }
+        </select>
+    </div>
+
+    <button type="button" class="btn btn-primary" @onclick="GenerarTransaccion">Crear Transacción</button>
+</form>
+
+
+
+@code {
+    [Parameter] public int Id { get; set; }
+    [Parameter] public string Correo { get; set; }
+    public string ErrorMsg { get; set; }
+    private int IdCategoriaSeleccionada;
+    private int IdCuentaSeleccionada;
+    public Espacio espacioActual { get; set; }
+    public Cuenta cuenta1;
+    private string Titulo;
+    private double Monto;
+    private Categoria categoria1;
+
+
+    private void SeleccionarCategoria(ChangeEventArgs e)
+    {
+        string categoriaSeleccionada = e.Value.ToString();
+        categoria1 = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault(c => c.Nombre == categoriaSeleccionada);
+    }
+
+    private void SeleccionarCuenta(ChangeEventArgs e)
+    {
+        string cuentaSeleccionada = e.Value.ToString();
+        cuenta1 = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.FirstOrDefault(c => c.ToString() == cuentaSeleccionada);
+    }
+
+    
+
+    private void GenerarTransaccion()
+    {
+        try
+        {
+            var nuevaTransaccion = new Transaccion
+            {
+                Titulo = Titulo,
+                CategoriaTransaccion = categoria1,
+				CuentaMonetaria = cuenta1,
+				Monto = Monto,
+				Moneda= cuenta1.Moneda,
+            };
+            try
+            {
+                EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
+                NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones"); 
+            }
+            catch (DomainCategoriaException e)
+            {
+                ErrorMsg = e.Message;
+            }
+            catch (DomainCuentaException e)
+            {
+                ErrorMsg = e.Message;
+            }
+        }
+        catch (DomainTransaccionException e)
+		{
+			ErrorMsg = e.Message;
+		}
+    }
+}

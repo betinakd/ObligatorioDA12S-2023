@@ -10,7 +10,35 @@
 <EspacioActual></EspacioActual>
 <h1>Lista de Transacciones del espacio:</h1>
 
-<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccion">Crear Transacción</a>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Titulo</th>
+			<th>Fecha</th>
+			<th>Monto</th>
+			<th>Moneda</th>
+			<th>Cuenta</th>
+			<th>Categoría</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Transaccion transaccion in EspacioLogic.FindEspacio(Persistencia.Id).Transacciones)
+		{
+			<tr>
+				<td>@transaccion.Titulo</td>
+				<td>@transaccion.FechaTransaccion</td>
+				<td>@transaccion.Monto</td>
+				<td>@transaccion.CuentaMonetaria.Moneda.ToString()</td>
+				<td>@transaccion.CuentaMonetaria.ToString()</td>
+				<td>@transaccion.CategoriaTransaccion.Nombre</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+
+<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionCosto">Crear Transacción Costo</a>
+<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionIngreso">Crear Transacción Ingreso</a>
 <p style="color:red">@ErrorMsg</p>
 
 
