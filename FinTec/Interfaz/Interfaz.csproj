@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Pages\Registro - Copia.razor.css" />
     <None Remove="Pages\Registro.razor.css" />
   </ItemGroup>
@@ -29,10 +25,6 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Pages\Transacciones\CrearTransaccionIngreso.razor" />
   </ItemGroup>
 
 </Project>
