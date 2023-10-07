@@ -23,7 +23,8 @@
 			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre</td>
 			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido</td>
 			<td>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo</td>
-			<td>
+			<td style="color:red">
+				Admin
 			</td>
 		</tr>
 		@foreach (var usuario in EspacioLogic.FindEspacio(Persistencia.Id).UsuariosInvitados)
