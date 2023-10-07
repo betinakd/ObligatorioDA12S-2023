@@ -146,5 +146,17 @@ namespace Domain
 				Categorias.Remove(categoria);
 			}
 		}
-	}
+		public static void AumentarContadorId()
+		{
+			_contadorId++;
+		}
+
+		public void AsignarId()
+		{			
+            Id = _contadorId;
+            AumentarContadorId();
+        }
+
+
+    }
 }
