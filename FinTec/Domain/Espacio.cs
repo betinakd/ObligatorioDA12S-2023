@@ -4,7 +4,12 @@ namespace Domain
 {
 	public class Espacio
 	{
-		private static int _contadorId = 1;
+
+        public Espacio()
+        {
+        }
+
+        private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
@@ -89,10 +94,6 @@ namespace Domain
 					throw new DomainEspacioException("El espacio debe tener un administrador");
 				_admin = value;
 			}
-		}
-		public Espacio()
-		{
-			Id = _contadorId++;
 		}
 
 		public void InvitarUsuario(Usuario usuario)
