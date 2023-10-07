@@ -310,7 +310,7 @@ namespace DomainTest
 
 		[TestMethod]
 		[ExpectedException(typeof(DomainEspacioException))]
-		public void Excepcion_Se_Agrega_Transaccion_Dolares_Sin_Cambio_Fecha() 
+		public void Excepcion_Se_Agrega_Transaccion_Dolares_Sin_Cambio_Fecha()
 		{
 			Transaccion transaccion = new Transaccion()
 			{
@@ -385,7 +385,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Static_Contador_De_Id() {
+		public void Static_Contador_De_Id()
+		{
 			var espacio = new Espacio();
 			var espacio2 = new Espacio();
 			espacio.Id = 1;
@@ -393,7 +394,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Recibe_Correo_Retorna_True_Si_Usuario_Pertenece_Espacio() {
+		public void Recibe_Correo_Retorna_True_Si_Usuario_Pertenece_Espacio()
+		{
 			var espacio = new Espacio()
 			{
 				Admin = new Usuario()
@@ -412,6 +414,30 @@ namespace DomainTest
 			espacio1.AgregarCategoria(categoria1);
 			espacio1.BorrarCategoria(categoria1);
 			Assert.AreEqual(espacio1.Categorias.Count, 0);
+		}
+
+
+
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Borrar_Categoria_Asociada_Transaccion()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			Transaccion transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = categoria1,
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.Dolar,
+				},
+			};
+			espacio1.AgregarTransaccion(transaccion);
+			espacio1.BorrarCategoria(categoria1);
 		}
 	}
 }
