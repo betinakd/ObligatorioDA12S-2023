@@ -24,7 +24,7 @@
 				<p><strong>Tipo de Ingreso:</strong> Costo</p>
 			}
 			<p><strong>Estado:</strong> @(categoria.EstadoActivo ? "Activo" : "Inactivo")</p>
-			@if (activadoModificar)
+			@if (activadoModificar && categoria.Equals(categoriaSelec))
 			{
 				<div class="form-group">
 					<label>Tipo de Ingreso:</label>
@@ -63,10 +63,10 @@
 	public string estadoSeleccionado = "Activa";
 	private bool estadoActivo;
 	private TipoCategoria tipo;
-
+	public Categoria categoriaSelec { get; set; } = new Categoria();
 	private void ModificarCategoria(Categoria categoria)
 	{
-
+		categoriaSelec = categoria;
 
 		switch (estadoSeleccionado)
 		{
