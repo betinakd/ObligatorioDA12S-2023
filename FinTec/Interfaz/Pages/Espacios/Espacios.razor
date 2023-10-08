@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Espacios"
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
 
 @using BussinesLogic
 @using Domain
@@ -18,17 +17,17 @@
 			<h5 class="card-title"><strong>Nombre</strong>@espacio.Nombre</h5>
 			@if (espacio.Admin.Correo == Persistencia.Correo)
 			{
-				<p>Soy admin</p>
+				<p>Soy administrador</p>
 			}
 			<p class="card-text"><Strong>Admin:</Strong>@($"{espacio.Admin.Nombre} {espacio.Admin.Apellido}")</p>
-			<button class="btn btn-primary" @onclick="() => ClickCambiarEspacio(espacio)">Cambiar de Espacio</button>
+			<button class="btn btn-primary" @onclick="() => ClickCambiarDeEspacio(espacio)">Cambiar de Espacio</button>
 			@if (espacio.Admin.Correo == Persistencia.Correo)
 			{
 				<button class="btn btn-primary" @onclick="MostrarInput">Cambiar Nombre</button>
 				@if (mostrarInput)
 				{
 					<input type="text" @bind="nuevoNombre" />
-					
+
 					<button class="btn btn-primary" @onclick="() => CambiarNombre(espacio)">Guardar</button>
 					<p style="color:red">@ErrorMsg</p>
 				}
@@ -44,8 +43,8 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public List<Espacio> espacios { get; set; } = new List<Espacio>();
-	public Usuario usuario { get; set; } = new Usuario();
+	public List<Espacio>? espacios { get; set; }
+	public Usuario? usuario { get; set; }
 	public string? ErrorMsg { get; set; }
 	protected override void OnInitialized()
 	{
@@ -54,21 +53,10 @@
 		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
 	}
 
-	private void ClickCambiarNombre(Espacio espacio)
-	{
-		// Cambiar el nombre del espacio
-		espacio.Nombre = "HOLA";
-
-		// Redireccionar a otra página
-		string newHref = $"/home/{Id}/{Correo}/Espacios";
-		NavigationManager.NavigateTo(newHref);
-	}
-
-	public void ClickCambiarEspacio(Espacio espacio)
+	public void ClickCambiarDeEspacio(Espacio espacio)
 	{
 		Persistencia.Id = espacio.Id;
 		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
-		Console.WriteLine("ClickCambiarEspacio ejecutado"); // Agrega esta línea
 	}
 
 	private bool mostrarInput = false;
@@ -91,6 +79,6 @@
 		catch (DomainEspacioException e)
 		{
 			ErrorMsg = e.Message;
-		}	
+		}
 	}
 }
