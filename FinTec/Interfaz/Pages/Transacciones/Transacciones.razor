@@ -10,7 +10,9 @@
 <EspacioActual></EspacioActual>
 <h1>Lista de Transacciones del espacio:</h1>
 
+<h3> Transacciones de costos:</h3>
 <table class="table">
+	
 	<thead>
 		<tr>
 			<th>Titulo</th>
@@ -22,14 +24,71 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (Transaccion transaccion in EspacioLogic.FindEspacio(Persistencia.Id).Transacciones)
+		@foreach (TransaccionCosto transaccion in (EspacioLogic.FindEspacio(Persistencia.Id).Transacciones.Where(c => c is TransaccionCosto)))
 		{
 			<tr>
 				<td>@transaccion.Titulo</td>
 				<td>@transaccion.FechaTransaccion</td>
-				<td>@transaccion.Monto</td>
-				<td>@transaccion.CuentaMonetaria.Moneda.ToString()</td>
-				<td>@transaccion.CuentaMonetaria.ToString()</td>
+				
+
+				
+					@if (transaccion.CuentaMonetaria is Ahorro cuentaAhorro)
+					{
+						<td>@cuentaAhorro.Monto</td>
+						<td>@cuentaAhorro.Moneda</td>
+						<td>@cuentaAhorro.Nombre</td>
+
+					}
+					else if (transaccion.CuentaMonetaria is Credito cuentaCredito)
+					{
+						
+						<td>@cuentaCredito.CreditoDisponible</td>
+						<td>@cuentaCredito.Moneda</td>
+						<td><text>Banco:</text>@cuentaCredito.BancoEmisor <text>|	</text> <text>Num:</text>@cuentaCredito.NumeroTarjeta</td>
+					}
+				<td>@transaccion.CategoriaTransaccion.Nombre</td>		
+			</tr>
+		}
+	</tbody>
+</table>
+
+<br>
+<br>
+
+<h3> Transacciones de ingresos:</h3>
+<table class="table">
+
+	<thead>
+		<tr>
+			<th>Titulo</th>
+			<th>Fecha</th>
+			<th>Monto</th>
+			<th>Moneda</th>
+			<th>Cuenta</th>
+			<th>Categoría</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (TransaccionIngreso transaccion in (EspacioLogic.FindEspacio(Persistencia.Id).Transacciones.Where(c => c is TransaccionIngreso)))
+		{
+			<tr>
+				<td>@transaccion.Titulo</td>
+				<td>@transaccion.FechaTransaccion</td>
+
+				@if (transaccion.CuentaMonetaria is Ahorro cuentaAhorro)
+				{
+					<td>@cuentaAhorro.Monto</td>
+					<td>@cuentaAhorro.Moneda</td>
+					<td>@cuentaAhorro.Nombre</td>
+
+				}
+				else if (transaccion.CuentaMonetaria is Credito cuentaCredito)
+				{
+
+					<td>@cuentaCredito.CreditoDisponible</td>
+					<td>@cuentaCredito.Moneda</td>
+					<td><text>Banco:</text>@cuentaCredito.BancoEmisor <text>|	</text> <text>Num:</text>@cuentaCredito.NumeroTarjeta</td>
+				}
 				<td>@transaccion.CategoriaTransaccion.Nombre</td>
 			</tr>
 		}
