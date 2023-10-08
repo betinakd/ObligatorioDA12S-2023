@@ -44,7 +44,7 @@ namespace Domain
 			}
             set
             {
-                if (value.Count == 0)
+                if (value.Count == 0 || value == null)
 					throw new DomainObjetivoException("Debe seleccionar al menos una categoría.");
 				_categorias = value;
             }
