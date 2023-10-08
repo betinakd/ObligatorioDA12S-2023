@@ -7,7 +7,8 @@
 @inject Persistencia Persistencia
 
 <PageTitle>FinTec Crear Cuenta de Crédito</PageTitle>
-<TituloRosado Titulo="Crear Cuenta de Crédito" Subtitulo="Creé la cuenta de crédito que deseé recuerde que el numero de tarjeta son 4 dígitos y monto debe ser mayor a 0."></TituloRosado>
+<TituloRosado Titulo="Crear Cuenta de Crédito"
+			  Subtitulo="Creé la cuenta de crédito que deseé recuerde que el numero de tarjeta son 4 dígitos y monto debe ser mayor a 0."></TituloRosado>
 <EspacioActual></EspacioActual>
 
 <form>
@@ -38,7 +39,10 @@
 			<td><input type="date" class="form-control" id="fechaCierre" @bind="FechaCierre"></td>
 		</tr>
 	</table>
-	<button type="button" class="btn btn-primary" @onclick="CrearCuenta">Crear Cuenta de Crédito</button>
+	<button type="button" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+	@onclick="CrearCuenta">
+		Crear Cuenta de Crédito
+	</button>
 </form>
 
 <p style="color:red">@ErrorMsg</p>

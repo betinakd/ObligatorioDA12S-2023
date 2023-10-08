@@ -7,56 +7,62 @@
 @inject Persistencia Persistencia
 
 <PageTitle>FinTec Crear Cuenta Ahorro</PageTitle>
+<TituloRosado Titulo="Crear cuenta de Ahorro" Subtitulo="Cree la cuenta de ahorro para el espacio seleccionado, debe tener saldo inicial mayor a 0 y nombre no vacío"></TituloRosado>
 <EspacioActual></EspacioActual>
 
-<h1>Crear Cuenta de Ahorro</h1>
-
 <form>
-    <div class="form-group">
-        <label for="nombre">Nombre de la cuenta:</label>
-        <input type="text" class="form-control" id="nombre" @bind="Nombre">
-    </div>
-    <div class="form-group">
-        <label for="monto">Saldo inicial:</label>
-        <input type="number" class="form-control" id="monto" @bind="Monto">
-    </div>
-    <div class="form-group">
-        <label for="moneda">Moneda:</label>
-        <select class="form-control" id="moneda" @bind="Moneda">
-            <option value="PesosUruguayos">Pesos Uruguayos</option>
-            <option value="Dolar">Dólar</option>
-        </select>
-    </div>
-    <button type="button" class="btn btn-primary" @onclick="CrearCuenta">Crear Cuenta de Ahorro</button>
+	<table>
+		<tr>
+			<td><label for="nombre">Nombre de la cuenta:</label></td>
+			<td><input type="text" class="form-control" id="nombre" @bind="Nombre"></td>
+		</tr>
+		<tr>
+			<td><label for="monto">Saldo inicial:</label></td>
+			<td><input type="number" class="form-control" id="monto" @bind="Monto"></td>
+		</tr>
+		<tr>
+			<td><label for="moneda">Moneda:</label></td>
+			<td>
+				<select class="form-control" id="moneda" @bind="Moneda">
+					<option value="PesosUruguayos">Pesos Uruguayos</option>
+					<option value="Dolar">Dólar</option>
+				</select>
+			</td>
+		</tr>
+	</table>
+	<button type="button" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+	@onclick="CrearCuenta">
+		Crear Cuenta de Ahorro
+	</button>
 </form>
 
 <p style="color:red">@ErrorMsg</p>
 
 @code {
-    [Parameter] public int Id { get; set; }
-    [Parameter] public string Correo { get; set; }
-    public string ErrorMsg { get; set; }
-    public string Nombre { get; set; }
-    public double Monto { get; set; }
-    public TipoCambiario Moneda { get; set; }
-    
-    private void CrearCuenta()
-    {
-        try{
-            // Crear la cuenta de ahorro
-            var nuevaCuentaAhorro = new Ahorro
-                {
-                    Moneda = Moneda,
-                    Nombre = Nombre,
-                    Monto = Monto
-                };
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+	public string Nombre { get; set; } = "";
+	public double Monto { get; set; } = 0;
+	public TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
 
-            EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaAhorro);
-            NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
-        }
-        catch (Exception ex)
-        {
-            ErrorMsg = ex.Message;
-        }
-    }
+	private void CrearCuenta()
+	{
+		try
+		{
+			var nuevaCuentaAhorro = new Ahorro
+				{
+					Moneda = Moneda,
+					Nombre = Nombre,
+					Monto = Monto
+				};
+
+			EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaAhorro);
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+		}
+		catch (DomainCuentaException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
 }
