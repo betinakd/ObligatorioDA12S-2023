@@ -70,7 +70,7 @@
                         _montoAcumulado += t.Monto;
                     }
                 }
-                double _porcentaje = (_montoTotal * 100) / _montoAcumulado;
+                double _porcentaje = (_montoAcumulado * 100) / _montoTotal;
                 CategoriaGasto cg = new CategoriaGasto(c, _montoAcumulado, _porcentaje);
                 _retList.Add(cg);
             }

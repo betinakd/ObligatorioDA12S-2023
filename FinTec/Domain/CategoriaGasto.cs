@@ -27,5 +27,16 @@ namespace Domain
             _montoUsado= m;
             _porcentaje = p;
         }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            };
+
+            CategoriaGasto og = (CategoriaGasto)obj;
+            return Categoria.Equals(og.Categoria) && MontoUsado == og.MontoUsado && Porcentaje == og.Porcentaje;
+        }
     }
 }
