@@ -7,8 +7,9 @@
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
 
-<PageTitle>FinTec Registro de Usuario</PageTitle>
+<PageTitle>FinTec Espacio</PageTitle>
 <EspacioActual></EspacioActual>
+<a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios">Crear Espacio</a>
 
 @foreach (var espacio in espacios)
 {
@@ -23,12 +24,13 @@
 			<button class="btn btn-primary" @onclick="() => ClickCambiarDeEspacio(espacio)">Cambiar de Espacio</button>
 			@if (espacio.Admin.Correo == Persistencia.Correo)
 			{
-				<button class="btn btn-primary" @onclick="MostrarInput">Cambiar Nombre</button>
-				@if (mostrarInput)
-				{
-					<input type="text" @bind="nuevoNombre" />
+				<button class="btn btn-primary" @onclick="() => MostrarInput(espacio)">Cambiar Nombre</button>
 
+				@if (mostrarInput && espacio.Equals(espacioClickeado))
+				{
+					<input type="text" @bind="inputNombre" />
 					<button class="btn btn-primary" @onclick="() => CambiarNombre(espacio)">Guardar</button>
+					<button class="btn btn-primary" @onclick="CambiarNombreCerrar">Cerrar</button>
 					<p style="color:red">@ErrorMsg</p>
 				}
 			}
@@ -36,21 +38,19 @@
 	</div>
 }
 
-<a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios">Crear Espacio</a>
-
-
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public List<Espacio>? espacios { get; set; }
-	public Usuario? usuario { get; set; }
+	public Espacio? espacioClickeado { get; set; }
 	public string? ErrorMsg { get; set; }
+	private bool mostrarInput = false;
+	private string inputNombre = string.Empty;
+
 	protected override void OnInitialized()
 	{
-
 		espacios = EspacioLogic.EspaciosByCorreo(Correo);
-		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
 	}
 
 	public void ClickCambiarDeEspacio(Espacio espacio)
@@ -59,11 +59,9 @@
 		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 	}
 
-	private bool mostrarInput = false;
-	private string nuevoNombre = string.Empty;
-
-	private void MostrarInput()
+	private void MostrarInput(Espacio espacio)
 	{
+		espacioClickeado = espacio;
 		mostrarInput = !mostrarInput;
 	}
 
@@ -71,14 +69,22 @@
 	{
 		try
 		{
-			espacio.Nombre = nuevoNombre;
+			espacio.Nombre = inputNombre;
 			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 			ErrorMsg = "";
+			inputNombre = "";
 			mostrarInput = false;
 		}
 		catch (DomainEspacioException e)
 		{
 			ErrorMsg = e.Message;
 		}
+	}
+
+	private void CambiarNombreCerrar()
+	{
+		mostrarInput = false;
+		espacioClickeado= null;
+		inputNombre = "";
 	}
 }
