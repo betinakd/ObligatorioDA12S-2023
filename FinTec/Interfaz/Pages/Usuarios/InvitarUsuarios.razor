@@ -8,56 +8,65 @@
 @inject Persistencia Persistencia;
 
 <PageTitle>FinTec Usuarios</PageTitle>
+<TituloRosado Titulo="Invitar Usuarios de FinTec" Subtitulo="Si es administrador puede eliminar y invitar usuarios."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-<h1>Seleccione el usuario que desea invitar :</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var usuario in UsuarioLogic.FindAllUsuario())
-        {
-            @if (!EspacioLogic.FindEspacio(Persistencia.Id).PerteneceCorreo(usuario.Correo) && EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
-            {
-                <tr>
-                    <td>@usuario.Nombre</td>
-                    <td>@usuario.Correo</td>
-                    <td>
-                        <button class="btn btn-primary" @onclick="() => AgregarUsuario(usuario)">Agregar Usuario</button>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
-
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Nombre
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Correo
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Acciones
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var usuario in UsuarioLogic.FindAllUsuario())
+			{
+				@if (!EspacioLogic.FindEspacio(Persistencia.Id).PerteneceCorreo(usuario.Correo) && EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
+				{
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+							@usuario.Nombre
+						</td>
+						<td class="px-6 py-4 font-medium">
+							@usuario.Correo
+						</td>
+						<td>
+							<button class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+							@onclick="() => AgregarUsuario(usuario)">
+								Agregar Usuario
+							</button>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
 <p style="color:red">@ErrorMsg</p>
 
 @code {
-    [Parameter] public int Id { get; set; }
-    [Parameter] public string Correo { get; set; }
-    public string ErrorMsg { get; set; }
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
 
-    private void AgregarUsuario(Usuario usuario)
-    {
-        try
-        {
-            // Agrega lógica para agregar el usuario al espacio aquí
-            // Por ejemplo, puedes llamar a un método en EspacioLogic
-            // para agregar el usuario al espacio actual.
-            EspacioLogic.FindEspacio(Persistencia.Id).InvitarUsuario(usuario);
-
-            // Redirige a la página de invitación de usuarios o realiza alguna otra acción después de agregar el usuario.
-            NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
-        }
-        catch (Exception ex)
-        {
-            ErrorMsg = ex.Message;
-        }
-    }
+	private void AgregarUsuario(Usuario usuario)
+	{
+		try
+		{
+			EspacioLogic.FindEspacio(Persistencia.Id).InvitarUsuario(usuario);
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
 }

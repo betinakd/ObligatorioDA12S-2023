@@ -89,7 +89,10 @@
 				};
 			test.IdEspacioPrincipal = espacio.Id;
 			EspacioLogic.AddEspacio(espacio);
-		}catch(Exception e)
+			espacio.AsignarId();
+			test.IdEspacioPrincipal = espacio.Id;
+		}
+		catch (Exception e)
 		{
 
 		}
@@ -98,11 +101,11 @@
 	{
 		try
 		{
-			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Correo , Password);
+			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Correo, Password);
 			ErrorMsg = "Usuario Correcto";
 			NavigationManager.NavigateTo($"/home/{usuarioLogeado.IdEspacioPrincipal}/{usuarioLogeado.Correo}");
 			Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
-			Persistencia.Correo=usuarioLogeado.Correo;
+			Persistencia.Correo = usuarioLogeado.Correo;
 			Console.WriteLine(Persistencia.Correo);
 
 		}
