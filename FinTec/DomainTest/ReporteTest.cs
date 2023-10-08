@@ -307,5 +307,39 @@ namespace DomainTest
             };
             Assert.AreEqual(toAnalize.First(), cg);
         }
+    
+        [TestMethod]
+        public void ReporteCategoriaPorMes_Cubre_100()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Categoria _categoria = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoria);
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            Transaccion transaccion = new Transaccion
+            {
+                CategoriaTransaccion = _categoria,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba",
+                CuentaMonetaria = _cuenta,
+            };
+            _miEspacio.AgregarTransaccion(transaccion);
+            _reporte.MiEspacio = _miEspacio;
+            List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+            Assert.IsFalse(toAnalize.First().Porcentaje == 100);
+        }
     }
 }
