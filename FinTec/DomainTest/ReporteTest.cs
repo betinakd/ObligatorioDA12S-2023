@@ -561,5 +561,61 @@ namespace DomainTest
             double balance = _reporte.BalanceCuentas(ahorro);
             Assert.IsTrue(balance == 0);
         }
+    
+        [TestMethod]
+        public void BalanceCuentas_Aumenta_Monto()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Ahorro ahorro = new Ahorro
+            {
+                Moneda = TipoCambiario.PesosUruguayos,
+                Monto = 0,
+                Nombre = "Cuenta Ahorro",
+            };
+            double montoInicial = ahorro.Monto;
+            _miEspacio.AgregarCuenta(ahorro);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            Categoria _categoriaIngreso = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Ingreso,
+                Nombre = "Una categoria 2",
+            };
+            _miEspacio.AgregarCategoria(_categoriaIngreso);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = ahorro,
+            };
+            _miEspacio.AgregarTransaccion(transaccion1);
+            Transaccion transaccion2 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaIngreso,
+                Monto = 30,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 2",
+                CuentaMonetaria = ahorro,
+            };
+            _miEspacio.AgregarTransaccion(transaccion2);
+            _reporte.MiEspacio = _miEspacio;
+            double balance = _reporte.BalanceCuentas(ahorro);
+            Assert.IsFalse(balance > montoInicial);
+        }
     }
 }
