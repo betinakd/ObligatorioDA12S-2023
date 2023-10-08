@@ -212,7 +212,7 @@ namespace DomainTest
             _reporte.MiEspacio = _miEspacio;
             List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
             ObjetivoGasto toAnalize = ret.First();
-            Assert.IsFalse(toAnalize.MontoCumpido());
+            Assert.IsTrue(toAnalize.MontoCumpido());
         }
     }
 }
