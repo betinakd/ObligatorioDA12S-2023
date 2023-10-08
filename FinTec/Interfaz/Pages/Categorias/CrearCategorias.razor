@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCategorias"
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
 
 @using BussinesLogic
 @using Domain
@@ -8,7 +7,8 @@
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
 
-<PageTitle>FinTec Registro de Usuario</PageTitle>
+<PageTitle>FinTec Crear Categorias</PageTitle>
+<TituloRosado Titulo="Cree una categoría." Subtitulo="Cree la categoría para el espacio seleccionado."></TituloRosado>
 <EspacioActual></EspacioActual>
 
 <div class="form-group">
