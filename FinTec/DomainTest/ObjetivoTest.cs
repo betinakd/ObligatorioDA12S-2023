@@ -87,6 +87,13 @@ namespace DomainTest
 		{
 			_objetivo.Categorias = new List<Categoria>();
 		}
-	
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainObjetivoException))]
+		public void Excepcion_Aplicar_Lista_Categorias_Nula_Objetivo()
+		{
+			_objetivo.Categorias = null;
+		}
+
 	}
 }
