@@ -80,6 +80,13 @@ namespace DomainTest
 		{
 			_objetivo.MontoMaximo = -1;
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainObjetivoException))]
+		public void Excepcion_Aplicar_Lista_Categorias_Vacia_Objetivo()
+		{
+			_objetivo.Categorias = new List<Categoria>();
+		}
 	
 	}
 }
