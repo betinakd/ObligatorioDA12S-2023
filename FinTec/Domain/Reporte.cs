@@ -2,12 +2,10 @@
 {
     public class Reporte
     {
-        private Usuario _user;
         private Espacio _MiEspacio;
 
         public Espacio MiEspacio { get { return _MiEspacio; } set { _MiEspacio = value; } }
 
-        public Usuario User { get { return _user; } set { _user = value; } }
 
         //NOTA: Quiero retornar un lista de una clase "custom". Este objeto tendria los siguientes atributos:
         //MontoDefinido::Double, MontoGastado::Double, CumpleMonto::Bool
