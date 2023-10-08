@@ -418,5 +418,41 @@ namespace DomainTest
             List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria, fIni, fEnd, _cuenta);
             Assert.IsTrue(toAnalize.Count == 0);
         }
+
+        [TestMethod]
+        public void ListadoGastos_No_Vacio()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Categoria _categoria = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoria);
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            Transaccion transaccion = new Transaccion
+            {
+                CategoriaTransaccion = _categoria,
+                Monto = 1,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba",
+                CuentaMonetaria = _cuenta,
+            };
+            _miEspacio.AgregarTransaccion(transaccion);
+            _reporte.MiEspacio = _miEspacio;
+            DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+            List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria, fIni, fEnd, _cuenta);
+            Assert.IsFalse(toAnalize.Count != 0);
+        }
     }
 }
