@@ -33,7 +33,7 @@ namespace Domain
         
         public bool MontoCumpido()
         {
-            return MontoEsperado < MontoAcumulado;
+            return MontoEsperado > MontoAcumulado;
         }
 
         public override bool Equals(object? obj)
