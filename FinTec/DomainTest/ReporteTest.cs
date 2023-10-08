@@ -454,5 +454,57 @@ namespace DomainTest
             List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria, fIni, fEnd, _cuenta);
             Assert.IsTrue(toAnalize.Count != 0);
         }
+    
+        [TestMethod]
+        public void ListadoGastos_Un_Elemento()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Categoria _categoria1 = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            Categoria _categoria2 = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria 2",
+            };
+            _miEspacio.AgregarCategoria(_categoria1);
+            _miEspacio.AgregarCategoria(_categoria2);
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoria1,
+                Monto = 1,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba",
+                CuentaMonetaria = _cuenta,
+            };
+            Transaccion transaccion2 = new Transaccion
+            {
+                CategoriaTransaccion = _categoria2,
+                Monto = 1,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 2",
+                CuentaMonetaria = _cuenta,
+            };
+            _miEspacio.AgregarTransaccion(transaccion1);
+            _miEspacio.AgregarTransaccion(transaccion2);
+            _reporte.MiEspacio = _miEspacio;
+            DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+            List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria1, fIni, fEnd, _cuenta);
+            Assert.IsFalse(toAnalize.Count == 1);
+        }
     }
 }
