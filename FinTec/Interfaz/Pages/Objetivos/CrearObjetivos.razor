@@ -7,29 +7,42 @@
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
 
-<PageTitle>FinTec Registro de Usuario</PageTitle>
+<PageTitle>FinTec Crear Objetivo</PageTitle>
+<TituloRosado Titulo="Crear Objetivo" Subtitulo="Para crear un objetivo debe escribir un nombre no vacío seleccionar un monto en pesos uruguayos mayor a 0 y seleccionar una o varias categorías presionando en caso de seleccionar múltiples categorías Ctrl+click ."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-<div class="form-group">
-    <label for="tituloObjetivo">Nombre de la Categoría:</label>
-    <input type="text" id="tituloObjetivo" class="form-control" @bind="tituloObjetivo" />
-</div>
-
-<div class="form-group">
-    <label for="montoObjetivo">Monto máximo de gasto por mes:</label>
-    <input type="number" id="montoObjetivo" class="form-control" @bind="montoObjetivo" />
-</div>
-
-<div class="form-group">
-    <label>Aplicar objetivo a las categorías:</label>
-    <select class="form-control" @onchange="UpdateCategoriasSeleccionadas" multiple>
-        @foreach (var categoria in categorias)
-        {
-            <option value="@categoria.Nombre">@categoria.Nombre</option>
-        }
-    </select>
-	    
-</div>
+<table>
+    <tr>
+        <td>
+            <label for="tituloObjetivo">Nombre de objetivo:</label>
+        </td>
+        <td>
+            <input type="text" id="tituloObjetivo" class="form-control" placeholder="Nombre" @bind="tituloObjetivo" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="montoObjetivo">Monto máximo de gasto por mes:</label>
+        </td>
+        <td>
+            <input type="number" id="montoObjetivo" class="form-control" placeholder="Monto" @bind="montoObjetivo" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>Seleccione categorías:</label>
+        </td>
+        <td>
+            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            @onchange="UpdateCategoriasSeleccionadas" multiple>
+                @foreach (var categoria in categorias)
+                {
+                    <option value="@categoria.Nombre">@categoria.Nombre</option>
+                }
+            </select>
+        </td>
+    </tr>
+</table>
 
 <p style="color:red">@ErrorMsg</p>
 <button class="btn btn-primary" @onclick="Crear">Crear</button>
