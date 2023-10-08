@@ -30,13 +30,13 @@
 	private void ClickCrearUsuario()
 	{
 		try{
-		Espacio espacio = new Espacio()
+			Espacio espacio = new Espacio()
 			{
 				Nombre = inputNombre,
 				Admin = usuario,
 			};
-
 			EspacioLogic.AddEspacio(espacio);
+			espacio.AsignarId();
 			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
 		}
 		catch (DomainEspacioException e)
