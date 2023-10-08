@@ -68,16 +68,10 @@ namespace DomainTest
 		public void Aplicar_Ojetivo_Categoria()
 
 		{
-			var objetivo = new Objetivo();
-			var categoria = new Categoria();
-			var categorias = new List<Categoria>();
-			categoria.EstadoActivo = true;
-			categoria.Tipo = TipoCategoria.Ingreso;
-			categoria.Nombre = "Sueldo";
-			categorias.Add(categoria);
-			objetivo.Categorias = categorias;
-			var resultado = objetivo.Categorias;
-			Assert.AreEqual(categorias, resultado);
+			_objetivo.Categorias = _categorias;
+			var resultado = _objetivo.Categorias;
+			Assert.AreEqual(_categorias, resultado);
+			Assert.AreEqual(1, resultado.Count);
 		}
 
 		[TestMethod]
