@@ -4,12 +4,11 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
-@using Domain
 
 @page "/home/{Id:int}/{Correo}"
 
 <PageTitle>FinTec Home</PageTitle>
-<h1>Bienvenido a FinTec</h1>
+<TituloRosado Titulo="Bienvenido a FinTec" Subtitulo="En FinTec puede navegar por los espacios a los que pertenece."></TituloRosado>
 <EspacioActual></EspacioActual>
 
 @code {
@@ -17,10 +16,4 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Correo { get; set; }
-	public List<Espacio>? Espacios { get; set; }
-
-	protected override void OnInitialized()
-	{
-		Espacios = EspacioLogic.EspaciosByCorreo(Correo);
-	}
 }

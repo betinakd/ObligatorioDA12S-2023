@@ -1,0 +1,72 @@
+﻿@page "/home/{Id:int}/{Correo}/AgregarTipoCambiario"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Agregar Tipo Cambiario</PageTitle>
+<TituloRosado Titulo="Agregar Tipo Cambiario" Subtitulo="Agregué un tipo cambiario para el espacio recuerde que no se puede repetir la fecha del mismo."></TituloRosado>
+<EspacioActual></EspacioActual>
+
+<form>
+	<table>
+		<tr>
+			<td><label for="moneda">Moneda:</label></td>
+			<td><input type="text" class="form-control" id="moneda" value="Dolar" readonly /></td>
+		</tr>
+		<tr>
+			<td><label for="valorPesos">Valor en Pesos Uruguayos:</label></td>
+			<td><input type="number" class="form-control" id="valorPesos" placeholder="Pesos Uruguayos" @bind="Pesos"></td>
+		</tr>
+		<tr>
+			<td><label for="fecha">Fecha:</label></td>
+			<td><input type="date" class="form-control" id="fecha" @bind="FechaDeCambio"></td>
+		</tr>
+	</table>
+	<p style="color:red">@ErrorMsg</p>
+	<button type="button" class="mb-5 mt-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+	@onclick="AgregarCambio">
+		Agregar Tipo Cambiario
+	</button>
+</form>
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; } = "";
+	public string Moneda { get; set; } = "";
+	public double Pesos { get; set; } = 0;
+	public DateTime FechaDeCambio { get; set; } = DateTime.Now;
+
+
+	private Cambio nuevoCambio = new Cambio();
+
+	private void AgregarCambio()
+	{
+		try
+		{
+			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+			Cambio cambio = new Cambio()
+				{
+					Moneda = Domain.TipoCambiario.Dolar,
+					Pesos = Pesos,
+					FechaDeCambio = FechaDeCambio.Date
+				};
+			try
+			{
+				espacio.AgregarCambio(cambio);
+				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
+			}
+			catch (DomainEspacioException ex)
+			{
+				ErrorMsg = ex.Message;
+			}
+		}
+		catch (DomainCambioException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+}

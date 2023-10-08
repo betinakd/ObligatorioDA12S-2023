@@ -78,7 +78,7 @@
 				};
 			Espacio espacioPrincipal = new Espacio()
 				{
-					Nombre = $"Espacio Principal {usuario.Nombre}",
+					Nombre = $"Principal {usuario.Nombre}",
 					Admin = usuario,
 				};
 
@@ -88,9 +88,11 @@
 			{
 				UsuarioLogic.AddUsuario(usuario);
 				EspacioLogic.AddEspacio(espacioPrincipal);
+				espacioPrincipal.AsignarId();
+				usuario.IdEspacioPrincipal = espacioPrincipal.Id;
+				Persistencia.Id = espacioPrincipal.Id;
+				Persistencia.Correo = usuario.Correo;
 				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
-				Persistencia.Id=espacioPrincipal.Id;
-                Persistencia.Correo=usuario.Correo;
 				ErrorMensaje = "";
 			}
 			catch (Exception exception)
