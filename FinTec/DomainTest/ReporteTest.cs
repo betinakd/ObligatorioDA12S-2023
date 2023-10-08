@@ -894,7 +894,7 @@ namespace DomainTest
             _miEspacio.AgregarCategoria(_categoriaCosto);
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
-            Assert.IsFalse(toAnalize.Count == 2);
+            Assert.IsTrue(toAnalize.Count == 2);
         }
     }
 }
