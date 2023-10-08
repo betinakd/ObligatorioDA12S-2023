@@ -15,13 +15,13 @@
 
 <form>
     <div class="form-group">
-		<label for="titulo">Titulo:</label>
-	    <input type="text" class="form-control" id="titulo" @bind="Titulo">
+        <label for="titulo">Titulo:</label>
+        <input type="text" class="form-control" id="titulo" @bind="Titulo">
     </div>
 
     <div class="form-group">
-		<label for="monto">Monto:</label>
-		<input type="number" class="form-control" id="monto" @bind="Monto">
+        <label for="monto">Monto:</label>
+        <input type="number" class="form-control" id="monto" @bind="Monto">
     </div>
 
     <div class="form-group">
@@ -64,8 +64,8 @@
         </select>
     </div>
 
-    <button type="button" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-    @onclick="GenerarTransaccion">Crear Transacción</button>
+
+    <button type="button" class="btn btn-primary" @onclick="GenerarTransaccion">Crear Transacción</button>
 </form>
 
 
@@ -123,7 +123,7 @@
 
             var nuevaTransaccion = new TransaccionCosto();
             nuevaTransaccion.Titulo = Titulo;
-            
+
             if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
             {
                 var cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault(c => c.Nombre == cuentaAhorroSeleccionada);
@@ -135,41 +135,42 @@
                             Nombre = cuentaAhorro.Nombre,
                             Moneda = cuentaAhorro.Moneda,
                             Monto = Monto
-                        };        
+                        };
                 }
             }
             else if (!string.IsNullOrEmpty(cuentaCreditoSeleccionada))
             {
                 var cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault(c => c.BancoEmisor == cuentaCreditoSeleccionada);
                 if (cuentaCredito != null)
-				{
-					nuevaTransaccion.Moneda = cuentaCredito.Moneda;
-					nuevaTransaccion.CuentaMonetaria = new Credito
-						{
-							BancoEmisor = cuentaCredito.BancoEmisor,
-							Moneda = cuentaCredito.Moneda,
-							CreditoDisponible = Monto,
+                {
+                    nuevaTransaccion.Moneda = cuentaCredito.Moneda;
+                    nuevaTransaccion.CuentaMonetaria = new Credito
+                        {
+                            BancoEmisor = cuentaCredito.BancoEmisor,
+                            Moneda = cuentaCredito.Moneda,
+                            CreditoDisponible = Monto,
                             NumeroTarjeta = cuentaCredito.NumeroTarjeta
-						};        
-				}              
+                        };
+                }
             }
-            if (!string.IsNullOrEmpty(categoriaSeleccionada)){
-			    categoria = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault(c => c.Nombre == categoriaSeleccionada) as Categoria;
+            if (!string.IsNullOrEmpty(categoriaSeleccionada))
+            {
+                categoria = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault(c => c.Nombre == categoriaSeleccionada) as Categoria;
                 categoria.EstadoActivo = true;
                 categoria.Tipo = TipoCategoria.Costo;
                 categoria.Nombre = categoriaSeleccionada;
-			 }
-        
-           nuevaTransaccion.CategoriaTransaccion = categoria;
+            }
 
-        EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
-        NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
+            nuevaTransaccion.CategoriaTransaccion = categoria;
+
+            EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
+            NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
 
         }
         catch (DomainTransaccionException e)
-		{
-			ErrorMsg = e.Message;
-		}
+        {
+            ErrorMsg = e.Message;
+        }
         catch (DomainCategoriaException e)
         {
             ErrorMsg = e.Message;
@@ -177,11 +178,11 @@
         catch (DomainCuentaException e)
         {
             ErrorMsg = e.Message;
-        }     
-		catch (Exception e)
-		{
-			ErrorMsg = e.Message;
-		}     
+        }
+        catch (Exception e)
+        {
+            ErrorMsg = e.Message;
+        }
     }
 
 }
