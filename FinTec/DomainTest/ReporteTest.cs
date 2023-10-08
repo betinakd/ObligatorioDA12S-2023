@@ -305,7 +305,7 @@ namespace DomainTest
                 MontoUsado = 10,
                 Porcentaje = (10 * 100) / montoTotal,
             };
-            Assert.AreNotEqual(toAnalize.First(), cg);
+            Assert.AreEqual(toAnalize.First(), cg);
         }
     }
 }
