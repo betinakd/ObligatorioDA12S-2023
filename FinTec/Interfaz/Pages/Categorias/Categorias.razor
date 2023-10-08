@@ -69,13 +69,24 @@
 							<label for="idModificar" class="block font-medium text-gray-900 dark:text-white">Modificar Nombre:</label>
 							<input id="idModificar" type="text"
 							@bind="nombreValor" class="w-full border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:focus:ring-pink-900 dark:focus:border-transparent px-3 py-2 mt-1" />
-						</td>
-						<td class="px-6 py-4">
 							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
-							@onclick="()=>ModificarValor(categoria)">
-								Modificar
+							@onclick="()=>ModificarNombre(categoria)">
+								Modificar nombre
 							</button>
 						</td>
+
+						<td class="px-6 py-4" colspan="3">
+							<label for="tipoModificar" class="block font-medium text-gray-900 dark:text-white">Estado</label>
+							<select id="tipoModificar" class="form-control" @oninput="e => estadoActivo = Convert.ToBoolean(e.Value.ToString())">
+								<option value="true">Activo</option>
+								<option value="false">Inactivo</option>
+							</select>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
+							@onclick="()=>ModificarEstado(categoria)">
+								Modificar estado
+							</button>
+						</td>
+
 					</tr>
 				}
 			}
@@ -83,27 +94,33 @@
 	</table>
 </div>
 
-<p style="color:red">@ErrorMsg</p>
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
 	private bool estadoActivo;
-	private TipoCategoria tipo;
 	public Categoria categoriaSelec { get; set; }
 	private bool mostrarModificar = false;
 	string nombreValor { get; set; } = "";
 
+	private void LimpiarInputs()
+	{
+		nombreValor = "";
+		ErrorMsg = "";
+		estadoActivo = true;
+	}
+
 	private void MostrarSeccionModificar(Categoria categoria)
 	{
-		ErrorMsg = "";
+		LimpiarInputs();
 		categoriaSelec = categoria;
 		mostrarModificar = !mostrarModificar;
 	}
 
 	private void EliminarCategoria(Categoria categoria)
 	{
+		LimpiarInputs();
+		mostrarModificar = false;
 		try
 		{
 			EspacioLogic.FindEspacio(Id).BorrarCategoria(categoria);
@@ -114,8 +131,31 @@
 		}
 	}
 
-	private void ModificarValor(Categoria categoria)
+	private void ModificarNombre(Categoria categoria)
 	{
+		try
+		{
+			categoria.Nombre = nombreValor;
+			LimpiarInputs();
+			mostrarModificar = false;
+		}
+		catch (DomainCategoriaException e)
+		{
+			ErrorMsg = e.Message;
+		}
+	}
 
+	private void ModificarEstado(Categoria categoria)
+	{
+		try
+		{
+			categoria.EstadoActivo = estadoActivo;
+			LimpiarInputs();
+			mostrarModificar = false;
+		}
+		catch (DomainCategoriaException e)
+		{
+			ErrorMsg = e.Message;
+		}
 	}
 }
