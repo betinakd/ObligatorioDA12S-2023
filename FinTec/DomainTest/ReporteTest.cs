@@ -214,5 +214,23 @@ namespace DomainTest
             ObjetivoGasto toAnalize = ret.First();
             Assert.IsTrue(toAnalize.MontoCumpido());
         }
+    
+        [TestMethod]
+        public void ReporteCategoriaPorMes_Vacio()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            _reporte.MiEspacio = _miEspacio;
+            List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+            Assert.IsFalse(toAnalize.Count == 0);
+        }
     }
 }
