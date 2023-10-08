@@ -33,7 +33,7 @@ namespace DomainTest
         {
             Categoria categoria = new Categoria();
             double _montoAcumulado = 20;
-            int porcentaje = 20;
+            double porcentaje = 20;
             var cg = new CategoriaGasto(categoria, _montoAcumulado, porcentaje);
             Assert.IsNotNull(cg);
         }
@@ -42,7 +42,7 @@ namespace DomainTest
         public void CategoriaGasto_Mismos_Valores_Monto_Porcentaje()
         {
             double _montoAcumulado = 15;
-            int _porcentaje = 15;
+            double _porcentaje = 15;
             Categoria _categoria = new Categoria();
             var cg = new CategoriaGasto(_categoria, _montoAcumulado, _porcentaje);
             Assert.AreEqual(cg.MontoUsado, cg.Porcentaje);
