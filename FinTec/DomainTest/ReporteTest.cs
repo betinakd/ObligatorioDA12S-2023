@@ -124,7 +124,7 @@ namespace DomainTest
             og.Objetivo = _objetivo;
             List<ObjetivoGasto> lista = _reporte.ReporteObjetivosDeGastos();
             ObjetivoGasto toCompare = lista.First();
-            Assert.AreNotEqual(og, toCompare);
+            Assert.AreEqual(og, toCompare);
         }
     }
 }
