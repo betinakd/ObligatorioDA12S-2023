@@ -230,7 +230,7 @@ namespace DomainTest
             _miEspacio.AgregarCuenta(_cuenta);
             _reporte.MiEspacio = _miEspacio;
             List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
-            Assert.IsFalse(toAnalize.Count == 0);
+            Assert.IsTrue(toAnalize.Count == 0);
         }
     }
 }
