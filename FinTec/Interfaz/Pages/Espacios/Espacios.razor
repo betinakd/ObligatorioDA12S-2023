@@ -8,7 +8,7 @@
 
 <PageTitle>FinTec Espacio</PageTitle>
 
-<TituloRosado Titulo="Espacios" Subtitulo="Un listado de todos los espacios en los que se encuentra."/>
+<TituloRosado Titulo="Espacios" Subtitulo="Un listado de todos los espacios en los que se encuentra." />
 
 <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
 	<svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -83,6 +83,9 @@
 				@if (mostrarInput && espacioClickeado.Equals(espacio))
 				{
 					<tr>
+						<p style="color:red">@ErrorMsg</p>
+					</tr>
+					<tr>
 						<td>
 							<input class="fb-input" @bind=inputNombre type="text" placeholder="Cambiar Nombre">
 						</td>
@@ -105,7 +108,7 @@
 	[Parameter] public string Correo { get; set; }
 	public List<Espacio>? espacios { get; set; }
 	public Espacio? espacioClickeado { get; set; }
-	public string? ErrorMsg { get; set; }
+	public string? ErrorMsg { get; set; } = "";
 	private bool mostrarInput = false;
 	private string inputNombre = string.Empty;
 
@@ -125,6 +128,8 @@
 		espacioClickeado = espacio;
 		mostrarInput = !mostrarInput;
 		inputNombre = "";
+		ErrorMsg = "";
+
 	}
 
 	private void CambiarNombre(Espacio espacio)
@@ -146,5 +151,7 @@
 	{
 		mostrarInput = false;
 		inputNombre = "";
+		ErrorMsg = "";
+
 	}
 }
