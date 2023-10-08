@@ -553,12 +553,13 @@ namespace DomainTest
                 CategoriaTransaccion = _categoriaIngreso,
                 Monto = 10,
                 Moneda = TipoCambiario.PesosUruguayos,
-                Titulo = "Transaccion Prueba 1",
+                Titulo = "Transaccion Prueba 2",
                 CuentaMonetaria = ahorro,
             };
             _miEspacio.AgregarTransaccion(transaccion2);
+            _reporte.MiEspacio = _miEspacio;
             double balance = _reporte.BalanceCuentas(ahorro);
-            Assert.IsFalse(balance == 0);
+            Assert.IsTrue(balance == 0);
         }
     }
 }

@@ -28,6 +28,16 @@ namespace Domain
 		public Categoria()
 		{
 		}
+
+		public override bool Equals(object? obj)
+		{
+			if (obj == null || GetType() != obj.GetType())
+			{
+				return false;
+			}
+			Categoria cat = (Categoria)obj;
+			return cat.EstadoActivo == EstadoActivo && cat.FechaCreacion == FechaCreacion && cat.Tipo == Tipo && cat.Nombre == Nombre;
+		}
 	}
 
 	public enum TipoCategoria

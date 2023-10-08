@@ -215,9 +215,7 @@
         */
         public double BalanceCuentas(Ahorro account)
         {
-            double saldoCuenta = account.Monto;
-            saldoCuenta += sumatoriaIngresos(account);
-            saldoCuenta -= sumatoriaCostos(account);
+            double saldoCuenta = account.Monto + sumatoriaIngresos(account) - sumatoriaCostos(account);
             return saldoCuenta;
         }
 
@@ -227,7 +225,7 @@
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach(Transaccion t in transacciones)
             {
-                if (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso) && t.CuentaMonetaria.Equals(account))
+                if (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso) && (account.Equals((Ahorro)t.CuentaMonetaria)))
                 {
                     sum += t.Monto;
                 }
@@ -239,9 +237,9 @@
         {
             double sum = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
-            foreach(Transaccion t in transacciones)
+            foreach (Transaccion t in transacciones)
             {
-                if (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo) && t.CuentaMonetaria.Equals(account))
+                if (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo) && ((Ahorro)t.CuentaMonetaria).Equals(account))
                 {
                     sum += t.Monto;
                 }
