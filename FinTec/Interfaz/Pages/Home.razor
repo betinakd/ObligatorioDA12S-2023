@@ -4,7 +4,6 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
-@using Domain
 
 @page "/home/{Id:int}/{Correo}"
 
@@ -17,10 +16,4 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Correo { get; set; }
-	public List<Espacio>? Espacios { get; set; }
-
-	protected override void OnInitialized()
-	{
-		Espacios = EspacioLogic.EspaciosByCorreo(Correo);
-	}
 }

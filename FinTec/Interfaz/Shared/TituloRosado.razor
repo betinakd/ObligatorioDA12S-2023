@@ -1,0 +1,13 @@
+﻿<p>
+	<h1 class="lg:text-xxl degradeLetra mt-4">
+		@Titulo
+	</h1>
+</p>
+<p class="mb-4 mt-4 font-normal text-gray-500 dark:text-gray-400">
+	@Subtitulo
+</p>
+
+@code {
+	[Parameter] public string? Titulo { get; set; }
+	[Parameter] public string? Subtitulo { get; set; }
+}

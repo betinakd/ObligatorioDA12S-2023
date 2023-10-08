@@ -1,0 +1,15 @@
+.degradeLetra {
+    background: linear-gradient(to right, #e61d81, #fca92d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: Arial;
+    font-weight: bold;
+    font-size:50px;
+}
+
+.degradeFondo {
+    background: linear-gradient(to right, #e41262, #eed78c);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
