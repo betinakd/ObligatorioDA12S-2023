@@ -9,6 +9,7 @@ namespace Domain
     public class Objetivo
     {
         private string _titulo;
+        private double _montoMaximo;
         public string Titulo 
         {
             get
@@ -22,7 +23,19 @@ namespace Domain
                 _titulo = value;
             }
         }
-        public double MontoMaximo { get; set; }
+        public double MontoMaximo
+        {
+			get
+            {
+				return _montoMaximo;
+			}
+			set
+            {
+				if (value <= 0)
+					throw new DomainObjetivoException("El monto máximo debe ser mayor a 0.");
+				_montoMaximo = value;
+			}
+		}
         public List<Categoria> Categorias { get; set; }
     }
 }

@@ -81,6 +81,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		[ExpectedException(typeof(DomainObjetivoException))]
 		public void Aplicar_Monto_Menor_A_Cero_Al_Objetivo()
 		{
 			_objetivo.MontoMaximo = -1;
