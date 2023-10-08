@@ -391,5 +391,32 @@ namespace DomainTest
             List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
             Assert.IsTrue(toAnalize.First().Porcentaje == 50);
         }
+    
+        [TestMethod]
+        public void ListadoGastos_Vacio()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            Categoria _categoria = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoria);
+            _reporte.MiEspacio = _miEspacio;
+            DateTime fIni = DateTime.Now;
+            DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+            List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria, fIni, fEnd, _cuenta);
+            Assert.IsFalse(toAnalize.Count == 0);
+        }
     }
 }
