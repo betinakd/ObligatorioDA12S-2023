@@ -15,25 +15,35 @@
    href="/home/@Persistencia.Id/@Persistencia.Correo/CrearObjetivos">Crear Objetivos</a>
 </div>
 
-@foreach (var objetivos in EspacioLogic.FindEspacio(Persistencia.Id).Objetivos)
-{
-	<div class="card">
-		<div class="card-body">
-			<h5 class="card-title"><strong>Titulo del objetivo:</strong> @objetivos.Titulo</h5>
-			<p><strong>Monto maximo de gasto por mes:</strong>@objetivos.MontoMaximo</p>
-			<p><strong>Objetivo aplicado a las categorias:</strong></p>
-			@foreach(var categoria in objetivos.Categorias)
-			{
-				@if (categoria != null)
-				{
-					<p>@categoria.Nombre</p>
-				}
-			}
-			<p style="color:red">@ErrorMsg</p>
-			
-		</div>
-	</div>
-}
+<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+    @foreach (var objetivo in EspacioLogic.FindEspacio(Persistencia.Id).Objetivos)
+    {
+        <li class="py-3 sm:py-4">
+            <div class="flex items-center space-x-4">
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                        <strong>Nombre:</strong> @objetivo.Titulo
+                    </p>
+                    <p class="text-sm text-gray-900 truncate dark:text-gray-400">
+                        <strong>Objetivo de gasto:</strong> @objetivo.MontoMaximo<strong>$</strong>
+                    </p>
+                    <p class="text-sm text-gray-900 truncate dark:text-gray-400">
+                        <strong>Categorías:</strong> @foreach (var categoria in objetivo.Categorias)
+                        {
+                            @categoria.Nombre
+                            @if (categoria != objetivo.Categorias.Last())
+                            {
+                            
+                            }
+                        }
+                    </p>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+
+
 
 
 @code {
