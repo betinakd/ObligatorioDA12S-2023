@@ -20,7 +20,7 @@ namespace Domain
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new ArgumentNullException("El titulo es requerido");
+                    throw new DomainObjetivoException("El titulo es requerido");
                 _titulo = value;
             }
         }

@@ -85,10 +85,7 @@
 			{
 				categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
 			}
-			if (categorias2.Count == 0)
-			{
-				throw new DomainCategoriaException("Debe seleccionar al menos una categoría");
-			}
+
 			try
 			{
 				Objetivo nuevoObjetivo = new Objetivo
@@ -106,13 +103,13 @@
 				string newHref = $"/home/{Id}/{Correo}/Objetivos";
 				NavigationManager.NavigateTo(newHref);
 			}
-			catch (ArgumentException e)
+			catch (DomainObjetivoException e)
 			{
 				ErrorMsg = e.Message;
 			}
 
 		}
-		catch (DomainCategoriaException e)
+		catch (DomainObjetivoException e)
 		{
 			ErrorMsg = e.Message;
 		}

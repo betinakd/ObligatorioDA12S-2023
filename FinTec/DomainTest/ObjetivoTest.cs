@@ -48,8 +48,8 @@ namespace DomainTest
 			Assert.AreEqual("Objetivo 1", _objetivo.Titulo);
 		}
 
-		[ExpectedException(typeof(ArgumentNullException))]
 		[TestMethod]
+		[ExpectedException(typeof(DomainObjetivoException))]
 		public void Tiene_Titulo_Vacio()
 
 		{
