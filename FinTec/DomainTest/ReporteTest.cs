@@ -805,7 +805,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void ReporteObjetivoGasto_CuentaExpirada()
+        public void ReporteGastosTarjeta_CuentaExpirada()
         {
             var _reporte = new Reporte();
             Espacio _miEspacio = new Espacio();
@@ -844,6 +844,57 @@ namespace DomainTest
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 0);
+        }
+
+        [TestMethod]
+        public void ReportegastosTarjeta_Cuenta_Por_Vencer()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Credito credit = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddDays(+5),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1234",
+            };
+            _miEspacio.AgregarCuenta(credit);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = credit,
+            };
+            Transaccion transaccion2 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 2",
+                CuentaMonetaria = credit,
+            };
+            _miEspacio.AgregarTransaccion(transaccion1);
+            _miEspacio.AgregarTransaccion(transaccion2);
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            _reporte.MiEspacio = _miEspacio;
+            List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
+            Assert.IsFalse(toAnalize.Count == 2);
         }
     }
 }
