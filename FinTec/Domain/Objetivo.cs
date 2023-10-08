@@ -10,6 +10,7 @@ namespace Domain
     {
         private string _titulo;
         private double _montoMaximo;
+        private List<Categoria> _categorias = new List<Categoria>();
         public string Titulo 
         {
             get
@@ -36,6 +37,17 @@ namespace Domain
 				_montoMaximo = value;
 			}
 		}
-        public List<Categoria> Categorias { get; set; }
+        public List<Categoria> Categorias { 
+            get
+            {
+				return _categorias;
+			}
+            set
+            {
+                if (value.Count == 0)
+					throw new DomainObjetivoException("Debe seleccionar al menos una categoría.");
+				_categorias = value;
+            }
+        }
     }
 }
