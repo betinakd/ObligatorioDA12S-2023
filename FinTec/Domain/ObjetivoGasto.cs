@@ -28,12 +28,23 @@ namespace Domain
         public ObjetivoGasto(double valorEsperado, double valorAcumulado)
         {
             MontoEsperado = valorEsperado;
-            MontoAcumulado = valorEsperado;
+            MontoAcumulado = valorAcumulado;
         }
         
         public bool MontoCumpido()
         {
             return MontoEsperado < MontoAcumulado;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            };
+
+            ObjetivoGasto og = (ObjetivoGasto)obj;
+            return Objetivo.Equals(og.Objetivo) && MontoEsperado == og.MontoEsperado && MontoAcumulado == og.MontoAcumulado;
         }
     }
 }
