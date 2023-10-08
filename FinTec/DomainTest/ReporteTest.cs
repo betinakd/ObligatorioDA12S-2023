@@ -671,7 +671,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion2);
             _reporte.MiEspacio = _miEspacio;
             double balance = _reporte.BalanceCuentas(ahorro);
-            Assert.IsFalse(balance < montoInicial);
+            Assert.IsTrue(balance < montoInicial);
         }
     }
 }
