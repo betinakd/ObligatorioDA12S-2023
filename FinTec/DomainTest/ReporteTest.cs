@@ -729,5 +729,37 @@ namespace DomainTest
             double balance = _reporte.BalanceCuentas(ahorro);
             Assert.IsTrue(balance == montoInicial);
         }
+    
+        [TestMethod]
+        public void ReporteGastosTarjeta_Vacio()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Credito credit = new Credito 
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = new DateTime(DateTime.Now.Year, 12, 31),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1234",
+            };
+            _miEspacio.AgregarCuenta(credit);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            _reporte.MiEspacio = _miEspacio;
+            List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
+            Assert.IsFalse(toAnalize.Count == 0);
+        }
     }
 }
