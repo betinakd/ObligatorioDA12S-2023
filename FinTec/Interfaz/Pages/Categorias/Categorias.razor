@@ -1,104 +1,72 @@
-﻿@page "/home/{Id:int}/{Correo}/Categorias"
-@inject NavigationManager NavigationManager;
-@using BussinesLogic
+﻿@using BussinesLogic
 @using Domain
+@page "/home/{Id:int}/{Correo}/Categorias"
+@inject NavigationManager NavigationManager;
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
 
-<PageTitle>FinTec Registro de Usuario</PageTitle>
+<PageTitle>FinTec Categorias</PageTitle>
+<TituloRosado Titulo="Categorias del espacio" Subtitulo="Cree, Modifiqué y elimine categorías en el espacio."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-@foreach (var categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
-{
-	<div class="card">
-		<div class="card-body">
-			<h5 class="card-title"><strong>Nombre de la Categoría:</strong> @categoria.Nombre</h5>
-			<p><strong>Fecha de creación:</strong>@categoria.FechaCreacion</p>
-			@if (categoria.Tipo == TipoCategoria.Ingreso)
-			{
-				<p><strong>Tipo de Ingreso:</strong> Ingreso</p>
-			}
-			else if (categoria.Tipo == TipoCategoria.Costo)
-			{
-				<p><strong>Tipo de Ingreso:</strong> Costo</p>
-			}
-			<p><strong>Estado:</strong> @(categoria.EstadoActivo ? "Activo" : "Inactivo")</p>
-			@if (activadoModificar && categoria.Equals(categoriaSelec))
-			{
-				<div class="form-group">
-					<label>Tipo de Ingreso:</label>
-					<select class="form-control" @bind="tipoIngresoSeleccionado">
-						<option value="Ingreso">Ingreso</option>
-						<option value="Costo">Costo</option>
-					</select>
-				</div>
+<a class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+   href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCategorias">Crear Categoria Nueva</a>
 
-				<div class="form-group">
-					<label>Estado:</label>
-					<select class="form-control" @bind="estadoSeleccionado">
-						<option value="Activa">Activa</option>
-						<option value="Inactiva">Inactiva</option>
-					</select>
-				</div>
-			}
-			<p style="color:red">@ErrorMsg</p>
-			<button class="btn btn-primary" @onclick="() => ModificarCategoria(categoria)">Modificar</button>
-			<p>
-				<a class="btn btn-danger btn-sm" @onclick="() => EliminarCategoria(categoria)" href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
-			</p>
-		</div>
-	</div>
-}
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Nombre de la Categoría
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Fecha de creación
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Tipo de Ingreso
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Estado
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Eliminar
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
+			{
+				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+					<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@categoria.Nombre</td>
+					<td class="px-6 py-4">@categoria.FechaCreacion</td>
+					<td class="px-6 py-4">
+						@categoria.Tipo
+					</td>
+					<td class="px-6 py-4">@(categoria.EstadoActivo ? "Activo" : "Inactivo")</td>
+					<td class="px-6 py-4">
 
-<a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCategorias">Crear Categoria Nueva</a>
+						<p style="color:red">@ErrorMsg</p>
+						<p>
+							<a @onclick="() => EliminarCategoria(categoria)" 
+								href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
+						</p>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
 
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	public bool activadoModificar { get; set; } = false;
-	public string tipoIngresoSeleccionado = "Ingreso";
-	public string estadoSeleccionado = "Activa";
 	private bool estadoActivo;
 	private TipoCategoria tipo;
 	public Categoria categoriaSelec { get; set; } = new Categoria();
-	private void ModificarCategoria(Categoria categoria)
-	{
-		categoriaSelec = categoria;
 
-		switch (estadoSeleccionado)
-		{
-			case "Activa":
-				estadoActivo = true;
-				break;
-			case "Inactiva":
-				estadoActivo = false;
-				break;
-		}
-
-		switch (tipoIngresoSeleccionado)
-		{
-			case "Ingreso":
-				tipo = TipoCategoria.Ingreso;
-				break;
-			case "Costo":
-				tipo = TipoCategoria.Costo;
-				break;
-		}
-
-		try
-		{
-			categoria.EstadoActivo = estadoActivo;
-			categoria.Tipo = tipo;
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
-		}
-		activadoModificar = !activadoModificar;
-	}
 
 	private void EliminarCategoria(Categoria categoria)
 	{
