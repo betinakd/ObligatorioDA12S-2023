@@ -32,6 +32,9 @@
 				<th scope="col" class="px-6 py-3">
 					Eliminar
 				</th>
+				<th scope="col" class="px-6 py-3">
+					Modificar
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -45,19 +48,42 @@
 					</td>
 					<td class="px-6 py-4">@(categoria.EstadoActivo ? "Activo" : "Inactivo")</td>
 					<td class="px-6 py-4">
-
-						<p style="color:red">@ErrorMsg</p>
 						<p>
-							<a @onclick="() => EliminarCategoria(categoria)" 
-								href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
+							<a @onclick="() => EliminarCategoria(categoria)"
+							   href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
+						</p>
+					</td>
+					<td class="px-6 py-4">
+						<p>
+							<a @onclick="() => MostrarSeccionModificar(categoria)"
+							   href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Modificar</a>
 						</p>
 					</td>
 				</tr>
+
+				@if (mostrarModificar && categoriaSelec == categoria)
+				{
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4" colspan="3">
+							<p style="color:red">@ErrorMsg</p>
+							<label for="idModificar" class="block font-medium text-gray-900 dark:text-white">Modificar Nombre:</label>
+							<input id="idModificar" type="text"
+							@bind="nombreValor" class="w-full border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent dark:focus:ring-pink-900 dark:focus:border-transparent px-3 py-2 mt-1" />
+						</td>
+						<td class="px-6 py-4">
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800"
+							@onclick="()=>ModificarValor(categoria)">
+								Modificar
+							</button>
+						</td>
+					</tr>
+				}
 			}
 		</tbody>
 	</table>
 </div>
 
+<p style="color:red">@ErrorMsg</p>
 
 @code {
 	[Parameter] public int Id { get; set; }
@@ -65,8 +91,16 @@
 	public string ErrorMsg { get; set; }
 	private bool estadoActivo;
 	private TipoCategoria tipo;
-	public Categoria categoriaSelec { get; set; } = new Categoria();
+	public Categoria categoriaSelec { get; set; }
+	private bool mostrarModificar = false;
+	string nombreValor { get; set; } = "";
 
+	private void MostrarSeccionModificar(Categoria categoria)
+	{
+		ErrorMsg = "";
+		categoriaSelec = categoria;
+		mostrarModificar = !mostrarModificar;
+	}
 
 	private void EliminarCategoria(Categoria categoria)
 	{
@@ -78,5 +112,10 @@
 		{
 			ErrorMsg = e.Message;
 		}
+	}
+
+	private void ModificarValor(Categoria categoria)
+	{
+
 	}
 }
