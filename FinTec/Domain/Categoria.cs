@@ -5,7 +5,7 @@ namespace Domain
 	public class Categoria
 	{
 		private string _nombre;
-		private readonly DateTime _fechaCreacion = DateTime.Now;
+		DateTime _fechaCreacion = DateTime.Today;
 		public bool EstadoActivo { get; set; }
 		public TipoCategoria Tipo { get; set; }
 		public string Nombre
@@ -23,8 +23,16 @@ namespace Domain
 
 		public DateTime FechaCreacion
 		{
-			get { return _fechaCreacion; }
+			get
+			{
+				return _fechaCreacion;
+			}
+			set
+			{
+				_fechaCreacion = value;
+			}
 		}
+
 		public Categoria()
 		{
 		}
