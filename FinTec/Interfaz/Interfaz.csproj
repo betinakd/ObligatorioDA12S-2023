@@ -19,4 +19,12 @@
     <ProjectReference Include="..\BussinesLogic\BussinesLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
+  </ItemGroup>
+
 </Project>
