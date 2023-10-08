@@ -7,38 +7,67 @@
 @inject Persistencia Persistencia;
 
 <PageTitle>FinTec Tipo Cambiario</PageTitle>
+<TituloRosado Titulo="Transacciones del espacio" Subtitulo="Listado con las transacciones realizadas en el espacio actual."></TituloRosado>
 <EspacioActual></EspacioActual>
-<h1>Lista de Transacciones del espacio:</h1>
+<div class="mb-4">
+<a class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+   href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionCosto">Crear Transacción Costo</a>
+<a class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+   href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionIngreso">Crear Transacción Ingreso</a>
+</div>
 
-<table class="table">
-	<thead>
-		<tr>
-			<th>Titulo</th>
-			<th>Fecha</th>
-			<th>Monto</th>
-			<th>Moneda</th>
-			<th>Cuenta</th>
-			<th>Categoría</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (Transaccion transaccion in EspacioLogic.FindEspacio(Persistencia.Id).Transacciones)
-		{
-			<tr>
-				<td>@transaccion.Titulo</td>
-				<td>@transaccion.FechaTransaccion</td>
-				<td>@transaccion.Monto</td>
-				<td>@transaccion.CuentaMonetaria.Moneda.ToString()</td>
-				<td>@transaccion.CuentaMonetaria.ToString()</td>
-				<td>@transaccion.CategoriaTransaccion.Nombre</td>
-			</tr>
-		}
-	</tbody>
-</table>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th class="px-6 py-3">
+                    Titulo
+                </th>
+                <th class="px-6 py-3">
+                    Fecha
+                </th>
+                <th class="px-6 py-3">
+                    Monto
+                </th>
+                <th class="px-6 py-3">
+                    Moneda
+                </th>
+                <th class="px-6 py-3">
+                    Cuenta
+                </th>
+                <th class="px-6 py-3">
+                    Categoría
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Transaccion transaccion in EspacioLogic.FindEspacio(Persistencia.Id).Transacciones)
+            {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        @transaccion.Titulo
+                    </td>
+                    <td class="px-6 py-4">
+                        @transaccion.FechaTransaccion
+                    </td>
+                    <td class="px-6 py-4">
+                        @transaccion.Monto
+                    </td>
+                    <td class="px-6 py-4">
+                        @transaccion.CuentaMonetaria.Moneda.ToString()
+                    </td>
+                    <td class="px-6 py-4">
+                        @transaccion.CuentaMonetaria.ToString()
+                    </td>
+                    <td class="px-6 py-4">
+                        @transaccion.CategoriaTransaccion.Nombre
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-
-<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionCosto">Crear Transacción Costo</a>
-<a class="btn btn-primary" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionIngreso">Crear Transacción Ingreso</a>
 <p style="color:red">@ErrorMsg</p>
 
 
