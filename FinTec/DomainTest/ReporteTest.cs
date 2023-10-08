@@ -339,7 +339,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion);
             _reporte.MiEspacio = _miEspacio;
             List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
-            Assert.IsFalse(toAnalize.First().Porcentaje == 100);
+            Assert.IsTrue(toAnalize.First().Porcentaje == 100);
         }
     }
 }
