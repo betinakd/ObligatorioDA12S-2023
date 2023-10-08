@@ -79,7 +79,7 @@ namespace DomainTest
             _reporte.MiEspacio = _miEspacio;
             List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
             List<ObjetivoGasto> ret2 = new List<ObjetivoGasto>();
-            Assert.IsFalse(ret.Count == 1);
+            Assert.IsTrue(ret.Count == 1);
         }
     }
 }
