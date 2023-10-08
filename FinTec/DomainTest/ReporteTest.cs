@@ -504,7 +504,7 @@ namespace DomainTest
             DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
             List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria1, fIni, fEnd, _cuenta);
-            Assert.IsFalse(toAnalize.Count == 1);
+            Assert.IsTrue(toAnalize.Count == 1);
         }
     }
 }
