@@ -7,12 +7,13 @@
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
 
-<PageTitle>FinTec Registro de Usuario</PageTitle>
+<PageTitle>FinTec Crear Espacio</PageTitle>
 
+<TituloRosado Titulo="Crear Espacio" Subtitulo="Ingrese el nombre del espacio y creé un nuevo espacio, usted será el Administrador."></TituloRosado>
 
-<input @bind="inputNombre" type="text" placeholder="Nombre de Espacio">
+<input class="mt-4 mb-4" @bind="inputNombre" type="text" placeholder="Nombre de Espacio">
 <p style="color:red">@ErrorMsg</p>
-<button @onclick="() => ClickCrearUsuario()">Crear Nuevo Espacio</button>
+<button @onclick="() => ClickCrearUsuario()" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Crear Nuevo Espacio</button>
 
 @code {
 	[Parameter] public int Id { get; set; }
@@ -30,13 +31,13 @@
 	private void ClickCrearUsuario()
 	{
 		try{
-		Espacio espacio = new Espacio()
+			Espacio espacio = new Espacio()
 			{
 				Nombre = inputNombre,
 				Admin = usuario,
 			};
-
 			EspacioLogic.AddEspacio(espacio);
+			espacio.AsignarId();
 			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
 		}
 		catch (DomainEspacioException e)

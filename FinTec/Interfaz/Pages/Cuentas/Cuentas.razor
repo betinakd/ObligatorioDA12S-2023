@@ -7,83 +7,143 @@
 @inject Persistencia Persistencia
 
 <PageTitle>FinTec Cuentas</PageTitle>
+<TituloRosado Titulo="Cuentas del espacio actual." Subtitulo="Cree elimine y modifique las cuentas del espacio."></TituloRosado>
 <EspacioActual></EspacioActual>
-<a class="btn btn-danger btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaAhorro">Crear Cuenta Ahorro</a>
-<a class="btn btn-danger btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaCredito">Crear Cuenta Credito</a>
-<p style="color:red">@ErrorMsg</p>
-<h2>Cuentas de Ahorro:</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Monto</th>
-            <th>Fecha de Creación</th>
-            <th>Moneda</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Ahorro))
-        {
-            <tr>
-                <td>@cuentaAhorro.Nombre</td>
-                <td>@cuentaAhorro.Monto</td>
-                <td>@cuentaAhorro.FechaCreacion</td>
-                <td>@cuentaAhorro.Moneda</td>
-                <td>
-                    <button class="btn btn-primary" @onclick="() => ModificarCuenta(cuentaAhorro)">Modificar</button>
-                    <button class="btn btn-danger" @onclick="() => EliminarCuenta(cuentaAhorro)">Eliminar</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="mb-4">
+	<a class="mb-5 mt-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+	   href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaAhorro">
+		Crear Cuenta Ahorro
+	</a>
 
-<h2>Cuentas de Crédito:</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Banco Emisor</th>
-            <th>Número de Tarjeta</th>
-            <th>Crédito Disponible</th>
-            <th>Moneda</th>
-            <th>Fecha de Creación</th>
-            <th>Fecha de Cierre</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Credito))
-        {
-            <tr>
-                <td>@cuentaCredito.BancoEmisor</td>
-                <td>@cuentaCredito.NumeroTarjeta</td>
-                <td>@cuentaCredito.CreditoDisponible</td>
-                <td>@cuentaCredito.Moneda</td>
-                <td>@cuentaCredito.FechaCreacion</td>
-                <td>@cuentaCredito.FechaCierre</td>
-                <td>
-                    <button class="btn btn-primary" @onclick="() => ModificarCuenta(cuentaCredito)">Modificar</button>
-                    <button class="btn btn-danger" @onclick="() => EliminarCuenta(cuentaCredito)">Eliminar</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+	<a class="mb-5 mt-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+	   href="/home/@Persistencia.Id/@Persistencia.Correo/CrearCuentaCredito">Crear Cuenta Credito</a>
+</div>
+
+<p style="color:red">@ErrorMsg</p>
+
+<h2>Cuentas de Ahorro:</h2>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Nombre
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Monto
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Fecha de Creación
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Moneda
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Acciones
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Ahorro))
+			{
+				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+						@cuentaAhorro.Nombre
+					</td>
+					<td class="px-6 py-4">
+						@cuentaAhorro.Monto
+					</td>
+					<td class="px-6 py-4">
+						@cuentaAhorro.FechaCreacion
+					</td>
+					<td class="px-6 py-4">
+						@cuentaAhorro.Moneda
+					</td>
+					<td class="px-6 py-4">
+						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarCuenta(cuentaAhorro)">Modificar</button>
+						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2" @onclick="() => EliminarCuenta(cuentaAhorro)">Eliminar</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+
+<h2 class="mt-5">Cuentas de Crédito:</h2>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Banco Emisor
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Número de Tarjeta
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Crédito Disponible
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Moneda
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Fecha de Creación
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Fecha de Cierre
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Acciones
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Credito))
+			{
+				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+						@cuentaCredito.BancoEmisor
+					</td>
+					<td class="px-6 py-4">
+						@cuentaCredito.NumeroTarjeta
+					</td>
+					<td class="px-6 py-4">
+						@cuentaCredito.CreditoDisponible
+					</td>
+					<td class="px-6 py-4">
+						@cuentaCredito.Moneda
+					</td>
+					<td class="px-6 py-4">
+						@cuentaCredito.FechaCreacion
+					</td>
+					<td class="px-6 py-4">
+						@cuentaCredito.FechaCierre
+					</td>
+					<td class="px-6 py-4">
+						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarCuenta(cuentaCredito)">Modificar</button>
+						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2" @onclick="() => EliminarCuenta(cuentaCredito)">Eliminar</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
 <p style="color:red">@ErrorMsg</p>
 
 @code {
-    [Parameter] public int Id { get; set; }
-    [Parameter] public string Correo { get; set; }
-    public string ErrorMsg { get; set; }
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
 
-    private void ModificarCuenta(Cuenta cuenta)
-    {
-        // Implementa la lógica para la modificación de la cuenta
-    }
+	private void ModificarCuenta(Cuenta cuenta)
+	{
+		// Implementa la lógica para la modificación de la cuenta
+	}
 
-    private void EliminarCuenta(Cuenta cuenta)
-    {
-        var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-        //Implementar en bussines logic
-        espacio.Cuentas.Remove(cuenta);      
-    }
+	private void EliminarCuenta(Cuenta cuenta)
+	{
+		var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+		//Implementar en bussines logic
+		espacio.Cuentas.Remove(cuenta);
+	}
 }

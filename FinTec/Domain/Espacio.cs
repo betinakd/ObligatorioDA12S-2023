@@ -4,7 +4,12 @@ namespace Domain
 {
 	public class Espacio
 	{
-		private static int _contadorId = 1;
+
+        public Espacio()
+        {
+        }
+
+        private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
@@ -90,10 +95,6 @@ namespace Domain
 				_admin = value;
 			}
 		}
-		public Espacio()
-		{
-			Id = _contadorId++;
-		}
 
 		public void InvitarUsuario(Usuario usuario)
 		{
@@ -140,10 +141,26 @@ namespace Domain
 		public void BorrarCategoria(Categoria categoria) {
 			if (Categorias.Contains(categoria))
 			{
-				//if (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)))
-				//	throw new DomainEspacioException("No se puede borrar una categoria que tiene transacciones asociadas");
+				if (TransaccionesContieneCategoria(categoria))
+					throw new DomainEspacioException("No se puede borrar una categoria que tiene transacciones asociadas");
 				Categorias.Remove(categoria);
 			}
 		}
-	}
+
+		public bool TransaccionesContieneCategoria(Categoria categoria) {
+			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
+        }
+        public static void AumentarContadorId()
+		{
+			_contadorId++;
+		}
+
+		public void AsignarId()
+		{			
+            Id = _contadorId;
+            AumentarContadorId();
+        }
+
+
+    }
 }

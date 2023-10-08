@@ -7,35 +7,37 @@
 @inject Persistencia Persistencia;
 
 <PageTitle>FinTec Agregar Tipo Cambiario</PageTitle>
+<TituloRosado Titulo="Agregar Tipo Cambiario" Subtitulo="Agregué un tipo cambiario para el espacio recuerde que no se puede repetir la fecha del mismo."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-<h1>Agregar Tipo Cambiario</h1>
-
 <form>
-	<div class="form-group">
-		<label for="moneda">Moneda:</label>
-		<input type="text" class="form-control" id="moneda" value="Dolar" readonly />
-	</div>
-	<div class="form-group">
-		<label for="valorPesos">Valor en Pesos Uruguayos:</label>
-		<input type="number" class="form-control" id="valorPesos" @bind="Pesos">
-	</div>
-	<div class="form-group">
-		<label for="fecha">Fecha:</label>
-		<input type="date" class="form-control" id="fecha" @bind="FechaDeCambio">
-	</div>
+	<table>
+		<tr>
+			<td><label for="moneda">Moneda:</label></td>
+			<td><input type="text" class="form-control" id="moneda" value="Dolar" readonly /></td>
+		</tr>
+		<tr>
+			<td><label for="valorPesos">Valor en Pesos Uruguayos:</label></td>
+			<td><input type="number" class="form-control" id="valorPesos" placeholder="Pesos Uruguayos" @bind="Pesos"></td>
+		</tr>
+		<tr>
+			<td><label for="fecha">Fecha:</label></td>
+			<td><input type="date" class="form-control" id="fecha" @bind="FechaDeCambio"></td>
+		</tr>
+	</table>
 	<p style="color:red">@ErrorMsg</p>
-	<button type="button" class="btn btn-primary" @onclick="AgregarCambio">Agregar Tipo Cambiario</button>
+	<button type="button" class="mb-5 mt-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+	@onclick="AgregarCambio">
+		Agregar Tipo Cambiario
+	</button>
 </form>
-
-
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
-	public string Moneda { get; set; }
-	public double Pesos { get; set; }
+	public string ErrorMsg { get; set; } = "";
+	public string Moneda { get; set; } = "";
+	public double Pesos { get; set; } = 0;
 	public DateTime FechaDeCambio { get; set; } = DateTime.Now;
 
 
