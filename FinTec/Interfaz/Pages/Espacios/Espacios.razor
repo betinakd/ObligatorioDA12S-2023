@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Espacios"
 @inject NavigationManager NavigationManager
-
 @using BussinesLogic
 @using Domain
 @inject UsuarioLogic UsuarioLogic;
@@ -15,7 +14,7 @@
 	<hr>
 	<p class="mb-0"><strong>Admin:</strong>@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre @EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido</p>
 </div>
-
+<BotonVerdeAgua></BotonVerdeAgua>
 <a class="btn btn-success btn-sm" href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios">Crear Espacio</a>
 
 @foreach (var espacio in espacios)
