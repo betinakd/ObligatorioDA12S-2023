@@ -593,6 +593,18 @@ namespace DomainTest
 			espacio1.BorrarCuenta(CuentaMonetaria);
 
 		}
-
+		[TestMethod]
+		public void Excepcion_Borrar_Cuentan_No_Contiene_Transaccion()
+		{
+			Ahorro CuentaMonetaria = new Ahorro()
+			{
+				Nombre = "Ahorro",
+				Moneda = TipoCambiario.Dolar,
+			};
+			espacio1.AgregarCuenta(CuentaMonetaria);
+			espacio1.BorrarCuenta(CuentaMonetaria);
+		}
 	}
 }
+
+
