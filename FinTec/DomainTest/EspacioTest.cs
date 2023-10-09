@@ -513,5 +513,13 @@ namespace DomainTest
 			espacio1.AgregarObjetivo(objetivo);
 			espacio1.BorrarCategoria(categoria1);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Al_Agregar_Dos_Categorias_Mismo_Nombre()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			espacio1.AgregarCategoria(categoria1);
+		}
 	}
 }
