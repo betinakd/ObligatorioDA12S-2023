@@ -42,10 +42,10 @@ namespace DomainTest
         public void CategoriaGasto_Constructor_Triple()
         {
             Categoria categoria = new Categoria();
-            double _montoAcumulados = 20;
+            double _montoAcumulado = 20;
             double porcentaje = 20;
-            var cg = new CategoriaGasto(categoria, _montoAcumulados, porcentaje);
-            Assert.IsFalse(cg.MontoUsado == _montoAcumulados && cg.Categoria.Equals(categoria) && cg.Porcentaje == porcentaje);
+            var cg = new CategoriaGasto(categoria, _montoAcumulado, porcentaje);
+            Assert.IsTrue(cg.MontoUsado == _montoAcumulado && cg.Categoria.Equals(categoria) && cg.Porcentaje == porcentaje);
         }
 
         [TestMethod]
