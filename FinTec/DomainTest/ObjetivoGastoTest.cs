@@ -138,5 +138,19 @@ namespace DomainTest
             og2.Objetivo = obj;
             Assert.AreNotEqual(og1, og2);
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_Diferente_MontoAc()
+        {
+            double montoEsp = 5;
+            double montoAc2 = 8;
+            double montoAc = 6;
+            Objetivo obj = new Objetivo();
+            var og1 = new ObjetivoGasto(montoEsp, montoAc);
+            var og2 = new ObjetivoGasto(montoEsp, montoAc2);
+            og1.Objetivo = obj;
+            og2.Objetivo = obj;
+            Assert.AreEqual(og1, og2);
+        }
     }
 }
