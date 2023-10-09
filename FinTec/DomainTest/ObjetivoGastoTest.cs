@@ -51,7 +51,7 @@ namespace DomainTest
         public void ObjetivoGasto_Constructor_Vacio()
         {
             var og = new ObjetivoGasto();
-            Assert.IsFalse(og.MontoEsperado == 0 && og.MontoAcumulado == 0);
+            Assert.IsTrue(og.MontoEsperado == 0 && og.MontoAcumulado == 0);
         }
     }
 }
