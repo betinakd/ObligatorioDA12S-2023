@@ -9,7 +9,7 @@ namespace Domain
     public class Transaccion
     {
         public static int _contadorIdTransaccion = 1;
-        private string _titulo;
+        private string _titulo;        
         public string Titulo
         {
             get 

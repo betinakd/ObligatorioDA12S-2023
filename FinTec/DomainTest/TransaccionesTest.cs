@@ -118,9 +118,16 @@ namespace DomainTest
         [TestMethod]
         public void Contador_Id_Transaccion()
         {   
-            Assert.AreEqual(1, Transaccion._contadorIdTransaccion);
+            Transaccion transaccion = new Transaccion();
+            Assert.AreEqual(0, transaccion.IdTransaccion);
         }
 
-        
+        [TestMethod]
+        public void Asignar_Id_Transaccion()
+        {   
+            Transaccion transaccion = new Transaccion();  
+            transaccion.AsignarIdTransaccion();
+            Assert.AreEqual(2, Transaccion._contadorIdTransaccion);          
+        }
     }
 }
