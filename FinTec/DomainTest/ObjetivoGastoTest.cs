@@ -198,5 +198,11 @@ namespace DomainTest
             obj2.Objetivo = new Objetivo { Categorias = listaCat2, MontoMaximo = montoEsp2, Titulo = "obj2" };
             Assert.AreNotEqual(obj1, obj2);
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_Equal_DiferentesObj()
+        {
+
+        }
     }
 }
