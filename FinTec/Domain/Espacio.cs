@@ -5,11 +5,11 @@ namespace Domain
 	public class Espacio
 	{
 
-        public Espacio()
-        {
-        }
+		public Espacio()
+		{
+		}
 
-        private static int _contadorId = 1;
+		private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
@@ -128,7 +128,7 @@ namespace Domain
 
 		public void AgregarCambio(Cambio cambio)
 		{
-			if(_cambios.Contains(cambio))
+			if (_cambios.Contains(cambio))
 				throw new DomainEspacioException("Ya existe un cambio para la fecha.");
 			_cambios.Add(cambio);
 		}
@@ -138,7 +138,8 @@ namespace Domain
 			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Correo == correo));
 		}
 
-		public void BorrarCategoria(Categoria categoria) {
+		public void BorrarCategoria(Categoria categoria)
+		{
 			if (Categorias.Contains(categoria))
 			{
 				if (TransaccionesContieneCategoria(categoria))
@@ -146,21 +147,31 @@ namespace Domain
 				Categorias.Remove(categoria);
 			}
 		}
+		public bool CategoriaAsociadaObjetivos(Categoria categoria)
+		{
+			foreach (var objetivo in _objetivos)
+			{
+				if (objetivo.ContieneCategoria(categoria))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
-		public bool TransaccionesContieneCategoria(Categoria categoria) {
+		public bool TransaccionesContieneCategoria(Categoria categoria)
+		{
 			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
-        }
-        public static void AumentarContadorId()
+		}
+		public static void AumentarContadorId()
 		{
 			_contadorId++;
 		}
 
 		public void AsignarId()
-		{			
-            Id = _contadorId;
-            AumentarContadorId();
-        }
-
-
-    }
+		{
+			Id = _contadorId;
+			AumentarContadorId();
+		}
+	}
 }
