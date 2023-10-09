@@ -205,9 +205,9 @@ namespace Domain
             transaccionAModificar.CuentaMonetaria = new Credito
             {
                 BancoEmisor = BancoEmisor,
-                Moneda = Moneda,
                 CreditoDisponible = Monto,
-                NumeroTarjeta = NumeroTarjeta
+                NumeroTarjeta = NumeroTarjeta,
+				FechaCierre = transaccionAModificar.FechaTransaccion
             };
         }
 
@@ -223,7 +223,6 @@ namespace Domain
             transaccionAModificar.CuentaMonetaria = new Ahorro
             {
                 Nombre = Nombre,
-                Moneda = Moneda,
                 Monto = Monto
             };
         }

@@ -105,7 +105,6 @@
                     nuevaTransaccion.CuentaMonetaria = new Ahorro
                         {
                             Nombre = cuentaAhorro.Nombre,
-                            Moneda = cuentaAhorro.Moneda,
                             Monto = Monto
                         };
                 }
@@ -120,9 +119,9 @@
                     nuevaTransaccion.CuentaMonetaria = new Credito
                         {
                             BancoEmisor = cuentaCredito.BancoEmisor,
-                            Moneda = cuentaCredito.Moneda,
                             CreditoDisponible = Monto,
-                            NumeroTarjeta = cuentaCredito.NumeroTarjeta
+                            NumeroTarjeta = cuentaCredito.NumeroTarjeta,
+                            FechaCierre = cuentaCredito.FechaCierre,
                         };
                 }
             }
