@@ -497,5 +497,21 @@ namespace DomainTest
 			espacio1.AgregarObjetivo(objetivo);
 			Assert.IsFalse(espacio1.CategoriaAsociadaObjetivos(categoria2));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Al_Borrar_Categoria_Contenida_En_Objetivos() {
+			List<Categoria> categorias = new List<Categoria>();
+			espacio1.AgregarCategoria(categoria1);
+			categorias.Add(categoria1);
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = categorias,
+			};
+			espacio1.AgregarObjetivo(objetivo);
+			espacio1.BorrarCategoria(categoria1);
+		}
 	}
 }
