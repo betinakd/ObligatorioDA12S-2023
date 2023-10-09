@@ -49,13 +49,13 @@
 					<td class="px-6 py-4">@(categoria.EstadoActivo ? "Activo" : "Inactivo")</td>
 					<td class="px-6 py-4">
 						<p>
-							<a @onclick="() => EliminarCategoria(categoria)"
+							<a @onclick="() => EliminarCategoria(categoria)" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
 							   href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Eliminar</a>
 						</p>
 					</td>
 					<td class="px-6 py-4">
 						<p>
-							<a @onclick="() => MostrarSeccionModificar(categoria)"
+							<a @onclick="() => MostrarSeccionModificar(categoria)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
 							   href="/home/@Persistencia.Id/@Persistencia.Correo/Categorias">Modificar</a>
 						</p>
 					</td>
