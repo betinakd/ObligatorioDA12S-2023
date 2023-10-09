@@ -49,6 +49,14 @@ namespace DomainTest
         }
 
         [TestMethod]
+        public void CategoriaGasto_Contructor_Cat()
+        {
+            Categoria categoria = new Categoria();
+            var cg = new CategoriaGasto(categoria);
+            Assert.IsFalse(cg.MontoUsado == 0 && cg.Categoria.Equals(categoria) && cg.Porcentaje == 0);
+        }
+
+        [TestMethod]
         public void CategoriaGasto_Mismos_Valores_Monto_Porcentaje()
         {
             double _montoAcumulado = 15;
