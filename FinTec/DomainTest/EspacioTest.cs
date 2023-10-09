@@ -506,6 +506,7 @@ namespace DomainTest
 			espacio1.AgregarCategoria(categoria1);
 			espacio1.AgregarCategoria(categoria1);
 		}
+
 		[TestMethod]
 		public void Transaccion_Contiene_Cuenta_True()
 		{
@@ -555,6 +556,42 @@ namespace DomainTest
 			};
 			espacio1.AgregarObjetivo(objetivo);
 			espacio1.BorrarCategoria(categoria1);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Borrar_Transaccion_Contiene_Cuenta_True()
+		{
+			Ahorro CuentaMonetaria = new Ahorro()
+			{
+				Nombre = "Ahorro",
+				Moneda = TipoCambiario.Dolar,
+			};
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 16,
+				FechaDeCambio = DateTime.Now,
+			};
+			espacio1.AgregarCambio(cambio);
+			var transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = CuentaMonetaria,
+			};
+
+			espacio1.AgregarCuenta(CuentaMonetaria);
+			espacio1.AgregarTransaccion(transaccion);
+			espacio1.BorrarCuenta(CuentaMonetaria);
+
 		}
 
 	}
