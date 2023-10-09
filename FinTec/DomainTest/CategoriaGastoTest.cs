@@ -119,5 +119,22 @@ namespace DomainTest
             var cg2 = new CategoriaGasto(_cat, _montoAcumulado, _porcentaje2);
             Assert.AreNotEqual(cg, cg2);
         }
+
+        [TestMethod]
+        public void CategoriaGasto_Diferente_MontoAc()
+        {
+            double _montoAcumulado = 15;
+            double _porcentaje = 15;
+            double _montoAcumulado2 = 30;
+            Categoria _cat = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat",
+                Tipo = TipoCategoria.Costo,
+            };
+            var cg = new CategoriaGasto(_cat, _montoAcumulado, _porcentaje);
+            var cg2 = new CategoriaGasto(_cat, _montoAcumulado2, _porcentaje);
+            Assert.AreEqual(cg, cg2);
+        }
     }
 }
