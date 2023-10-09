@@ -161,6 +161,20 @@ namespace Domain
             AumentarContadorId();
         }
 
-
+        public void ModificarTransaccionCuentaCredito(string Titulo, TipoCambiario Moneda, string BancoEmisor, double Monto,
+			Categoria categoria, string NumeroTarjeta, int id)
+        {
+            Transaccion transaccionAModificar = Transacciones.Find(t => t.IdTransaccion == id);
+            transaccionAModificar.Titulo = Titulo;
+            transaccionAModificar.Moneda = Moneda;
+			transaccionAModificar.CategoriaTransaccion = categoria;
+            transaccionAModificar.CuentaMonetaria = new Credito
+            {
+                BancoEmisor = BancoEmisor,
+                Moneda = Moneda,
+                CreditoDisponible = Monto,
+                NumeroTarjeta = NumeroTarjeta
+            };
+        }
     }
 }
