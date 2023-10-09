@@ -87,9 +87,8 @@
 		</tbody>
 	</table>
 </div>
-
 <h2 class="mt-5">Cuentas de Crédito:</h2>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5" style="margin-bottom:500">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 			<tr>
@@ -147,6 +146,7 @@
 		</tbody>
 	</table>
 </div>
+<div style="height:500px"></div>
 
 
 @code {
@@ -157,12 +157,17 @@
 	private bool mostrarModificar { get; set; } = false;
 	private string inputAhorro { get; set; } = "";
 
+	private void LimpiarImputs()
+	{
+		inputAhorro = "";
+		ErrorMsg = "";
+	}
+
 	private void ClickModificarCuenta(Cuenta cuenta)
 	{
 		mostrarModificar = !mostrarModificar;
 		cuentaClickeada = cuenta;
-		ErrorMsg = "";
-		inputAhorro = "";
+		LimpiarImputs();
 	}
 
 	private void ModificarCuenta(Cuenta cuenta)
@@ -170,11 +175,34 @@
 		Ahorro cuentaAhorro = (Ahorro)cuenta;
 		try
 		{
-			cuentaAhorro.Nombre = inputAhorro;
+			Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+			Ahorro igualador = new Ahorro();
+			{
+				igualador.Nombre = inputAhorro;
+			};
+
+			if (!espacio.Cuentas.Contains(igualador))
+			{
+				try
+				{
+					cuentaAhorro.Nombre = inputAhorro;
+					LimpiarImputs();
+				}
+				catch (DomainCuentaException ex)
+				{
+					ErrorMsg = ex.Message;
+				}
+			}
+
+			else
+			{
+				ErrorMsg = "Ya existe una cuenta con ese nombre.";
+			}
+
 			mostrarModificar = !mostrarModificar;
-			inputAhorro="";
+			LimpiarImputs();
 		}
-		catch(DomainEspacioException ex)
+		catch (DomainCuentaException ex)
 		{
 			ErrorMsg = ex.Message;
 		}
@@ -187,10 +215,11 @@
 		{
 
 			espacio.BorrarCuenta(cuenta);
+			LimpiarImputs();
 		}
-		catch (DomainCuentaException ex)
-		{
-			ErrorMsg = ex.Message;
+			catch (DomainCuentaException ex)
+			{
+				ErrorMsg = ex.Message;
+			}
 		}
 	}
-}
