@@ -464,5 +464,38 @@ namespace DomainTest
 			espacio1.AsignarId();
 			Assert.AreEqual(espacio1.Id, 1);
 		}
+
+		[TestMethod]
+		public void CategoriaAsociadaObjetivos_Retorna_True_Al_Tener_Objetivo_Asociado()
+		{
+
+			List<Categoria> categorias = new List<Categoria>();
+			espacio1.AgregarCategoria(categoria1);
+			categorias.Add(categoria1);
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = categorias,
+			};
+			espacio1.AgregarObjetivo(objetivo);
+			Assert.IsTrue(espacio1.CategoriaAsociadaObjetivos(categoria1));
+		}
+
+		[TestMethod]
+		public void CategoriaAsociadaObjetivos_Retorna_False_Al_No_Tener_Objetivo_Asociado()
+		{
+			List<Categoria> categorias = new List<Categoria>();
+			espacio1.AgregarCategoria(categoria1);
+			categorias.Add(categoria1);
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = categorias,
+			};
+			espacio1.AgregarObjetivo(objetivo);
+			Assert.IsFalse(espacio1.CategoriaAsociadaObjetivos(categoria2));
+		}
 	}
 }
