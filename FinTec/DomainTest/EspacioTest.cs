@@ -500,5 +500,24 @@ namespace DomainTest
             Assert.AreEqual(espacio1.Transacciones[0].CategoriaTransaccion, categoria);
             Assert.AreEqual(((espacio1.Transacciones[0].CuentaMonetaria) as Credito).NumeroTarjeta, NumeroTarjeta);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainEspacioException))]
+        public void Excepcion_Modificar_Transaccion_Credito_No_Existe()
+        {
+            string Titulo = "Transaccion";
+            TipoCambiario Moneda = TipoCambiario.PesosUruguayos;
+            string BancoEmisor = "Banco";
+            double Monto = 100;
+            Categoria categoria = new Categoria()
+            {
+                EstadoActivo = true,
+                Nombre = "Categoria",
+                Tipo = TipoCategoria.Costo,
+            };
+            string NumeroTarjeta = "1234";
+            int id = 1;
+            espacio1.ModificarTransaccionCuentaCredito(Titulo, Moneda, BancoEmisor, Monto, categoria, NumeroTarjeta, id);
+        }
     }
 }
