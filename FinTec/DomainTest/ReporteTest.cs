@@ -1406,5 +1406,85 @@ namespace DomainTest
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 2);
         }
+
+        [TestMethod]
+        public void TransaccionMismoYearYMes_Otro_Year()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Credito credit = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddDays(+5),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1234",
+            };
+            _miEspacio.AgregarCuenta(credit);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = credit,
+            };
+            _reporte.MiEspacio = _miEspacio;
+            DateTime fecha = new DateTime(2024, DateTime.Now.Month, DateTime.Now.Day);
+            Assert.IsTrue(!_reporte.transaccionMismoYearYMes(transaccion1, fecha));
+        }
+
+        [TestMethod]
+        public void TransaccionMismoYearYMes_Otro_Mes()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Credito credit = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddDays(+5),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1234",
+            };
+            _miEspacio.AgregarCuenta(credit);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = credit,
+            };
+            _reporte.MiEspacio = _miEspacio;
+            DateTime fecha = new DateTime(DateTime.Now.Year, 1, DateTime.Now.Day);
+            Assert.IsTrue(!_reporte.transaccionMismoYearYMes(transaccion1, fecha));
+        }
     }
 }

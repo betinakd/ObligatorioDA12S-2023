@@ -8,27 +8,25 @@
 
         public List<ObjetivoGasto> ReporteObjetivosDeGastos()
         {
-            DateTime _actualDate = DateTime.Now;
-            int _mesActual = _actualDate.Month;
-            int _yearActual = _actualDate.Year;
             List<ObjetivoGasto> ret = new List<ObjetivoGasto>();
             List<Objetivo> objetivos = MiEspacio.Objetivos;
+            DateTime fechaActual = DateTime.Now;
             foreach (Objetivo o in objetivos)
             {
                 List<Transaccion> transacciones = MiEspacio.Transacciones;
                 ObjetivoGasto objetivo = new ObjetivoGasto(o.MontoMaximo);
                 objetivo.Objetivo = o;
                 double _montoAcumulado = 0;
-                bool controlEntrada = false;
+                bool transaccionesAceptadas = false;
                 foreach (Transaccion t in transacciones)
                 {
-                    if ((o.Categorias.Contains(t.CategoriaTransaccion)) && (t.FechaTransaccion.Month.Equals(_mesActual)) && (t.FechaTransaccion.Year.Equals(_yearActual)) && (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo)))
+                    if (transaccionEntraObjetivo(o, t) && transaccionMismoYearYMes(t, fechaActual) && transaccionCategoriaCosto(t))
                     {
-                        controlEntrada = true;
+                        transaccionesAceptadas = true;
                         _montoAcumulado += t.Monto;
                     }
                 }
-                if (controlEntrada)
+                if (transaccionesAceptadas)
                 {
                     objetivo.MontoAcumulado = _montoAcumulado;
                     ret.Add(objetivo);
@@ -37,9 +35,24 @@
             return ret;
         }
 
+        public bool transaccionEntraObjetivo(Objetivo o, Transaccion t)
+        {
+            return (o.Categorias.Contains(t.CategoriaTransaccion));
+        }
+
+        public bool transaccionMismoYearYMes(Transaccion t, DateTime fecha)
+        {
+            return (t.FechaTransaccion.Month.Equals(fecha.Month)) && (t.FechaTransaccion.Year.Equals(fecha.Year));
+        }
+
+        public bool transaccionCategoriaCosto(Transaccion t)
+        {
+            return (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo));
+        }
+
         public List<CategoriaGasto> ReporteGastosCategoriaPorMes(int mes)
         {
-            List<CategoriaGasto> _retList = new List<CategoriaGasto>();
+            List<CategoriaGasto> _reporteGastos = new List<CategoriaGasto>();
             List<Categoria> _categorias = MiEspacio.Categorias;
             double _montoTotal = Calcular_MontoTotal(mes);
             foreach (Categoria c in _categorias)
@@ -48,44 +61,54 @@
                 List<Transaccion> transacciones = MiEspacio.Transacciones;
                 foreach (Transaccion t in transacciones)
                 {
-                    if ((t.CategoriaTransaccion.Equals(c)) && (t.FechaTransaccion.Month.Equals(mes)) && (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo)))
+                    if (transaccionMismaCategoria(c, t) && transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
                     {
                         _montoAcumulado += t.Monto;
                     }
                 }
                 double _porcentaje = (_montoAcumulado * 100) / _montoTotal;
                 CategoriaGasto cg = new CategoriaGasto(c, _montoAcumulado, _porcentaje);
-                _retList.Add(cg);
+                _reporteGastos.Add(cg);
             }
-            return _retList;
+            return _reporteGastos;
+        }
+
+        public bool transaccionMismaCategoria(Categoria c, Transaccion t)
+        {
+            return (t.CategoriaTransaccion.Equals(c));
+        }
+
+        public bool transaccionMismoMes(Transaccion t, int mes)
+        {
+            return (t.FechaTransaccion.Month.Equals(mes));
         }
 
         public double Calcular_MontoTotal(int mes)
         {
-            double total = 0;
+            double montoTotal = 0;
             List<Transaccion> _listTran = MiEspacio.Transacciones;
             foreach(Transaccion t in _listTran)
             {
-                if ((t.FechaTransaccion.Month.Equals(mes)) && (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo)))
+                if (transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
                 {
-                    total += t.Monto;
+                    montoTotal += t.Monto;
                 }
             }
-            return total;
+            return montoTotal;
         }
 
-                public List<Transaccion> ListadoGastos(Categoria _catFiltro, DateTime _fechaIni, DateTime _fechaFin, Cuenta _cuentaFiltro)
+        public List<Transaccion> ListadoGastos(Categoria _catFiltro, DateTime _fechaIni, DateTime _fechaFin, Cuenta _cuentaFiltro)
         {
             List<Transaccion> _transacciones = MiEspacio.Transacciones;
-            List<Transaccion> _retList = new List<Transaccion>();
+            List<Transaccion> _listaGastos = new List<Transaccion>();
             foreach(Transaccion t in _transacciones)
             {
                 if (CumpleFiltroCategoria(t.CategoriaTransaccion, _catFiltro) && (TransaccionDentroDelScope(t, _fechaIni, _fechaFin)) && MismaCuenta(t.CuentaMonetaria, _cuentaFiltro))
                 {
-                    _retList.Add(t);
+                    _listaGastos.Add(t);
                 }
             }
-            return _retList;
+            return _listaGastos;
         }
 
         public bool CumpleFiltroCategoria(Categoria _catFiltro, Categoria _catTrans)
@@ -100,7 +123,7 @@
 
         public List<Transaccion> ReporteGastosTarjeta(string _nroTarjeta)
         {
-            List<Transaccion> listRet = new List<Transaccion>();
+            List<Transaccion> _reporteGastos = new List<Transaccion>();
             List<Cuenta> cuentas = MiEspacio.Cuentas;
             DateTime actualDate = DateTime.Now;
             foreach(Cuenta c in cuentas)
@@ -113,7 +136,7 @@
                         List<Transaccion> listaTrans = MiEspacio.Transacciones;
                         foreach(Transaccion t in listaTrans)
                         {
-                            if ((t.CuentaMonetaria is Credito) && MismaCuenta((Credito)t.CuentaMonetaria, creditAccount) && (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo)))
+                            if ((t.CuentaMonetaria is Credito) && MismaCuenta((Credito)t.CuentaMonetaria, creditAccount) && transaccionCategoriaCosto(t))
                             {
                                 if (!CuentaVencida(creditAccount, actualDate))
                                 {
@@ -125,7 +148,7 @@
                                         lastDate = creditAccount.FechaCierre;
                                         if (TransaccionDentroDelScope(t, firstDate, lastDate))
                                         {
-                                            listRet.Add(t);
+                                            _reporteGastos.Add(t);
                                         }
                                     } else
                                     {
@@ -134,7 +157,7 @@
                                         lastDate = lastDate.AddDays(-1);
                                         if (TransaccionDentroDelScope(t, firstDate, lastDate))
                                         {
-                                            listRet.Add(t);
+                                            _reporteGastos.Add(t);
                                         }
                                     }
                                 }
@@ -143,7 +166,7 @@
                     }
                 }
             }
-            return listRet;
+            return _reporteGastos;
         }
 
         public bool CuentaVenceEseMes(Credito CA, DateTime actualDate)
@@ -172,30 +195,40 @@
 
         public double sumatoriaIngresos(Ahorro account)
         {
-            double sum = 0;
+            double _montoIngresos = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach(Transaccion t in transacciones)
             {
-                if (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso) && (account.Equals((Ahorro)t.CuentaMonetaria)))
+                if (transaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
                 {
-                    sum += t.Monto;
+                    _montoIngresos += t.Monto;
                 }
             }
-            return sum;
+            return _montoIngresos;
+        }
+
+        public bool transaccionCategoriaIngreso(Transaccion t)
+        {
+            return t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso);
+        }
+
+        public bool MismaCuentaAhorro(Ahorro c1, Ahorro c2)
+        {
+            return c1.Equals(c2);
         }
 
         public double sumatoriaCostos(Ahorro account)
         {
-            double sum = 0;
+            double _montoCostos = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach (Transaccion t in transacciones)
             {
-                if (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo) && ((Ahorro)t.CuentaMonetaria).Equals(account))
+                if (transaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
                 {
-                    sum += t.Monto;
+                    _montoCostos += t.Monto;
                 }
             }
-            return sum;
+            return _montoCostos;
         }
     }
 }
