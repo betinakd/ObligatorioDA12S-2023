@@ -83,7 +83,7 @@ namespace DomainTest
 			var objeto2 = new Object();
 			Assert.IsFalse(categoria1.Equals(objeto));
 			Assert.IsFalse(categoria1.Equals(objeto2));
-			Assert.IsTrue(categoria1.Equals(objeto2));
+			Assert.IsFalse(categoria1.Equals(objeto2));
 		}
 
 		[TestMethod]
