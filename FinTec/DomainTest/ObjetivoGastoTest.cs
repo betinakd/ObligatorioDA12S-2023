@@ -1,4 +1,5 @@
 ﻿using Domain;
+using System;
 
 namespace DomainTest
 {
@@ -234,6 +235,25 @@ namespace DomainTest
             obj1.Objetivo = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
             //List<int> cuenta = null;
             Assert.AreNotEqual(obj1, null);
+        }
+
+        [TestMethod]
+        public void Equals_Null_ObjetivoGasto()
+        {
+            double montoEsp = 5;
+            double moncoAc = 6;
+            List<Categoria> listaCat1 = new List<Categoria>();
+            Categoria cat1 = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat1",
+                Tipo = TipoCategoria.Costo,
+            };
+            listaCat1.Add(cat1);
+            ObjetivoGasto obj1 = new ObjetivoGasto(montoEsp, moncoAc);
+            obj1.Objetivo = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
+            ObjetivoGasto obj2 = null;
+            Assert.IsFalse(obj1.Equals(obj2));
         }
     }
 }
