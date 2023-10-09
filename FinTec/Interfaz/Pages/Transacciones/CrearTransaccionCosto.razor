@@ -75,8 +75,6 @@
     [Parameter] public string Correo { get; set; }
     [Parameter] public int IdTransaccion { get; set; }
     public string ErrorMsg { get; set; }
-    private int IdCategoriaSeleccionada;
-    private int IdCuentaSeleccionada;
     public Espacio espacioActual { get; set; }
     public Ahorro cuentaAhorro = new Ahorro();
     public Credito cuentaCredito = new Credito();
@@ -89,20 +87,17 @@
     TipoCambiario moneda;
 
 
-
-
     private void GenerarTransaccion()
     {
         try
         {
-
-
             var nuevaTransaccion = new TransaccionCosto();
             nuevaTransaccion.Titulo = Titulo;
 
             if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
             {
-                cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault(c => c.Nombre == cuentaAhorroSeleccionada);
+                cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault
+                (c => c.Nombre == cuentaAhorroSeleccionada);
                 if (cuentaAhorro != null)
                 {
                     nuevaTransaccion.Moneda = cuentaAhorro.Moneda;
@@ -116,7 +111,8 @@
             }
             else if (!string.IsNullOrEmpty(cuentaCreditoSeleccionada))
             {
-                cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault(c => c.BancoEmisor == cuentaCreditoSeleccionada);
+                cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault
+                (c => c.BancoEmisor == cuentaCreditoSeleccionada);
                 if (cuentaCredito != null)
                 {
                     nuevaTransaccion.Moneda = cuentaCredito.Moneda;
@@ -131,7 +127,8 @@
             }
             if (!string.IsNullOrEmpty(categoriaSeleccionada))
             {
-                categoria = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault(c => c.Nombre == categoriaSeleccionada) as Categoria;
+                categoria = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault
+                (c => c.Nombre == categoriaSeleccionada) as Categoria;
                 categoria.EstadoActivo = true;
                 categoria.Tipo = TipoCategoria.Costo;
                 categoria.Nombre = categoriaSeleccionada;
@@ -147,11 +144,13 @@
             {
                 if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
                 {
-                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda, cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
+                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda,
+                        cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
                 }
                 else
                 {
-                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda, cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
+                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda,
+                        cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
                 }
             }
 
@@ -175,5 +174,4 @@
             ErrorMsg = e.Message;
         }
     }
-
 }
