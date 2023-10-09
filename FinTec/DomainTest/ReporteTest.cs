@@ -264,7 +264,50 @@ namespace DomainTest
             List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
             Assert.IsTrue(ret.Count == 0);
         }
-    
+
+        [TestMethod]
+        public void ReporteObjetivoGasto_Sin_Transacciones_Costo()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Categoria _categoria2 = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Ingreso,
+                Nombre = "Una categoria 2",
+            };
+            _miEspacio.AgregarCategoria(_categoria2);
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            Transaccion transaccion2 = new Transaccion
+            {
+                CategoriaTransaccion = _categoria2,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba",
+                CuentaMonetaria = _cuenta,
+            };
+            _miEspacio.AgregarTransaccion(transaccion2);
+            List<Categoria> _listCat = new List<Categoria>();
+            _listCat.Add(_categoria2);
+            Objetivo _objetivo = new Objetivo
+            {
+                Categorias = _listCat,
+                MontoMaximo = 100,
+                Titulo = "Menos gastos",
+            };
+            _miEspacio.AgregarObjetivo(_objetivo);
+            _reporte.MiEspacio = _miEspacio;
+            List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
+            Assert.IsFalse(ret.Count == 0);
+        }
+
         [TestMethod]
         public void ReporteCategoriaPorMes_Vacio()
         {
