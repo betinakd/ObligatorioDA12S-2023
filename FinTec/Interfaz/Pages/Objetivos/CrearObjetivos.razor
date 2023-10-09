@@ -64,9 +64,7 @@
 	{
 		// Cargar la lista de categorías desde el espacio
 		categorias = EspacioLogic.FindEspacio(Persistencia.Id).Categorias;
-
 	}
-
 
 	private void UpdateCategoriasSeleccionadas(ChangeEventArgs e)
 	{
@@ -76,10 +74,7 @@
 
 	private void Crear()
 	{
-		try
-		{
 			categorias2.Clear();
-
 			// Crear un nuevo objetivo con los valores ingresados
 			foreach (var categoria in categoriasSeleccionadas)
 			{
@@ -107,12 +102,5 @@
 			{
 				ErrorMsg = e.Message;
 			}
-
-		}
-		catch (DomainObjetivoException e)
-		{
-			ErrorMsg = e.Message;
-		}
 	}
-
 }
