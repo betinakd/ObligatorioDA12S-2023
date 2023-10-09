@@ -22,15 +22,20 @@
                 ObjetivoGasto objetivo = new ObjetivoGasto(o.MontoMaximo);
                 objetivo.Objetivo = o;
                 double _montoAcumulado = 0;
+                bool controlEntrada = false;
                 foreach (Transaccion t in transacciones)
                 {
                     if ((o.Categorias.Contains(t.CategoriaTransaccion)) && (t.FechaTransaccion.Month.Equals(_mesActual)) && (t.FechaTransaccion.Year.Equals(_yearActual)) && (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo)))
                     {
+                        controlEntrada = true;
                         _montoAcumulado += t.Monto;
                     }
                 }
-                objetivo.MontoAcumulado = _montoAcumulado;
-                ret.Add(objetivo);
+                if (controlEntrada)
+                {
+                    objetivo.MontoAcumulado = _montoAcumulado;
+                    ret.Add(objetivo);
+                }
             }
             return ret;
         }
