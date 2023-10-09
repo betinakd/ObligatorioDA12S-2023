@@ -70,5 +70,18 @@ namespace DomainTest
             var og = new ObjetivoGasto(montoEsp, montoAc);
             Assert.IsTrue(og.MontoEsperado == montoEsp && og.MontoAcumulado == montoAc);
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_Cumple_Equals()
+        {
+            double montoEsp = 5;
+            double montoAc = 6;
+            Objetivo obj = new Objetivo();
+            var og1 = new ObjetivoGasto(montoEsp, montoAc);
+            var og2 = new ObjetivoGasto(montoEsp, montoAc);
+            og1.Objetivo = obj;
+            og2.Objetivo = obj;
+            Assert.IsFalse(og1.Equals(og2));
+        }
     }
 }
