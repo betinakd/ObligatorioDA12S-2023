@@ -411,6 +411,54 @@ namespace DomainTest
         }
 
         [TestMethod]
+        public void ReporteGastosTarjeta_Cuenta_Ahorro()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Ahorro ahorro = new Ahorro
+            {
+                Moneda = TipoCambiario.PesosUruguayos,
+                Monto = 0,
+                Nombre = "CuentaAhorro",
+            };
+            Credito credit = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddMonths(+2),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1111",                
+            };
+            _miEspacio.AgregarCuenta(ahorro);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = ahorro,
+            };
+            _miEspacio.AgregarTransaccion(transaccion1);
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            _reporte.MiEspacio = _miEspacio;
+            List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
+            Assert.IsFalse(toAnalize.Count == 0);
+        }
+
+        [TestMethod]
         public void ReporteCategoriaPorMes_Vacio()
         {
             var _reporte = new Reporte();
