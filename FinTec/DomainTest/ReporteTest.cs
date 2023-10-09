@@ -519,6 +519,55 @@ namespace DomainTest
                 Correo = "mateo@gmail.com",
             };
             _miEspacio.Admin = _admin;
+            Credito credit2 = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddMonths(+2),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1122",
+            };
+            Credito credit = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddMonths(+2),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1111",
+            };
+            _miEspacio.AgregarCuenta(credit);
+            Categoria _categoriaIngreso = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Ingreso,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaIngreso);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaIngreso,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = credit2,
+            };
+            _miEspacio.AgregarTransaccion(transaccion1);
+            _reporte.MiEspacio = _miEspacio;
+            List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
+            Assert.IsTrue(toAnalize.Count != 0);
+        }
+
+        [TestMethod]
+        public void ReporteGastosTarjeta_CuentaCredito_DistintaCuenta_Ingreso()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
             Credito credit = new Credito
             {
                 BancoEmisor = "Santander",
@@ -632,6 +681,48 @@ namespace DomainTest
             _reporte.MiEspacio = _miEspacio;
             bool control = _reporte.TransaccionDentroDelScope(transaccion1, DateTime.Now.AddMonths(-5), DateTime.Now.AddMonths(+1));
             Assert.IsFalse(!control);
+        }
+
+        [TestMethod]
+        public void TransaccionDentroDelScope_FirstDate_Es_Mayor()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Credito credit = new Credito
+            {
+                BancoEmisor = "Santander",
+                CreditoDisponible = 1000,
+                FechaCierre = DateTime.Now.AddMonths(+2),
+                Moneda = TipoCambiario.PesosUruguayos,
+                NumeroTarjeta = "1111",
+            };
+            _miEspacio.AgregarCuenta(credit);
+            Categoria _categoriaCosto = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Ingreso,
+                Nombre = "Una categoria",
+            };
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            Transaccion transaccion1 = new Transaccion
+            {
+                CategoriaTransaccion = _categoriaCosto,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba 1",
+                CuentaMonetaria = credit,
+            };
+            _miEspacio.AgregarTransaccion(transaccion1);
+            _miEspacio.AgregarCategoria(_categoriaCosto);
+            _reporte.MiEspacio = _miEspacio;
+            bool control = _reporte.TransaccionDentroDelScope(transaccion1, DateTime.Now.AddMonths(+1), DateTime.Now.AddDays(+1));
+            Assert.IsFalse(control);
         }
 
         [TestMethod]
