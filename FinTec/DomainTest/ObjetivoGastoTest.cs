@@ -196,7 +196,7 @@ namespace DomainTest
             ObjetivoGasto obj2 = new ObjetivoGasto(montoEsp2, montoAc2);
             obj1.Objetivo = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
             obj2.Objetivo = new Objetivo { Categorias = listaCat2, MontoMaximo = montoEsp2, Titulo = "obj2" };
-            Assert.AreEqual(obj1, obj2);
+            Assert.AreNotEqual(obj1, obj2);
         }
     }
 }
