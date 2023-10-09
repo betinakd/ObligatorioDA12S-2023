@@ -146,11 +146,26 @@ namespace Domain
 			{
 				if (TransaccionesContieneCategoria(categoria))
 					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
-				if(CategoriaAsociadaObjetivos(categoria))
+				if (CategoriaAsociadaObjetivos(categoria))
 					throw new DomainEspacioException("No se puede borrar una categoría que asociada a algún objetivo.");
 				Categorias.Remove(categoria);
 			}
 		}
+		public void BorrarCuenta(Cuenta cuenta)
+		{
+			if (Cuentas.Contains(cuenta))
+			{
+				if (TransaccionesContieneCuenta(cuenta))
+					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
+				Cuentas.Remove(cuenta);
+			}
+		}
+
+		public bool TransaccionesContieneCuenta(Cuenta cuenta)
+		{
+			return (Transacciones.Any(t => t.CuentaMonetaria.Equals(cuenta)));
+		}
+
 		public bool CategoriaAsociadaObjetivos(Categoria categoria)
 		{
 			foreach (var objetivo in _objetivos)
