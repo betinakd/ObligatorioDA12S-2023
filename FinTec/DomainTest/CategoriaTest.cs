@@ -68,5 +68,60 @@ namespace DomainTest
 			categoria.FechaCreacion = fecha;
 			Assert.AreEqual(fecha, categoria.FechaCreacion);
 		}
+
+		[TestMethod]
+		public void Categoria_Equals_Null()
+		{
+
+			var categoria1 = new Categoria
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+			};
+			Object objeto = null;
+			var objeto2 = new Object();
+			Assert.IsFalse(categoria1.Equals(objeto));
+			Assert.IsFalse(categoria1.Equals(objeto2));
+			Assert.IsTrue(categoria1.Equals(objeto2));
+		}
+
+		[TestMethod]
+		public void Categoria_Equals_Diferentes()
+		{
+			var categoria1 = new Categoria
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			var categoria2 = new Categoria
+			{
+				Nombre = "CategoriaDiferentePrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+			};
+			Assert.IsFalse(categoria1.Equals(categoria2));
+		}
+
+		[TestMethod]
+		public void Categoria_Equals_Iguales()
+		{
+			var categoria1 = new Categoria
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			var categoria2 = new Categoria
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+			};
+			Assert.IsTrue(categoria1.Equals(categoria2));
+		}
 	}
 }
