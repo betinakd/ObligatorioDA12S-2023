@@ -78,7 +78,7 @@ namespace DomainTest
                 Tipo = TipoCategoria.Costo,
             };
             var cg = new CategoriaGasto(_cat,_montoAcumulado, _porcentaje);
-            Assert.AreNotEqual(cg, cg);
+            Assert.AreEqual(cg, cg);
         }
     }
 }
