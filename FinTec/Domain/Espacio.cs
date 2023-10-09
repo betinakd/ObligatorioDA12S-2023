@@ -183,6 +183,8 @@ namespace Domain
 			Categoria categoria, int id)
         {
             Transaccion transaccionAModificar = Transacciones.Find(t => t.IdTransaccion == id);
+            if (transaccionAModificar == null)
+                throw new DomainEspacioException("No existe la transaccion");
             transaccionAModificar.Titulo = Titulo;
             transaccionAModificar.Moneda = Moneda;
             transaccionAModificar.CategoriaTransaccion = categoria;
