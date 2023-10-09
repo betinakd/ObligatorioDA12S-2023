@@ -24,7 +24,7 @@
 	protected override void OnInitialized()
 	{
 		espacios = EspacioLogic.EspaciosByCorreo(Correo);
-		usuario = UsuarioLogic.UsuarioByCorreo(Correo);
+		usuario = UsuarioLogic.FindUsuario(Correo);
 	}
 
 	private void ClickCrearUsuario()
