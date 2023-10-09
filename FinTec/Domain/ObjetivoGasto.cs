@@ -12,8 +12,8 @@ namespace Domain
         public Objetivo Objetivo { get { return _objetivo; } set { _objetivo = value; } }
         public double MontoEsperado { set { _montoEsperado = value; } get { return _montoEsperado; } }
         public double MontoAcumulado { set { _montoAcumulado = value; } get { return _montoAcumulado; } }
-        
-        public ObjetivoGasto() 
+
+        public ObjetivoGasto()
         {
             MontoEsperado = 0;
             MontoAcumulado = 0;
