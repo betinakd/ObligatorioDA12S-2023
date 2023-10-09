@@ -142,7 +142,6 @@ namespace DomainTest
         {
             double _montoAcumulado = 15;
             double _porcentaje = 15;
-            double _montoAcumulado2 = 30;
             Categoria _cat = new Categoria
             {
                 EstadoActivo = true,
@@ -165,7 +164,7 @@ namespace DomainTest
                 Tipo = TipoCategoria.Costo,
             };
             var cg = new CategoriaGasto(_cat, _montoAcumulado, _porcentaje);
-            Categoria cat2 = null;
+            CategoriaGasto cat2 = null;
             Assert.AreNotEqual(cg, cat2);
         }
     }
