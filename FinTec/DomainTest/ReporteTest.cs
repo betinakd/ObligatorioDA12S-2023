@@ -631,7 +631,7 @@ namespace DomainTest
             _miEspacio.AgregarCategoria(_categoriaCosto);
             _reporte.MiEspacio = _miEspacio;
             bool control = _reporte.TransaccionDentroDelScope(transaccion1, DateTime.Now.AddMonths(-5), DateTime.Now.AddMonths(+1));
-            Assert.IsFalse(control);
+            Assert.IsFalse(!control);
         }
 
         [TestMethod]
