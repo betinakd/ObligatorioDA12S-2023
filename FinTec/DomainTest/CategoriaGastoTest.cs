@@ -117,7 +117,7 @@ namespace DomainTest
             };
             var cg = new CategoriaGasto(_cat, _montoAcumulado, _porcentaje);
             var cg2 = new CategoriaGasto(_cat, _montoAcumulado, _porcentaje2);
-            Assert.AreEqual(cg, cg2);
+            Assert.AreNotEqual(cg, cg2);
         }
     }
 }
