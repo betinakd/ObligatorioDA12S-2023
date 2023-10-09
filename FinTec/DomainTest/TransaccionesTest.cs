@@ -114,5 +114,12 @@ namespace DomainTest
             transaccion.CuentaMonetaria = cuenta;
             Assert.AreEqual(cuenta.Moneda, transaccion.Moneda);
         }
+
+        [TestMethod]
+        public void Contador_Id_Transaccion()
+        {
+            Transaccion.AumentarContadorIdTransaccion();
+            Assert.AreEqual(1, Transaccion._contadorIdTransaccion);
+        }
     }
 }
