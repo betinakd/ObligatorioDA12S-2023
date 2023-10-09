@@ -407,7 +407,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion2);
             _reporte.MiEspacio = _miEspacio;
             double monto = _reporte.Calcular_MontoTotal(DateTime.Now.Month+1);
-            Assert.IsFalse(monto == 0);
+            Assert.IsTrue(monto == 0);
         }
 
         [TestMethod]
