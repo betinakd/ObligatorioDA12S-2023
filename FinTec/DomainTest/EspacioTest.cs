@@ -498,9 +498,52 @@ namespace DomainTest
 			Assert.IsFalse(espacio1.CategoriaAsociadaObjetivos(categoria2));
 		}
 
+
 		[TestMethod]
 		[ExpectedException(typeof(DomainEspacioException))]
-		public void Excepcion_Al_Borrar_Categoria_Contenida_En_Objetivos() {
+		public void Excepcion_Al_Agregar_Dos_Categorias_Mismo_Nombre()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			espacio1.AgregarCategoria(categoria1);
+		}
+		[TestMethod]
+		public void Transaccion_Contiene_Cuenta_True()
+		{
+			Ahorro CuentaMonetaria = new Ahorro()
+			{
+				Nombre = "Ahorro",
+				Moneda = TipoCambiario.Dolar,
+			};
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 16,
+				FechaDeCambio = DateTime.Now,
+			};
+			espacio1.AgregarCambio(cambio);
+			var transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = CuentaMonetaria,
+			};
+
+			espacio1.AgregarCuenta(CuentaMonetaria);
+			espacio1.AgregarTransaccion(transaccion);
+			bool resultado = espacio1.TransaccionesContieneCuenta(CuentaMonetaria);
+			Assert.IsTrue(resultado);
+		}
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Al_Borrar_Categoria_Contenida_En_Objetivos()
+		{
 			List<Categoria> categorias = new List<Categoria>();
 			espacio1.AgregarCategoria(categoria1);
 			categorias.Add(categoria1);
@@ -514,12 +557,5 @@ namespace DomainTest
 			espacio1.BorrarCategoria(categoria1);
 		}
 
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Excepcion_Al_Agregar_Dos_Categorias_Mismo_Nombre()
-		{
-			espacio1.AgregarCategoria(categoria1);
-			espacio1.AgregarCategoria(categoria1);
-		}
 	}
 }
