@@ -103,7 +103,7 @@
 				string newHref = $"/home/{Id}/{Correo}/Categorias";
 				NavigationManager.NavigateTo(newHref);
 			}
-			catch (DomainCategoriaException e)
+			catch (DomainEspacioException e)
 			{
 				ErrorMsg = e.Message;
 			}
@@ -111,7 +111,6 @@
 		catch (DomainCategoriaException e)
 		{
 			ErrorMsg = e.Message;
-
 		}
 		Console.WriteLine(tipo);
 	}
