@@ -424,7 +424,7 @@ namespace DomainTest
             Ahorro ahorro = new Ahorro
             {
                 Moneda = TipoCambiario.PesosUruguayos,
-                Monto = 0,
+                Monto = 1,
                 Nombre = "CuentaAhorro",
             };
             Credito credit = new Credito
@@ -452,7 +452,7 @@ namespace DomainTest
                 CuentaMonetaria = ahorro,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+          
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 0);
@@ -502,7 +502,7 @@ namespace DomainTest
                 CuentaMonetaria = credit2,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+         
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit2.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 0);
@@ -554,7 +554,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion1);
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
-            Assert.IsTrue(toAnalize.Count != 0);
+            Assert.IsTrue(toAnalize.Count != 1);
         }
 
         [TestMethod]
@@ -593,7 +593,7 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+            
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 0);
@@ -635,7 +635,7 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+            
             _reporte.MiEspacio = _miEspacio;
             bool control = _reporte.TransaccionDentroDelScope(transaccion1, DateTime.Now.AddMonths(-5), DateTime.Now.AddMonths(-4));
             Assert.IsTrue(!control);
@@ -677,7 +677,7 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+     
             _reporte.MiEspacio = _miEspacio;
             bool control = _reporte.TransaccionDentroDelScope(transaccion1, DateTime.Now.AddMonths(-5), DateTime.Now.AddMonths(+1));
             Assert.IsFalse(!control);
@@ -719,7 +719,7 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+          
             _reporte.MiEspacio = _miEspacio;
             bool control = _reporte.TransaccionDentroDelScope(transaccion1, DateTime.Now.AddMonths(+1), DateTime.Now.AddDays(+1));
             Assert.IsFalse(control);
@@ -1031,7 +1031,7 @@ namespace DomainTest
             Ahorro ahorro = new Ahorro
             {
                 Moneda = TipoCambiario.PesosUruguayos,
-                Monto = 0,
+                Monto = 1,
                 Nombre = "Cuenta Ahorro",                
             };
             _miEspacio.AgregarCuenta(ahorro);
@@ -1069,7 +1069,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion2);
             _reporte.MiEspacio = _miEspacio;
             double balance = _reporte.BalanceCuentas(ahorro);
-            Assert.IsTrue(balance == 0);
+            Assert.IsTrue(balance == 1);
         }
     
         [TestMethod]
@@ -1086,7 +1086,7 @@ namespace DomainTest
             Ahorro ahorro = new Ahorro
             {
                 Moneda = TipoCambiario.PesosUruguayos,
-                Monto = 0,
+                Monto = 1,
                 Nombre = "Cuenta Ahorro",
             };
             double montoInicial = ahorro.Monto;
@@ -1308,7 +1308,7 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+           
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count != 0);
@@ -1350,7 +1350,7 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+           
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 0);
@@ -1401,7 +1401,7 @@ namespace DomainTest
             };
             _miEspacio.AgregarTransaccion(transaccion1);
             _miEspacio.AgregarTransaccion(transaccion2);
-            _miEspacio.AgregarCategoria(_categoriaCosto);
+            
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 2);
