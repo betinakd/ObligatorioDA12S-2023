@@ -36,6 +36,15 @@ namespace Domain
 		public Categoria()
 		{
 		}
+
+		public override bool Equals(object? obj)
+		{
+			if (obj is Categoria categoria)
+			{
+				return categoria.Nombre == Nombre;
+			}
+			return false;
+		}
 	}
 
 	public enum TipoCategoria
