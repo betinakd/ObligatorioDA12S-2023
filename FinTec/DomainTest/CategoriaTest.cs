@@ -60,5 +60,13 @@ namespace DomainTest
 			categoria.Tipo = TipoCategoria.Costo;
 			Assert.AreEqual(TipoCategoria.Costo, categoria.Tipo);
 		}
+
+		[TestMethod]
+		public void Set_Fecha_Creacion()
+		{
+			DateTime fecha = new DateTime(2015, 1, 1);
+			categoria.FechaCreacion = fecha;
+			Assert.AreEqual(fecha, categoria.FechaCreacion);
+		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCategorias"
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JSRuntime
 
 @using BussinesLogic
 @using Domain
@@ -8,32 +7,51 @@
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
 
-<PageTitle>FinTec Registro de Usuario</PageTitle>
+<PageTitle>FinTec Crear Categorias</PageTitle>
+<TituloRosado Titulo="Cree una categoría." Subtitulo="Cree la categoría para el espacio seleccionado."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-<div class="form-group">
-	<label for="nombreCategoria">Nombre de la Categoría:</label>
-	<input type="text" id="nombreCategoria" class="form-control" @bind="nombreCategoria" />
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<table class="table">
+				<tr>
+					<td><label for="nombreCategoria">Nombre de la Categoría:</label></td>
+					<td><input type="text" id="nombreCategoria" class="form-control" @bind="nombreCategoria" /></td>
+				</tr>
+				<tr>
+					<td><label>Tipo de Ingreso:</label></td>
+					<td>
+						<select class="form-control" @bind="tipoIngresoSeleccionado">
+							<option value="Ingreso">Ingreso</option>
+							<option value="Costo">Costo</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Estado:</label></td>
+					<td>
+						<select class="form-control" @bind="estadoSeleccionado">
+							<option value="Activa">Activa</option>
+							<option value="Inactiva">Inactiva</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><label>Fecha de Creación:</label></td>
+					<td><input type="date" class="form-control" @bind="fechaCreacion"></td>
+				</tr>
+			</table>
+			<p style="color:red">@ErrorMsg</p>
+			<button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+			@onclick="ClickCrear">
+				Crear Categoría
+			</button>
+		</div>
+	</div>
 </div>
 
-<div class="form-group">
-	<label>Tipo de Ingreso:</label>
-	<select class="form-control" @bind="tipoIngresoSeleccionado">
-		<option value="Ingreso">Ingreso</option>
-		<option value="Costo">Costo</option>
-	</select>
-</div>
 
-<div class="form-group">
-	<label>Estado:</label>
-	<select class="form-control" @bind="estadoSeleccionado">
-		<option value="Activa">Activa</option>
-		<option value="Inactiva">Inactiva</option>
-	</select>
-</div>
-
-<p style="color:red">@ErrorMsg</p>
-<button class="btn btn-primary" @onclick="ClickCrear">Crear</button>
 
 
 @code {
@@ -45,11 +63,10 @@
 	private string nombreCategoria;
 	private bool estadoActivo;
 	private TipoCategoria tipo;
+	private DateTime fechaCreacion = DateTime.Today;
 
 	private void ClickCrear()
 	{
-		// Aquí puedes acceder a los valores seleccionados y al valor del campo de texto
-
 		switch (estadoSeleccionado)
 		{
 			case "Activa":
@@ -75,7 +92,8 @@
 				{
 					Nombre = nombreCategoria,
 					Tipo = tipo,
-					EstadoActivo = estadoActivo
+					EstadoActivo = estadoActivo,
+					FechaCreacion = fechaCreacion
 				};
 
 			try
@@ -96,6 +114,5 @@
 
 		}
 		Console.WriteLine(tipo);
-
 	}
 }

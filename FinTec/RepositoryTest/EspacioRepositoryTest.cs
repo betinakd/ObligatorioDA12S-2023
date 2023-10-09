@@ -42,13 +42,7 @@ namespace RepositoryTest
                 Moneda = TipoCambiario.Dolar,
             };
             _cambios.Add(cambio1);
-            Objetivo objetivo1 = new Objetivo
-            {
-                Categorias = _categorias,
-                MontoMaximo = 1000,
-                Titulo = "Objetivo1",
-            };
-            _objetivos.Add(objetivo1);
+
             Transaccion transaccion1 = new Transaccion
             {
 
@@ -70,7 +64,14 @@ namespace RepositoryTest
                 Contrasena = "123456789B",
             };
             _usuariosInvitados.Add(usuarioInvitado1);
-        }
+			Objetivo objetivo1 = new Objetivo
+			{
+				Categorias = _categorias,
+				MontoMaximo = 1000,
+				Titulo = "Objetivo1",
+			};
+			_objetivos.Add(objetivo1);
+		}
     
         [TestMethod]
         public void Agregar_Espacio() 
