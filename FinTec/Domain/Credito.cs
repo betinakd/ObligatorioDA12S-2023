@@ -82,6 +82,30 @@
 			Credito credito = (Credito)obj;
 			return BancoEmisor == credito.BancoEmisor && NumeroTarjeta == credito.NumeroTarjeta;	
 		}
+
+		[TestMethod]
+		public void Caracter_Es_Num_True()
+		{
+			var cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			Assert.IsTrue(cuenta.CaracterEsNumero("45555"));
+		}
+
+		[TestMethod]
+		public void Caracter_Es_Num_False()
+		{
+			Credito cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			Assert.IsFalse(cuenta.CaracterEsNumero("a4"));
+		}
+	}
+}
 		
 	}
 }
