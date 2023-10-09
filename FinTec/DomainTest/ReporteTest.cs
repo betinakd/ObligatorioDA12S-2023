@@ -343,6 +343,40 @@ namespace DomainTest
         }
 
         [TestMethod]
+        public void CalcularMontoTotal_No_Cero()
+        {
+            var _reporte = new Reporte();
+            Espacio _miEspacio = new Espacio();
+            Usuario _admin = new Usuario
+            {
+                Contrasena = "1234567890Yuu",
+                Correo = "mateo@gmail.com",
+            };
+            _miEspacio.Admin = _admin;
+            Categoria _categoria2 = new Categoria
+            {
+                EstadoActivo = true,
+                Tipo = TipoCategoria.Costo,
+                Nombre = "Una categoria 2",
+            };
+            _miEspacio.AgregarCategoria(_categoria2);
+            Cuenta _cuenta = new Cuenta();
+            _miEspacio.AgregarCuenta(_cuenta);
+            Transaccion transaccion2 = new Transaccion
+            {
+                CategoriaTransaccion = _categoria2,
+                Monto = 10,
+                Moneda = TipoCambiario.PesosUruguayos,
+                Titulo = "Transaccion Prueba",
+                CuentaMonetaria = _cuenta,
+            };
+            _miEspacio.AgregarTransaccion(transaccion2);
+            _reporte.MiEspacio = _miEspacio;
+            double monto = _reporte.Calcular_MontoTotal(DateTime.Now.Month);
+            Assert.IsFalse(monto > 0);
+        }
+
+        [TestMethod]
         public void ReporteCategoriaPorMes_Vacio()
         {
             var _reporte = new Reporte();
