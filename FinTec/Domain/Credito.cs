@@ -87,10 +87,12 @@
 			Credito credito = (Credito)obj;
 			return BancoEmisor == credito.BancoEmisor && NumeroTarjeta == credito.NumeroTarjeta;
 		}
+
 		public bool CaracterEsNumero(string palabra)
 		{
 			return int.TryParse(palabra, out int numero);
 		}
+
 
 	}
 

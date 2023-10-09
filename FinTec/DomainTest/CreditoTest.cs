@@ -285,7 +285,33 @@ namespace DomainTest
 				BancoEmisor = "MiBanco",
 				NumeroTarjeta = "1234"
 			};
-			cuenta.NumeroTarjeta="1EE23";
+			cuenta.NumeroTarjeta = "1EE23";
+		}
+
+		[TestMethod]
+		public void Credito_Equals_Nulls()
+		{
+			Credito ahorro1 = new Credito { BancoEmisor = "Santanderr", NumeroTarjeta = "1011", Moneda = TipoCambiario.Dolar };
+
+			Assert.IsFalse(ahorro1.Equals(null));
+		}
+
+		[TestMethod]
+		public void Ahorro_Equals_Diferentes()
+		{
+			Credito ahorro1 = new Credito { BancoEmisor = "Santanderr", NumeroTarjeta = "1011", Moneda = TipoCambiario.Dolar };
+			Credito ahorro2 = new Credito { BancoEmisor = "Santander", NumeroTarjeta = "1111", Moneda = TipoCambiario.Dolar };
+
+			Assert.IsFalse(ahorro1.Equals(ahorro2));
+		}
+
+		[TestMethod]
+		public void Ahorro_Equals_Iguales()
+		{
+			Credito ahorro1 = new Credito { BancoEmisor = "Santander", NumeroTarjeta = "1111", Moneda = TipoCambiario.Dolar };
+			Credito ahorro2 = new Credito { BancoEmisor = "Santander", NumeroTarjeta = "1111", Moneda = TipoCambiario.Dolar };
+
+			Assert.IsTrue(ahorro1.Equals(ahorro2));
 		}
 	}
 }
