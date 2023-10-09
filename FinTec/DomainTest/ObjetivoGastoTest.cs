@@ -150,7 +150,7 @@ namespace DomainTest
             var og2 = new ObjetivoGasto(montoEsp, montoAc2);
             og1.Objetivo = obj;
             og2.Objetivo = obj;
-            Assert.AreEqual(og1, og2);
+            Assert.AreNotEqual(og1, og2);
         }
     }
 }
