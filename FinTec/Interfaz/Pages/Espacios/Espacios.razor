@@ -65,12 +65,15 @@
 						@espacio.Id
 					</td>
 					<td class="px-1 py-4">
-						<a @onclick="() =>ClickCambiarDeEspacio(espacio)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Cambiar Espacio</a>
+						<a @onclick="() =>ClickCambiarDeEspacio(espacio)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
+							Cargar Espacio
+						</a>
 					</td>
 					@if (espacio.Admin.Correo == Persistencia.Correo)
 					{
 						<td class="px-1 py-4 text-left">
-							<a @onclick="() =>MostrarInput(espacio)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Cambiar Nombre</a>
+							<a @onclick="() =>MostrarInput(espacio)" class="bg-red-500 text-white text-xs font-medium px-2 py-1
+rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">Cambiar Nombre</a>
 						</td>
 					}
 					else
@@ -90,8 +93,12 @@
 							<input class="fb-input" @bind=inputNombre type="text" placeholder="Cambiar Nombre">
 						</td>
 						<td>
-							<a @onclick="() =>CambiarNombre(espacio)" class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">Cambiar Nombre</a>
-							<a @onclick="CambiarNombreCerrar" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Cerrar</a>
+							<button @onclick="() =>CambiarNombre(espacio)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
+								Cambiar Nombre
+							</button>
+							<button @onclick="CambiarNombreCerrar" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
+								Cerrar
+							</button>
 						</td>
 					</tr>
 				}
