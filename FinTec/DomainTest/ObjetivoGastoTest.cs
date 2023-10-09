@@ -81,7 +81,7 @@ namespace DomainTest
             var og2 = new ObjetivoGasto(montoEsp, montoAc);
             og1.Objetivo = obj;
             og2.Objetivo = obj;
-            Assert.IsTrue(og1.Equals(og2));
+            Assert.AreEqual(og1, og2);
         }
 
         [TestMethod]
@@ -94,7 +94,7 @@ namespace DomainTest
             var og2 = new ObjetivoGasto(montoEsp, montoEsp);
             og1.Objetivo = obj;
             og2.Objetivo = obj;
-            Assert.IsFalse(og1.Equals(og2));
+            Assert.AreNotEqual(og1, og2);
         }
 
         [TestMethod]
@@ -123,6 +123,20 @@ namespace DomainTest
             obj1.Objetivo = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
             obj2.Objetivo = new Objetivo { Categorias = listaCat2, MontoMaximo = montoEsp, Titulo = "obj2" };
             Assert.AreNotEqual(obj1, obj2);
+        }
+
+        [TestMethod]
+        public void ObjetivoGasto_Diferente_MontoEsp()
+        {
+            double montoEsp = 5;
+            double montoEsp2 = 6;
+            double montoAc = 6;
+            Objetivo obj = new Objetivo();
+            var og1 = new ObjetivoGasto(montoEsp, montoAc);
+            var og2 = new ObjetivoGasto(montoEsp2, montoAc);
+            og1.Objetivo = obj;
+            og2.Objetivo = obj;
+            Assert.AreEqual(og1, og2);
         }
     }
 }
