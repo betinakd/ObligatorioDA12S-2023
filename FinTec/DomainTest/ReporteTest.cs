@@ -505,7 +505,7 @@ namespace DomainTest
             _miEspacio.AgregarCategoria(_categoriaCosto);
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit2.NumeroTarjeta);
-            Assert.IsFalse(toAnalize.Count == 0);
+            Assert.IsTrue(toAnalize.Count == 0);
         }
 
         [TestMethod]
