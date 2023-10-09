@@ -149,7 +149,14 @@
 	private void EliminarCuenta(Cuenta cuenta)
 	{
 		var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		//Implementar en bussines logic
-		espacio.Cuentas.Remove(cuenta);
+		try
+		{
+
+			espacio.BorrarCuenta(cuenta);
+		}
+		catch(DomainCuentaException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
 	}
 }
