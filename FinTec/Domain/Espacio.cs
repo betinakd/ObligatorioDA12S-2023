@@ -143,7 +143,9 @@ namespace Domain
 			if (Categorias.Contains(categoria))
 			{
 				if (TransaccionesContieneCategoria(categoria))
-					throw new DomainEspacioException("No se puede borrar una categoria que tiene transacciones asociadas");
+					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
+				if(CategoriaAsociadaObjetivos(categoria))
+					throw new DomainEspacioException("No se puede borrar una categoría que asociada a algún objetivo.");
 				Categorias.Remove(categoria);
 			}
 		}
