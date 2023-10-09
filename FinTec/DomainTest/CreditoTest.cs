@@ -128,8 +128,10 @@ namespace DomainTest
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
 			};
 			string fechaAhora = System.DateTime.Now.ToString();
-			string resultadoEsperado = "Pesos Uruguayos\n" + fechaAhora + "\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
-
+			var moneda = "Pesos Uruguayos";
+			string cuentaToString = moneda + "\n" + fechaAhora + "\n";
+			string resultadoEsperado = $"{cuentaToString}{credito.CreditoDisponible}\n" +
+				$"{credito.NumeroTarjeta}\n{credito.BancoEmisor}\n{credito.FechaCierre}\n";
 			string resultado = credito.ToString();
 			Assert.AreEqual(resultadoEsperado, resultado);
 		}

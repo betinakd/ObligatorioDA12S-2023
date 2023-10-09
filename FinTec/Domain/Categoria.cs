@@ -39,15 +39,6 @@ namespace Domain
 
 		public override bool Equals(object? obj)
 		{
-			if (obj is Categoria categoria)
-			{
-				return categoria.Nombre == Nombre;
-			}
-			return false;
-		}
-
-		public override bool Equals(object? obj)
-		{
 			if (obj == null || GetType() != obj.GetType())
 			{
 				return false;

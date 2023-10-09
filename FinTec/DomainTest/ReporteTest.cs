@@ -1198,7 +1198,7 @@ namespace DomainTest
             Ahorro ahorro = new Ahorro
             {
                 Moneda = TipoCambiario.PesosUruguayos,
-                Monto = 0,
+                Monto = 1,
                 Nombre = "Cuenta Ahorro",
             };
             double montoInicial = ahorro.Monto;
