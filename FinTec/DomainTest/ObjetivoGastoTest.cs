@@ -59,7 +59,7 @@ namespace DomainTest
         {
             double montoEsp = 5;
             var og = new ObjetivoGasto(montoEsp);
-            Assert.IsFalse(og.MontoEsperado == montoEsp && og.MontoAcumulado == 0);
+            Assert.IsTrue(og.MontoEsperado == montoEsp && og.MontoAcumulado == 0);
         }
     }
 }
