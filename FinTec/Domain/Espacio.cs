@@ -178,5 +178,20 @@ namespace Domain
                 NumeroTarjeta = NumeroTarjeta
             };
         }
+
+        public void ModificarTransaccionCuentaAhorro(string Titulo, TipoCambiario Moneda, string Nombre, double Monto,
+			Categoria categoria, int id)
+        {
+            Transaccion transaccionAModificar = Transacciones.Find(t => t.IdTransaccion == id);
+            transaccionAModificar.Titulo = Titulo;
+            transaccionAModificar.Moneda = Moneda;
+            transaccionAModificar.CategoriaTransaccion = categoria;
+            transaccionAModificar.CuentaMonetaria = new Ahorro
+            {
+                Nombre = Nombre,
+                Moneda = Moneda,
+                Monto = Monto
+            };
+        }
     }
 }
