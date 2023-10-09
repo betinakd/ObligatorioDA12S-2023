@@ -140,18 +140,18 @@
 
             if (IdTransaccion == 0)
             {
-               // nuevaTransaccion.AsignarIdTransaccion();
+                nuevaTransaccion.AsignarIdTransaccion();
                 EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
             }
             else
             {
                 if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
                 {
-                  //  EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda, cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
+                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda, cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
                 }
                 else
                 {
-                  //  EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda, cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
+                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda, cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
                 }
             }
 
