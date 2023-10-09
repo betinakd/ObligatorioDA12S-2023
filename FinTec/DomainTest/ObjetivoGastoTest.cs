@@ -61,5 +61,14 @@ namespace DomainTest
             var og = new ObjetivoGasto(montoEsp);
             Assert.IsTrue(og.MontoEsperado == montoEsp && og.MontoAcumulado == 0);
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_Constructor_Dos_Parametros()
+        {
+            double montoEsp = 5;
+            double montoAc = 6;
+            var og = new ObjetivoGasto(montoEsp, montoAc);
+            Assert.IsFalse(og.MontoEsperado == montoEsp && og.MontoAcumulado == montoAc);
+        }
     }
 }
