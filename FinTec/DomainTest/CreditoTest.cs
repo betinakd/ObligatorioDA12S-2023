@@ -275,5 +275,17 @@ namespace DomainTest
 			};
 			Assert.IsFalse(cuenta.CaracterEsNumero("a4"));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCuentaException))]
+		public void Excepcion_Num_Tarjeta_Es_String()
+		{
+			Credito cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			cuenta.NumeroTarjeta="1EE23";
+		}
 	}
 }
