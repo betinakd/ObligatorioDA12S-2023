@@ -83,5 +83,18 @@ namespace DomainTest
             og2.Objetivo = obj;
             Assert.IsTrue(og1.Equals(og2));
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_No_Cumple_Equals()
+        {
+            double montoEsp = 5;
+            double montoAc = 6;
+            Objetivo obj = new Objetivo();
+            var og1 = new ObjetivoGasto(montoEsp, montoAc);
+            var og2 = new ObjetivoGasto(montoEsp, montoEsp);
+            og1.Objetivo = obj;
+            og2.Objetivo = obj;
+            Assert.IsTrue(og1.Equals(og2));
+        }
     }
 }
