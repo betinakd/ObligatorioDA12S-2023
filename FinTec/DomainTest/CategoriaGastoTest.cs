@@ -39,6 +39,16 @@ namespace DomainTest
         }
 
         [TestMethod]
+        public void CategoriaGasto_Constructor_Triple()
+        {
+            Categoria categoria = new Categoria();
+            double _montoAcumulado = 20;
+            double porcentaje = 20;
+            var cg = new CategoriaGasto(categoria, _montoAcumulado, porcentaje);
+            Assert.IsFalse(cg.MontoUsado == _montoAcumulado && cg.Categoria.Equals(categoria) && cg.Porcentaje == porcentaje);
+        }
+
+        [TestMethod]
         public void CategoriaGasto_Mismos_Valores_Monto_Porcentaje()
         {
             double _montoAcumulado = 15;
