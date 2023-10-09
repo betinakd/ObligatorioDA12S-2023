@@ -8,7 +8,9 @@ namespace Domain
 {
     public class Transaccion
     {
+        public static int _contadorIdTransaccion = 1;
         private string _titulo;
+        public int IdTransaccion { get; set; }
         public string Titulo
         {
             get 
@@ -71,6 +73,17 @@ namespace Domain
                     throw new DomainTransaccionException("La categoria tiene que estar activa");
                 _categoria = value;
             }
+        }
+
+        public static void AumentarContadorIdTransaccion()
+        {
+             _contadorIdTransaccion++;
+        }
+
+        public void AsignarIdTransaccion()
+        {
+            IdTransaccion = _contadorIdTransaccion;
+            AumentarContadorIdTransaccion();
         }
     }
 }
