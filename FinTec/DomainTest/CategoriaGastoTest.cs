@@ -167,5 +167,21 @@ namespace DomainTest
             CategoriaGasto cat2 = null;
             Assert.AreNotEqual(cg, cat2);
         }
+
+        [TestMethod]
+        public void CategoriaGasto_Empty_Obj_Equal()
+        {
+            double _montoAcumulado = 15;
+            double _porcentaje = 15;
+            Categoria _cat = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat",
+                Tipo = TipoCategoria.Costo,
+            };
+            var cg = new CategoriaGasto(_cat, _montoAcumulado, _porcentaje);
+            Transaccion trans = new Transaccion();
+            Assert.AreNotEqual(cg, trans.CategoriaTransaccion);
+        }
     }
 }
