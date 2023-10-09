@@ -1,4 +1,4 @@
-﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionIngreso"
+﻿@page "/home/{Id:int}/{Correo}/{IdTransaccion:int}/CrearTransaccionIngreso"
 @inject NavigationManager NavigationManager;
 @using BussinesLogic
 @using Domain
@@ -73,6 +73,7 @@
 @code {
     [Parameter] public int Id { get; set; }
     [Parameter] public string Correo { get; set; }
+    [Parameter] public int IdTransaccion { get; set; }
     public string ErrorMsg { get; set; }
     private int IdCategoriaSeleccionada;
     private int IdCuentaSeleccionada;
@@ -90,30 +91,6 @@
 
 
 
-    private void SeleccionarCuentaCredito(ChangeEventArgs e)
-    {
-        cuentaAhorroSeleccionada = e.Value.ToString();
-        if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
-        {
-            cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.FirstOrDefault(c => c is Credito && ((Credito)c).BancoEmisor == cuentaCreditoSeleccionada) as Credito;
-            cuentaCredito.BancoEmisor = cuentaCreditoSeleccionada;
-        }
-    }
-
-
-    private void SeleccionarCuentaAhorro(ChangeEventArgs e)
-    {
-        cuentaAhorroSeleccionada = e.Value.ToString();
-        if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
-        {
-            cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.FirstOrDefault(c => c is Ahorro && ((Ahorro)c).Nombre == cuentaAhorroSeleccionada) as Ahorro;
-            cuentaAhorro.Nombre = cuentaAhorroSeleccionada;
-        }
-    }
-
-
-
-
 
     private void GenerarTransaccion()
     {
@@ -126,7 +103,7 @@
 
             if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
             {
-                var cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault(c => c.Nombre == cuentaAhorroSeleccionada);
+                cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault(c => c.Nombre == cuentaAhorroSeleccionada);
                 if (cuentaAhorro != null)
                 {
                     nuevaTransaccion.Moneda = cuentaAhorro.Moneda;
@@ -140,7 +117,7 @@
             }
             else if (!string.IsNullOrEmpty(cuentaCreditoSeleccionada))
             {
-                var cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault(c => c.BancoEmisor == cuentaCreditoSeleccionada);
+                cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault(c => c.BancoEmisor == cuentaCreditoSeleccionada);
                 if (cuentaCredito != null)
                 {
                     nuevaTransaccion.Moneda = cuentaCredito.Moneda;
@@ -160,10 +137,25 @@
                 categoria.Tipo = TipoCategoria.Ingreso;
                 categoria.Nombre = categoriaSeleccionada;
             }
-
-            nuevaTransaccion.CategoriaTransaccion = categoria;
-
-            EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
+            nuevaTransaccion.CategoriaTransaccion = categoria;  
+            
+            if (IdTransaccion == 0)
+            {
+                nuevaTransaccion.AsignarIdTransaccion();
+                EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
+                {
+                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda, cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
+                }
+                else
+                {
+                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda, cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
+                }
+            }
+            
             NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
 
         }
