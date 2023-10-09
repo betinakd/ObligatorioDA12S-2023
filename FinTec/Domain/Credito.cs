@@ -52,9 +52,9 @@
 			}
 			set
 			{
-				if (value < 0)
+				if (value <= 0)
 				{
-					throw new DomainCuentaException("El crédito disponible no puede ser negativo");
+					throw new DomainCuentaException("El crédito inicial disponible no puede ser menor a cero.");
 				}
 				_creditoDisponible = value;
 			}
