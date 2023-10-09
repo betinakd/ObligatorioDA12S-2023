@@ -29,6 +29,10 @@
 			}
 			set
 			{
+				if(!CaracterEsNumero(value))
+				{
+					throw new DomainCuentaException("El número de tarjeta debe ser numérico");
+				}
 				if (value.Length < 4)
 				{
 					throw new DomainCuentaException("El número de tarjeta no puede tener menos de 4 caracteres");
@@ -48,9 +52,9 @@
 			}
 			set
 			{
-				if (value < 0)
+				if (value <= 0)
 				{
-					throw new DomainCuentaException("El crédito disponible no puede ser negativo");
+					throw new DomainCuentaException("El crédito inicial disponible no puede ser menor a cero.");
 				}
 				_creditoDisponible = value;
 			}
@@ -76,12 +80,20 @@
 		}
 		public override bool Equals(object? obj)
 		{
-			if (obj == null || GetType() != obj.GetType()) { 
+			if (obj == null || GetType() != obj.GetType())
+			{
 				return false;
 			}
 			Credito credito = (Credito)obj;
-			return BancoEmisor == credito.BancoEmisor && NumeroTarjeta == credito.NumeroTarjeta;	
+			return BancoEmisor == credito.BancoEmisor && NumeroTarjeta == credito.NumeroTarjeta;
 		}
-		
+
+		public bool CaracterEsNumero(string palabra)
+		{
+			return int.TryParse(palabra, out int numero);
+		}
+
+
 	}
+
 }

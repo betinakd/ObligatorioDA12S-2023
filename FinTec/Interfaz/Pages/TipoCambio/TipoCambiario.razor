@@ -86,18 +86,22 @@
 	private Cambio cambioEliminar;
 	private Cambio cambioModificar;
 
-	private void SeleccionarCambioModificar(Cambio cambio)
+	private void LimpiarInputs()
 	{
 		inputValor = 0;
+		ErrorMsg = "";
+	}
+
+	private void SeleccionarCambioModificar(Cambio cambio)
+	{
 		modificarValor = !modificarValor;
 		cambioModificar = cambio;
-		ErrorMsg = "";
+		LimpiarInputs();
 	}
 
 	private void ModificarValor(Cambio cambio)
 	{
-		inputValor = 0;
-		ErrorMsg = "";
+
 		try
 		{
 			if (cambioModificar != null)
@@ -105,10 +109,11 @@
 				cambioModificar.Pesos = inputValor;
 			}
 			modificarValor = !modificarValor;
+			LimpiarInputs();
 		}
 		catch (Exception ex)
 		{
 			ErrorMsg = ex.Message;
-		}
+		}		
 	}
 }

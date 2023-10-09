@@ -60,17 +60,35 @@
 						@cuentaAhorro.Moneda
 					</td>
 					<td class="px-6 py-4">
-						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarCuenta(cuentaAhorro)">Modificar</button>
-						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2" @onclick="() => EliminarCuenta(cuentaAhorro)">Eliminar</button>
+						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+						@onclick="() =>	ClickModificarCuenta(cuentaAhorro)">
+							Modificar
+						</button>
+						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
+						@onclick="() => EliminarCuenta(cuentaAhorro)">
+							Eliminar
+						</button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						@if (mostrarModificar && cuentaClickeada.Equals(cuentaAhorro))
+						{
+							<p style="color:red">@ErrorMsg</p>
+							<input type="text" @bind="inputAhorro" class="border rounded-md px-2 py-1" />
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() =>	ModificarCuenta(cuentaAhorro)">
+								Modificar
+							</button>
+						}
 					</td>
 				</tr>
 			}
 		</tbody>
 	</table>
 </div>
-
 <h2 class="mt-5">Cuentas de Crédito:</h2>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5" style="margin-bottom:500">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 			<tr>
@@ -128,22 +146,80 @@
 		</tbody>
 	</table>
 </div>
-<p style="color:red">@ErrorMsg</p>
+<div style="height:500px"></div>
+
 
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
+	private Cuenta cuentaClickeada { get; set; }
+	private bool mostrarModificar { get; set; } = false;
+	private string inputAhorro { get; set; } = "";
+
+	private void LimpiarImputs()
+	{
+		inputAhorro = "";
+		ErrorMsg = "";
+	}
+
+	private void ClickModificarCuenta(Cuenta cuenta)
+	{
+		mostrarModificar = !mostrarModificar;
+		cuentaClickeada = cuenta;
+		LimpiarImputs();
+	}
 
 	private void ModificarCuenta(Cuenta cuenta)
 	{
-		// Implementa la lógica para la modificación de la cuenta
+		Ahorro cuentaAhorro = (Ahorro)cuenta;
+		try
+		{
+			Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+			Ahorro igualador = new Ahorro();
+			{
+				igualador.Nombre = inputAhorro;
+			};
+
+			if (!espacio.Cuentas.Contains(igualador))
+			{
+				try
+				{
+					cuentaAhorro.Nombre = inputAhorro;
+					LimpiarImputs();
+				}
+				catch (DomainCuentaException ex)
+				{
+					ErrorMsg = ex.Message;
+				}
+			}
+
+			else
+			{
+				ErrorMsg = "Ya existe una cuenta con ese nombre.";
+			}
+
+			mostrarModificar = !mostrarModificar;
+			LimpiarImputs();
+		}
+		catch (DomainCuentaException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
 	}
 
 	private void EliminarCuenta(Cuenta cuenta)
 	{
 		var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		//Implementar en bussines logic
-		espacio.Cuentas.Remove(cuenta);
+		try
+		{
+
+			espacio.BorrarCuenta(cuenta);
+			LimpiarImputs();
+		}
+			catch (DomainCuentaException ex)
+			{
+				ErrorMsg = ex.Message;
+			}
+		}
 	}
-}

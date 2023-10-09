@@ -72,5 +72,6 @@ namespace DomainTest
 			Assert.AreEqual(cuenta.ToString(), "Dolar\n" + fecha + "\n");
 		}
 
+
 	}
 }

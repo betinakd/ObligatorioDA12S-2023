@@ -50,15 +50,21 @@
 	{
 		try
 		{
-			var nuevaCuentaAhorro = new Ahorro
+			Ahorro nuevaCuentaAhorro = new Ahorro
 				{
 					Moneda = Moneda,
 					Nombre = Nombre,
 					Monto = Monto
 				};
-
-			EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaAhorro);
-			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+			try
+			{
+				EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaAhorro);
+				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+			}
+			catch (DomainEspacioException ex)
+			{
+				ErrorMsg = ex.Message;
+			}
 		}
 		catch (DomainCuentaException ex)
 		{

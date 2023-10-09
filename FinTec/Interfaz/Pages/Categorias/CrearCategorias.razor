@@ -37,6 +37,10 @@
 						</select>
 					</td>
 				</tr>
+				<tr>
+					<td><label>Fecha de Creación:</label></td>
+					<td><input type="date" class="form-control" @bind="fechaCreacion"></td>
+				</tr>
 			</table>
 			<p style="color:red">@ErrorMsg</p>
 			<button class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
@@ -49,6 +53,7 @@
 
 
 
+
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -58,6 +63,7 @@
 	private string nombreCategoria;
 	private bool estadoActivo;
 	private TipoCategoria tipo;
+	private DateTime fechaCreacion = DateTime.Today;
 
 	private void ClickCrear()
 	{
@@ -86,7 +92,8 @@
 				{
 					Nombre = nombreCategoria,
 					Tipo = tipo,
-					EstadoActivo = estadoActivo
+					EstadoActivo = estadoActivo,
+					FechaCreacion = fechaCreacion
 				};
 
 			try
@@ -96,7 +103,7 @@
 				string newHref = $"/home/{Id}/{Correo}/Categorias";
 				NavigationManager.NavigateTo(newHref);
 			}
-			catch (DomainCategoriaException e)
+			catch (DomainEspacioException e)
 			{
 				ErrorMsg = e.Message;
 			}
@@ -104,7 +111,6 @@
 		catch (DomainCategoriaException e)
 		{
 			ErrorMsg = e.Message;
-
 		}
 		Console.WriteLine(tipo);
 	}

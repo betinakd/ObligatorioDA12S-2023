@@ -95,9 +95,9 @@ namespace DomainTest
 		public void Credito_Tiene_IngresoMonetario()
 		{
 			Credito cuentaCredito = new Credito();
-			cuentaCredito.CreditoDisponible = 0;
+			cuentaCredito.CreditoDisponible = 5;
 			cuentaCredito.IngresoMonetario(100);
-			Assert.AreEqual(100, cuentaCredito.CreditoDisponible);
+			Assert.AreEqual(105, cuentaCredito.CreditoDisponible);
 		}
 		[TestMethod]
 		public void Credito_Tiene_EgresoMonetario()
@@ -120,7 +120,7 @@ namespace DomainTest
 		public void Credito_Tiene_ToString()
 		{
 			var credito = new Credito
-			{ 
+			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				CreditoDisponible = 1000,
 				NumeroTarjeta = "1234",
@@ -128,7 +128,7 @@ namespace DomainTest
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
 			};
 			string fechaAhora = System.DateTime.Now.ToString();
-			string resultadoEsperado = "Pesos Uruguayos\n"+fechaAhora+"\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
+			string resultadoEsperado = "Pesos Uruguayos\n" + fechaAhora + "\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
 
 			string resultado = credito.ToString();
 			Assert.AreEqual(resultadoEsperado, resultado);
@@ -149,7 +149,7 @@ namespace DomainTest
 
 			Object objeto = null;
 			var objeto2 = new Object();
-			
+
 			Assert.IsFalse(credito.Equals(objeto));
 			Assert.IsFalse(credito.Equals(objeto2));
 			Assert.IsTrue(credito.Equals(credito));
@@ -252,6 +252,66 @@ namespace DomainTest
 			};
 
 			Assert.IsTrue(credito1.Equals(credito2));
+		}
+
+		[TestMethod]
+		public void Caracter_Es_Num_True()
+		{
+			var cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			Assert.IsTrue(cuenta.CaracterEsNumero("45555"));
+		}
+
+		[TestMethod]
+		public void Caracter_Es_Num_False()
+		{
+			Credito cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			Assert.IsFalse(cuenta.CaracterEsNumero("a4"));
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainCuentaException))]
+		public void Excepcion_Num_Tarjeta_Es_String()
+		{
+			Credito cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			cuenta.NumeroTarjeta = "1EE23";
+		}
+
+		[TestMethod]
+		public void Credito_Equals_Nulls()
+		{
+			Credito ahorro1 = new Credito { BancoEmisor = "Santanderr", NumeroTarjeta = "1011", Moneda = TipoCambiario.Dolar };
+
+			Assert.IsFalse(ahorro1.Equals(null));
+		}
+
+		[TestMethod]
+		public void Ahorro_Equals_Diferentes()
+		{
+			Credito ahorro1 = new Credito { BancoEmisor = "Santanderr", NumeroTarjeta = "1011", Moneda = TipoCambiario.Dolar };
+			Credito ahorro2 = new Credito { BancoEmisor = "Santander", NumeroTarjeta = "1111", Moneda = TipoCambiario.Dolar };
+
+			Assert.IsFalse(ahorro1.Equals(ahorro2));
+		}
+
+		[TestMethod]
+		public void Ahorro_Equals_Iguales()
+		{
+			Credito ahorro1 = new Credito { BancoEmisor = "Santander", NumeroTarjeta = "1111", Moneda = TipoCambiario.Dolar };
+			Credito ahorro2 = new Credito { BancoEmisor = "Santander", NumeroTarjeta = "1111", Moneda = TipoCambiario.Dolar };
+
+			Assert.IsTrue(ahorro1.Equals(ahorro2));
 		}
 	}
 }
