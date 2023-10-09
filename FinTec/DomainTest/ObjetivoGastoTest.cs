@@ -131,7 +131,15 @@ namespace DomainTest
             double montoEsp = 5;
             double montoEsp2 = 6;
             double montoAc = 6;
-            Objetivo obj = new Objetivo();
+            List<Categoria> listaCat1 = new List<Categoria>();
+            Categoria cat1 = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat1",
+                Tipo = TipoCategoria.Costo,
+            };
+            listaCat1.Add(cat1);
+            Objetivo obj = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
             var og1 = new ObjetivoGasto(montoEsp, montoAc);
             var og2 = new ObjetivoGasto(montoEsp2, montoAc);
             og1.Objetivo = obj;
@@ -144,13 +152,51 @@ namespace DomainTest
         {
             double montoEsp = 5;
             double montoAc2 = 8;
-            double montoAc = 6;
-            Objetivo obj = new Objetivo();
+            double montoAc = 6; 
+            List<Categoria> listaCat1 = new List<Categoria>();
+            Categoria cat1 = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat1",
+                Tipo = TipoCategoria.Costo,
+            };
+            listaCat1.Add(cat1);
+            Objetivo obj = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
             var og1 = new ObjetivoGasto(montoEsp, montoAc);
             var og2 = new ObjetivoGasto(montoEsp, montoAc2);
             og1.Objetivo = obj;
             og2.Objetivo = obj;
             Assert.AreNotEqual(og1, og2);
+        }
+
+        [TestMethod]
+        public void ObjetivoGasto_Diferentes_OG()
+        {
+            double montoEsp = 5;
+            double moncoAc = 6;
+            double montoEsp2 = 7;
+            double montoAc2 = 8;
+            List<Categoria> listaCat1 = new List<Categoria>();
+            List<Categoria> listaCat2 = new List<Categoria>();
+            Categoria cat1 = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat1",
+                Tipo = TipoCategoria.Costo,
+            };
+            Categoria cat2 = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat2",
+                Tipo = TipoCategoria.Costo,
+            };
+            listaCat1.Add(cat1);
+            listaCat2.Add(cat2);
+            ObjetivoGasto obj1 = new ObjetivoGasto(montoEsp, moncoAc);
+            ObjetivoGasto obj2 = new ObjetivoGasto(montoEsp2, montoAc2);
+            obj1.Objetivo = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
+            obj2.Objetivo = new Objetivo { Categorias = listaCat2, MontoMaximo = montoEsp2, Titulo = "obj2" };
+            Assert.AreEqual(obj1, obj2);
         }
     }
 }
