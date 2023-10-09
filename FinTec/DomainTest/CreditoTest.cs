@@ -120,7 +120,7 @@ namespace DomainTest
 		public void Credito_Tiene_ToString()
 		{
 			var credito = new Credito
-			{ 
+			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				CreditoDisponible = 1000,
 				NumeroTarjeta = "1234",
@@ -128,7 +128,7 @@ namespace DomainTest
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
 			};
 			string fechaAhora = System.DateTime.Now.ToString();
-			string resultadoEsperado = "Pesos Uruguayos\n"+fechaAhora+"\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
+			string resultadoEsperado = "Pesos Uruguayos\n" + fechaAhora + "\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
 
 			string resultado = credito.ToString();
 			Assert.AreEqual(resultadoEsperado, resultado);
@@ -149,7 +149,7 @@ namespace DomainTest
 
 			Object objeto = null;
 			var objeto2 = new Object();
-			
+
 			Assert.IsFalse(credito.Equals(objeto));
 			Assert.IsFalse(credito.Equals(objeto2));
 			Assert.IsTrue(credito.Equals(credito));
@@ -252,6 +252,28 @@ namespace DomainTest
 			};
 
 			Assert.IsTrue(credito1.Equals(credito2));
+		}
+
+		[TestMethod]
+		public void Caracter_Es_Num_True()
+		{
+			var cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			Assert.IsTrue(cuenta.CaracterEsNumero("45555"));
+		}
+
+		[TestMethod]
+		public void Caracter_Es_Num_False()
+		{
+			Credito cuenta = new Credito()
+			{
+				BancoEmisor = "MiBanco",
+				NumeroTarjeta = "1234"
+			};
+			Assert.IsFalse(cuenta.CaracterEsNumero("a4"));
 		}
 	}
 }
