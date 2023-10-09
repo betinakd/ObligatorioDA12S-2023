@@ -1,0 +1,90 @@
+﻿@page "/home/{Id:int}/{Correo}/CrearCuentaCredito"
+@inject NavigationManager NavigationManager
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic
+@inject EspacioLogic EspacioLogic
+@inject Persistencia Persistencia
+
+<PageTitle>FinTec Crear Cuenta de Crédito</PageTitle>
+<TituloRosado Titulo="Crear Cuenta de Crédito"
+			  Subtitulo="Creé la cuenta de crédito que deseé recuerde que el numero de tarjeta son 4 dígitos y monto debe ser mayor a 0."></TituloRosado>
+<EspacioActual></EspacioActual>
+
+<form>
+	<table>
+		<tr>
+			<td><label for="bancoEmisor">Banco Emisor:</label></td>
+			<td><input type="text" class="form-control" id="bancoEmisor" placeholder="Banco Emisor"
+				@bind="BancoEmisor"></td>
+		</tr>
+		<tr>
+			<td><label for="numeroTarjeta">Número de Tarjeta:</label></td>
+			<td><input type="text" class="form-control" id="numeroTarjeta" placeholder="Número de tarjeta"
+				@bind="NumeroTarjeta"></td>
+		</tr>
+		<tr>
+			<td><label for="creditoDisponible">Crédito Disponible:</label></td>
+			<td><input type="number" class="form-control" id="creditoDisponible" placeholder="Crédito disponible"
+				@bind="CreditoDisponible"></td>
+		</tr>
+		<tr>
+			<td><label for="moneda">Moneda:</label></td>
+			<td>
+				<select class="form-control" id="moneda" @bind="Moneda">
+					<option value="PesosUruguayos">Pesos Uruguayos</option>
+					<option value="Dolar">Dólar</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td><label for="fechaCierre">Fecha de Cierre:</label></td>
+			<td><input type="date" class="form-control" id="fechaCierre" @bind="FechaCierre"></td>
+		</tr>
+	</table>
+	<button type="button" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+	@onclick="CrearCuenta">
+		Crear Cuenta de Crédito
+	</button>
+</form>
+
+<p style="color:red">@ErrorMsg</p>
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; } = "";
+	public string BancoEmisor { get; set; } = "";
+	public string NumeroTarjeta { get; set; } = "";
+	public double CreditoDisponible { get; set; } = 0;
+	public TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
+	public DateTime FechaCierre { get; set; } = DateTime.Now;
+
+	private void CrearCuenta()
+	{
+		try
+		{
+			Credito nuevaCuentaCredito = new Credito
+				{
+					BancoEmisor = BancoEmisor,
+					NumeroTarjeta = NumeroTarjeta,
+					CreditoDisponible = CreditoDisponible,
+					Moneda = Moneda,
+					FechaCierre = FechaCierre
+				};
+			try
+			{
+				EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaCredito);
+				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+			}
+			catch (DomainCuentaException ex)
+			{
+				ErrorMsg = ex.Message;
+			}
+		}
+		catch (DomainCuentaException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+}

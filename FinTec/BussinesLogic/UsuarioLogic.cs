@@ -29,52 +29,19 @@ namespace BussinesLogic
             return oneElement;
         }
 
-        public bool ExisteCorreoUsuario(string correo)
-		{
-			IList<Usuario> usuarios = _repository.FindAll();
-			bool existe = usuarios?.Any(u => u.Correo == correo) ?? false;
-			return existe;
-		}
-
 		public Usuario UsuarioByCorreoContrasena(string correo, string contrasena)
 		{
-            if (ExisteCorreoUsuario(correo))
-            {
-                Usuario usuario = _repository.Find(u => u.Correo == correo);
+			Usuario usuario = _repository.Find(u => u.Correo == correo);
 
-                if (usuario.Contrasena == contrasena)
-                {
-                    return usuario;
-                }
-                else { 
-                    throw new BussinesLogicUsuarioException("La contraseña no es valida, porfavor ingresela nuevamente.");
-                }
-            }
-            else
-            {
-                throw new BussinesLogicUsuarioException("El usuario no existe");
-            }
-            return null;
+			if (usuario != null && usuario.Contrasena == contrasena)
+			{
+				return usuario;
+			}
+			else
+			{
+				throw new BussinesLogicUsuarioException("El usuario o la contraseña no son válidos.");
+			}
 		}
-
-		public Usuario? UpdateUsuario(Usuario updateEntity)
-        {
-            ValidarCorreoYContrasena(updateEntity);
-            return _repository.Update(updateEntity);
-        }
-
-
-        private void ValidarCorreoYContrasena(Usuario oneElement)
-        {
-            if (!oneElement.Validar_Contrasena(oneElement.Contrasena))
-            {
-                throw new Exception("La contraseña no es valida");
-            }
-            if (!oneElement.Validar_Correo(oneElement.Correo))
-            {
-                throw new Exception("El correo no es valido");
-            }
-        }
 
         public IList<Usuario> FindAllUsuario()
         {

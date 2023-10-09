@@ -1,31 +1,15 @@
-﻿<div id="alert-additional-content-1" class="p-3 mb-4 text-blue-800 border border-blue-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800">
-	<div class="flex items-center">
-		<span class="sr-only">Info</span>
-		<h3 class="text-lg font-medium">Principal (Nombre Usuario)</h3>
-	</div>
-	<div class="mt-2 mb-4 text-sm">
-		Se encuentra en el espacio Principal (Nombre Usuario) en modo Administrador.
-	</div>
+﻿@using BussinesLogic;
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
 
-	@if (mostrarInput)
-	{
-		<InputRegistro />
-	}
-
-	<div class="flex">
-		<button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none
-			focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-1"
-				@onclick="MostrarOcultarInput">
-			Cambiar nombre
-		</button>
+<div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+	<svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+		<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+	</svg>
+	<div>
+		<strong>@EspacioLogic.FindEspacio(Persistencia.Id).Nombre</strong>
+		<p>Se encuentra en el espacio @EspacioLogic.FindEspacio(Persistencia.Id).Nombre por mas información contáctese con el administrador del espacio: @EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo .</p>
 	</div>
 </div>
-
-@code {
-	private bool mostrarInput = false;
-
-	private void MostrarOcultarInput()
-	{
-		mostrarInput = !mostrarInput;
-	}
-}

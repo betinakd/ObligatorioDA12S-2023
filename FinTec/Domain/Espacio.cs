@@ -4,6 +4,11 @@ namespace Domain
 {
 	public class Espacio
 	{
+
+		public Espacio()
+		{
+		}
+
 		private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;
@@ -90,10 +95,6 @@ namespace Domain
 				_admin = value;
 			}
 		}
-		public Espacio()
-		{
-			Id = _contadorId++;
-		}
 
 		public void InvitarUsuario(Usuario usuario)
 		{
@@ -110,6 +111,8 @@ namespace Domain
 		}
 		public void AgregarCategoria(Categoria categoria)
 		{
+			if (Categorias.Contains(categoria))
+				throw new DomainEspacioException("No se pueden agregar dos categorías con el mismo nombre.");
 			_categorias.Add(categoria);
 		}
 		public void AgregarTransaccion(Transaccion transaccion)
@@ -127,8 +130,67 @@ namespace Domain
 
 		public void AgregarCambio(Cambio cambio)
 		{
+			if (_cambios.Contains(cambio))
+				throw new DomainEspacioException("Ya existe un cambio para la fecha.");
 			_cambios.Add(cambio);
 		}
 
+		public bool PerteneceCorreo(string correo)
+		{
+			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Correo == correo));
+		}
+
+		public void BorrarCategoria(Categoria categoria)
+		{
+			if (Categorias.Contains(categoria))
+			{
+				if (TransaccionesContieneCategoria(categoria))
+					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
+				if (CategoriaAsociadaObjetivos(categoria))
+					throw new DomainEspacioException("No se puede borrar una categoría que asociada a algún objetivo.");
+				Categorias.Remove(categoria);
+			}
+		}
+		public void BorrarCuenta(Cuenta cuenta)
+		{
+			if (Cuentas.Contains(cuenta))
+			{
+				if (TransaccionesContieneCuenta(cuenta))
+					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
+				Cuentas.Remove(cuenta);
+			}
+		}
+
+		public bool TransaccionesContieneCuenta(Cuenta cuenta)
+		{
+			return (Transacciones.Any(t => t.CuentaMonetaria.Equals(cuenta)));
+		}
+
+		public bool CategoriaAsociadaObjetivos(Categoria categoria)
+		{
+			foreach (var objetivo in _objetivos)
+			{
+				if (objetivo.ContieneCategoria(categoria))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public bool TransaccionesContieneCategoria(Categoria categoria)
+		{
+			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
+		}
+		public static void AumentarContadorId()
+		{
+			_contadorId++;
+		}
+
+		public void AsignarId()
+		{
+			Id = _contadorId;
+			AumentarContadorId();
+		}
 	}
 }

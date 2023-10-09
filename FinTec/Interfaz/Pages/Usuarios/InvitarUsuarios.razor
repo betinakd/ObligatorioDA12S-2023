@@ -1,0 +1,72 @@
+﻿@page "/home/{Id:int}/{Correo}/InvitarUsuarios"
+@inject NavigationManager NavigationManager
+
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Usuarios</PageTitle>
+<TituloRosado Titulo="Invitar Usuarios de FinTec" Subtitulo="Si es administrador puede eliminar y invitar usuarios."></TituloRosado>
+<EspacioActual></EspacioActual>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Nombre
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Correo
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Acciones
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var usuario in UsuarioLogic.FindAllUsuario())
+			{
+				@if (!EspacioLogic.FindEspacio(Persistencia.Id).PerteneceCorreo(usuario.Correo) && EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
+				{
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+							@usuario.Nombre
+						</td>
+						<td class="px-6 py-4 font-medium">
+							@usuario.Correo
+						</td>
+						<td>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => AgregarUsuario(usuario)">
+								Agregar Usuario
+							</button>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
+<p style="color:red">@ErrorMsg</p>
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+
+	private void AgregarUsuario(Usuario usuario)
+	{
+		try
+		{
+			EspacioLogic.FindEspacio(Persistencia.Id).InvitarUsuario(usuario);
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
+		}
+		catch (Exception ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+}

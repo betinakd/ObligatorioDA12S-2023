@@ -1,0 +1,164 @@
+﻿@page "/home/{Id:int}/{Correo}/Espacios"
+@inject NavigationManager NavigationManager
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Espacio</PageTitle>
+
+<TituloRosado Titulo="Espacios" Subtitulo="Un listado de todos los espacios en los que se encuentra." />
+
+<div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+	<svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+		<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+	</svg>
+	<div>
+		<strong>@EspacioLogic.FindEspacio(Persistencia.Id).Nombre</strong>
+		<p>Se encuentra en el espacio @EspacioLogic.FindEspacio(Persistencia.Id).Nombre por mas información contáctese con el administrador del espacio: @EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo .</p>
+	</div>
+</div>
+
+<a href="/home/@Persistencia.Id/@Persistencia.Correo/CrearEspacios" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Crear espacio</a>
+
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
+	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<tr>
+				<th scope="col" class="px-6 py-3">
+					Nombre del espacio
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Administrador
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Id
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Seleccionar
+				</th>
+				<th scope="col" class="px-6 py-3">
+					Editar
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var espacio in espacios)
+			{
+				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+					<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+						@espacio.Nombre
+					</th>
+					<td class="px-6 py-4">
+						@if (espacio.Admin.Correo == Persistencia.Correo)
+						{
+							<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">Administrador</span>
+						}
+						else
+						{
+							<span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">Invitado</span>
+						}
+
+					</td>
+					<td class="px-6 py-4">
+						@espacio.Id
+					</td>
+					<td class="px-1 py-4">
+						<button @onclick="() =>ClickCambiarDeEspacio(espacio)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
+							Cargar Espacio
+						</button>
+					</td>
+					@if (espacio.Admin.Correo == Persistencia.Correo)
+					{
+						<td class="px-1 py-4 text-left">
+							<button @onclick="() =>MostrarInput(espacio)" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
+								Cambiar Nombre</button>
+						</td>
+					}
+					else
+					{
+						<td class="px-6 py-4 text-right">
+						</td>
+					}
+				</tr>
+
+				@if (mostrarInput && espacioClickeado.Equals(espacio))
+				{
+					<tr>
+						<p style="color:red">@ErrorMsg</p>
+					</tr>
+					<tr>
+						<td>
+							<input class="fb-input" @bind=inputNombre type="text" placeholder="Cambiar Nombre">
+						</td>
+						<td>
+							<button @onclick="() =>CambiarNombre(espacio)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
+								Cambiar Nombre
+							</button>
+							<button @onclick="CambiarNombreCerrar" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
+								Cerrar
+							</button>
+						</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
+
+
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public List<Espacio>? espacios { get; set; }
+	public Espacio? espacioClickeado { get; set; }
+	public string? ErrorMsg { get; set; } = "";
+	private bool mostrarInput = false;
+	private string inputNombre = string.Empty;
+
+	protected override void OnInitialized()
+	{
+		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+	}
+
+	public void ClickCambiarDeEspacio(Espacio espacio)
+	{
+		Persistencia.Id = espacio.Id;
+		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+	}
+
+	private void MostrarInput(Espacio espacio)
+	{
+		espacioClickeado = espacio;
+		mostrarInput = !mostrarInput;
+		inputNombre = "";
+		ErrorMsg = "";
+
+	}
+
+	private void CambiarNombre(Espacio espacio)
+	{
+		try
+		{
+			espacio.Nombre = inputNombre;
+			ErrorMsg = "";
+			inputNombre = "";
+			mostrarInput = false;
+		}
+		catch (DomainEspacioException e)
+		{
+			ErrorMsg = e.Message;
+		}
+	}
+
+	private void CambiarNombreCerrar()
+	{
+		mostrarInput = false;
+		inputNombre = "";
+		ErrorMsg = "";
+
+	}
+}

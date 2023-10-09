@@ -84,10 +84,21 @@ namespace BussinesLogicTest
         [TestMethod]
         public void Buscar_Espacio()
         {
+            Espacio espacio = new Espacio();
+            espacioLogic.AddEspacio(espacio);
+
+            Espacio resultado1 = espacioLogic.FindEspacio(espacio.Id);
+
+			Assert.AreEqual(espacio.Nombre, resultado1.Nombre);
+
+        }
+
+        [TestMethod]
+        public void Retorna_Lista_Espacios_Recibiendo_Correo_Valido() { 
             espacioLogic.AddEspacio(espacio1);
-            espacioLogic.AddEspacio(espacio2);
-            Assert.AreEqual(espacio1, espacioLogic.FindEspacio(espacio1.Admin.Correo));
-            Assert.AreEqual(espacio2, espacioLogic.FindEspacio(espacio2.Admin.Correo));
+			espacioLogic.AddEspacio(espacio2);
+            List<Espacio> espacios = espacioLogic.EspaciosByCorreo("xx@yy.com");
+            Assert.IsTrue(espacios.Count == 1);
         }
     }
 }

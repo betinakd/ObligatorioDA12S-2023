@@ -6,6 +6,39 @@ namespace DomainTest
 	[TestClass]
 	public class EspacioTest
 	{
+		private Usuario usuario1;
+		private Usuario usuario2;
+		private Espacio espacio1;
+		private Categoria categoria1;
+		private Categoria categoria2;
+
+		[TestInitialize]
+		public void Setup()
+		{
+
+
+			usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+
+			usuario2 = new Usuario()
+			{
+				Correo = "usuario2@gmail.com",
+				Nombre = "Alberto",
+				Apellido = "Rodriguez",
+				Contrasena = "123tttt9Aaa",
+				Direccion = "street 67 av white"
+			};
+
+			espacio1 = new Espacio() { Admin = usuario1, Nombre = "Espacio1" };
+			categoria1 = new Categoria() { Nombre = "Categoria1", Tipo = TipoCategoria.Costo, EstadoActivo = true };
+			categoria2 = new Categoria() { Nombre = "Categoria2", Tipo = TipoCategoria.Costo, EstadoActivo = true };
+		}
 		[TestMethod]
 		public void Nueva_Espacio_No_Nulo()
 		{
@@ -75,14 +108,8 @@ namespace DomainTest
 		[ExpectedException(typeof(DomainEspacioException))]
 		public void Espacio_Invitar_Usuario_Ya_Presente()
 		{
-			var espacio = new Espacio();
-			Usuario usuario = new Usuario();
-			Usuario usuario2 = new Usuario();
-			List<Usuario> usuarios = new List<Usuario>();
-			usuarios.Add(usuario);
-			espacio.Admin = usuario2;
-			espacio.UsuariosInvitados = usuarios;
-			espacio.InvitarUsuario(usuario);
+			espacio1.InvitarUsuario(usuario2);
+			espacio1.InvitarUsuario(usuario2);
 		}
 
 		[TestMethod]
@@ -278,7 +305,7 @@ namespace DomainTest
 
 		[TestMethod]
 		[ExpectedException(typeof(DomainEspacioException))]
-		public void Excepcion_Se_Agrega_Transaccion_Dolares_Sin_Cambio_Fecha() 
+		public void Excepcion_Se_Agrega_Transaccion_Dolares_Sin_Cambio_Fecha()
 		{
 			Transaccion transaccion = new Transaccion()
 			{
@@ -353,11 +380,231 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Static_Contador_De_Id() {
-			var espacio = new Espacio();
-			var espacio2 = new Espacio();
-			espacio.Id = 1;
-			espacio2.Id = 2;
+		public void Pertenece_Correo_Retorna_True_Si_Invitado_Pertenece_Espacio()
+		{
+			espacio1.InvitarUsuario(usuario2);
+			bool resultado = espacio1.PerteneceCorreo("usuario2@gmail.com");
+			Assert.IsTrue(resultado);
+		}
+
+		[TestMethod]
+		public void Recibe_Correo_Retorna_True_Si_Usuario_Pertenece_Espacio()
+		{
+			var espacio = new Espacio()
+			{
+				Admin = new Usuario()
+				{
+					Correo = "holaaaa@gmail.com",
+					Contrasena = "123456789A",
+				}
+			};
+			bool resultado = espacio.PerteneceCorreo("holaaaa@gmail.com");
+			Assert.IsTrue(resultado);
+		}
+
+		[TestMethod]
+		public void Borrar_Categoria_Espacio()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			espacio1.BorrarCategoria(categoria1);
+			Assert.AreEqual(espacio1.Categorias.Count, 0);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Borrar_Categoria_Asociada_Transaccion()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 16,
+				FechaDeCambio = DateTime.Now,
+			};
+			espacio1.AgregarCambio(cambio);
+			Transaccion transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = categoria1,
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.Dolar,
+				},
+			};
+			espacio1.AgregarTransaccion(transaccion);
+			espacio1.BorrarCategoria(categoria1);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Recibe_Cambio_Dos_Fechas_Iguales()
+		{
+			Cambio cambio1 = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 100,
+				FechaDeCambio = new System.DateTime(2018, 10, 10),
+			};
+			Cambio cambio2 = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 10,
+				FechaDeCambio = new System.DateTime(2018, 10, 10),
+			};
+			espacio1.AgregarCambio(cambio1);
+			espacio1.AgregarCambio(cambio2);
+		}
+
+		[TestMethod]
+		public void Suma_Uno_A_Contador_Static_Y_Lo_Asigna_A_Id()
+		{
+			espacio1.AsignarId();
+			Assert.AreEqual(espacio1.Id, 1);
+		}
+
+		[TestMethod]
+		public void CategoriaAsociadaObjetivos_Retorna_True_Al_Tener_Objetivo_Asociado()
+		{
+
+			List<Categoria> categorias = new List<Categoria>();
+			espacio1.AgregarCategoria(categoria1);
+			categorias.Add(categoria1);
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = categorias,
+			};
+			espacio1.AgregarObjetivo(objetivo);
+			Assert.IsTrue(espacio1.CategoriaAsociadaObjetivos(categoria1));
+		}
+
+		[TestMethod]
+		public void CategoriaAsociadaObjetivos_Retorna_False_Al_No_Tener_Objetivo_Asociado()
+		{
+			List<Categoria> categorias = new List<Categoria>();
+			espacio1.AgregarCategoria(categoria1);
+			categorias.Add(categoria1);
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = categorias,
+			};
+			espacio1.AgregarObjetivo(objetivo);
+			Assert.IsFalse(espacio1.CategoriaAsociadaObjetivos(categoria2));
+		}
+
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Al_Agregar_Dos_Categorias_Mismo_Nombre()
+		{
+			espacio1.AgregarCategoria(categoria1);
+			espacio1.AgregarCategoria(categoria1);
+		}
+
+		[TestMethod]
+		public void Transaccion_Contiene_Cuenta_True()
+		{
+			Ahorro CuentaMonetaria = new Ahorro()
+			{
+				Nombre = "Ahorro",
+				Moneda = TipoCambiario.Dolar,
+			};
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 16,
+				FechaDeCambio = DateTime.Now,
+			};
+			espacio1.AgregarCambio(cambio);
+			var transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = CuentaMonetaria,
+			};
+
+			espacio1.AgregarCuenta(CuentaMonetaria);
+			espacio1.AgregarTransaccion(transaccion);
+			bool resultado = espacio1.TransaccionesContieneCuenta(CuentaMonetaria);
+			Assert.IsTrue(resultado);
+		}
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Al_Borrar_Categoria_Contenida_En_Objetivos()
+		{
+			List<Categoria> categorias = new List<Categoria>();
+			espacio1.AgregarCategoria(categoria1);
+			categorias.Add(categoria1);
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = categorias,
+			};
+			espacio1.AgregarObjetivo(objetivo);
+			espacio1.BorrarCategoria(categoria1);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Borrar_Transaccion_Contiene_Cuenta_True()
+		{
+			Ahorro CuentaMonetaria = new Ahorro()
+			{
+				Nombre = "Ahorro",
+				Moneda = TipoCambiario.Dolar,
+			};
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 16,
+				FechaDeCambio = DateTime.Now,
+			};
+			espacio1.AgregarCambio(cambio);
+			var transaccion = new Transaccion()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = CuentaMonetaria,
+			};
+
+			espacio1.AgregarCuenta(CuentaMonetaria);
+			espacio1.AgregarTransaccion(transaccion);
+			espacio1.BorrarCuenta(CuentaMonetaria);
+
+		}
+		[TestMethod]
+		public void Excepcion_Borrar_Cuentan_No_Contiene_Transaccion()
+		{
+			Ahorro CuentaMonetaria = new Ahorro()
+			{
+				Nombre = "Ahorro",
+				Moneda = TipoCambiario.Dolar,
+			};
+			espacio1.AgregarCuenta(CuentaMonetaria);
+			espacio1.BorrarCuenta(CuentaMonetaria);
 		}
 	}
 }
+
+

@@ -27,9 +27,9 @@
 			}
 			set
 			{
-				if (value < 0)
+				if (value <= 0)
 				{
-					throw new DomainCuentaException("El monto de la cuenta no puede ser negativo");
+					throw new DomainCuentaException("El monto inicial de la cuenta no puede ser menor a cer.");
 				}
 				_monto = value;
 			}
