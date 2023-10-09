@@ -49,5 +49,10 @@ namespace Domain
 				_categorias = value;
             }
         }
+
+        public bool ContieneCategoria(Categoria categoria)
+        {
+			return _categorias.Contains(categoria);
+		}
     }
 }
