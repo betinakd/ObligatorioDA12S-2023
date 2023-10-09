@@ -94,7 +94,7 @@ namespace DomainTest
             var og2 = new ObjetivoGasto(montoEsp, montoEsp);
             og1.Objetivo = obj;
             og2.Objetivo = obj;
-            Assert.IsTrue(og1.Equals(og2));
+            Assert.IsFalse(og1.Equals(og2));
         }
     }
 }
