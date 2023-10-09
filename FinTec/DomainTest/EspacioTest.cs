@@ -456,5 +456,49 @@ namespace DomainTest
             espacio1.AsignarId();
             Assert.AreEqual(espacio1.Id, 1);
         }
+
+        [TestMethod]
+        public void Modificar_Transaccion_Credito()
+        { 
+            string Titulo = "Transaccion";
+            TipoCambiario Moneda = TipoCambiario.PesosUruguayos;
+            string BancoEmisor = "Banco";
+            double Monto = 100;
+            Categoria categoria = new Categoria()
+            {
+                EstadoActivo = true,
+                Nombre = "Categoria",
+                Tipo = TipoCategoria.Costo,
+            };
+            string NumeroTarjeta = "1234";
+            int id = 1;
+            Transaccion transaccion = new Transaccion()
+            {
+                IdTransaccion = 1,
+                Titulo = "Transaccion",
+                Moneda = TipoCambiario.PesosUruguayos,
+                Monto = 100,
+                CategoriaTransaccion = new Categoria()
+                {
+                    EstadoActivo = true,
+                    Nombre = "Categoria",
+                    Tipo = TipoCategoria.Costo,
+                },
+                CuentaMonetaria = new Credito()
+                {
+                    BancoEmisor = "Banco",
+                    Moneda = TipoCambiario.PesosUruguayos,
+                    NumeroTarjeta = "1234",
+                },
+            };
+            espacio1.AgregarTransaccion(transaccion);
+            espacio1.ModificarTransaccionCuentaCredito(Titulo, Moneda, BancoEmisor, Monto, categoria, NumeroTarjeta, id);
+            Assert.AreEqual(espacio1.Transacciones[0].Titulo, Titulo);
+            Assert.AreEqual(espacio1.Transacciones[0].Moneda, Moneda);
+            Assert.AreEqual(((espacio1.Transacciones[0].CuentaMonetaria) as Credito).BancoEmisor, BancoEmisor);
+            Assert.AreEqual(espacio1.Transacciones[0].Monto, Monto);
+            Assert.AreEqual(espacio1.Transacciones[0].CategoriaTransaccion, categoria);
+            Assert.AreEqual(((espacio1.Transacciones[0].CuentaMonetaria) as Credito).NumeroTarjeta, NumeroTarjeta);
+        }
     }
 }
