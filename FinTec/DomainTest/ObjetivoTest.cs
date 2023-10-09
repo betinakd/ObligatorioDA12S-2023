@@ -95,5 +95,24 @@ namespace DomainTest
 			_objetivo.Categorias = null;
 		}
 
+		[TestMethod]
+		public void Contiene_Categoria()
+		{
+			var categoria = new Categoria()
+			{
+				Nombre = "Sueldo",
+				Tipo = TipoCategoria.Ingreso,
+				EstadoActivo = true
+			};
+
+			var objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo 1",
+				MontoMaximo = 1000,
+			};
+			objetivo.Categorias.Add(categoria);
+			var resultado = objetivo.ContieneCategoria(categoria);
+			Assert.IsTrue(resultado);
+		}
 	}
 }
