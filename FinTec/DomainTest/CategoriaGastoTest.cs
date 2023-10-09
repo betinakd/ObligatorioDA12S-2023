@@ -53,7 +53,7 @@ namespace DomainTest
         {
             Categoria categoria = new Categoria();
             var cg = new CategoriaGasto(categoria);
-            Assert.IsFalse(cg.MontoUsado == 0 && cg.Categoria.Equals(categoria) && cg.Porcentaje == 0);
+            Assert.IsTrue(cg.MontoUsado == 0 && cg.Categoria.Equals(categoria) && cg.Porcentaje == 0);
         }
 
         [TestMethod]
