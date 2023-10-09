@@ -96,5 +96,33 @@ namespace DomainTest
             og2.Objetivo = obj;
             Assert.IsFalse(og1.Equals(og2));
         }
+
+        [TestMethod]
+        public void ObjetivoGasto_Diferentes_Objetivos()
+        {
+            double montoEsp = 5;
+            double moncoAc = 6;
+            List<Categoria> listaCat1 = new List<Categoria>();
+            List<Categoria> listaCat2 = new List<Categoria>();
+            Categoria cat1 = new Categoria 
+            {
+                EstadoActivo = true,
+                Nombre = "cat1",
+                Tipo = TipoCategoria.Costo,
+            };
+            Categoria cat2 = new Categoria
+            {
+                EstadoActivo = true,
+                Nombre = "cat2",
+                Tipo = TipoCategoria.Costo,
+            };
+            listaCat1.Add(cat1);
+            listaCat2.Add(cat2);
+            ObjetivoGasto obj1 = new ObjetivoGasto(montoEsp, moncoAc);
+            ObjetivoGasto obj2 = new ObjetivoGasto(montoEsp, moncoAc);
+            obj1.Objetivo = new Objetivo { Categorias = listaCat1, MontoMaximo = montoEsp, Titulo = "obj1" };
+            obj2.Objetivo = new Objetivo { Categorias = listaCat2, MontoMaximo = montoEsp, Titulo = "obj2" };
+            Assert.AreEqual(obj1, obj2);
+        }
     }
 }
