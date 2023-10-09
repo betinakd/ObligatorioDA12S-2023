@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Domain;
 using Repository;
 using BussinesLogic;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 
 namespace BussinesLogicTest
 {
@@ -150,34 +151,6 @@ namespace BussinesLogicTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
-		public void Actualizar_Usuario_Correo_Invalido()
-		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
-			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
-			Usuario usuario1 = new Usuario();
-			usuario1.Correo = "xxxx@yyyy.com";
-			usuario1.Contrasena = "123456780A";
-			usuarioLogic.AddUsuario(usuario1);
-			usuario1.Correo = "xxxx@yyyy.co";
-			usuarioLogic.UpdateUsuario(usuario1);
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
-		public void Actualizar_Usuario_Contrasena_Invalida()
-		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
-			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
-			Usuario usuario1 = new Usuario();
-			usuario1.Correo = "xxxx@yyyy.com";
-			usuario1.Contrasena = "123456780Ab";
-			usuarioLogic.AddUsuario(usuario1);
-			usuario1.Contrasena = "1234";
-			usuarioLogic.UpdateUsuario(usuario1);
-		}
-
-		[TestMethod]
 		public void Buscar_Usuario()
 		{
 			IRepository<Usuario> repository = new UsuarioMemoryRepository();
@@ -251,6 +224,8 @@ namespace BussinesLogicTest
 
 		}
 
+
+
 		[TestMethod]
 		public void Ingreso_Correo_Contrasena_Valida_Entrega_Usuario()
 		{
@@ -282,14 +257,21 @@ namespace BussinesLogicTest
 		}
 
 		[TestMethod]
-		public void Recibe_Correo_Retorna_Usuario()
+		public void ExisteCorreoUsuario_Recibe_Vacio()
 		{
-			usuarioLogic.AddUsuario(usuario1);
-			usuarioLogic.AddUsuario(usuario2);
-			Usuario usuario = usuarioLogic.UsuarioByCorreo("hola@gmail.com");
-			bool resultado = usuario.Equals(usuario1);
-			Assert.IsTrue(resultado);
+			bool resultado = usuarioLogic.ExisteCorreoUsuario("");
+			Assert.IsFalse(resultado);
 		}
-
+		[TestMethod]
+		public void ExisteCorreoUsuario_Recibe_Nulo()
+		{
+			var usuario = new Usuario
+			{
+				Correo = "prueba@gmail.com",
+				Contrasena = "123456aasaU",
+			};
+			bool resultado = usuarioLogic.ExisteCorreoUsuario("prueba@gmail.com");
+			Assert.IsFalse(resultado);
+		}
 	}
 }

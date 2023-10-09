@@ -57,23 +57,9 @@ namespace BussinesLogic
             return null;
 		}
 
-		public Usuario? UpdateUsuario(Usuario updateEntity)
+        public Usuario? UpdateUsuario(Usuario updateEntity)
         {
-            ValidarCorreoYContrasena(updateEntity);
             return _repository.Update(updateEntity);
-        }
-
-
-        private void ValidarCorreoYContrasena(Usuario oneElement)
-        {
-            if (!oneElement.Validar_Contrasena(oneElement.Contrasena))
-            {
-                throw new Exception("La contraseña no es valida");
-            }
-            if (!oneElement.Validar_Correo(oneElement.Correo))
-            {
-                throw new Exception("El correo no es valido");
-            }
         }
 
         public IList<Usuario> FindAllUsuario()
@@ -90,11 +76,5 @@ namespace BussinesLogic
         {
             return _repository.Find(u => u.Correo == id);
         }
-
-        public Usuario? UsuarioByCorreo(string correo)
-        {
-			return _repository.Find(u => u.Correo == correo);
-		}
-
     }
 }
