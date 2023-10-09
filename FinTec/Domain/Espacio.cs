@@ -111,6 +111,8 @@ namespace Domain
 		}
 		public void AgregarCategoria(Categoria categoria)
 		{
+			if (Categorias.Contains(categoria))
+				throw new DomainEspacioException("No se pueden agregar dos categorías con el mismo nombre.");
 			_categorias.Add(categoria);
 		}
 		public void AgregarTransaccion(Transaccion transaccion)
