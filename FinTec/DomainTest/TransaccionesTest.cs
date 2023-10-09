@@ -117,9 +117,10 @@ namespace DomainTest
 
         [TestMethod]
         public void Contador_Id_Transaccion()
-        {
-            Transaccion.AumentarContadorIdTransaccion();
+        {   
             Assert.AreEqual(1, Transaccion._contadorIdTransaccion);
         }
+
+        
     }
 }

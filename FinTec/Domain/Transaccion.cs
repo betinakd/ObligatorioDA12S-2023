@@ -8,7 +8,7 @@ namespace Domain
 {
     public class Transaccion
     {
-        public static int _contadorIdTransaccion;
+        public static int _contadorIdTransaccion = 1;
         private string _titulo;
         public string Titulo
         {
@@ -76,7 +76,7 @@ namespace Domain
 
         public static void AumentarContadorIdTransaccion()
         {
-            _contadorIdTransaccion=1;
+             _contadorIdTransaccion++;
         }
     }
 }
