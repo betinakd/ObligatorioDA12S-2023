@@ -29,6 +29,10 @@
 			}
 			set
 			{
+				if(!CaracterEsNumero(value))
+				{
+					throw new DomainCuentaException("El número de tarjeta debe ser numérico");
+				}
 				if (value.Length < 4)
 				{
 					throw new DomainCuentaException("El número de tarjeta no puede tener menos de 4 caracteres");
