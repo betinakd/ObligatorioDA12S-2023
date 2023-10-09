@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Domain.DomainExceptions;
 
 namespace DomainTest
 {
