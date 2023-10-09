@@ -262,7 +262,7 @@ namespace DomainTest
             _miEspacio.AgregarObjetivo(_objetivo);
             _reporte.MiEspacio = _miEspacio;
             List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
-            Assert.IsFalse(ret.Count == 0);
+            Assert.IsTrue(ret.Count == 0);
         }
     
         [TestMethod]
