@@ -561,5 +561,23 @@ namespace DomainTest
             Assert.AreEqual(espacio1.Transacciones[0].Monto, Monto);
             Assert.AreEqual(espacio1.Transacciones[0].CategoriaTransaccion, categoria);      
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainEspacioException))]
+        public void Excepcion_Modificar_Transaccion_Ahorro_No_Existe()
+        {
+            string Titulo = "Transaccion";
+            TipoCambiario Moneda = TipoCambiario.PesosUruguayos;
+            string Nombre = "Banco";
+            double Monto = 100;
+            Categoria categoria = new Categoria()
+            {
+                EstadoActivo = true,
+                Nombre = "Categoria",
+                Tipo = TipoCategoria.Costo,
+            };
+            int id = 1;
+            espacio1.ModificarTransaccionCuentaAhorro(Titulo, Moneda, Nombre, Monto, categoria, id);
+        }
     }
 }
