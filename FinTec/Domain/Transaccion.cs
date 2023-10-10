@@ -55,7 +55,9 @@
             }
             set
             {
-                if (value.Moneda != Moneda)
+				if (value == null)
+					throw new DomainEspacioException("La cuenta no puede ser nula");
+				if (value.Moneda != Moneda)
                     throw new DomainEspacioException("La cuenta tiene que ser del tipo de la moneda");
                 _cuenta = value;
             }
