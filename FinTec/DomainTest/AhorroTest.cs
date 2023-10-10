@@ -116,5 +116,23 @@ namespace DomainTest
 
 			Assert.IsFalse(credito.Equals(credito2));
 		}
+
+		[TestMethod]
+		public void Modificar_Cuenta_Ahorro() {
+			var cuenta = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01,
+			};
+			var modificacion = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba2",
+				Monto = 100.01,
+			};
+			cuenta.Modificar(modificacion);
+			Assert.AreEqual(cuenta.Nombre, modificacion.Nombre);
+		}
 	}
 }
