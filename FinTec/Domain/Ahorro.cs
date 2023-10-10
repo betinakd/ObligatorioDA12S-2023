@@ -37,6 +37,13 @@
 		public Ahorro()
 		{
 		}
+
+		public override void Modificar(Cuenta cuenta)
+		{
+			Ahorro ahorro = (Ahorro)cuenta;
+			Nombre = ahorro.Nombre;
+		}
+
 		public override string ToString()
 		{
 			return $"{base.ToString()}/n{Nombre}/n {FechaCreacion}/n {Monto}";
@@ -48,7 +55,7 @@
 			{
 				return false;
 			}
-			Ahorro ahorro = (Ahorro) obj;
+			Ahorro ahorro = (Ahorro)obj;
 			return Nombre == ahorro.Nombre;
 		}
 	}
