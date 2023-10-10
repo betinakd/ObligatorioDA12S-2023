@@ -46,5 +46,13 @@ namespace DomainTest
             transaccion.CategoriaTransaccion = categoria;
             Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
         }
-    }
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Categoria_Nula()
+		{
+			TransaccionIngreso transaccion = new TransaccionIngreso();
+			transaccion.CategoriaTransaccion = null;
+		}
+	}
 }
