@@ -77,12 +77,12 @@
 				EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaCredito);
 				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
 			}
-			catch (DomainCuentaException ex)
+			catch (DomainEspacioException ex)
 			{
 				ErrorMsg = ex.Message;
 			}
 		}
-		catch (DomainCuentaException ex)
+		catch (DomainEspacioException ex)
 		{
 			ErrorMsg = ex.Message;
 		}
