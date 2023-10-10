@@ -727,7 +727,27 @@ namespace DomainTest
             int id = 1;
             espacio1.ModificarTransaccionCuentaAhorro(Titulo, Moneda, Nombre, Monto, categoria, id);
         }
-    }
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Modificar_Cuenta_Con_Nombre_Repetido()
+		{ 
+			var ahorro1 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };
+			var ahorro2 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };
+			espacio1.AgregarCuenta(ahorro1);
+			espacio1.ModificarCuenta(ahorro2, ahorro1);
+		}
+
+		[TestMethod]
+		public void Modificar_Cuenta_Con_Nombre_No_Repetido()
+		{
+			var ahorro1 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };
+			var ahorro2 = new Ahorro() { Nombre = "Ahorro2", Moneda = TipoCambiario.Dolar };
+			espacio1.AgregarCuenta(ahorro1);
+			espacio1.ModificarCuenta(ahorro2, ahorro1);
+			Assert.AreEqual(ahorro1.Nombre, ahorro2.Nombre);
+		}
+	}
 }
 
 
