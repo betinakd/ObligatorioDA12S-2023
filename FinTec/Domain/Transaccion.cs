@@ -18,10 +18,17 @@
                 _titulo = value;
             }
         }
-        private readonly DateTime _fechaCreacion = DateTime.Now;
+        private  DateTime _fechaCreacion = DateTime.Now;
         public DateTime FechaTransaccion
         {
-            get { return _fechaCreacion; }
+            get
+            {
+                return _fechaCreacion;
+            }
+            set 
+            {
+                _fechaCreacion = value;
+            }
         }
         private double _monto;
         public double Monto

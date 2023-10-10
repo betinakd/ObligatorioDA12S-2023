@@ -1,1 +1,10 @@
-﻿
+﻿@page "/home/{Id:int}/{Correo}/ReporteA"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTec Reportes</PageTitle>
+<TituloRosado Titulo="Reporte de objetivo de gastos" Subtitulo="Sección con reportes del espacio actual."></TituloRosado>

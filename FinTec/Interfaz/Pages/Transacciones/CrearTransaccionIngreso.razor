@@ -46,7 +46,6 @@
 					<option value="@categoria.Nombre">@categoria.Nombre</option>
 				}
 			</select>
-			<span>@ErrorMsg</span>
 		</div>
 		<p style="color:red">@ErrorMsg</p>
 		<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
@@ -55,8 +54,6 @@
 		</button>
 	</div>
 </div>
-
-
 
 
 
@@ -86,23 +83,12 @@
 	{
 		string selectedValue = e.Value.ToString();
 		cuenta = cuentas.FirstOrDefault(c => c.ToString().Equals(selectedValue));
-		if (cuenta is Ahorro)
-		{
-			cuenta = (Ahorro)cuenta;
-			ErrorMsg += "Ahorro";
-		}
-		if (cuenta is Credito)
-		{
-			cuenta = (Credito)cuenta;
-			ErrorMsg += "Credito";
-		}
 	}
 
 	private void SeleccionarCategoria(ChangeEventArgs e)
 	{
 		string selectedValue = e.Value.ToString();
 		categoria = categorias.FirstOrDefault(c => c.Nombre == selectedValue);
-
 	}
 
 	private void CrearTransaccion()
@@ -130,7 +116,8 @@
 				Credito credito = (Credito)cuenta;
 				credito.IngresoMonetario(inputMonto);
 			}
-
+			NavigationManager.NavigateTo
+			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}
 		catch (DomainEspacioException ex)
 		{

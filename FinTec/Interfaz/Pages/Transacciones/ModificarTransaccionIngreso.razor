@@ -33,7 +33,6 @@
 					<option value="@categoria.Nombre">@categoria.Nombre</option>
 				}
 			</select>
-			<span>@ErrorMsg</span>
 		</div>
 		<p style="color:red">@ErrorMsg</p>
 		<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
@@ -75,13 +74,11 @@
 
 		try
 		{
-			transaccion.Monto = 6666;
+			transaccion.Monto = inputMonto;
 			transaccion.Moneda = inputMoneda;
 			transaccion.CategoriaTransaccion = categoria;
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
-			Console.WriteLine(inputMonto);
-			Console.WriteLine(inputMoneda);
 		}
 		catch (DomainEspacioException ex)
 		{
