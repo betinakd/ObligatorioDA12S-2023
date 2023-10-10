@@ -43,7 +43,10 @@
 				<option value="">Seleccione una Opcion</option>
 				@foreach (var categoria in categorias)
 				{
-					<option value="@categoria.Nombre">@categoria.Nombre</option>
+					if (categoria.Tipo.Equals(TipoCategoria.Ingreso))
+					{
+						<option value="@categoria.Nombre">@categoria.Nombre</option>
+					}
 				}
 			</select>
 		</div>

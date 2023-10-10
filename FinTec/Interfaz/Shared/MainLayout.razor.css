@@ -5,7 +5,7 @@
 }
 
 main {
-    flex-grow: 5;
+    flex-grow: 6;
     /*right: 50%;*/
     justify-content: center;
     align-items: center;

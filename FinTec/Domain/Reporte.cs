@@ -59,16 +59,21 @@
             {
                 double _montoAcumulado = 0;
                 List<Transaccion> transacciones = MiEspacio.Transacciones;
+                bool transaccionAceptada = false;
                 foreach (Transaccion t in transacciones)
                 {
                     if (transaccionMismaCategoria(c, t) && transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
                     {
+                        transaccionAceptada = true;
                         _montoAcumulado += t.Monto;
                     }
                 }
-                double _porcentaje = (_montoAcumulado * 100) / _montoTotal;
-                CategoriaGasto cg = new CategoriaGasto(c, _montoAcumulado, _porcentaje);
-                _reporteGastos.Add(cg);
+                if (transaccionAceptada)
+                {
+					double _porcentaje = (_montoAcumulado * 100) / _montoTotal;
+					CategoriaGasto cg = new CategoriaGasto(c, _montoAcumulado, _porcentaje);
+					_reporteGastos.Add(cg);
+				}
             }
             return _reporteGastos;
         }

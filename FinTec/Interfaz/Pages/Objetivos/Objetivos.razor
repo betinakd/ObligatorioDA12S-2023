@@ -28,7 +28,7 @@
                         <strong>Objetivo de gasto:</strong> @objetivo.MontoMaximo<strong>$</strong>
                     </p>
                     <p class="text-sm text-gray-900 truncate dark:text-gray-400">
-                        <strong>Categorías:</strong> @foreach (var categoria in objetivo.Categorias)
+                        <strong>Categorías: </strong> @foreach (var categoria in objetivo.Categorias)
                         {
                             @categoria.Nombre
                             @if (categoria != objetivo.Categorias.Last())

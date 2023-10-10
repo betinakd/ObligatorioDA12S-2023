@@ -773,7 +773,7 @@ namespace DomainTest
             };
             _miEspacio.AgregarTransaccion(transaccion);
             _reporte.MiEspacio = _miEspacio;
-            List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+            List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(5);
             Assert.IsTrue(toAnalize.Count != 0);
         }
     

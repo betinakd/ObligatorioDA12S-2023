@@ -12,6 +12,14 @@
 <div class="mt-4">
 	<h3 class="text-lg font-medium mb-2">Objetivos de Gasto</h3>
 	<div class="flex flex-col space-y-2">
+		@if (objetivosDeGasto.Count == 0)
+		{
+			<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center">
+				<h1 style="padding-left:5px">No hay transacciones que permitan esta operacion.</h1>
+			</div>
+
+		} else
+		{
 			<table class="min-w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
 					<tr>
@@ -44,11 +52,12 @@
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap">
 								@CumpleMonto(objetivo)
-						</td>
+							</td>
 						</tr>
 					}
 				</tbody>
 			</table>
+		}
 	</div>
 </div>
 
@@ -75,6 +84,4 @@
 		Reporte reporte = new Reporte() { MiEspacio = espacio };
 		objetivosDeGasto = reporte.ReporteObjetivosDeGastos();
 	}
-}
-
 }
