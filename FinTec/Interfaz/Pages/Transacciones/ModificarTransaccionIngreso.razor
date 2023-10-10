@@ -4,18 +4,15 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
-@page "/home/{Id:int}/{Correo}/CrearTransaccionIngreso"
+@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionIngreso"
 <PageTitle>FinTec Transacción</PageTitle>
-<TituloRosado Titulo="Crear Transacción de Ingreso" Subtitulo="Cree sus transacciones de ingreso."></TituloRosado>
+<TituloRosado Titulo="Modificar Transacción de Ingreso" Subtitulo="Modifiqué sus transacciones de ingreso."></TituloRosado>
 <EspacioActual></EspacioActual>
+
 
 <div class="mt-4">
 	<h3 class="text-lg font-medium mb-2">Detalles de la Transacción</h3>
 	<div class="flex flex-col space-y-2">
-		<div>
-			<label class="text-gray-600">Título de la Transacción</label>
-			<input type="text" @bind="inputTitulo" class="border rounded-md px-2 py-1" />
-		</div>
 		<div>
 			<label class="text-gray-600">Monto</label>
 			<input type="number" step="0.01" @bind="inputMonto" class="border rounded-md px-2 py-1" />
@@ -25,16 +22,6 @@
 			<select @bind="inputMoneda" class="border rounded-md px-2 py-1">
 				<option value="@TipoCambiario.Dolar">Dólar</option>
 				<option value="@TipoCambiario.PesosUruguayos">Pesos uruguayos</option>
-			</select>
-		</div>
-		<div>
-			<label class="text-gray-600">Cuenta Monetaria</label>
-			<select @onchange="SeleccionarCuenta" class="border rounded-md px-2 py-1">
-				<option value="">Seleccione una Opcion</option>
-				@foreach (Cuenta cuenta in cuentas)
-				{
-					<option value="@cuenta">@cuenta.ToString()</option>
-				}
 			</select>
 		</div>
 		<div>
@@ -50,12 +37,13 @@
 		</div>
 		<p style="color:red">@ErrorMsg</p>
 		<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
-		@onclick="() => CrearTransaccion()">
+		@onclick="() => ModificarTransaccion()">
 			Crear Transacción
 		</button>
 	</div>
 </div>
 
+// Para transacciones: moneda, monto y categoría
 
 
 
@@ -63,74 +51,36 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
+	[Parameter] public int IdTrans { get; set; }
 	public string ErrorMsg { get; set; } = "";
-	private string inputTitulo { get; set; } = "";
 	private double inputMonto { get; set; } = 0;
 	private TipoCambiario inputMoneda { get; set; }
-	private string inputCuenta { get; set; }
 	private string inputCategoria { get; set; }
 	private Espacio espacio = new Espacio();
-	private List<Cuenta> cuentas = new List<Cuenta>();
 	private List<Categoria> categorias = new List<Categoria>();
 	private Categoria categoria;
-	private Cuenta cuenta;
+	private Transaccion transaccion;
 
 	protected override void OnInitialized()
 	{
 		espacio = EspacioLogic.FindEspacio(Id);
-		cuentas = espacio.Cuentas;
 		categorias = espacio.Categorias;
-	}
-
-	private void SeleccionarCuenta(ChangeEventArgs e)
-	{
-		string selectedValue = e.Value.ToString();
-		cuenta = cuentas.FirstOrDefault(c => c.ToString().Equals(selectedValue));
-		if (cuenta is Ahorro)
-		{
-			cuenta = (Ahorro)cuenta;
-			ErrorMsg += "Ahorro";
-		}
-		if (cuenta is Credito)
-		{
-			cuenta = (Credito)cuenta;
-			ErrorMsg += "Credito";
-		}
 	}
 
 	private void SeleccionarCategoria(ChangeEventArgs e)
 	{
 		string selectedValue = e.Value.ToString();
 		categoria = categorias.FirstOrDefault(c => c.Nombre == selectedValue);
-
 	}
 
-	private void CrearTransaccion()
+	private void ModificarTransaccion()
 	{
+		transaccion = espacio.Transacciones.Find(t => t.IdTransaccion.Equals(IdTrans));
 		try
 		{
-
-			TransaccionIngreso transaccion = new TransaccionIngreso()
-				{
-					Titulo = inputTitulo,
-					Monto = inputMonto,
-					Moneda = inputMoneda,
-					CuentaMonetaria = cuenta,
-					CategoriaTransaccion = categoria,
-				};
-			espacio.AgregarTransaccion(transaccion);
-			transaccion.AsignarIdTransaccion();
-			if (cuenta is Ahorro)
-			{
-				Ahorro ahorro = (Ahorro)cuenta;
-				ahorro.EgresoMonetario(inputMonto);
-			}
-			if (cuenta is Credito)
-			{
-				Credito credito = (Credito)cuenta;
-				credito.IngresoMonetario(inputMonto);
-			}
-
+			transaccion.Monto = inputMonto;
+			transaccion.Moneda = inputMoneda;
+			transaccion.CategoriaTransaccion = categoria;
 		}
 		catch (DomainEspacioException ex)
 		{
