@@ -1,11 +1,27 @@
-﻿namespace Domain
+﻿using System.Runtime.CompilerServices;
+
+namespace Domain
 {
 	public class Credito : Cuenta
 	{
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
 		private double _creditoDisponible;
-		public DateTime FechaCierre { get; set; }
+		private DateTime _fechaCierre;
+		public DateTime FechaCierre {
+			get 
+			{
+				return _fechaCierre;	
+			}
+			set
+			{
+				if (value < DateTime.Now)
+				{
+					throw new DomainEspacioException("La fecha de cierre no puede ser menor a la fecha actual");
+				}
+				_fechaCierre = value;
+			}
+		}
 		public string BancoEmisor
 		{
 			get
