@@ -313,5 +313,29 @@ namespace DomainTest
 
 			Assert.IsTrue(ahorro1.Equals(ahorro2));
 		}
+
+		[TestMethod]
+		public void Modificar_Cuenta_Credito() { 
+			var credito = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				CreditoDisponible = 1000,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "MiBanco",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			var credito2 = new Credito
+			{
+				Moneda = TipoCambiario.Dolar,
+				CreditoDisponible = 2000,
+				NumeroTarjeta = "4321",
+				BancoEmisor = "MiBancoEmisor",
+				FechaCierre = new System.DateTime(2026, 1, 1, 0, 0, 0)
+			};
+
+			credito.Modificar(credito2);
+			Assert.IsTrue(credito.Equals(credito2));
+		}
 	}
 }
