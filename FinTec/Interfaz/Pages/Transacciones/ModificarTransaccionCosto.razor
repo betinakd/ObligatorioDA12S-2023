@@ -4,9 +4,9 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
-@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionIngreso"
+@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionCosto"
 <PageTitle>FinTec Transacción</PageTitle>
-<TituloRosado Titulo="Modificar Transacción de Ingreso" Subtitulo="Modifiqué sus transacciones de ingreso."></TituloRosado>
+<TituloRosado Titulo="Modificar Transacción de Costo" Subtitulo="Modifiqué sus transacciones de costo."></TituloRosado>
 <EspacioActual></EspacioActual>
 
 
@@ -43,7 +43,6 @@
 	</div>
 </div>
 
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -72,16 +71,13 @@
 
 	private void ModificarTransaccion()
 	{
-
 		try
 		{
-			transaccion.Monto = 6666;
+			transaccion.Monto = inputMonto;
 			transaccion.Moneda = inputMoneda;
 			transaccion.CategoriaTransaccion = categoria;
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
-			Console.WriteLine(inputMonto);
-			Console.WriteLine(inputMoneda);
 		}
 		catch (DomainEspacioException ex)
 		{
