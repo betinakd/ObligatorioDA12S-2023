@@ -73,6 +73,14 @@
 			CreditoDisponible -= monto;
 		}
 
+		public override void Modificar(Cuenta cuenta)
+		{
+			Credito credito = (Credito)cuenta;
+			BancoEmisor = credito.BancoEmisor;
+			NumeroTarjeta = credito.NumeroTarjeta;
+			FechaCierre = credito.FechaCierre;
+		}
+
 		public override string ToString()
 		{
 			string baseString = base.ToString();
