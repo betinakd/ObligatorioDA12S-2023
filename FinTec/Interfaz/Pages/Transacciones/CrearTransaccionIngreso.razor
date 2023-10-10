@@ -23,7 +23,15 @@
         <label for="monto">Monto:</label>
         <input type="number" class="form-control" id="monto" @bind="Monto">
     </div>
-
+  
+    <td><label for="moneda">Moneda:</label></td>
+    <td>
+        <select class="form-control" id="moneda" @bind="Moneda">
+            <option value="PesosUruguayos">Pesos Uruguayos</option>
+            <option value="Dolar">Dólar</option>
+        </select>
+    </td>
+   
     <div class="form-group">
         <label for="categoria">Categoría:</label>
         <select class="form-control" @bind="categoriaSeleccionada">
@@ -45,7 +53,8 @@
         <label for="cuenta">Cuentas de credito:</label>
         <select class="form-control" @bind="cuentaCreditoSeleccionada">
             <option value="">-- Selecciona una opción --</option>
-            @foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Credito))
+            @foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where
+            (c => c is Credito && c.Moneda == Moneda && cuentaAhorroSeleccionada == ""))
             {
                 <option value="@cuentaCredito.BancoEmisor">@cuentaCredito.BancoEmisor</option>
             }
@@ -57,7 +66,8 @@
         <label for="cuenta">Cuentas de ahorro:</label>
         <select class="form-control" @bind="cuentaAhorroSeleccionada">
             <option value="">-- Selecciona una opción --</option>
-            @foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Ahorro))
+            @foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where
+            (c => c is Ahorro && c.Moneda == Moneda && cuentaCreditoSeleccionada == ""))
             {
                 <option value="@cuentaAhorro.Nombre">@cuentaAhorro.Nombre</option>
             }
@@ -84,7 +94,7 @@
     string cuentaCreditoSeleccionada = "";
     string cuentaAhorroSeleccionada = "";
     string categoriaSeleccionada = "";
-    TipoCambiario moneda;
+    TipoCambiario Moneda;
 
 
 
@@ -94,18 +104,18 @@
         {
             var nuevaTransaccion = new TransaccionIngreso();
             nuevaTransaccion.Titulo = Titulo;
-
+            nuevaTransaccion.Moneda= Moneda;
             if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
             {
                 cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault
                 (c => c.Nombre == cuentaAhorroSeleccionada);
                 if (cuentaAhorro != null)
-                {
-                    nuevaTransaccion.Moneda = cuentaAhorro.Moneda;
+                {                   
                     nuevaTransaccion.CuentaMonetaria = new Ahorro
                         {
                             Nombre = cuentaAhorro.Nombre,
-                            Monto = Monto
+                            Monto = Monto,
+                            Moneda = Moneda
                         };
                 }
             }
@@ -115,13 +125,13 @@
                 (c => c.BancoEmisor == cuentaCreditoSeleccionada);
                 if (cuentaCredito != null)
                 {
-                    nuevaTransaccion.Moneda = cuentaCredito.Moneda;
                     nuevaTransaccion.CuentaMonetaria = new Credito
                         {
                             BancoEmisor = cuentaCredito.BancoEmisor,
                             CreditoDisponible = Monto,
                             NumeroTarjeta = cuentaCredito.NumeroTarjeta,
                             FechaCierre = cuentaCredito.FechaCierre,
+                            Moneda = Moneda
                         };
                 }
             }

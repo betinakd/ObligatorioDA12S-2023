@@ -41,5 +41,10 @@
 			}
 			return moneda + "\n" + fecha + "\n";
 		}
+
+		public virtual void Modificar(Cuenta cuenta)
+		{
+			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+		}
 	}
 }

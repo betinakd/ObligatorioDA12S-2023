@@ -193,7 +193,16 @@ namespace Domain
             AumentarContadorId();
         }
 
-        public void ModificarTransaccionCuentaCredito(string Titulo, TipoCambiario Moneda, string BancoEmisor, double Monto,
+		public void ModificarCuenta(Cuenta modificacion, Cuenta modificada)
+		{
+			if (Cuentas.Contains(modificacion))
+			{
+				throw new DomainEspacioException("No se puede Modificar, hay cuentas ya registradas con ese nombre");
+			}
+			modificada.Modificar(modificacion);
+		}
+
+		public void ModificarTransaccionCuentaCredito(string Titulo, TipoCambiario Moneda, string BancoEmisor, double Monto,
 			Categoria categoria, string NumeroTarjeta, int id)
         {
             Transaccion transaccionAModificar = Transacciones.Find(t => t.IdTransaccion == id);
@@ -207,7 +216,8 @@ namespace Domain
                 BancoEmisor = BancoEmisor,
                 CreditoDisponible = Monto,
                 NumeroTarjeta = NumeroTarjeta,
-				FechaCierre = transaccionAModificar.FechaTransaccion
+				FechaCierre = transaccionAModificar.FechaTransaccion,
+				Moneda = Moneda
             };
         }
 
@@ -223,7 +233,8 @@ namespace Domain
             transaccionAModificar.CuentaMonetaria = new Ahorro
             {
                 Nombre = Nombre,
-                Monto = Monto
+                Monto = Monto,
+				Moneda = Moneda
             };
         }
     }

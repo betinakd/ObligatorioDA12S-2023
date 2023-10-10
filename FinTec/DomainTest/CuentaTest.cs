@@ -72,6 +72,12 @@ namespace DomainTest
 			Assert.AreEqual(cuenta.ToString(), "Dolar\n" + fecha + "\n");
 		}
 
-
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Modificar_Cuenta_Excepcion_No_Implementada()
+		{
+			Cuenta cuenta = new Cuenta();
+			cuenta.Modificar(cuenta);
+		}
 	}
 }
