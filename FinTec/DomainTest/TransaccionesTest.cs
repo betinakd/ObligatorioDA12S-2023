@@ -137,5 +137,12 @@ namespace DomainTest
             transaccion.FechaTransaccion= new DateTime(2020, 1, 1);
             Assert.AreEqual(new DateTime(2020, 1, 1), transaccion.FechaTransaccion);
         }
+        [TestMethod]
+        [ExpectedException(typeof(DomainEspacioException))]
+        public void Excepcion_Cuenta_Nula()
+        {
+            Transaccion transaccion = new Transaccion();
+			transaccion.CuentaMonetaria = null;
+        }
     }
 }
