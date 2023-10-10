@@ -63,7 +63,7 @@
 							@categoriaGasto.Categoria.Nombre
 						</td>
 						<td class="px-6 py-4 whitespace-nowrap">
-							@categoriaGasto.MontoUsado
+							$@categoriaGasto.MontoUsado
 						</td>
 						<td class="px-6 py-4 whitespace-nowrap">
 								@(categoriaGasto.Porcentaje.ToString("F2"))%
@@ -120,7 +120,8 @@
 		mesElegido = "10";
 		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 		reporte.MiEspacio = espacio;
-		gastosCategoria = new List<CategoriaGasto>();
+		//gastosCategoria = new List<CategoriaGasto>();
+		gastosCategoria = reporte.ReporteGastosCategoriaPorMes(mesEnInt);
 	}
 
 }
