@@ -18,9 +18,9 @@ namespace Domain
             set
             {
                 if (value.EstadoActivo == false)
-                    throw new DomainTransaccionException("La categoria tiene que estar activa");
+                    throw new DomainEspacioException("La categoria tiene que estar activa");
                 if (value.Tipo != TipoCategoria.Costo)
-                    throw new DomainTransaccionException("La categoria tiene que ser de tipo Ingreso");
+                    throw new DomainEspacioException("La categoria tiene que ser de tipo Ingreso");
                 _categoria = value;
             }
         }

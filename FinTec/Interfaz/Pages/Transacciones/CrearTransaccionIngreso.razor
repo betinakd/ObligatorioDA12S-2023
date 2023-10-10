@@ -167,18 +167,6 @@
             NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
 
         }
-        catch (DomainTransaccionException e)
-        {
-            ErrorMsg = e.Message;
-        }
-        catch (DomainCategoriaException e)
-        {
-            ErrorMsg = e.Message;
-        }
-        catch (DomainCuentaException e)
-        {
-            ErrorMsg = e.Message;
-        }
         catch (Exception e)
         {
             ErrorMsg = e.Message;

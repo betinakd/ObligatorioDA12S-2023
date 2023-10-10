@@ -98,7 +98,7 @@
 				string newHref = $"/home/{Id}/{Correo}/Objetivos";
 				NavigationManager.NavigateTo(newHref);
 			}
-			catch (DomainObjetivoException e)
+		catch (DomainEspacioException e)
 			{
 				ErrorMsg = e.Message;
 			}

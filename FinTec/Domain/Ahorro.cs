@@ -14,7 +14,7 @@
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainCuentaException("El nombre de la cuenta no puede ser vacío");
+					throw new DomainEspacioException("El nombre de la cuenta no puede ser vacío");
 				}
 				_nombre = value;
 			}
@@ -29,7 +29,7 @@
 			{
 				if (value <= 0)
 				{
-					throw new DomainCuentaException("El monto inicial de la cuenta no puede ser menor a cer.");
+					throw new DomainEspacioException("El monto inicial de la cuenta no puede ser menor a cer.");
 				}
 				_monto = value;
 			}

@@ -49,7 +49,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainObjetivoException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Tiene_Titulo_Vacio()
 
 		{
@@ -75,21 +75,21 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainObjetivoException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Aplicar_Monto_Menor_A_Cero_Al_Objetivo()
 		{
 			_objetivo.MontoMaximo = -1;
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainObjetivoException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_Aplicar_Lista_Categorias_Vacia_Objetivo()
 		{
 			_objetivo.Categorias = new List<Categoria>();
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainObjetivoException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_Aplicar_Lista_Categorias_Nula_Objetivo()
 		{
 			_objetivo.Categorias = null;

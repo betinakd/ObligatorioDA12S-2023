@@ -14,174 +14,162 @@
 
 
 <form>
-    <div class="form-group">
-        <label for="titulo">Titulo:</label>
-        <input type="text" class="form-control" id="titulo" @bind="Titulo">
-    </div>
+	<div class="form-group">
+		<label for="titulo">Titulo:</label>
+		<input type="text" class="form-control" id="titulo" @bind="Titulo">
+	</div>
 
-    <div class="form-group">
-        <label for="monto">Monto:</label>
-        <input type="number" class="form-control" id="monto" @bind="Monto">
-    </div>
+	<div class="form-group">
+		<label for="monto">Monto:</label>
+		<input type="number" class="form-control" id="monto" @bind="Monto">
+	</div>
 
-    <td><label for="moneda">Moneda:</label></td>
-    <td>
-        <select class="form-control" id="moneda" @bind="Moneda">
-            <option value="PesosUruguayos">Pesos Uruguayos</option>
-            <option value="Dolar">Dólar</option>
-        </select>
-    </td>
+	<td><label for="moneda">Moneda:</label></td>
+	<td>
+		<select class="form-control" id="moneda" @bind="Moneda">
+			<option value="PesosUruguayos">Pesos Uruguayos</option>
+			<option value="Dolar">Dólar</option>
+		</select>
+	</td>
 
-    <div class="form-group">
-        <label for="categoria">Categoría:</label>
-        <select class="form-control" @bind="categoriaSeleccionada">
-            @foreach (Categoria categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
-            {
-                if (categoria.Tipo == TipoCategoria.Costo && categoria.EstadoActivo)
-                {
-                    <option value="@categoria.Nombre">@categoria.Nombre</option>
-                }
-            }
-        </select>
+	<div class="form-group">
+		<label for="categoria">Categoría:</label>
+		<select class="form-control" @bind="categoriaSeleccionada">
+			@foreach (Categoria categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
+			{
+				if (categoria.Tipo == TipoCategoria.Costo && categoria.EstadoActivo)
+				{
+					<option value="@categoria.Nombre">@categoria.Nombre</option>
+				}
+			}
+		</select>
 
-    </div>
-
-
+	</div>
 
 
-    <div class="form-group">
-        <label for="cuenta">Cuentas de credito:</label>
-        <select class="form-control" @bind="cuentaCreditoSeleccionada">
-            <option value="">-- Selecciona una opción --</option>
-            @foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where
-            (c => c is Credito && c.Moneda == Moneda && cuentaAhorroSeleccionada == ""))
-            {
-                <option value="@cuentaCredito.BancoEmisor">@cuentaCredito.BancoEmisor</option>
-            }
-        </select>
-    </div>
 
 
-    <div class="form-group">
-        <label for="cuenta">Cuentas de ahorro:</label>
-        <select class="form-control" @bind="cuentaAhorroSeleccionada">
-            <option value="">-- Selecciona una opción --</option>
-            @foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where
-            (c => c is Ahorro && c.Moneda == Moneda && cuentaCreditoSeleccionada == ""))
-            {
-                <option value="@cuentaAhorro.Nombre">@cuentaAhorro.Nombre</option>
-            }
-        </select>
-    </div>
+	<div class="form-group">
+		<label for="cuenta">Cuentas de credito:</label>
+		<select class="form-control" @bind="cuentaCreditoSeleccionada">
+			<option value="">-- Selecciona una opción --</option>
+			@foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where
+					(c => c is Credito && c.Moneda == Moneda && cuentaAhorroSeleccionada == ""))
+			{
+				<option value="@cuentaCredito.BancoEmisor">@cuentaCredito.BancoEmisor</option>
+			}
+		</select>
+	</div>
 
 
-    <button type="button" class="btn btn-primary" @onclick="GenerarTransaccion">Crear Transacción</button>
+	<div class="form-group">
+		<label for="cuenta">Cuentas de ahorro:</label>
+		<select class="form-control" @bind="cuentaAhorroSeleccionada">
+			<option value="">-- Selecciona una opción --</option>
+			@foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where
+					(c => c is Ahorro && c.Moneda == Moneda && cuentaCreditoSeleccionada == ""))
+			{
+				<option value="@cuentaAhorro.Nombre">@cuentaAhorro.Nombre</option>
+			}
+		</select>
+	</div>
+
+
+	<button type="button" class="btn btn-primary" @onclick="GenerarTransaccion">Crear Transacción</button>
 </form>
 
 
 
 @code {
-    [Parameter] public int Id { get; set; }
-    [Parameter] public string Correo { get; set; }
-    [Parameter] public int IdTransaccion { get; set; }
-    public string ErrorMsg { get; set; }
-    public Espacio espacioActual { get; set; }
-    public Ahorro cuentaAhorro = new Ahorro();
-    public Credito cuentaCredito = new Credito();
-    private string Titulo;
-    private double Monto;
-    private Categoria categoria = new Categoria();
-    string cuentaCreditoSeleccionada = "";
-    string cuentaAhorroSeleccionada = "";
-    string categoriaSeleccionada = "";
-    TipoCambiario Moneda;
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	[Parameter] public int IdTransaccion { get; set; }
+	public string ErrorMsg { get; set; }
+	public Espacio espacioActual { get; set; }
+	public Ahorro cuentaAhorro = new Ahorro();
+	public Credito cuentaCredito = new Credito();
+	private string Titulo;
+	private double Monto;
+	private Categoria categoria = new Categoria();
+	string cuentaCreditoSeleccionada = "";
+	string cuentaAhorroSeleccionada = "";
+	string categoriaSeleccionada = "";
+	TipoCambiario Moneda;
 
 
-    private void GenerarTransaccion()
-    {
-        try
-        {
-            var nuevaTransaccion = new TransaccionCosto();
-            nuevaTransaccion.Titulo = Titulo;
-            nuevaTransaccion.Moneda = Moneda;
-            if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
-            {
-                cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault
-                (c => c.Nombre == cuentaAhorroSeleccionada);
-                if (cuentaAhorro != null)
-                {
-                    nuevaTransaccion.CuentaMonetaria = new Ahorro
-                        {
-                            Nombre = cuentaAhorro.Nombre,
-                            Monto = Monto,
-                            Moneda = Moneda
-                        };
-                }
-            }
-            else if (!string.IsNullOrEmpty(cuentaCreditoSeleccionada))
-            {
-                cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault
-                (c => c.BancoEmisor == cuentaCreditoSeleccionada);
-                if (cuentaCredito != null)
-                {
-                    nuevaTransaccion.Moneda = cuentaCredito.Moneda;
-                    nuevaTransaccion.CuentaMonetaria = new Credito
-                        {
-                            BancoEmisor = cuentaCredito.BancoEmisor,
-                            CreditoDisponible = Monto,
-                            NumeroTarjeta = cuentaCredito.NumeroTarjeta,
-                            FechaCierre = cuentaCredito.FechaCierre,
-                            Moneda = Moneda
-                        };
-                }
-            }
-            if (!string.IsNullOrEmpty(categoriaSeleccionada))
-            {
-                categoria = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault
-                (c => c.Nombre == categoriaSeleccionada) as Categoria;
-                categoria.EstadoActivo = true;
-                categoria.Tipo = TipoCategoria.Costo;
-                categoria.Nombre = categoriaSeleccionada;
-            }
-            nuevaTransaccion.CategoriaTransaccion = categoria;
+	private void GenerarTransaccion()
+	{
+		try
+		{
+			var nuevaTransaccion = new TransaccionCosto();
+			nuevaTransaccion.Titulo = Titulo;
+			nuevaTransaccion.Moneda = Moneda;
+			if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
+			{
+				cuentaAhorro = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Ahorro>().FirstOrDefault
+				(c => c.Nombre == cuentaAhorroSeleccionada);
+				if (cuentaAhorro != null)
+				{
+					nuevaTransaccion.CuentaMonetaria = new Ahorro
+						{
+							Nombre = cuentaAhorro.Nombre,
+							Monto = Monto,
+							Moneda = Moneda
+						};
+				}
+			}
+			else if (!string.IsNullOrEmpty(cuentaCreditoSeleccionada))
+			{
+				cuentaCredito = EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.OfType<Credito>().FirstOrDefault
+				(c => c.BancoEmisor == cuentaCreditoSeleccionada);
+				if (cuentaCredito != null)
+				{
+					nuevaTransaccion.Moneda = cuentaCredito.Moneda;
+					nuevaTransaccion.CuentaMonetaria = new Credito
+						{
+							BancoEmisor = cuentaCredito.BancoEmisor,
+							CreditoDisponible = Monto,
+							NumeroTarjeta = cuentaCredito.NumeroTarjeta,
+							FechaCierre = cuentaCredito.FechaCierre,
+							Moneda = Moneda
+						};
+				}
+			}
+			if (!string.IsNullOrEmpty(categoriaSeleccionada))
+			{
+				categoria = EspacioLogic.FindEspacio(Persistencia.Id).Categorias.FirstOrDefault
+				(c => c.Nombre == categoriaSeleccionada) as Categoria;
+				categoria.EstadoActivo = true;
+				categoria.Tipo = TipoCategoria.Costo;
+				categoria.Nombre = categoriaSeleccionada;
+			}
+			nuevaTransaccion.CategoriaTransaccion = categoria;
 
-            if (IdTransaccion == 0)
-            {
-                nuevaTransaccion.AsignarIdTransaccion();
-                EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
-                {
-                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda,
-                        cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
-                }
-                else
-                {
-                    EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda,
-                        cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
-                }
-            }
+			if (IdTransaccion == 0)
+			{
+				nuevaTransaccion.AsignarIdTransaccion();
+				EspacioLogic.FindEspacio(Id).AgregarTransaccion(nuevaTransaccion);
+			}
+			else
+			{
+				if (!string.IsNullOrEmpty(cuentaAhorroSeleccionada))
+				{
+					EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaAhorro(Titulo, cuentaAhorro.Moneda,
+						cuentaAhorro.Nombre, Monto, categoria, IdTransaccion);
+				}
+				else
+				{
+					EspacioLogic.FindEspacio(Id).ModificarTransaccionCuentaCredito(Titulo, cuentaCredito.Moneda,
+						cuentaCredito.BancoEmisor, Monto, categoria, cuentaCredito.NumeroTarjeta, IdTransaccion);
+				}
+			}
 
-            NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
 
-        }
-        catch (DomainTransaccionException e)
-        {
-            ErrorMsg = e.Message;
-        }
-        catch (DomainCategoriaException e)
-        {
-            ErrorMsg = e.Message;
-        }
-        catch (DomainCuentaException e)
-        {
-            ErrorMsg = e.Message;
-        }
-        catch (Exception e)
-        {
-            ErrorMsg = e.Message;
-        }
-    }
+		}
+		catch (Exception e)
+		{
+			ErrorMsg = e.Message;
+		}
+	}
 }

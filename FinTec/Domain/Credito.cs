@@ -16,7 +16,7 @@
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainCuentaException("El banco emisor no puede ser vacío");
+					throw new DomainEspacioException("El banco emisor no puede ser vacío");
 				}
 				_bancoEmisor = value;
 			}
@@ -31,15 +31,15 @@
 			{
 				if(!CaracterEsNumero(value))
 				{
-					throw new DomainCuentaException("El número de tarjeta debe ser numérico");
+					throw new DomainEspacioException("El número de tarjeta debe ser numérico");
 				}
 				if (value.Length < 4)
 				{
-					throw new DomainCuentaException("El número de tarjeta no puede tener menos de 4 caracteres");
+					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
 				}
 				if (value.Length > 4)
 				{
-					throw new DomainCuentaException("El número de tarjeta no puede tener menos de 4 caracteres");
+					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
 				}
 				_numeroTarjeta = value;
 			}
@@ -54,7 +54,7 @@
 			{
 				if (value <= 0)
 				{
-					throw new DomainCuentaException("El crédito inicial disponible no puede ser menor a cero.");
+					throw new DomainEspacioException("El crédito inicial disponible no puede ser menor a cero.");
 				}
 				_creditoDisponible = value;
 			}
