@@ -201,41 +201,5 @@ namespace Domain
 			}
 			modificada.Modificar(modificacion);
 		}
-
-		public void ModificarTransaccionCuentaCredito(string Titulo, TipoCambiario Moneda, string BancoEmisor, double Monto,
-			Categoria categoria, string NumeroTarjeta, int id)
-        {
-            Transaccion transaccionAModificar = Transacciones.Find(t => t.IdTransaccion == id);
-            if (transaccionAModificar == null)
-                throw new DomainEspacioException("No existe la transaccion");
-            transaccionAModificar.Titulo = Titulo;
-            transaccionAModificar.Moneda = Moneda;
-			transaccionAModificar.CategoriaTransaccion = categoria;
-            transaccionAModificar.CuentaMonetaria = new Credito
-            {
-                BancoEmisor = BancoEmisor,
-                CreditoDisponible = Monto,
-                NumeroTarjeta = NumeroTarjeta,
-				FechaCierre = transaccionAModificar.FechaTransaccion,
-				Moneda = Moneda
-            };
-        }
-
-        public void ModificarTransaccionCuentaAhorro(string Titulo, TipoCambiario Moneda, string Nombre, double Monto,
-			Categoria categoria, int id)
-        {
-            Transaccion transaccionAModificar = Transacciones.Find(t => t.IdTransaccion == id);
-            if (transaccionAModificar == null)
-                throw new DomainEspacioException("No existe la transaccion");
-            transaccionAModificar.Titulo = Titulo;
-            transaccionAModificar.Moneda = Moneda;
-            transaccionAModificar.CategoriaTransaccion = categoria;
-            transaccionAModificar.CuentaMonetaria = new Ahorro
-            {
-                Nombre = Nombre,
-                Monto = Monto,
-				Moneda = Moneda
-            };
-        }
     }
 }
