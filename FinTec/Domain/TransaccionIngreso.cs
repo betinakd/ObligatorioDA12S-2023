@@ -24,5 +24,5 @@ namespace Domain
                 _categoria = value;
             }
         }
-    }
+	}
 }

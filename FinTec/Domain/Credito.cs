@@ -81,12 +81,12 @@ namespace Domain
 		}
 		public override void IngresoMonetario(double monto)
 		{
-			CreditoDisponible += monto;
+			_creditoDisponible += monto;
 		}
 
 		public override void EgresoMonetario(double monto)
 		{
-			CreditoDisponible -= monto;
+			_creditoDisponible -= monto;
 		}
 
 		public override void Modificar(Cuenta cuenta)

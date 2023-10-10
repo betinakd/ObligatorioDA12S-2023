@@ -20,9 +20,10 @@ namespace Domain
                 if (value.EstadoActivo == false)
                     throw new DomainEspacioException("La categoria tiene que estar activa");
                 if (value.Tipo != TipoCategoria.Costo)
-                    throw new DomainEspacioException("La categoria tiene que ser de tipo Ingreso");
+                    throw new DomainEspacioException("La categoria tiene que ser de tipo Costo");
                 _categoria = value;
             }
         }
+
     }
 }

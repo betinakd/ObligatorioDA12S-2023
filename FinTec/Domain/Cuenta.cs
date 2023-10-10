@@ -29,7 +29,6 @@
 
 		public override string ToString()
 		{
-			string fecha = DateTime.Now.ToString();
 			string moneda = "";
 			if (Moneda == TipoCambiario.PesosUruguayos)
 			{
@@ -39,7 +38,7 @@
 			{
 				moneda = "Dolar";
 			}
-			return moneda + "\n" + fecha + "\n";
+			return moneda;
 		}
 
 		public virtual void Modificar(Cuenta cuenta)
