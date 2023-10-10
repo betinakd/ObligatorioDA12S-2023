@@ -129,5 +129,13 @@ namespace DomainTest
             transaccion.AsignarIdTransaccion();
             Assert.AreEqual(2, Transaccion._contadorIdTransaccion);          
         }
+
+        [TestMethod]
+        public void Transaccion_Tiene_Fecha()
+        {
+            Transaccion transaccion = new Transaccion();
+            transaccion.FechaTransaccion= new DateTime(2020, 1, 1);
+            Assert.AreEqual(new DateTime(2020, 1, 1), transaccion.FechaTransaccion);
+        }
     }
 }
