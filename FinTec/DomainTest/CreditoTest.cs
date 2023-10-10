@@ -337,5 +337,13 @@ namespace DomainTest
 			credito.Modificar(credito2);
 			Assert.IsTrue(credito.Equals(credito2));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Excepcion_Credito_Tiene_Fecha_Cierre_Menor_Hoy()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.FechaCierre = new System.DateTime(2019, 1, 1);
+		}
 	}
 }
