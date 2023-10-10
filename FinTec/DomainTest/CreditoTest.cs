@@ -88,7 +88,7 @@ namespace DomainTest
 		public void Credito_Tiene_FechaCierre()
 		{
 			Credito cuentaCredito = new Credito();
-			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
+			cuentaCredito.FechaCierre = new System.DateTime(2029, 1, 1);
 		}
 
 		[TestMethod]
@@ -112,8 +112,8 @@ namespace DomainTest
 		public void Obtener_FechaCiere()
 		{
 			Credito cuentaCredito = new Credito();
-			cuentaCredito.FechaCierre = new System.DateTime(2020, 1, 1);
-			Assert.AreEqual(new System.DateTime(2020, 1, 1), cuentaCredito.FechaCierre);
+			cuentaCredito.FechaCierre = new System.DateTime(2029, 1, 1);
+			Assert.AreEqual(new System.DateTime(2029, 1, 1), cuentaCredito.FechaCierre);
 		}
 
 		[TestMethod]
@@ -128,7 +128,7 @@ namespace DomainTest
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
 			};
 			string fechaAhora = System.DateTime.Now.ToString();
-			string resultadoEsperado = "Pesos Uruguayos\n" + fechaAhora + "\n1000\n1234\nMiBanco\n1/1/2025 0:00:00\n";
+			string resultadoEsperado = "Pesos Uruguayos - 1000 - 1234 - MiBanco";
 
 			string resultado = credito.ToString();
 			Assert.AreEqual(resultadoEsperado, resultado);

@@ -32,11 +32,11 @@
 			string moneda = "";
 			if (Moneda == TipoCambiario.PesosUruguayos)
 			{
-				moneda = "Pesos Uruguayos";
+				moneda = "Pesos Uruguayos - ";
 			}
 			else
 			{
-				moneda = "Dolar";
+				moneda = "Dolar - ";
 			}
 			return moneda;
 		}

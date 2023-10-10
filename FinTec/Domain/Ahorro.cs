@@ -54,7 +54,7 @@
 
 		public override string ToString()
 		{
-			return $"{base.ToString()}/n{Nombre}/n {FechaCreacion}/n {Monto}";
+			return $"{base.ToString()}{Nombre} - {Monto}";
 		}
 
 		public override bool Equals(object? obj)

@@ -100,7 +100,7 @@ namespace Domain
 		public override string ToString()
 		{
 			string baseString = base.ToString();
-			return $"{baseString}{CreditoDisponible}\n{NumeroTarjeta}\n{BancoEmisor}\n{FechaCierre}\n";
+			return $"{baseString}{CreditoDisponible} - {NumeroTarjeta} - {BancoEmisor}";
 		}
 		public override bool Equals(object? obj)
 		{

@@ -60,7 +60,7 @@ namespace DomainTest
 			Cuenta cuenta = new Cuenta();
 			cuenta.Moneda = TipoCambiario.PesosUruguayos;
 			string fecha = DateTime.Now.ToString();
-			Assert.AreEqual(cuenta.ToString(), "Pesos Uruguayos\n" + fecha+ "\n");
+			Assert.AreEqual(cuenta.ToString(), "Pesos Uruguayos - ");
 		}
 
 		[TestMethod]
@@ -69,7 +69,7 @@ namespace DomainTest
 			Cuenta cuenta = new Cuenta();
 			cuenta.Moneda = TipoCambiario.Dolar;
 			string fecha = DateTime.Now.ToString();
-			Assert.AreEqual(cuenta.ToString(), "Dolar\n" + fecha + "\n");
+			Assert.AreEqual(cuenta.ToString(), "Dolar - ");
 		}
 
 		[TestMethod]
