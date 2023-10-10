@@ -24,6 +24,9 @@
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 							Monto Acumulado
 						</th>
+						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Cumple Objetivo
+						</th>
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
@@ -31,7 +34,7 @@
 					{
 						<tr>
 							<td class="px-6 py-4 whitespace-nowrap">
-								@objetivo.Objetivo
+								@objetivo.Objetivo.Titulo
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap">
 								@objetivo.MontoEsperado
@@ -39,6 +42,9 @@
 							<td class="px-6 py-4 whitespace-nowrap">
 								@objetivo.MontoAcumulado
 							</td>
+							<td class="px-6 py-4 whitespace-nowrap">
+								@CumpleMonto(objetivo)
+						</td>
 						</tr>
 					}
 				</tbody>
@@ -52,6 +58,16 @@
 	public string ErrorMsg { get; set; }
 	public Espacio espacio { get; set; }
 	public List<ObjetivoGasto> objetivosDeGasto { get; set; }
+	public string CumpleMonto(ObjetivoGasto og)
+	{
+		if (og.MontoCumpido())
+		{
+			return "Monto Cumplido";
+		} else
+		{
+			return "Monto Incumplido";
+		}
+	}
 
 	protected override void OnInitialized()
 	{
