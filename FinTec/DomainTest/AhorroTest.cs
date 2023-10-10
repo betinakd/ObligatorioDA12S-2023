@@ -35,7 +35,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Cuenta_Tiene_Monto_Decimal() { 
+		public void Cuenta_Tiene_Monto_Decimal()
+		{
 			double monto = 100.01;
 			cuentaAhorro.Monto = monto;
 			Assert.AreEqual(monto, cuentaAhorro.Monto);
@@ -56,7 +57,7 @@ namespace DomainTest
 			cuentaAhorro.Nombre = "CuentaAhorroPrueba";
 			cuentaAhorro.Monto = 100.01;
 			Cuenta cuenta = cuentaAhorro;
-			Assert.AreEqual(cuenta.ToString() , cuentaAhorro.ToString());
+			Assert.AreEqual(cuenta.ToString(), cuentaAhorro.ToString());
 		}
 
 		[TestMethod]
@@ -118,7 +119,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Modificar_Cuenta_Ahorro() {
+		public void Modificar_Cuenta_Ahorro()
+		{
 			var cuenta = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
@@ -133,6 +135,32 @@ namespace DomainTest
 			};
 			cuenta.Modificar(modificacion);
 			Assert.AreEqual(cuenta.Nombre, modificacion.Nombre);
+		}
+
+		[TestMethod]
+		public void Egreso_Monetario_Valido()
+		{
+			Ahorro cuenta = new Ahorro()
+			{
+
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01
+			};
+			cuenta.EgresoMonetario(100.01);
+			Assert.AreEqual(cuenta.Monto, 0);
+		}
+
+		[TestMethod]
+		public void Ingreso_Monetario_Valido()
+		{
+			Ahorro cuenta = new Ahorro()
+			{
+
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01
+			};
+			cuenta.IngresoMonetario(100.01);
+			Assert.AreEqual(cuenta.Monto, 200.02);
 		}
 	}
 }
