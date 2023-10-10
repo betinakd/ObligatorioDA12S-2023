@@ -27,7 +27,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainCuentaException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_CuentaAhorro_Tiene_Nombre_Vacio()
 		{
 			string nombre = "";
@@ -42,7 +42,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainCuentaException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_CuentaAhorro_Monto_Negativo()
 		{
 			double monto = -100.01;

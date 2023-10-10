@@ -20,7 +20,7 @@ namespace Domain
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new DomainObjetivoException("El titulo es requerido");
+                    throw new DomainEspacioException("El titulo es requerido");
                 _titulo = value;
             }
         }
@@ -33,7 +33,7 @@ namespace Domain
 			set
             {
 				if (value <= 0)
-					throw new DomainObjetivoException("El monto máximo debe ser mayor a 0.");
+					throw new DomainEspacioException("El monto máximo debe ser mayor a 0.");
 				_montoMaximo = value;
 			}
 		}
@@ -45,7 +45,7 @@ namespace Domain
             set
             {
                 if (value == null || value.Count == 0 )
-					throw new DomainObjetivoException("Debe seleccionar al menos una categoría.");
+					throw new DomainEspacioException("Debe seleccionar al menos una categoría.");
 				_categorias = value;
             }
         }

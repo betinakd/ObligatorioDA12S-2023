@@ -27,7 +27,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DomainTransaccionException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Titulo_Transaccion_Vacio()
         {
             var transaccion = new Transaccion();
@@ -52,7 +52,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DomainTransaccionException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Monto_Mayor_Cero() 
         {
             var transaccion = new Transaccion();
@@ -92,7 +92,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DomainTransaccionException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Categoria_Inactiva_Transaccion()
         {
             var transaccion = new Transaccion();
@@ -104,7 +104,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DomainTransaccionException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Tipo_Moneda_Distinto_Cuenta()
         {
             var transaccion = new Transaccion();

@@ -100,7 +100,7 @@ namespace DomainTest
 		}
 
         [TestMethod]
-        [ExpectedException(typeof(DomainCambioException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Valor_Moneda_PesosUy_Negativo()
         {
 			var tipoDeCambio = new Cambio();

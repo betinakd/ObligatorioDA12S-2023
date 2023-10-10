@@ -15,7 +15,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainCategoriaException("El nombre de la categoría no puede ser vacío");
+					throw new DomainEspacioException("El nombre de la categoría no puede ser vacío");
 				}
 				_nombre = value;
 			}

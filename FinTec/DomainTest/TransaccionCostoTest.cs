@@ -11,7 +11,7 @@ namespace DomainTest
     public class TransaccionCostoTest
     {
         [TestMethod]
-        [ExpectedException(typeof(DomainTransaccionException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Tipo_Categoria_Distinto_TransaccionC()
         {
             var transaccion = new TransaccionCosto();
@@ -23,7 +23,7 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DomainTransaccionException))]
+        [ExpectedException(typeof(DomainEspacioException))]
         public void Categoria_Inactiva_TransaccionC()
         {
             var transaccion = new TransaccionCosto();

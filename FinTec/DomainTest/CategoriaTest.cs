@@ -28,14 +28,14 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainCategoriaException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_Categoria_Tiene_Nombre_Nulo()
 		{
 			categoria.Nombre = null;
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainCategoriaException))]
+		[ExpectedException(typeof(DomainEspacioException))]
 		public void Excepcion_Categoria_Tiene_Nombre_Vacio()
 		{
 			categoria.Nombre = "";
