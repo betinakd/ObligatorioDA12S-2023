@@ -1315,7 +1315,8 @@ namespace DomainTest
         }
 
         [TestMethod]
-        public void ReporteGastosTarjeta_CuentaExpirada()
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void ReporteGastosTarjeta_CuentaExpirada()
         {
             var _reporte = new Reporte();
             Espacio _miEspacio = new Espacio();
@@ -1352,7 +1353,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion1);
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
-            Assert.IsTrue(toAnalize.Count == 0);
+            //Assert.IsTrue(toAnalize.First().CategoriaTransaccion == null);
         }
 
         [TestMethod]
