@@ -148,6 +148,8 @@ namespace DomainTest
             Assert.AreEqual(cambioRet, miCambio);
         }
 
+		
+
 		[TestMethod]
 		public void buscarCambioActual_No_Nulo()
 		{
@@ -163,6 +165,24 @@ namespace DomainTest
 			Reporte reporte = new Reporte { MiEspacio = espacio };
 			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
 			Assert.IsNotNull(cambioRet);
+		}
+
+        [TestMethod]
+        public void buscarCambio_Fecha_Otro_Dia()
+        {
+			Espacio espacio = new Espacio();
+			espacio.Admin = new Usuario();
+            DateTime fecha = new DateTime(2023, 10, 10);
+			Cambio miCambio = new Cambio
+			{
+				FechaDeCambio = fecha,
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			espacio.AgregarCambio(miCambio);
+			Reporte reporte = new Reporte { MiEspacio = espacio };
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Assert.IsTrue(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
 		[TestMethod]
