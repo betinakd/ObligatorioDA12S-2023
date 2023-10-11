@@ -92,9 +92,9 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
+	private string ErrorMsg { get; set; }
 	private bool estadoActivo;
-	public Categoria categoriaSelec { get; set; }
+	private Categoria categoriaSelec { get; set; }
 	private bool mostrarModificar = false;
 	string nombreValor { get; set; } = "";
 
@@ -130,9 +130,18 @@
 	{
 		try
 		{
-			categoria.Nombre = nombreValor;
-			LimpiarInputs();
-			mostrarModificar = false;
+			Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+			List<Categoria> categorias = espacio.Categorias;
+			if (!categorias.Any(c => c.Nombre == nombreValor))
+			{
+				categoria.Nombre = nombreValor;
+				mostrarModificar = false;
+				LimpiarInputs();
+			}
+			else
+			{
+				ErrorMsg = "Ya hay categorias con ese nombre.";		
+			}			
 		}
 		catch (DomainEspacioException e)
 		{

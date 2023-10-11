@@ -43,6 +43,6 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
+    private string ErrorMsg { get; set; }
 	private List<Categoria> categoriasSeleccionada;
 }

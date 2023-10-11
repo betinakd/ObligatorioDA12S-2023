@@ -47,12 +47,12 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; } = "";
-	public string BancoEmisor { get; set; } = "";
-	public string NumeroTarjeta { get; set; } = "";
-	public double CreditoDisponible { get; set; } = 0;
-	public TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
-	public DateTime FechaCierre { get; set; } = DateTime.Now;
+	private string ErrorMsg { get; set; } = "";
+	private string BancoEmisor { get; set; } = "";
+	private string NumeroTarjeta { get; set; } = "";
+	private double CreditoDisponible { get; set; } = 0;
+	private TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
+	private DateTime FechaCierre { get; set; } = DateTime.Now;
 
 	private void CrearCuenta()
 	{

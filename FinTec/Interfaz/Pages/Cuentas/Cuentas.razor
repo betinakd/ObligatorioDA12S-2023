@@ -184,10 +184,10 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsgEliminar { get; set; } = "";
-	public string ErrorMsg { get; set; }
-	public string ErrorMsgFecha { get; set; }
-	public string ErrorMsgBancoTarjeta { get; set; }
+	private string ErrorMsgEliminar { get; set; } = "";
+	private string ErrorMsg { get; set; }
+	private string ErrorMsgFecha { get; set; }
+	private string ErrorMsgBancoTarjeta { get; set; }
 	private Cuenta cuentaClickeada { get; set; }
 	private bool mostrarModificar { get; set; } = false;
 	private string inputAhorro { get; set; } = "e";

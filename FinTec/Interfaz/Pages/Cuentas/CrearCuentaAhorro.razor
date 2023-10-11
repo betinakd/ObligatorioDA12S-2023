@@ -35,10 +35,10 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
-	public string Nombre { get; set; } = "";
-	public double Monto { get; set; } = 0;
-	public TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
+	private string ErrorMsg { get; set; }
+	private string Nombre { get; set; } = "";
+	private double Monto { get; set; } = 0;
+	private TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
 
 	private void CrearCuenta()
 	{
