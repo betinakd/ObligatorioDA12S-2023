@@ -311,7 +311,7 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
 			double monto = reporte.SumatoriaIngresos(cuenta, miCambio);
-			Assert.IsTrue(monto != 40);
+			Assert.IsTrue(monto == 40);
 		}
 
 		[TestMethod]
