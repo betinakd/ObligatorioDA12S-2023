@@ -104,10 +104,10 @@
 									@gasto.Moneda
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$@(gasto.Monto * gasto.encontrarCambio(reporte.MiEspacio).Pesos)
+									$@(gasto.Monto * gasto.EncontrarCambio(reporte.MiEspacio).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@gasto.encontrarCambio(reporte.MiEspacio).Pesos - U$D @gasto.Monto
+									@gasto.EncontrarCambio(reporte.MiEspacio).Pesos - U$D @gasto.Monto
 								</td>
 							</tr>
 						} else
