@@ -218,7 +218,53 @@ namespace DomainTest
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
 			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
-			Assert.IsFalse(cambioRet.Equals(espacio.Cambios.First()));
+			Assert.IsTrue(cambioRet.Equals(espacio.Cambios.First()));
+		}
+
+        [TestMethod]
+        public void SumatoriaCostos_Monto_Dolares()
+        {
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Categoria _categoria = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoria);
+			Ahorro _cuenta = new Ahorro
+            {
+                Moneda = TipoCambiario.Dolar,
+                Monto = 200,
+                Nombre = "Nombre Cuenta",
+            };
+			_miEspacio.AgregarCuenta(_cuenta);
+			Transaccion transaccion = new Transaccion
+			{
+				CategoriaTransaccion = _categoria,
+				Monto = 1,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba",
+				CuentaMonetaria = _cuenta,
+			};
+            _miEspacio.AgregarTransaccion(transaccion);
+            Cambio miCambio = new Cambio
+            {
+                FechaDeCambio = DateTime.Today,
+                Moneda = TipoCambiario.Dolar,
+                Pesos = 40,
+            };
+            _miEspacio.AgregarCambio(miCambio);
+			_reporte.MiEspacio = _miEspacio;
+            double monto = _reporte.SumatoriaCostos(_cuenta, miCambio);
+            Assert.IsFalse(monto == 40);
 		}
 
 		[TestMethod]
