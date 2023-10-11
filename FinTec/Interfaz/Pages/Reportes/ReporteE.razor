@@ -113,13 +113,13 @@
 
 	private void generarBalance()
 	{
-		Ahorro cuenta = encontrarCuenta(cuentaActual, cuentas);
+		cuentaBalance = encontrarCuenta(cuentaActual, cuentas);
 		if (cuenta.Nombre != null)
 		{
 			cuentaEncontrada = true;
 			cuentaBalance = cuenta;
 			EncontrarCambio(cuentaBalance);
-			balanceCalculado = reporte.BalanceCuentas(cuenta);
+			balanceCalculado = reporte.BalanceCuentas(cuentaBalance);
 		} else
 		{
 			cuentaEncontrada = false;
