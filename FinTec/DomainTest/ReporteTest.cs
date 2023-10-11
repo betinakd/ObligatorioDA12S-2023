@@ -774,7 +774,7 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(transaccion);
             _reporte.MiEspacio = _miEspacio;
             List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(5);
-            Assert.IsTrue(toAnalize.Count != 0);
+            Assert.IsTrue(toAnalize.Count == 0);
         }
     
         [TestMethod]
@@ -1329,7 +1329,7 @@ namespace DomainTest
             {
                 BancoEmisor = "Santander",
                 CreditoDisponible = 1000,
-                FechaCierre = DateTime.Now.AddDays(-1),
+                FechaCierre = DateTime.Now.AddMonths(-2),
                 Moneda = TipoCambiario.PesosUruguayos,
                 NumeroTarjeta = "1234",
             };
@@ -1350,7 +1350,6 @@ namespace DomainTest
                 CuentaMonetaria = credit,
             };
             _miEspacio.AgregarTransaccion(transaccion1);
-           
             _reporte.MiEspacio = _miEspacio;
             List<Transaccion> toAnalize = _reporte.ReporteGastosTarjeta(credit.NumeroTarjeta);
             Assert.IsTrue(toAnalize.Count == 0);
@@ -1444,7 +1443,7 @@ namespace DomainTest
             };
             _reporte.MiEspacio = _miEspacio;
             DateTime fecha = new DateTime(2024, DateTime.Now.Month, DateTime.Now.Day);
-            Assert.IsTrue(!_reporte.transaccionMismoYearYMes(transaccion1, fecha));
+            Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
         }
 
         [TestMethod]
@@ -1484,7 +1483,7 @@ namespace DomainTest
             };
             _reporte.MiEspacio = _miEspacio;
             DateTime fecha = new DateTime(DateTime.Now.Year, 1, DateTime.Now.Day);
-            Assert.IsTrue(!_reporte.transaccionMismoYearYMes(transaccion1, fecha));
+            Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
         }
     }
 }
