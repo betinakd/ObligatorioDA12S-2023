@@ -68,7 +68,7 @@
 									@transaccion.Titulo
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$ @(transaccion.Monto * transaccion.encontrarCambio(reporte.MiEspacio).Pesos)
+									$ @(transaccion.Monto * transaccion.EncontrarCambio(reporte.MiEspacio).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@transaccion.FechaTransaccion
@@ -80,7 +80,7 @@
 									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@transaccion.encontrarCambio(reporte.MiEspacio).Pesos
+									@transaccion.EncontrarCambio(reporte.MiEspacio).Pesos
 								</td>
 							</tr>
 						} else

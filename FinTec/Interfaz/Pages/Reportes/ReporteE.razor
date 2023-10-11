@@ -99,17 +99,17 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
-	public Espacio espacio { get; set; }
-	public double gastosCategoria { get; set; }
+	private string ErrorMsg { get; set; }
+	private Espacio espacio { get; set; }
+	private double gastosCategoria { get; set; }
 	Reporte reporte { get; set; }
 	Ahorro cuenta { get; set; }
-	public List<Cuenta> cuentas { get; set; }
-	public string cuentaActual { get; set; }
-	public bool cuentaEncontrada = false;
-	public Ahorro cuentaBalance { set; get; }
-	public double balanceCalculado { set; get; }
-	public Cambio cambioActual { get; set; }
+	private List<Cuenta> cuentas { get; set; }
+	private string cuentaActual { get; set; }
+	private bool cuentaEncontrada = false;
+	private Ahorro cuentaBalance { set; get; }
+	private double balanceCalculado { set; get; }
+	private Cambio cambioActual { get; set; }
 
 	private void generarBalance()
 	{
@@ -118,7 +118,7 @@
 		{
 			cuentaEncontrada = true;
 			cuentaBalance = cuenta;
-			encontrarCambio(cuentaBalance);
+			EncontrarCambio(cuentaBalance);
 			balanceCalculado = reporte.BalanceCuentas(cuenta);
 		} else
 		{
@@ -142,7 +142,7 @@
 		return cuentaRet;
 	}
 
-	private void encontrarCambio(Ahorro cuenta)
+	private void EncontrarCambio(Ahorro cuenta)
 	{
 		Cambio cambioRet = new Cambio();
 		foreach (Cambio cambio in reporte.MiEspacio.Cambios)
