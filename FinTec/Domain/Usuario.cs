@@ -74,8 +74,6 @@ namespace Domain
 			}
 		}
 
-		private const string _patron = @".+\.com$";
-
 		public bool Validar_Contrasena(string contrasena)
 		{
 			if (EsContrasenaMayorATreinta(contrasena))
@@ -101,12 +99,14 @@ namespace Domain
 
 		private bool ContienePuntoCom(string correo)
 		{
+			string _patron = @".+\.com$";
 			return Regex.IsMatch(correo, _patron);
 		}
 
 		private bool ContieneArroba(string correo)
 		{
-			return correo.Contains("@");
+			string patron = @"^.+@.+$";
+			return Regex.IsMatch(correo, patron);
 		}
 
 		private bool SonTodasMinusculas(string contrasena)
