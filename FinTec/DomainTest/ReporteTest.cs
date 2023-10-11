@@ -200,6 +200,24 @@ namespace DomainTest
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
 			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Assert.IsFalse(cambioRet.Equals(espacio.Cambios.First()));
+		}
+
+        [TestMethod]
+        public void buscarCambio_Fecha_Otro_Year()
+        {
+			Espacio espacio = new Espacio();
+			espacio.Admin = new Usuario();
+			DateTime fecha = new DateTime(2022, 10, 11);
+			Cambio miCambio = new Cambio
+			{
+				FechaDeCambio = fecha,
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			espacio.AgregarCambio(miCambio);
+			Reporte reporte = new Reporte { MiEspacio = espacio };
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
 			Assert.IsTrue(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
