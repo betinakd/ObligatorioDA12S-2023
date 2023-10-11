@@ -76,5 +76,35 @@ namespace DomainTest
 			Assert.AreEqual(transaccion1.CategoriaTransaccion, transaccionClon.CategoriaTransaccion);
 			Assert.AreEqual(transaccion1.Monto, transaccionClon.Monto);
 		}
+
+        [TestMethod]
+        public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Valida()
+        {
+            transaccion1.CuentaMonetaria = new Ahorro()
+            {
+                Nombre = "Cuenta1",
+                Moneda = TipoCambiario.Dolar,
+                Monto = 100,
+            };
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DomainEspacioException))]
+        public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Invalida()
+        {
+			transaccion1.CuentaMonetaria = new Ahorro()
+            {
+				Nombre = "Cuenta1",
+				Moneda = TipoCambiario.PesosUruguayos,
+				Monto = 100,
+			};
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Nula()
+		{
+            transaccion1.CuentaMonetaria = null;
+		}
 	}
 }
