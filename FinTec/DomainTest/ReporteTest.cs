@@ -1134,17 +1134,18 @@ namespace DomainTest
 				Moneda = TipoCambiario.Dolar,
 				Titulo = "Transaccion Prueba",
 				CuentaMonetaria = _cuenta,
-                FechaTransaccion = DateTime.Today,
+                //FechaTransaccion = DateTime.Today,
 			};
             Cambio cambio = new Cambio
             {
                 Moneda = TipoCambiario.Dolar,
                 Pesos = 40,
             };
-			_miEspacio.AgregarTransaccion(transaccion);
+            _miEspacio.AgregarCambio(cambio);
+            _miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
 			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
-			Assert.IsTrue(toAnalize.First().MontoUsado == 1);
+			Assert.IsTrue(toAnalize.First().MontoUsado == 40);
 		}
 	
 
