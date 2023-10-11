@@ -84,7 +84,7 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 							Modificar
 						</button>
 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => ClonarTransaccionCosto(transaccion)">
+						@onclick="() => ClonarTransaccion(transaccion)">
 							Clonar
 						</button>
 					</td>
@@ -162,7 +162,7 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 							Modificar
 						</button>
 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => ClonarTransaccionIngreso(transaccion)">
+						@onclick="() => ClonarTransaccion(transaccion)">
 							Clonar
 						</button>
 					</td>
@@ -180,22 +180,15 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; }
 
-	private void ClonarTransaccionCosto(Transaccion transaccion)
+
+	private void ClonarTransaccion(TransaccionIngreso transaccion)
 	{
 		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 		try
 		{
-			var clon = new TransaccionCosto()
-				{
-					Monto = transaccion.Monto,
-					Titulo = transaccion.Titulo,
-					Moneda = transaccion.Moneda,
-					CategoriaTransaccion = transaccion.CategoriaTransaccion,
-					CuentaMonetaria = transaccion.CuentaMonetaria,
-					FechaTransaccion = DateTime.Today,
-				};
-		clon.AsignarIdTransaccion();
-		espacio.AgregarTransaccion(clon);
+			var clon = transaccion.ClonTransaccion(transaccion);
+			clon.AsignarIdTransaccion();
+			espacio.Transacciones.Add(clon);
 		}
 		catch (DomainEspacioException ex)
 		{
@@ -203,28 +196,6 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 		}
 	}
 
-	private void ClonarTransaccionIngreso(TransaccionIngreso transaccion)
-	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		try
-		{
-			var clon = new TransaccionIngreso()
-				{
-					Monto = transaccion.Monto,
-					Titulo = transaccion.Titulo,
-					Moneda = transaccion.Moneda,
-					CategoriaTransaccion = transaccion.CategoriaTransaccion,
-					CuentaMonetaria = transaccion.CuentaMonetaria,
-					FechaTransaccion = DateTime.Today,
-				};
-			clon.AsignarIdTransaccion();
-			espacio.AgregarTransaccion(clon);
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
-	}
 	private void ModificarTransaccionIngreso(Transaccion transaccion)
 	{
 		NavigationManager.NavigateTo
