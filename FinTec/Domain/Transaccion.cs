@@ -59,7 +59,7 @@
 			AumentarContadorIdTransaccion();
 		}
 
-		public Cambio encontrarCambio(Espacio espacioActual)
+		public Cambio EncontrarCambio(Espacio espacioActual)
 		{
 			Cambio toRet = new Cambio();
 			foreach (Cambio cambio in espacioActual.Cambios)
