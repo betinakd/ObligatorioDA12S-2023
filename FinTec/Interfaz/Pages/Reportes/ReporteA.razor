@@ -45,10 +45,10 @@
 								@objetivo.Objetivo.Titulo
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap">
-								@objetivo.MontoEsperado
+								$ @objetivo.MontoEsperado
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap">
-								@objetivo.MontoAcumulado
+								$ @objetivo.MontoAcumulado
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap">
 								@CumpleMonto(objetivo)
@@ -71,10 +71,10 @@
 	{
 		if (og.MontoCumpido())
 		{
-			return "Monto Cumplido";
+			return "Objetivo cumplido";
 		} else
 		{
-			return "Monto Incumplido";
+			return "Objetivo no cumplido";
 		}
 	}
 

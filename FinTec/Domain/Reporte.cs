@@ -20,11 +20,23 @@
                 bool transaccionesAceptadas = false;
                 foreach (Transaccion t in transacciones)
                 {
-                    if (transaccionEntraObjetivo(o, t) && transaccionMismoYearYMes(t, fechaActual) && transaccionCategoriaCosto(t))
+					Cambio cambio = new Cambio();
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						cambio = t.encontrarCambio(MiEspacio);
+					}
+					if (transaccionEntraObjetivo(o, t) && transaccionMismoYearYMes(t, fechaActual) && transaccionCategoriaCosto(t))
                     {
-                        transaccionesAceptadas = true;
-                        _montoAcumulado += t.Monto;
-                    }
+						transaccionesAceptadas = true;
+						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						{
+							_montoAcumulado += t.Monto * cambio.Pesos;
+						}
+						else
+						{
+							_montoAcumulado += t.Monto;
+						}
+					}
                 }
                 if (transaccionesAceptadas)
                 {
@@ -62,10 +74,21 @@
                 bool transaccionAceptada = false;
                 foreach (Transaccion t in transacciones)
                 {
+					Cambio cambio = new Cambio();
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+                    {
+                        cambio = t.encontrarCambio(MiEspacio);
+                    }
                     if (transaccionMismaCategoria(c, t) && transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
                     {
                         transaccionAceptada = true;
-                        _montoAcumulado += t.Monto;
+                        if (t.Moneda.Equals(TipoCambiario.Dolar))
+                        {
+							_montoAcumulado += t.Monto * cambio.Pesos;
+						} else
+                        {
+                            _montoAcumulado += t.Monto;
+                        }
                     }
                 }
                 if (transaccionAceptada)
@@ -93,10 +116,18 @@
             double montoTotal = 0;
             List<Transaccion> _listTran = MiEspacio.Transacciones;
             foreach(Transaccion t in _listTran)
-            {
-                if (transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
+			{
+				Cambio cambio = new Cambio();
+				if (transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
                 {
-                    montoTotal += t.Monto;
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						cambio = t.encontrarCambio(MiEspacio);
+						montoTotal += t.Monto * cambio.Pesos;
+					} else
+                    {
+                        montoTotal += t.Monto;
+                    }					
                 }
             }
             return montoTotal;
