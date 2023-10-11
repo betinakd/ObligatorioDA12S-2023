@@ -1,14 +1,6 @@
-﻿<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
-@inject NavigationManager NavigationManager;
-@using BussinesLogic;
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
-@page "/registro"
+﻿@page "/registro"
 @layout RegistroLayout
-<PageTitle>FinTec Registro de Usuario</PageTitle>
-
+<PageTitle>FinTrec Registro de Usuario</PageTitle>
 
 <div style="text-align: center; margin-bottom: 3rem;">
 	<TituloFintec TituloVerde="FinTec" TituloNegro="Registro" Subtitulo="Registre su usuario en la app de ahorro mas importante de America Latina" />
@@ -46,7 +38,7 @@
 <div class="mb-4">
 	<BotonVerdeAgua NombreBoton="Registro" ClickIngreso="ClickRegistro" />
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
 @code {
 	public string ErrorMensaje { get; set; } = "";
 	public string Email { get; set; } = "";

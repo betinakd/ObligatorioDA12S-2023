@@ -1,10 +1,4 @@
 ﻿@page "/home/{Id:int}/{Correo}/AgregarTipoCambiario"
-@inject NavigationManager NavigationManager;
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Agregar Tipo Cambiario</PageTitle>
 <TituloRosado Titulo="Agregar Tipo Cambiario" Subtitulo="Agregué un tipo cambiario para el espacio recuerde que no se puede repetir la fecha del mismo."></TituloRosado>
@@ -35,10 +29,10 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; } = "";
-	public string Moneda { get; set; } = "";
-	public double Pesos { get; set; } = 0;
-	public DateTime FechaDeCambio { get; set; } = DateTime.Now;
+	private string ErrorMsg { get; set; } = "";
+	private string Moneda { get; set; } = "";
+	private double Pesos { get; set; } = 0;
+	private DateTime FechaDeCambio { get; set; } = DateTime.Now;
 
 
 	private Cambio nuevoCambio = new Cambio();

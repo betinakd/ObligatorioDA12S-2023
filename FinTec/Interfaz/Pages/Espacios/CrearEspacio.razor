@@ -1,11 +1,4 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearEspacios"
-@inject NavigationManager NavigationManager
-
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Crear Espacio</PageTitle>
 
@@ -20,8 +13,9 @@
 	[Parameter] public string Correo { get; set; }
 	[Parameter] public string inputNombre { get; set; }
 	[Parameter] public string ErrorMsg { get; set; }
-	public List<Espacio> espacios { get; set; } = new List<Espacio>();
-	public Usuario usuario { get; set; } = new Usuario();
+	private List<Espacio> espacios { get; set; } = new List<Espacio>();
+	private Usuario usuario { get; set; } = new Usuario();
+
 	protected override void OnInitialized()
 	{
 		espacios = EspacioLogic.EspaciosByCorreo(Correo);

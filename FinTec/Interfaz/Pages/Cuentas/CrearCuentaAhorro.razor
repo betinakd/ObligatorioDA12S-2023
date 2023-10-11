@@ -1,10 +1,4 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCuentaAhorro"
-@inject NavigationManager NavigationManager
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic
-@inject EspacioLogic EspacioLogic
-@inject Persistencia Persistencia
 
 <PageTitle>FinTec Crear Cuenta Ahorro</PageTitle>
 <TituloRosado Titulo="Crear cuenta de Ahorro" Subtitulo="Cree la cuenta de ahorro para el espacio seleccionado, debe tener saldo inicial mayor a 0 y nombre no vacío"></TituloRosado>
@@ -41,10 +35,10 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
-	public string Nombre { get; set; } = "";
-	public double Monto { get; set; } = 0;
-	public TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
+	private string ErrorMsg { get; set; }
+	private string Nombre { get; set; } = "";
+	private double Monto { get; set; } = 0;
+	private TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
 
 	private void CrearCuenta()
 	{

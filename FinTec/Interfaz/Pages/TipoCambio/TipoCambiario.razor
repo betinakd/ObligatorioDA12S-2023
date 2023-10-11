@@ -1,10 +1,4 @@
 ﻿@page "/home/{Id:int}/{Correo}/TipoCambiario"
-@inject NavigationManager NavigationManager;
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Tipo Cambiario</PageTitle>
 <TituloRosado Titulo="Tipo Cambiario del espacio." Subtitulo="Aquí encontrar los tipos cambiarios disponibles para el espacio."></TituloRosado>
@@ -80,9 +74,9 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; }
-	public double inputValor { get; set; }
-	public bool modificarValor { get; set; } = false;
+	private string ErrorMsg { get; set; }
+	private double inputValor { get; set; }
+	private bool modificarValor { get; set; } = false;
 	private Cambio cambioEliminar;
 	private Cambio cambioModificar;
 

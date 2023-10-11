@@ -44,7 +44,7 @@ namespace Domain
 				return false;
 			}
 			Categoria cat = (Categoria)obj;
-			return cat.EstadoActivo == EstadoActivo && cat.FechaCreacion == FechaCreacion && cat.Tipo == Tipo && cat.Nombre == Nombre;
+			return cat.Nombre == Nombre;
 		}
 	}
 

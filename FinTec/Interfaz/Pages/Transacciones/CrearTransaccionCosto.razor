@@ -1,10 +1,4 @@
-﻿@inject NavigationManager NavigationManager;
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
-@page "/home/{Id:int}/{Correo}/CrearTransaccionCosto"
+﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionCosto"
 <PageTitle>FinTec Transacción</PageTitle>
 <TituloRosado Titulo="Crear Transacción de Costo" Subtitulo="Cree sus transacciones de costo."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -66,7 +60,7 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public string ErrorMsg { get; set; } = "";
+	private string ErrorMsg { get; set; } = "";
 	private string inputTitulo { get; set; } = "";
 	private double inputMonto { get; set; } = 0;
 	private TipoCambiario inputMoneda { get; set; }

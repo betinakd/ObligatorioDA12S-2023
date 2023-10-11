@@ -1,10 +1,5 @@
-﻿@inject NavigationManager NavigationManager;
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
-@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionIngreso"
+﻿@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionIngreso"
+
 <PageTitle>FinTec Transacción</PageTitle>
 <TituloRosado Titulo="Modificar Transacción de Ingreso" Subtitulo="Modifiqué sus transacciones de ingreso."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -47,7 +42,7 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	[Parameter] public int IdTrans { get; set; }
-	public string ErrorMsg { get; set; } = "";
+	private string ErrorMsg { get; set; } = "";
 	private double inputMonto { get; set; } = 0;
 	private TipoCambiario inputMoneda { get; set; }
 	private string inputCategoria { get; set; }

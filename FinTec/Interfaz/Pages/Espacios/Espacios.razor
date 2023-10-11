@@ -1,10 +1,4 @@
 ﻿@page "/home/{Id:int}/{Correo}/Espacios"
-@inject NavigationManager NavigationManager
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Espacio</PageTitle>
 
@@ -113,9 +107,9 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	public List<Espacio>? espacios { get; set; }
-	public Espacio? espacioClickeado { get; set; }
-	public string? ErrorMsg { get; set; } = "";
+	private List<Espacio>? espacios { get; set; }
+	private Espacio? espacioClickeado { get; set; }
+	private string? ErrorMsg { get; set; } = "";
 	private bool mostrarInput = false;
 	private string inputNombre = string.Empty;
 
