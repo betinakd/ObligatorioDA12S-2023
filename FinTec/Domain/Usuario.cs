@@ -105,7 +105,8 @@ namespace Domain
 
 		private bool ContieneArroba(string correo)
 		{
-			return correo.Contains("@");
+			string patron = @"^.+@.+$";
+			return Regex.IsMatch(correo, patron);
 		}
 
 		private bool SonTodasMinusculas(string contrasena)
