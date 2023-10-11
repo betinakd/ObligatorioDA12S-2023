@@ -80,8 +80,92 @@ namespace DomainTest
             List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
             Assert.IsTrue(ret.Count == 1);
         }
-    
+
+		[TestMethod]
+		public void ReporteObjetivosGastos_En_Dolares()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Categoria _categoria = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoria);
+			Cuenta _cuenta = new Cuenta();
+            Cambio miCambio = new Cambio
+            {
+                FechaDeCambio = DateTime.Today,
+                Moneda = TipoCambiario.Dolar,
+                Pesos = 40,
+            };
+			_miEspacio.AgregarCuenta(_cuenta);
+			Transaccion transaccion = new Transaccion
+			{
+				CategoriaTransaccion = _categoria,
+				Monto = 10,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba",
+				CuentaMonetaria = _cuenta,
+			};
+			_miEspacio.AgregarTransaccion(transaccion);
+			List<Categoria> _listCat = new List<Categoria>();
+			_listCat.Add(_categoria);
+			Objetivo _objetivo = new Objetivo
+			{
+				Categorias = _listCat,
+				MontoMaximo = 100,
+				Titulo = "Menos gastos",
+			};
+			_miEspacio.AgregarObjetivo(_objetivo);
+			_reporte.MiEspacio = _miEspacio;
+			List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
+			Assert.IsTrue(ret.Count == 1);
+		}
+
+
         [TestMethod]
+        public void buscarCambioActual_Equals() 
+        {
+            Espacio espacio = new Espacio();
+            espacio.Admin = new Usuario();
+            Cambio miCambio = new Cambio
+            {
+                FechaDeCambio = DateTime.Today,
+                Moneda = TipoCambiario.Dolar,
+                Pesos = 40,
+            };
+            espacio.AgregarCambio(miCambio);
+			Reporte reporte = new Reporte { MiEspacio = espacio };
+            Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+            Assert.AreNotEqual(cambioRet, miCambio);
+        }
+
+		[TestMethod]
+		public void buscarCambioActual_No_Nulo()
+		{
+			Espacio espacio = new Espacio();
+			espacio.Admin = new Usuario();
+			Cambio miCambio = new Cambio
+			{
+				FechaDeCambio = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			espacio.AgregarCambio(miCambio);
+			Reporte reporte = new Reporte { MiEspacio = espacio };
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Assert.IsNotNull(cambioRet);
+		}
+
+		[TestMethod]
         public void ReporteObjetivoGasto_Mismo_ObjetivoGasto()
         {
             var _reporte = new Reporte();
