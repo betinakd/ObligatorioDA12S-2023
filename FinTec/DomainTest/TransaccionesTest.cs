@@ -156,7 +156,7 @@ namespace DomainTest
 				Titulo = "hola",
 			};
 			Cambio cambio1 = transaccion.EncontrarCambio(espacio);
-			Assert.AreNotEqual(cambio1, cambio);
+			Assert.AreEqual(cambio1, cambio);
 		}
 	}
 }
