@@ -38,7 +38,56 @@ namespace DomainTest
             Assert.IsTrue(_reporteGastos.Count == 0);
         }
 
-        [TestMethod]
+		[TestMethod]
+		public void ReporteObjetivosGastos_Dolares()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Categoria _categoria = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoria);
+            Cambio cambio = new Cambio
+            {
+                Moneda = TipoCambiario.Dolar,
+                Pesos = 40,
+            };
+            _miEspacio.AgregarCambio(cambio);
+			Cuenta _cuenta = new Cuenta { Moneda = TipoCambiario.Dolar };
+			_miEspacio.AgregarCuenta(_cuenta);
+			Transaccion transaccion = new Transaccion
+			{
+				CategoriaTransaccion = _categoria,
+				Monto = 10,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba",
+				CuentaMonetaria = _cuenta,
+			};
+			_miEspacio.AgregarTransaccion(transaccion);
+			List<Categoria> _listCat = new List<Categoria>();
+			_listCat.Add(_categoria);
+			Objetivo _objetivo = new Objetivo
+			{
+				Categorias = _listCat,
+				MontoMaximo = 100,
+				Titulo = "Menos gastos",
+			};
+			_miEspacio.AgregarObjetivo(_objetivo);
+			_reporte.MiEspacio = _miEspacio;
+			List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
+			Assert.IsTrue(ret.First().MontoAcumulado != 400);
+		}
+
+		[TestMethod]
         public void ReporteObjetivosGastos_No_Vacio()
         {
             var _reporte = new Reporte();
