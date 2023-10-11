@@ -1,15 +1,5 @@
-﻿@inject NavigationManager NavigationManager
-
-@using BussinesLogic;
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
-@page "/"
+﻿@page "/"
 @layout LoginLayout
-
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet" />
 
 <PageTitle>FinTec Ingreso de Usuario</PageTitle>
 
@@ -52,7 +42,6 @@
 		<BotonVerdeAgua NombreBoton="Ingreso" ClickIngreso="ClickLogin" />
 	</div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
 
 @code {
 	public string Correo { get; set; } = "";
@@ -102,12 +91,9 @@
 		try
 		{
 			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Correo, Password);
-			ErrorMsg = "Usuario Correcto";
 			NavigationManager.NavigateTo($"/home/{usuarioLogeado.IdEspacioPrincipal}/{usuarioLogeado.Correo}");
 			Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
 			Persistencia.Correo = usuarioLogeado.Correo;
-			Console.WriteLine(Persistencia.Correo);
-
 		}
 		catch (BussinesLogicUsuarioException e)
 		{
