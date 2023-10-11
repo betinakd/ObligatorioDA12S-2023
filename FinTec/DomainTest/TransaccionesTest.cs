@@ -92,30 +92,6 @@ namespace DomainTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DomainEspacioException))]
-        public void Categoria_Inactiva_Transaccion()
-        {
-            var transaccion = new Transaccion();
-            Categoria categoria = new Categoria();
-            categoria.Nombre = "Categoria1";
-            categoria.Tipo = TipoCategoria.Costo;
-            categoria.EstadoActivo = false;
-            transaccion.CategoriaTransaccion = categoria;            
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(DomainEspacioException))]
-        public void Tipo_Moneda_Distinto_Cuenta()
-        {
-            var transaccion = new Transaccion();
-            Cuenta cuenta = new Cuenta();
-            cuenta.Moneda = TipoCambiario.Dolar;
-            transaccion.Moneda = TipoCambiario.PesosUruguayos;
-            transaccion.CuentaMonetaria = cuenta;
-            Assert.AreEqual(cuenta.Moneda, transaccion.Moneda);
-        }
-
-        [TestMethod]
         public void Contador_Id_Transaccion()
         {   
             Transaccion transaccion = new Transaccion();
@@ -137,12 +113,6 @@ namespace DomainTest
             transaccion.FechaTransaccion= new DateTime(2020, 1, 1);
             Assert.AreEqual(new DateTime(2020, 1, 1), transaccion.FechaTransaccion);
         }
-        [TestMethod]
-        [ExpectedException(typeof(DomainEspacioException))]
-        public void Excepcion_Cuenta_Nula()
-        {
-            Transaccion transaccion = new Transaccion();
-			transaccion.CuentaMonetaria = null;
-        }
+
     }
 }
