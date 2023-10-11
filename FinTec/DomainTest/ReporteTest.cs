@@ -211,7 +211,7 @@ namespace DomainTest
 			DateTime fecha = new DateTime(2022, 10, 11);
 			Cambio miCambio = new Cambio
 			{
-				FechaDeCambio = fecha,
+				//FechaDeCambio = fecha,
 				Moneda = TipoCambiario.Dolar,
 				Pesos = 40,
 			};
@@ -405,7 +405,7 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
 			double monto = reporte.Calcular_MontoTotal(10);
-			Assert.IsTrue(40 != monto);
+			Assert.IsTrue(40 == monto);
 		}
 
 		[TestMethod]
@@ -1103,8 +1103,52 @@ namespace DomainTest
             List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(5);
             Assert.IsTrue(toAnalize.Count == 0);
         }
-    
+
         [TestMethod]
+		public void ReporteGastosCategoriaPorMes_Dolares()
+        {
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Categoria _categoria = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoria);
+            Ahorro _cuenta = new Ahorro
+            {
+                Moneda = TipoCambiario.Dolar,
+            };
+			_miEspacio.AgregarCuenta(_cuenta);
+			Transaccion transaccion = new Transaccion
+			{
+				CategoriaTransaccion = _categoria,
+				Monto = 1,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba",
+				CuentaMonetaria = _cuenta,
+                FechaTransaccion = DateTime.Today,
+			};
+            Cambio cambio = new Cambio
+            {
+                Moneda = TipoCambiario.Dolar,
+                Pesos = 40,
+            };
+			_miEspacio.AgregarTransaccion(transaccion);
+			_reporte.MiEspacio = _miEspacio;
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			Assert.IsTrue(toAnalize.First().MontoUsado == 1);
+		}
+	
+
+		[TestMethod]
         public void ReporteCategoriaPorMes_Misma_CategoriaGasto()
         {
             var _reporte = new Reporte();
