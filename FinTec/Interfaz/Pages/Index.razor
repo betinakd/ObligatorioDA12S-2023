@@ -54,38 +54,6 @@
 		Password = "";
 	}
 
-	protected override void OnInitialized()
-	{
-		try
-		{
-			Usuario test = new Usuario()
-				{
-					Nombre = "Hola",
-					Apellido = "Hola",
-					Correo = "hola@gmail.com",
-					Contrasena = "HOLAhola123",
-					Direccion = "Hola"
-				};
-			UsuarioLogic.AddUsuario(test);
-
-
-			Espacio espacio = new Espacio()
-				{
-					Nombre = $"Espacio Principal {test.Nombre}",
-					Admin = test,
-
-
-				};
-			test.IdEspacioPrincipal = espacio.Id;
-			EspacioLogic.AddEspacio(espacio);
-			espacio.AsignarId();
-			test.IdEspacioPrincipal = espacio.Id;
-		}
-		catch (Exception e)
-		{
-
-		}
-	}
 	public void ClickLogin()
 	{
 		try
