@@ -129,7 +129,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void EncontrarCambio()
+		public void EncontrarCambio_Otra_Fecha()
 		{
 			Espacio espacio = new Espacio();
 			Cambio cambio = new Cambio
@@ -154,9 +154,10 @@ namespace DomainTest
 				Moneda = TipoCambiario.Dolar,
 				Monto = 1,
 				Titulo = "hola",
+				FechaTransaccion = DateTime.Today.AddDays(-1),
 			};
 			Cambio cambio1 = transaccion.EncontrarCambio(espacio);
-			Assert.AreEqual(cambio1, cambio);
+			Assert.IsTrue(cambio1.FechaDeCambio != transaccion.FechaTransaccion);
 		}
 	}
 }
