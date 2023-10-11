@@ -145,7 +145,7 @@ namespace DomainTest
             espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
             Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
-            Assert.AreNotEqual(cambioRet, miCambio);
+            Assert.AreEqual(cambioRet, miCambio);
         }
 
 		[TestMethod]
