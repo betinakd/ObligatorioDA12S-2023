@@ -232,40 +232,52 @@ namespace DomainTest
 				Correo = "mateo@gmail.com",
 			};
 			_miEspacio.Admin = _admin;
-			Categoria _categoria = new Categoria
+			//DateTime fecha = new DateTime(2022, 10, 11);
+			Cambio miCambio = new Cambio
 			{
-				EstadoActivo = true,
-				Tipo = TipoCategoria.Costo,
-				Nombre = "Una categoria",
-			};
-			_miEspacio.AgregarCategoria(_categoria);
-			Ahorro _cuenta = new Ahorro
-            {
-                Moneda = TipoCambiario.Dolar,
-                Monto = 200,
-                Nombre = "Nombre Cuenta",
-            };
-			_miEspacio.AgregarCuenta(_cuenta);
-			Transaccion transaccion = new Transaccion
-			{
-				CategoriaTransaccion = _categoria,
-				Monto = 1,
+				//FechaDeCambio = fecha,
 				Moneda = TipoCambiario.Dolar,
-				Titulo = "Transaccion Prueba",
-				CuentaMonetaria = _cuenta,
+				Pesos = 40,
 			};
-            _miEspacio.AgregarTransaccion(transaccion);
-            Cambio miCambio = new Cambio
+			_miEspacio.AgregarCambio(miCambio);
+            Ahorro cuenta = new Ahorro
             {
-                FechaDeCambio = DateTime.Today,
+                Monto = 200,
+                Nombre = "cuenta",
                 Moneda = TipoCambiario.Dolar,
-                Pesos = 40,
             };
-            _miEspacio.AgregarCambio(miCambio);
-			_reporte.MiEspacio = _miEspacio;
-            double monto = _reporte.SumatoriaCostos(_cuenta, miCambio);
-            Assert.IsFalse(monto == 40);
+            _miEspacio.AgregarCuenta(cuenta);
+            Categoria categoria = new Categoria
+            {
+                EstadoActivo = true,
+                FechaCreacion = DateTime.Today,
+                Nombre = "nombreCar",
+                Tipo = TipoCategoria.Costo,
+            };
+            _miEspacio.AgregarCategoria(categoria);
+            Transaccion t = new Transaccion
+            {
+                CategoriaTransaccion = categoria,
+                CuentaMonetaria = cuenta,
+                FechaTransaccion = DateTime.Today,
+                Moneda = TipoCambiario.Dolar,
+                Monto = 1,
+                Titulo = "transaccion",
+            };
+            _miEspacio.AgregarTransaccion(t);
+            Reporte reporte = new Reporte { MiEspacio = _miEspacio };
+            double monto = reporte.SumatoriaCostos(cuenta, miCambio);
+            Assert.IsTrue(monto != 40);
 		}
+
+        [TestMethod]
+        public void AAAAAAAAAAAA()
+        {
+            Cambio aaa = new Cambio();
+            Espacio espacio = new Espacio();
+            espacio.AgregarCambio(aaa);
+            Assert.IsTrue(true);
+        }
 
 		[TestMethod]
         public void ReporteObjetivoGasto_Mismo_ObjetivoGasto()
