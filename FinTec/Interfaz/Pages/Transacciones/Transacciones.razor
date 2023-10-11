@@ -1,10 +1,4 @@
 ﻿@page "/home/{Id:int}/{Correo}/Transacciones"
-@inject NavigationManager NavigationManager;
-@using BussinesLogic
-@using Domain
-@inject UsuarioLogic UsuarioLogic;
-@inject EspacioLogic EspacioLogic;
-@inject Persistencia Persistencia;
 
 <PageTitle>FinTec Transacciones</PageTitle>
 <TituloRosado Titulo="Transacciones del espacio" Subtitulo="Listado con las transacciones realizadas en el espacio actual."></TituloRosado>
@@ -84,7 +78,7 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 							Modificar
 						</button>
 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => ClonarTransaccion(transaccion)">
+						@onclick="() => ClonarTransaccionCosto(transaccion)">
 							Clonar
 						</button>
 					</td>
@@ -162,7 +156,7 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 							Modificar
 						</button>
 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => ClonarTransaccion(transaccion)">
+						@onclick="() => ClonarTransaccionIngreso(transaccion)">
 							Clonar
 						</button>
 					</td>
@@ -181,7 +175,22 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 	private string ErrorMsg { get; set; }
 
 
-	private void ClonarTransaccion(TransaccionIngreso transaccion)
+	private void ClonarTransaccionIngreso(TransaccionIngreso transaccion)
+	{
+		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+		try
+		{
+			var clon = transaccion.ClonTransaccion(transaccion);
+			clon.AsignarIdTransaccion();
+			espacio.Transacciones.Add(clon);
+		}
+		catch (DomainEspacioException ex)
+		{
+			ErrorMsg = ex.Message;
+		}
+	}
+
+	private void ClonarTransaccionCosto(TransaccionCosto transaccion)
 	{
 		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 		try
