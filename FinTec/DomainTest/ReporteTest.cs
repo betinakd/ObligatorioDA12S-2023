@@ -232,10 +232,8 @@ namespace DomainTest
 				Correo = "mateo@gmail.com",
 			};
 			_miEspacio.Admin = _admin;
-			//DateTime fecha = new DateTime(2022, 10, 11);
 			Cambio miCambio = new Cambio
 			{
-				//FechaDeCambio = fecha,
 				Moneda = TipoCambiario.Dolar,
 				Pesos = 40,
 			};
@@ -267,17 +265,54 @@ namespace DomainTest
             _miEspacio.AgregarTransaccion(t);
             Reporte reporte = new Reporte { MiEspacio = _miEspacio };
             double monto = reporte.SumatoriaCostos(cuenta, miCambio);
-            Assert.IsTrue(monto != 40);
+            Assert.IsTrue(monto == 40);
 		}
-
-        [TestMethod]
-        public void AAAAAAAAAAAA()
-        {
-            Cambio aaa = new Cambio();
-            Espacio espacio = new Espacio();
-            espacio.AgregarCambio(aaa);
-            Assert.IsTrue(true);
-        }
+		[TestMethod]
+		public void SumatoriaIngresos_Monto_Dolares()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Cambio miCambio = new Cambio
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			_miEspacio.AgregarCambio(miCambio);
+			Ahorro cuenta = new Ahorro
+			{
+				Monto = 200,
+				Nombre = "cuenta",
+				Moneda = TipoCambiario.Dolar,
+			};
+			_miEspacio.AgregarCuenta(cuenta);
+			Categoria categoria = new Categoria
+			{
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Today,
+				Nombre = "nombreCar",
+				Tipo = TipoCategoria.Ingreso,
+			};
+			_miEspacio.AgregarCategoria(categoria);
+			Transaccion t = new Transaccion
+			{
+				CategoriaTransaccion = categoria,
+				CuentaMonetaria = cuenta,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "transaccion",
+			};
+			_miEspacio.AgregarTransaccion(t);
+			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
+			double monto = reporte.SumatoriaIngresos(cuenta, miCambio);
+			Assert.IsTrue(monto != 40);
+		}
 
 		[TestMethod]
         public void ReporteObjetivoGasto_Mismo_ObjetivoGasto()
