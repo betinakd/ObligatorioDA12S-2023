@@ -84,7 +84,7 @@ namespace DomainTest
 			_miEspacio.AgregarObjetivo(_objetivo);
 			_reporte.MiEspacio = _miEspacio;
 			List<ObjetivoGasto> ret = _reporte.ReporteObjetivosDeGastos();
-			Assert.IsTrue(ret.First().MontoAcumulado != 400);
+			Assert.IsTrue(ret.First().MontoAcumulado == 400);
 		}
 
 		[TestMethod]
