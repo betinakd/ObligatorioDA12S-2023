@@ -10,25 +10,25 @@
 <TituloRosado Titulo="Balance de Cuentas" Subtitulo=""></TituloRosado>
 
 <div style="position:relative; right:5%;" class="mt-4">
-	<h3 class="text-lg font-medium mb-2">Objetivos de Gasto</h3>
 	<div style="display:flex; flex-direction:column" class="mt-4">
 		<div style="flex-grow: 1; padding-bottom:15px" class="flex flex-col space-y-2">
 			<label for="cardSelector" class="text-sm font-medium text-gray-500">Seleccione una tarjeta:</label>
 			<select id="cardSelector" name="mes" @bind="cuentaActual">
+				<option value="" selected>Seleccione una Opcion</option>
 				@foreach (Cuenta account in cuentas)
 				{
 					@if (account is Ahorro)
 					{
-						<option value="@(((Ahorro)account).Nombre)"> @(((Ahorro)account).Nombre) - @(((Ahorro)account).Moneda)</option>
+						<option value="@(((Ahorro)account).Nombre)"> @(((Ahorro)account).Nombre) - @(((Ahorro)account).Moneda) </option>
 					}
 				}
 			</select>
 		</div>
-		<a style="position:relative; flex-grow:1; cursor:pointer; width:50%; left:23%;" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" @onclick="generarBalance">Calcular Balance</a>
+		<a style="position:relative; flex-grow:1; cursor:pointer; width:50%; left:23%; align-items:center; justify-content:center; display: flex; font-size: 25px" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" @onclick="generarBalance">Calcular Balance</a>
 	</div>
 	@if (!cuentaEncontrada)
 	{
-		<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
+		<div style="border: solid; border-color: #d4d4d4; width: 22.5%; border-radius:9px; position:relative; align-items:center; justify-content:center; left:37%">
 			<h1 style="padding-left:6px">Seleccione una cuenta disponible.</h1>
 		</div>
 	}
@@ -52,9 +52,7 @@
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@cuentaBalance.Nombre</td>
 					<td class="px-6 py-4">U$D @balanceCalculado</td>
-					<td class="px-6 py-4">
-						@cuentaBalance.Moneda
-					</td>
+					<td class="px-6 py-4">@cuentaBalance.Moneda</td>
 				</tr>
 			</tbody>
 		</table>
@@ -79,9 +77,15 @@
 	private void generarBalance()
 	{
 		Ahorro cuenta = encontrarCuenta(cuentaActual, cuentas);
-		cuentaEncontrada = true;
-		cuentaBalance = cuenta;
-		balanceCalculado = reporte.BalanceCuentas(cuenta);
+		if (cuenta.Nombre != null)
+		{
+			cuentaEncontrada = true;
+			cuentaBalance = cuenta;
+			balanceCalculado = reporte.BalanceCuentas(cuenta);
+		} else
+		{
+			cuentaEncontrada = false;
+		}
 	}
 
 	private Ahorro encontrarCuenta(string nombreCuenta, List<Cuenta> listaCuentas)
