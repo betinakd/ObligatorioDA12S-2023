@@ -358,7 +358,7 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
 			double monto = reporte.BalanceCuentas(cuenta);
-			Assert.IsTrue(80 != monto);
+			Assert.IsTrue(80 == monto);
 		}
 
 		[TestMethod]
