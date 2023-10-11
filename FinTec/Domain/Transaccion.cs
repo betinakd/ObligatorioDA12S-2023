@@ -59,6 +59,19 @@
 			AumentarContadorIdTransaccion();
 		}
 
+		public Cambio encontrarCambio(Espacio espacioActual)
+		{
+			Cambio toRet = new Cambio();
+			foreach (Cambio cambio in espacioActual.Cambios)
+			{
+				if (cambio.FechaDeCambio.Day == FechaTransaccion.Day && cambio.FechaDeCambio.Month == FechaTransaccion.Month && cambio.FechaDeCambio.Year == FechaTransaccion.Year)
+				{
+					toRet = cambio;
+				}
+			}
+			return toRet;
+		}
+
 		public virtual Transaccion ClonTransaccion(Transaccion transaccion)
 		{
 			throw new DomainEspacioException("No implementado");

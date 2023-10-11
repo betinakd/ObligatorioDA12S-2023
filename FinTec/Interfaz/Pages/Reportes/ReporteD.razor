@@ -48,33 +48,39 @@
 							Fecha
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Categoria
+							Moneda
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 							Banco
+						</th>
+						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Valor dolar
 						</th>
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
 					@foreach (Transaccion transaccion in gastosTarjeta)
 					{
-						@if (transaccion.Moneda.Equals(TipoCambiario.Dolar))
+						if (transaccion.Moneda.Equals(TipoCambiario.Dolar))
 						{
 							<tr>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@transaccion.Titulo
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									U$D @transaccion.Monto
+									$ @(transaccion.Monto * transaccion.encontrarCambio(reporte.MiEspacio).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@transaccion.FechaTransaccion
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@transaccion.CategoriaTransaccion.Nombre
+									@transaccion.Moneda - U$D @transaccion.Monto
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap">
+									@transaccion.encontrarCambio(reporte.MiEspacio).Pesos
 								</td>
 							</tr>
 						} else
@@ -90,10 +96,13 @@
 									@transaccion.FechaTransaccion
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@transaccion.CategoriaTransaccion.Nombre
+									@transaccion.Moneda
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap">
+									
 								</td>
 							</tr>
 						}

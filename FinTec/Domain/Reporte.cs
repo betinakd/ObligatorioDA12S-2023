@@ -194,11 +194,21 @@
 
         public double BalanceCuentas(Ahorro account)
         {
-            double saldoCuenta = account.Monto + sumatoriaIngresos(account) - sumatoriaCostos(account);
+            Cambio cambioUtilizado = buscarCambioActual(account.FechaCreacion);
+            double saldoCuenta;
+
+			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
+            {
+                saldoCuenta = account.Monto + sumatoriaIngresos(account, cambioUtilizado) - sumatoriaCostos(account, cambioUtilizado);
+				return saldoCuenta;
+			} else
+            {
+                saldoCuenta = (account.Monto * cambioUtilizado.Pesos) + sumatoriaIngresos(account, cambioUtilizado) - sumatoriaCostos(account, cambioUtilizado);
+            }
             return saldoCuenta;
         }
 
-        public double sumatoriaIngresos(Ahorro account)
+        public double sumatoriaIngresos(Ahorro account, Cambio cambioUtilizado)
         {
             double _montoIngresos = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
@@ -206,7 +216,13 @@
             {
                 if (transaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
                 {
-                    _montoIngresos += t.Monto;
+                    if (t.Moneda.Equals(TipoCambiario.Dolar))
+                    {
+						_montoIngresos += t.Monto * cambioUtilizado.Pesos;
+					} else
+                    {
+						_montoIngresos += t.Monto;
+					}
                 }
             }
             return _montoIngresos;
@@ -222,7 +238,7 @@
             return c1.Equals(c2);
         }
 
-        public double sumatoriaCostos(Ahorro account)
+        public double sumatoriaCostos(Ahorro account, Cambio cambioUtilizado)
         {
             double _montoCostos = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
@@ -230,10 +246,30 @@
             {
                 if (transaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
                 {
-                    _montoCostos += t.Monto;
-                }
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						_montoCostos += t.Monto * cambioUtilizado.Pesos;
+					}
+					else
+					{
+						_montoCostos += t.Monto;
+					}
+				}
             }
             return _montoCostos;
+        }
+
+        public Cambio buscarCambioActual(DateTime fecha)
+        {
+            Cambio cambioRet = new Cambio();
+            foreach (Cambio cambio in MiEspacio.Cambios)
+            {
+                if (cambio.FechaDeCambio.Day == fecha.Day && cambio.FechaDeCambio.Month == fecha.Month && cambio.FechaDeCambio.Year == fecha.Year)
+                {
+                    cambioRet = cambio;
+                }
+            }
+            return cambioRet;
         }
     }
 }

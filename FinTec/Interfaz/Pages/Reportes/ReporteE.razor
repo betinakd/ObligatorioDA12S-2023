@@ -34,28 +34,64 @@
 	}
 	else
 	{
-		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-				<tr>
-					<th scope="col" class="px-6 py-3">
-						Nombre de Cuenta
-					</th>
-					<th scope="col" class="px-6 py-3">
-						Balance Actual
-					</th>
-					<th scope="col" class="px-6 py-3">
-						Moneda
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-					<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@cuentaBalance.Nombre</td>
-					<td class="px-6 py-4">U$D @balanceCalculado</td>
-					<td class="px-6 py-4">@cuentaBalance.Moneda</td>
-				</tr>
-			</tbody>
-		</table>
+		@if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+		{
+			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+					<tr>
+						<th scope="col" class="px-6 py-3">
+							Nombre de Cuenta
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Balance Actual
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Moneda
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Valor dolar
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@cuentaBalance.Nombre</td>
+						<td class="px-6 py-4">$ @balanceCalculado</td>
+						<td class="px-6 py-4">@cuentaBalance.Moneda</td>
+						<td class="px-6 py-4">
+							@if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+							{
+								@cambioActual.Pesos
+							}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		} else
+		{
+			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+					<tr>
+						<th scope="col" class="px-6 py-3">
+							Nombre de Cuenta
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Balance Actual
+						</th>
+						<th scope="col" class="px-6 py-3">
+							Moneda
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@cuentaBalance.Nombre</td>
+						<td class="px-6 py-4">$ @balanceCalculado</td>
+						<td class="px-6 py-4">@cuentaBalance.Moneda</td>
+					</tr>
+				</tbody>
+			</table>
+		}
 	}
 </div>
 
@@ -73,6 +109,7 @@
 	public bool cuentaEncontrada = false;
 	public Ahorro cuentaBalance { set; get; }
 	public double balanceCalculado { set; get; }
+	public Cambio cambioActual { get; set; }
 
 	private void generarBalance()
 	{
@@ -81,6 +118,7 @@
 		{
 			cuentaEncontrada = true;
 			cuentaBalance = cuenta;
+			encontrarCambio(cuentaBalance);
 			balanceCalculado = reporte.BalanceCuentas(cuenta);
 		} else
 		{
@@ -102,6 +140,19 @@
 			}
 		}
 		return cuentaRet;
+	}
+
+	private void encontrarCambio(Ahorro cuenta)
+	{
+		Cambio cambioRet = new Cambio();
+		foreach (Cambio cambio in reporte.MiEspacio.Cambios)
+		{
+			if (cambio.FechaDeCambio.Day == cuenta.FechaCreacion.Day && cambio.FechaDeCambio.Month == cuenta.FechaCreacion.Month && cambio.FechaDeCambio.Year == cuenta.FechaCreacion.Year)
+			{
+				cambioRet = cambio;
+			}
+		}
+		cambioActual = cambioRet;
 	}
 
 	protected override void OnInitialized()
