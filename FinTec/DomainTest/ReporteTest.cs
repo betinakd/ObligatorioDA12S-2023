@@ -361,6 +361,53 @@ namespace DomainTest
 			Assert.IsTrue(80 == monto);
 		}
 
+        [TestMethod]
+		public void CalcularMontoTotal_Dolares()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Cambio miCambio = new Cambio
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			_miEspacio.AgregarCambio(miCambio);
+			Ahorro cuenta = new Ahorro
+			{
+				Monto = 1,
+				Nombre = "cuenta",
+				Moneda = TipoCambiario.Dolar,
+			};
+			_miEspacio.AgregarCuenta(cuenta);
+			Categoria categoria = new Categoria
+			{
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Today,
+				Nombre = "nombreCar",
+				Tipo = TipoCategoria.Costo,
+			};
+			_miEspacio.AgregarCategoria(categoria);
+			Transaccion t = new Transaccion
+			{
+				CategoriaTransaccion = categoria,
+				CuentaMonetaria = cuenta,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "transaccion",
+			};
+			_miEspacio.AgregarTransaccion(t);
+			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
+			double monto = reporte.Calcular_MontoTotal(10);
+			Assert.IsTrue(40 != monto);
+		}
+
 		[TestMethod]
         public void ReporteObjetivoGasto_Mismo_ObjetivoGasto()
         {
