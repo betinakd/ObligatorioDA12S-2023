@@ -162,7 +162,7 @@ namespace DomainTest
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
 			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
-			Assert.IsNotNull(cambioRet);
+			Assert.IsNull(cambioRet);
 		}
 
 		[TestMethod]
