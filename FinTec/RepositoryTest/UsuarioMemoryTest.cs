@@ -1,5 +1,7 @@
 using Domain;
 using Repository;
+using DomainExceptions;
+
 namespace RepositoryTest
 {
     [TestClass]

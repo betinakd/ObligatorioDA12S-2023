@@ -1,5 +1,5 @@
 ﻿using Domain;
-using System.ComponentModel.DataAnnotations;
+using DomainExceptions;
 
 namespace DomainTest
 {

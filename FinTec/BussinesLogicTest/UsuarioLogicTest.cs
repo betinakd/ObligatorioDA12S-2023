@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
+﻿using Domain;
 using Repository;
 using BussinesLogic;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
+using DomainExceptions;
+
 
 namespace BussinesLogicTest
 {

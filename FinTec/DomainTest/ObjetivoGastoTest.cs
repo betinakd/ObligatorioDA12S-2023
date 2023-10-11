@@ -1,5 +1,5 @@
 ﻿using Domain;
-using System;
+using DomainExceptions;
 
 namespace DomainTest
 {

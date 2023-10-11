@@ -1,4 +1,5 @@
-﻿namespace Domain
+﻿using DomainExceptions;
+namespace Domain
 {
 	public class Ahorro : Cuenta
 	{

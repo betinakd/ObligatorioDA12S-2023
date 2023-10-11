@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using DomainExceptions;
 
 namespace Domain
 {
