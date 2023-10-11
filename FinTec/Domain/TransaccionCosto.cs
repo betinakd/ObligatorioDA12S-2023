@@ -36,7 +36,7 @@
 				_categoria = value;
 			}
 		}
-		public virtual Transaccion ClonTransaccion(Transaccion transaccion)
+		public override Transaccion ClonTransaccion(Transaccion transaccion)
 		{
 			var clon = new TransaccionCosto()
 			{
