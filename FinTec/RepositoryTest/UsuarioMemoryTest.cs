@@ -1,6 +1,5 @@
-using Domain;
 using Repository;
-using DomainExceptions;
+using Models.Domain;
 
 namespace RepositoryTest
 {

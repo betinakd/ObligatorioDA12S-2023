@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/AgregarTipoCambiario"
-
+@using Models.Domain
 <PageTitle>FinTrac Agregar Tipo Cambiario</PageTitle>
 <TituloRosado Titulo="Agregar Tipo Cambiario" Subtitulo="Agregué un tipo cambiario para el espacio recuerde que no se puede repetir la fecha del mismo."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -44,7 +44,7 @@
 			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 			Cambio cambio = new Cambio()
 				{
-					Moneda = Domain.TipoCambiario.Dolar,
+					Moneda = Models.Domain.TipoCambiario.Dolar,
 					Pesos = Pesos,
 					FechaDeCambio = FechaDeCambio.Date
 				};

@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BussinesLogic
+﻿namespace BussinesLogic
 {
-    public class BusinessLogicEspacioException : Exception
+    namespace Excepcion
     {
-        public BusinessLogicEspacioException(string message) : base(message)
+        public class BusinessLogicEspacioException : Exception
         {
+            public BusinessLogicEspacioException(string message) : base(message)
+            {
+            }
         }
     }
 }

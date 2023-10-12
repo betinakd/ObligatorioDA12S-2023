@@ -1,5 +1,5 @@
-﻿using Domain;
-using DomainExceptions;
+﻿using Models.Reporte;
+using Models.Domain;
 
 namespace DomainTest
 {

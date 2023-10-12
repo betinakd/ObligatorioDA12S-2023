@@ -17,8 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BussinesLogic\BussinesLogic.csproj" />
-    <ProjectReference Include="..\DomainExceptions\DomainExceptions.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Domain\Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,9 +1,12 @@
-﻿namespace Domain
+﻿namespace BussinesLogic
 {
-	public class BussinesLogicUsuarioException : Exception
+	namespace Excepcion
 	{
-		public BussinesLogicUsuarioException(string message) : base(message)
+		public class BussinesLogicUsuarioException : Exception
 		{
+			public BussinesLogicUsuarioException(string message) : base(message)
+			{
+			}
 		}
 	}
 }

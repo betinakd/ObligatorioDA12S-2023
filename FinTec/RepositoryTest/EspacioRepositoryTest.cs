@@ -1,5 +1,4 @@
-﻿using DomainExceptions;
-using Domain;
+﻿using Models.Domain;
 using Repository;
 
 namespace RepositoryTest
