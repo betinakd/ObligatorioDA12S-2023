@@ -178,11 +178,12 @@
                                 {
                                     DateTime firstDate;
                                     DateTime lastDate;
-                                    if (CuentaVenceEseMes(creditAccount, actualDate))
+									if (CuentaVenceEseMes(creditAccount, actualDate))
                                     {
+                                        DateTime fechaPrueba = new DateTime(2023, 10, 30);
                                         firstDate = new DateTime(creditAccount.FechaCierre.Year, creditAccount.FechaCierre.Month - 1, creditAccount.FechaCierre.Day + 1);
-                                        lastDate = creditAccount.FechaCierre;
-                                        if (TransaccionDentroDelScope(t, firstDate, lastDate))
+										lastDate = creditAccount.FechaCierre;
+										if (TransaccionDentroDelScope(t, firstDate, lastDate))
                                         {
                                             _reporteGastos.Add(t);
                                         }
@@ -245,16 +246,20 @@
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach(Transaccion t in transacciones)
             {
-                if (TransaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
+                if (t.CuentaMonetaria is Ahorro)
                 {
-                    if (t.Moneda.Equals(TipoCambiario.Dolar))
-                    {
-						_montoIngresos += t.Monto * cambioUtilizado.Pesos;
-					} else
-                    {
-						_montoIngresos += t.Monto;
+					if (TransaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
+					{
+						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						{
+							_montoIngresos += t.Monto * cambioUtilizado.Pesos;
+						}
+						else
+						{
+							_montoIngresos += t.Monto;
+						}
 					}
-                }
+				}
             }
             return _montoIngresos;
         }
@@ -275,15 +280,18 @@
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach (Transaccion t in transacciones)
             {
-                if (TransaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
+                if(t.CuentaMonetaria is Ahorro)
                 {
-					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					if (TransaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
 					{
-						_montoCostos += t.Monto * cambioUtilizado.Pesos;
-					}
-					else
-					{
-						_montoCostos += t.Monto;
+						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						{
+							_montoCostos += t.Monto * cambioUtilizado.Pesos;
+						}
+						else
+						{
+							_montoCostos += t.Monto;
+						}
 					}
 				}
             }

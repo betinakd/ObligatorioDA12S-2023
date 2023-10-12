@@ -30,7 +30,10 @@
 			@onchange="UpdateCategoriasSeleccionadas" multiple>
 				@foreach (var categoria in categorias)
 				{
-					<option value="@categoria.Nombre">@categoria.Nombre</option>
+					if (categoria.Tipo.Equals(TipoCategoria.Costo))
+					{
+						<option value="@categoria.Nombre">@categoria.Nombre</option>
+					}
 				}
 			</select>
 		</td>

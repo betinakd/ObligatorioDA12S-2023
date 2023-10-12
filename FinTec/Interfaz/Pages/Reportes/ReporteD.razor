@@ -15,18 +15,15 @@
 		<div style="flex-grow: 1; padding-bottom:15px" class="flex flex-col space-y-2">
 			<label for="cardSelector" class="text-sm font-medium text-gray-500">Seleccione una tarjeta:</label>
 			<select @bind="tarjetaActual" id="cardSelector" name="mes">
-				@foreach (Cuenta account in cuentas)
+				@foreach (string tarjeta in generarListaTarjetas())
 				{
-					@if (account is Credito)
-					{
-						<option value="@(((Credito)account).NumeroTarjeta)"> @(((Credito)account).NumeroTarjeta) - @(((Credito)account).BancoEmisor) </option>
-					}
+					<option value="@tarjeta"> @tarjeta </option>
 				}
 			</select>
 		</div>
 		<a style="position:relative; flex-grow:1; cursor:pointer; width:50%; left:23%; align-items:center; justify-content:center; display: flex; font-size: 25px" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" @onclick="generarReporte">Generar Reporte</a>
 	</div>
-	
+
 	<div class="flex flex-col space-y-2">
 		@if (gastosTarjeta.Count == 0)
 		{
@@ -127,6 +124,23 @@
 	private void generarReporte()
 	{
 		gastosTarjeta = reporte.ReporteGastosTarjeta(tarjetaActual);
+	}
+
+	public List<string> generarListaTarjetas()
+	{
+		List<string> toRet = new List<string>();
+		foreach (Cuenta cuenta in cuentas)
+		{
+			if (cuenta is Credito)
+			{
+				string tarjeta = ((Credito)cuenta).NumeroTarjeta;
+				if (!(toRet.Contains(tarjeta)))
+				{
+					toRet.Add(tarjeta);
+				}
+			}
+		}
+		return toRet;
 	}
 
 	protected override void OnInitialized()

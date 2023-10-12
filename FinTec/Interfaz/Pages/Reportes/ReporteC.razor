@@ -16,15 +16,13 @@
 			<option value="" selected>Seleccione una Opcion</option>
 			@foreach (Categoria categoria in categorias)
 			{
-				@if (categoria.EstadoActivo)
+				@if (categoria.EstadoActivo && categoria.Tipo.Equals(TipoCategoria.Costo))
 				{
 					<option value="@categoria.Nombre">@categoria.Nombre - @categoria.Tipo</option>
 				}
 			}
 		</select>
 	</div>
-
-	<h1>@catElegida</h1>
 
 	<div style="display:flex; flex-direction:row">
 		<div style="flex-grow: 1; padding-bottom:15px; justify-content:flex-start" class="flex flex-col space-y-2">
@@ -53,8 +51,6 @@
 			}
 		</select>
 	</div>
-
-	<h1>@cuentaElegida</h1>
 
 	<a style="position:relative; flex-grow:1; cursor:pointer; width:50%; left:23%; align-items:center; justify-content:center; display: flex; font-size: 25px" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" @onclick="generarLista">Generar Reporte</a>
 
