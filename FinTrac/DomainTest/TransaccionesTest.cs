@@ -1,7 +1,7 @@
 ﻿using Models.Domain;
 using Models.Excepcion;
 
-namespace DomainTest
+namespace ModelsTest
 {
 	[TestClass]
 	public class TransaccionesTest

@@ -1,7 +1,7 @@
 ﻿using Models.Reporte;
 using Models.Domain;
 
-namespace DomainTest
+namespace ModelsTest
 {
     [TestClass]
     public class ObjetivoGastoTest
