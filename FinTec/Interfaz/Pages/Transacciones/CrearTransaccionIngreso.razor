@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionIngreso"
-<PageTitle>FinTec Transacción</PageTitle>
+<PageTitle>FinTrac Transacción</PageTitle>
 <TituloRosado Titulo="Crear Transacción de Ingreso" Subtitulo="Cree sus transacciones de ingreso."></TituloRosado>
 <EspacioActual></EspacioActual>
 
@@ -37,7 +37,10 @@
 				<option value="">Seleccione una Opcion</option>
 				@foreach (var categoria in categorias)
 				{
-					<option value="@categoria.Nombre">@categoria.Nombre</option>
+					if (categoria.Tipo.Equals(TipoCategoria.Ingreso))
+					{
+						<option value="@categoria.Nombre">@categoria.Nombre</option>
+					}
 				}
 			</select>
 		</div>
@@ -100,16 +103,16 @@
 				};
 			espacio.AgregarTransaccion(transaccion);
 			transaccion.AsignarIdTransaccion();
-			if (cuenta is Ahorro)
+			/*if (cuenta is Ahorro)
 			{
 				Ahorro ahorro = (Ahorro)cuenta;
-				ahorro.EgresoMonetario(inputMonto);
+				ahorro.IngresoMonetario(inputMonto);
 			}
 			if (cuenta is Credito)
 			{
 				Credito credito = (Credito)cuenta;
 				credito.IngresoMonetario(inputMonto);
-			}
+			}*/
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}

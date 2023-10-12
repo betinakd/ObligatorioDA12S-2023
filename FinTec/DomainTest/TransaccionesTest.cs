@@ -124,5 +124,36 @@ namespace DomainTest
 			transaccion1.ClonTransaccion(transaccion1);
 		}
 
+		[TestMethod]
+		public void EncontrarCambio_Otra_Fecha()
+		{
+			Espacio espacio = new Espacio();
+			Cambio cambio = new Cambio
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			espacio.AgregarCambio(cambio);
+			Cuenta cuenta = new Cuenta { Moneda = TipoCambiario.Dolar, };
+			espacio.AgregarCuenta(cuenta);
+			Categoria cuategoria = new Categoria 
+			{ 
+				EstadoActivo = true,
+				Nombre = "nombre",
+				Tipo = TipoCategoria.Costo,
+			};
+			espacio.AgregarCategoria(cuategoria);
+			Transaccion transaccion = new Transaccion
+			{
+				CategoriaTransaccion = cuategoria,
+				CuentaMonetaria = cuenta,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "hola",
+				FechaTransaccion = DateTime.Today.AddDays(-1),
+			};
+			Cambio cambio1 = transaccion.EncontrarCambio(espacio);
+			Assert.IsTrue(cambio1.FechaDeCambio != transaccion.FechaTransaccion);
+		}
 	}
 }

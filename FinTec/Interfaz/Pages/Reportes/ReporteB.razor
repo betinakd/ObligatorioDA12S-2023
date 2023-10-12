@@ -1,1 +1,126 @@
-﻿
+﻿@page "/home/{Id:int}/{Correo}/ReporteB"
+@inject NavigationManager NavigationManager;
+@using BussinesLogic
+@using Domain
+@inject UsuarioLogic UsuarioLogic;
+@inject EspacioLogic EspacioLogic;
+@inject Persistencia Persistencia;
+
+<PageTitle>FinTrac Reportes</PageTitle>
+<TituloRosado Titulo="Reporte de gasto por Categoría por mes" Subtitulo=""></TituloRosado>
+<div style="display:flex; flex-direction:column" class="mt-4">
+	<div style="flex-grow: 1; padding-bottom:15px" class="flex flex-col space-y-2">
+		<label for="mesSelector" class="text-sm font-medium text-gray-500">Selecciona un mes:</label>
+		<select id="mesSelector" name="mes" @bind=mesElegido>
+			<option value="1" >Enero</option>
+			<option value="2">Febrero</option>
+			<option value="3">Marzo</option>
+			<option value="4">Abril</option>
+			<option value="5">Mayo</option>
+			<option value="6">Junio</option>
+			<option value="7">Julio</option>
+			<option value="8">Agosto</option>
+			<option value="9">Septiembre</option>
+			<option value="10" selected>Octubre</option>
+			<option value="11">Noviembre</option>
+			<option value="12">Diciembre</option>
+		</select>
+	</div>
+	<a style="position:relative; flex-grow:1; cursor:pointer; width:50%; left:23%; align-items:center; justify-content:center; display: flex; font-size: 25px" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" @onclick="generarReporte">Generar Reporte</a>
+</div>
+<div class="mt-4">
+	<div class="flex flex-col space-y-2">
+		<table class="min-w-full divide-y divide-gray-200">
+			
+
+			@if (gastosCategoria.Count == 0)
+			{
+				<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
+					<h1 style="padding-left:6px">No hay transacciones que permitan esta operacion.</h1>
+				</div>
+
+			}
+			else
+			{
+				<thead class="bg-gray-50">
+					<tr>
+						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Categoria
+						</th>
+						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Monto Usado
+						</th>
+						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Porcentaje Usado
+						</th>
+					</tr>
+				</thead>
+				<tbody class="bg-white divide-y divide-gray-200">
+					@foreach (var categoriaGasto in gastosCategoria)
+					{
+					<tr>
+						<td class="px-6 py-4 whitespace-nowrap">
+							@categoriaGasto.Categoria.Nombre
+						</td>
+						<td class="px-6 py-4 whitespace-nowrap">
+							$@categoriaGasto.MontoUsado
+						</td>
+						<td class="px-6 py-4 whitespace-nowrap">
+							@(categoriaGasto.Porcentaje.ToString("F2"))%
+						</td>
+					</tr>
+					}
+				</tbody>
+			}
+		</table>
+	</div>
+</div>
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+	public Espacio espacio { get; set; }
+	public List<CategoriaGasto> gastosCategoria { get; set; }
+	public Reporte reporte = new Reporte();
+	private int mesSeleccionado = 10; // Valor predeterminado a 10
+	public string mesElegido {
+		get;
+		set;
+	}
+	public int mesEnInt { 
+		get {
+			int mes = int.Parse(mesElegido);
+			return mes; 
+		} 
+	}
+
+	public void generarReporte()
+	{
+		gastosCategoria = reporte.ReporteGastosCategoriaPorMes(mesEnInt);
+	}
+
+	public string formatoPorcentaje(string porcentaje)
+	{
+		if (porcentaje.Length <= 4)
+		{
+			return porcentaje.Substring(0, 4) + "%";
+		} else if (porcentaje.Length == 3)
+		{
+			return porcentaje.Substring(0, 3) + "%";
+		} else
+		{
+			return porcentaje + "%";
+		}
+
+	}
+
+	protected override void OnInitialized()
+	{
+		mesElegido = "10";
+		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+		reporte.MiEspacio = espacio;
+		//gastosCategoria = new List<CategoriaGasto>();
+		gastosCategoria = reporte.ReporteGastosCategoriaPorMes(mesEnInt);
+	}
+}

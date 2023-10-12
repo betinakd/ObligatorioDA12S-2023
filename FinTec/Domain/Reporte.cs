@@ -22,11 +22,23 @@ namespace Domain
                 bool transaccionesAceptadas = false;
                 foreach (Transaccion t in transacciones)
                 {
-                    if (transaccionEntraObjetivo(o, t) && transaccionMismoYearYMes(t, fechaActual) && transaccionCategoriaCosto(t))
+					Cambio cambio = new Cambio();
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						cambio = t.EncontrarCambio(MiEspacio);
+					}
+					if (TransaccionEntraObjetivo(o, t) && TransaccionMismoYearYMes(t, fechaActual) && TransaccionCategoriaCosto(t))
                     {
-                        transaccionesAceptadas = true;
-                        _montoAcumulado += t.Monto;
-                    }
+						transaccionesAceptadas = true;
+						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						{
+							_montoAcumulado += t.Monto * cambio.Pesos;
+						}
+						else
+						{
+							_montoAcumulado += t.Monto;
+						}
+					}
                 }
                 if (transaccionesAceptadas)
                 {
@@ -37,17 +49,17 @@ namespace Domain
             return ret;
         }
 
-        public bool transaccionEntraObjetivo(Objetivo o, Transaccion t)
+        public bool TransaccionEntraObjetivo(Objetivo o, Transaccion t)
         {
             return (o.Categorias.Contains(t.CategoriaTransaccion));
         }
 
-        public bool transaccionMismoYearYMes(Transaccion t, DateTime fecha)
+        public bool TransaccionMismoYearYMes(Transaccion t, DateTime fecha)
         {
             return (t.FechaTransaccion.Month.Equals(fecha.Month)) && (t.FechaTransaccion.Year.Equals(fecha.Year));
         }
 
-        public bool transaccionCategoriaCosto(Transaccion t)
+        public bool TransaccionCategoriaCosto(Transaccion t)
         {
             return (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo));
         }
@@ -61,26 +73,42 @@ namespace Domain
             {
                 double _montoAcumulado = 0;
                 List<Transaccion> transacciones = MiEspacio.Transacciones;
+                bool transaccionAceptada = false;
                 foreach (Transaccion t in transacciones)
                 {
-                    if (transaccionMismaCategoria(c, t) && transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
+					Cambio cambio = new Cambio();
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
                     {
-                        _montoAcumulado += t.Monto;
+                        cambio = t.EncontrarCambio(MiEspacio);
+                    }
+                    if (TransaccionMismaCategoria(c, t) && TransaccionMismoMes(t, mes) && TransaccionCategoriaCosto(t))
+                    {
+                        transaccionAceptada = true;
+                        if (t.Moneda.Equals(TipoCambiario.Dolar))
+                        {
+							_montoAcumulado += t.Monto * cambio.Pesos;
+						} else
+                        {
+                            _montoAcumulado += t.Monto;
+                        }
                     }
                 }
-                double _porcentaje = (_montoAcumulado * 100) / _montoTotal;
-                CategoriaGasto cg = new CategoriaGasto(c, _montoAcumulado, _porcentaje);
-                _reporteGastos.Add(cg);
+                if (transaccionAceptada)
+                {
+					double _porcentaje = (_montoAcumulado * 100) / _montoTotal;
+					CategoriaGasto cg = new CategoriaGasto(c, _montoAcumulado, _porcentaje);
+					_reporteGastos.Add(cg);
+				}
             }
             return _reporteGastos;
         }
 
-        public bool transaccionMismaCategoria(Categoria c, Transaccion t)
+        public bool TransaccionMismaCategoria(Categoria c, Transaccion t)
         {
             return (t.CategoriaTransaccion.Equals(c));
         }
 
-        public bool transaccionMismoMes(Transaccion t, int mes)
+        public bool TransaccionMismoMes(Transaccion t, int mes)
         {
             return (t.FechaTransaccion.Month.Equals(mes));
         }
@@ -90,10 +118,18 @@ namespace Domain
             double montoTotal = 0;
             List<Transaccion> _listTran = MiEspacio.Transacciones;
             foreach(Transaccion t in _listTran)
-            {
-                if (transaccionMismoMes(t, mes) && transaccionCategoriaCosto(t))
+			{
+				Cambio cambio = new Cambio();
+				if (TransaccionMismoMes(t, mes) && TransaccionCategoriaCosto(t))
                 {
-                    montoTotal += t.Monto;
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						cambio = t.EncontrarCambio(MiEspacio);
+						montoTotal += t.Monto * cambio.Pesos;
+					} else
+                    {
+                        montoTotal += t.Monto;
+                    }					
                 }
             }
             return montoTotal;
@@ -138,7 +174,7 @@ namespace Domain
                         List<Transaccion> listaTrans = MiEspacio.Transacciones;
                         foreach(Transaccion t in listaTrans)
                         {
-                            if ((t.CuentaMonetaria is Credito) && MismaCuenta((Credito)t.CuentaMonetaria, creditAccount) && transaccionCategoriaCosto(t))
+                            if ((t.CuentaMonetaria is Credito) && MismaCuenta((Credito)t.CuentaMonetaria, creditAccount) && TransaccionCategoriaCosto(t))
                             {
                                 if (!CuentaVencida(creditAccount, actualDate))
                                 {
@@ -191,25 +227,41 @@ namespace Domain
 
         public double BalanceCuentas(Ahorro account)
         {
-            double saldoCuenta = account.Monto + sumatoriaIngresos(account) - sumatoriaCostos(account);
+            Cambio cambioUtilizado = BuscarCambioActual(account.FechaCreacion);
+            double saldoCuenta;
+
+			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
+            {
+                saldoCuenta = account.Monto + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
+				return saldoCuenta;
+			} else
+            {
+                saldoCuenta = (account.Monto * cambioUtilizado.Pesos) + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
+            }
             return saldoCuenta;
         }
 
-        public double sumatoriaIngresos(Ahorro account)
+        public double SumatoriaIngresos(Ahorro account, Cambio cambioUtilizado)
         {
             double _montoIngresos = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach(Transaccion t in transacciones)
             {
-                if (transaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
+                if (TransaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
                 {
-                    _montoIngresos += t.Monto;
+                    if (t.Moneda.Equals(TipoCambiario.Dolar))
+                    {
+						_montoIngresos += t.Monto * cambioUtilizado.Pesos;
+					} else
+                    {
+						_montoIngresos += t.Monto;
+					}
                 }
             }
             return _montoIngresos;
         }
 
-        public bool transaccionCategoriaIngreso(Transaccion t)
+        public bool TransaccionCategoriaIngreso(Transaccion t)
         {
             return t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso);
         }
@@ -219,18 +271,38 @@ namespace Domain
             return c1.Equals(c2);
         }
 
-        public double sumatoriaCostos(Ahorro account)
+        public double SumatoriaCostos(Ahorro account, Cambio cambioUtilizado)
         {
             double _montoCostos = 0;
             List<Transaccion> transacciones = MiEspacio.Transacciones;
             foreach (Transaccion t in transacciones)
             {
-                if (transaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
+                if (TransaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
                 {
-                    _montoCostos += t.Monto;
-                }
+					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						_montoCostos += t.Monto * cambioUtilizado.Pesos;
+					}
+					else
+					{
+						_montoCostos += t.Monto;
+					}
+				}
             }
             return _montoCostos;
+        }
+
+        public Cambio BuscarCambioActual(DateTime fecha)
+        {
+            Cambio cambioRet = new Cambio();
+            foreach (Cambio cambio in MiEspacio.Cambios)
+            {
+                if (cambio.FechaDeCambio.Day == fecha.Day && cambio.FechaDeCambio.Month == fecha.Month && cambio.FechaDeCambio.Year == fecha.Year)
+                {
+                    cambioRet = cambio;
+                }
+            }
+            return cambioRet;
         }
     }
 }

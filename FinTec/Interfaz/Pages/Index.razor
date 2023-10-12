@@ -1,11 +1,11 @@
 ﻿@page "/"
 @layout LoginLayout
 
-<PageTitle>FinTec Ingreso de Usuario</PageTitle>
+<PageTitle>FinTrac Ingreso de Usuario</PageTitle>
 
-<TituloFintec TituloVerde="FinTec" />
+<TituloFintec TituloVerde="FinTrac" />
 <p class="text-s font-normal text-gray-500 lg:text-s dark:text-gray-400 mb-7">
-	En FinTec, garantizamos que tus ahorros crezcan desde la comodidad de tu hogar.
+	En FinTrac, garantizamos que tus ahorros crezcan desde la comodidad de tu hogar.
 </p>
 
 <label for="input-group-1" class="text-l font-normal text-gray-800 lg:text-l dark:text-gray-300">Email</label>
@@ -54,38 +54,6 @@
 		Password = "";
 	}
 
-	protected override void OnInitialized()
-	{
-		try
-		{
-			Usuario test = new Usuario()
-				{
-					Nombre = "Hola",
-					Apellido = "Hola",
-					Correo = "hola@gmail.com",
-					Contrasena = "HOLAhola123",
-					Direccion = "Hola"
-				};
-			UsuarioLogic.AddUsuario(test);
-
-
-			Espacio espacio = new Espacio()
-				{
-					Nombre = $"Espacio Principal {test.Nombre}",
-					Admin = test,
-
-
-				};
-			test.IdEspacioPrincipal = espacio.Id;
-			EspacioLogic.AddEspacio(espacio);
-			espacio.AsignarId();
-			test.IdEspacioPrincipal = espacio.Id;
-		}
-		catch (Exception e)
-		{
-
-		}
-	}
 	public void ClickLogin()
 	{
 		try
