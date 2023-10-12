@@ -12,7 +12,7 @@
 <div style="position:relative; right:5%;" class="mt-4">
 	<div style="display:flex; flex-direction:column" class="mt-4">
 		<div style="flex-grow: 1; padding-bottom:15px" class="flex flex-col space-y-2">
-			<label for="cardSelector" class="text-sm font-medium text-gray-500">Seleccione una tarjeta:</label>
+			<label for="cardSelector" class="text-sm font-medium text-gray-500">Seleccione una cuenta:</label>
 			<select id="cardSelector" name="mes" @bind="cuentaActual">
 				<option value="" selected>Seleccione una Opcion</option>
 				@foreach (Cuenta account in cuentas)
@@ -59,7 +59,7 @@
 						<td class="px-6 py-4">$ @balanceCalculado</td>
 						<td class="px-6 py-4">@cuentaBalance.Moneda</td>
 						<td class="px-6 py-4">
-							@if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+							$ @if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
 							{
 								@cambioActual.Pesos
 							}

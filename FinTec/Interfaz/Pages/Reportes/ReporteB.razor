@@ -100,21 +100,6 @@
 		gastosCategoria = reporte.ReporteGastosCategoriaPorMes(mesEnInt);
 	}
 
-	public string formatoPorcentaje(string porcentaje)
-	{
-		if (porcentaje.Length <= 4)
-		{
-			return porcentaje.Substring(0, 4) + "%";
-		} else if (porcentaje.Length == 3)
-		{
-			return porcentaje.Substring(0, 3) + "%";
-		} else
-		{
-			return porcentaje + "%";
-		}
-
-	}
-
 	protected override void OnInitialized()
 	{
 		mesElegido = "10";
