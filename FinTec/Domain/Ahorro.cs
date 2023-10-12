@@ -37,15 +37,6 @@
 		public Ahorro()
 		{
 		}
-		/*public virtual void IngresoMonetario(double monto)
-		{
-			_monto+=monto;
-		}
-
-		public virtual void EgresoMonetario(double monto)
-		{
-			_monto -= monto;
-		}*/
 		public override void Modificar(Cuenta cuenta)
 		{
 			Ahorro ahorro = (Ahorro)cuenta;
