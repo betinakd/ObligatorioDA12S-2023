@@ -303,6 +303,22 @@ namespace DomainTest
 
 			Assert.IsFalse(ahorro1.Equals(ahorro2));
 		}
+		[TestMethod]
+		public void Credito_Tiene_IngresoMonetario()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.CreditoDisponible = 5;
+			cuentaCredito.IngresoMonetario(100);
+			Assert.AreEqual(105, cuentaCredito.CreditoDisponible);
+		}
+		[TestMethod]
+		public void Credito_Tiene_EgresoMonetario()
+		{
+			Credito cuentaCredito = new Credito();
+			cuentaCredito.CreditoDisponible = 1000;
+			cuentaCredito.EgresoMonetario(100);
+			Assert.AreEqual(900, cuentaCredito.CreditoDisponible);
+		}
 
 		[TestMethod]
 		public void Ahorro_Equals_Iguales()

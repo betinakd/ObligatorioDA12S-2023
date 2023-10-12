@@ -37,7 +37,17 @@ namespace Domain
 				_bancoEmisor = value;
 			}
 		}
-		public string NumeroTarjeta
+
+		public override void IngresoMonetario(double monto)
+		{
+			_creditoDisponible += monto;
+		}
+		public override void EgresoMonetario(double monto)
+		{
+			_creditoDisponible -= monto;
+		}
+
+	public string NumeroTarjeta
 		{
 			get
 			{

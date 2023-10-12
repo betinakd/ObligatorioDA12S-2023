@@ -232,7 +232,6 @@
 			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
             {
                 saldoCuenta = account.Monto + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
-				return saldoCuenta;
 			} else
             {
                 saldoCuenta = (account.Monto * cambioUtilizado.Pesos) + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);

@@ -99,6 +99,29 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		public void Egreso_Monetario_Valido()
+		{
+			Ahorro cuenta = new Ahorro()
+			{
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01
+			};
+			cuenta.EgresoMonetario(100.01);
+			Assert.AreEqual(cuenta.Monto, 0);
+		}
+		[TestMethod]
+		public void Ingreso_Monetario_Valido()
+		{
+			Ahorro cuenta = new Ahorro()
+			{
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01
+			};
+			cuenta.IngresoMonetario(100.01);
+			Assert.AreEqual(cuenta.Monto, 200.02);
+		}
+
+	[TestMethod]
 		public void Ahorro_Equals_False_Diferente_Nombre()
 		{
 			var credito = new Ahorro

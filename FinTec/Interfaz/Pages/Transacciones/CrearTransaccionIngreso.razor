@@ -103,6 +103,16 @@
 				};
 			espacio.AgregarTransaccion(transaccion);
 			transaccion.AsignarIdTransaccion();
+			if (cuenta is Ahorro)
+			{
+				Ahorro ahorro = (Ahorro)cuenta;
+				ahorro.IngresoMonetario(inputMonto);
+			}
+			if (cuenta is Credito)
+			{
+				Credito credito = (Credito)cuenta;
+				credito.IngresoMonetario(inputMonto);
+			}
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}
