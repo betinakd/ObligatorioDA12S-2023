@@ -231,12 +231,25 @@
 
 			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
             {
-                saldoCuenta = account.Monto + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
+                saldoCuenta = EncontrarMontoInicial(account, cambioUtilizado) + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
 			} else
             {
-                saldoCuenta = (account.Monto * cambioUtilizado.Pesos) + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
+                saldoCuenta = EncontrarMontoInicial(account, cambioUtilizado) + SumatoriaIngresos(account, cambioUtilizado) - SumatoriaCostos(account, cambioUtilizado);
             }
             return saldoCuenta;
+        }
+
+        public double EncontrarMontoInicial(Ahorro account, Cambio cambioUtilizado)
+        {
+			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
+			{
+				return account.Monto + SumatoriaCostos(account, cambioUtilizado) - SumatoriaIngresos(account, cambioUtilizado);
+			}
+			else
+			{
+				return (account.Monto * cambioUtilizado.Pesos) + SumatoriaCostos(account, cambioUtilizado) - SumatoriaIngresos(account, cambioUtilizado);
+			}
+			
         }
 
         public double SumatoriaIngresos(Ahorro account, Cambio cambioUtilizado)
