@@ -1,4 +1,4 @@
-﻿using System.Runtime.CompilerServices;
+﻿using Excepcion;
 
 namespace Domain
 {

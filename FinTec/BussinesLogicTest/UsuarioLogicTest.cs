@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Excepcion;
 using Domain;
 using Repository;
 using BussinesLogic;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 
 namespace BussinesLogicTest
 {
@@ -129,27 +124,6 @@ namespace BussinesLogicTest
 			Assert.AreEqual(1, usuarios.Count);
 		}
 
-		//[TestMethod]
-		//public void Actualizar_Usuario()
-		//{
-		//	IRepository<Usuario> repository = new UsuarioMemoryRepository();
-		//	UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
-		//	Usuario usuario1 = new Usuario();
-		//	usuario1.Correo = "xx@yy.com";
-		//	usuario1.Contrasena = "123456780A";
-		//	Usuario usuario2 = new Usuario();
-		//	usuario2.Correo = "xxxx@yyyy.com";
-		//	usuario2.Contrasena = "123456789A";
-		//	usuarioLogic.AddUsuario(usuario1);
-		//	usuarioLogic.AddUsuario(usuario2);
-		//	usuario1.Contrasena = "123456789B";
-		//	usuarioLogic.UpdateUsuario(usuario1);
-		//	var usuarios = usuarioLogic.FindAllUsuario();
-		//	Assert.IsNotNull(usuarios);
-		//	Assert.AreEqual(2, usuarios.Count);
-		//	Assert.AreEqual("123456789B", usuarios[0].Contrasena);
-		//}
-
 		[TestMethod]
 		public void Buscar_Usuario()
 		{
@@ -213,19 +187,6 @@ namespace BussinesLogicTest
 			logica.AddUsuario(usuario2);
 		}
 
-		//[TestMethod]
-		//public void Existe_Usuario_Segun_Correo()
-		//{
-		//	usuarioLogic.AddUsuario(usuario1);
-		//	bool resultadoPositivo = usuarioLogic.ExisteCorreoUsuario("hola@gmail.com");
-		//	bool resultadoNegativo = usuarioLogic.ExisteCorreoUsuario("holaaaaa@gmail.com");
-		//	Assert.IsTrue(resultadoPositivo);
-		//	Assert.IsFalse(resultadoNegativo);
-
-		//}
-
-
-
 		[TestMethod]
 		public void Ingreso_Correo_Contrasena_Valida_Entrega_Usuario()
 		{
@@ -237,17 +198,6 @@ namespace BussinesLogicTest
 			Assert.IsTrue(resultado);
 			Assert.IsTrue(contrasenaIgual);
 		}
-
-		//[TestMethod]
-		//[ExpectedException(typeof(BussinesLogicUsuarioException))]
-		//public void Excepcion_Ingreso_Correo_No_Existente()
-		//{
-		//	usuarioLogic.AddUsuario(usuario1);
-		//	usuarioLogic.AddUsuario(usuario2);
-		//	Usuario usuario = usuarioLogic.UsuarioByCorreoContrasena("", "");
-		//}
-
-
 
 		[TestMethod]
 		[ExpectedException(typeof(BussinesLogicUsuarioException))]

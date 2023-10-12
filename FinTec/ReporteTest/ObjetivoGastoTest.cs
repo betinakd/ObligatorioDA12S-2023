@@ -1,7 +1,7 @@
 ﻿using Domain;
-using System;
-
-namespace DomainTest
+using Excepcion;
+using EspacioReporte;
+namespace EspacioReporteTest
 {
     [TestClass]
     public class ObjetivoGastoTest

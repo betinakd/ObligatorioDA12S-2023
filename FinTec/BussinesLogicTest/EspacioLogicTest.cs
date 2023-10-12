@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Excepcion;
 using Domain;
 using Repository;
 using BussinesLogic;
@@ -90,7 +86,6 @@ namespace BussinesLogicTest
             Espacio resultado1 = espacioLogic.FindEspacio(espacio.Id);
 
 			Assert.AreEqual(espacio.Nombre, resultado1.Nombre);
-
         }
 
         [TestMethod]

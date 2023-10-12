@@ -1,5 +1,5 @@
 ﻿using Domain;
-using System.Data.SqlTypes;
+using Excepcion;
 
 namespace DomainTest
 {

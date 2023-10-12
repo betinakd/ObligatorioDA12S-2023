@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using Domain;
+
+namespace EspacioReporte
 {
     public class Reporte
     {

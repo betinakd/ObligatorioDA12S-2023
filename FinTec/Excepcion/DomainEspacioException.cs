@@ -1,4 +1,4 @@
-﻿namespace Domain
+﻿namespace Excepcion
 {
 	public class DomainEspacioException : Exception
 	{

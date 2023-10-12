@@ -1,6 +1,7 @@
 ﻿using Domain;
+using EspacioReporte;
 
-namespace DomainTest
+namespace EspacioReporteTest
 {
     [TestClass]
     public class CategoriaGastoTest
