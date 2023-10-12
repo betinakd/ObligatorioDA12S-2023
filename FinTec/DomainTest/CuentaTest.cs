@@ -41,20 +41,6 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(NotImplementedException))]
-		public void Excepcion_Recibir_Deposito()
-		{
-			cuenta.IngresoMonetario(100);
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(NotImplementedException))]
-		public void Excepcion_Realizar_Deposito()
-		{
-			cuenta.EgresoMonetario(100);
-		}
-
-		[TestMethod]
 		public void Cuenta_Tiene_ToString()
 		{
 			Cuenta cuenta = new Cuenta();

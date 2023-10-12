@@ -17,16 +17,6 @@
 		{
 		}
 
-		public virtual void IngresoMonetario(double monto)
-		{
-			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
-		}
-
-		public virtual void EgresoMonetario(double monto)
-		{
-			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
-		}
-
 		public override string ToString()
 		{
 			string moneda = "";
