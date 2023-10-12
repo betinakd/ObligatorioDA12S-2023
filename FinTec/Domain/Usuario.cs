@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-
+﻿using Excepcion;
+using System.Text.RegularExpressions;
 namespace Domain
 {
 	public class Usuario

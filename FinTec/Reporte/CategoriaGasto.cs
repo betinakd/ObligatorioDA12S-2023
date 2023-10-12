@@ -1,6 +1,6 @@
 ﻿using Domain;
 
-namespace Domain
+namespace EspacioReporte
 {
     public class CategoriaGasto
     {

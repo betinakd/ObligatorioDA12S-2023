@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using Excepcion;
+
+namespace Domain
 {
 	public class TransaccionIngreso : Transaccion
 	{

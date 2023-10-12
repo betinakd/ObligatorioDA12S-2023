@@ -1,4 +1,6 @@
 ﻿using Domain;
+using Excepcion;
+
 namespace DomainTest
 {
 	[TestClass]

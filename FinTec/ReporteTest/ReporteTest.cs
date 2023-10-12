@@ -1,6 +1,8 @@
 ﻿using Domain;
+using Excepcion;
+using EspacioReporte;
 
-namespace DomainTest
+namespace EspacioReporteTest
 {
     [TestClass]
     public class ReporteTest
