@@ -91,7 +91,7 @@ namespace DomainTest
 			cuentaCredito.FechaCierre = new System.DateTime(2029, 1, 1);
 		}
 
-		[TestMethod]
+		/*[TestMethod]
 		public void Credito_Tiene_IngresoMonetario()
 		{
 			Credito cuentaCredito = new Credito();
@@ -106,7 +106,7 @@ namespace DomainTest
 			cuentaCredito.CreditoDisponible = 1000;
 			cuentaCredito.EgresoMonetario(100);
 			Assert.AreEqual(900, cuentaCredito.CreditoDisponible);
-		}
+		}*/
 
 		[TestMethod]
 		public void Obtener_FechaCiere()

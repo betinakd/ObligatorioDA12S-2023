@@ -79,7 +79,7 @@ namespace Domain
 		public Credito()
 		{
 		}
-		public override void IngresoMonetario(double monto)
+		/*public override void IngresoMonetario(double monto)
 		{
 			_creditoDisponible += monto;
 		}
@@ -87,7 +87,7 @@ namespace Domain
 		public override void EgresoMonetario(double monto)
 		{
 			_creditoDisponible -= monto;
-		}
+		}*/
 
 		public override void Modificar(Cuenta cuenta)
 		{

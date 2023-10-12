@@ -114,10 +114,10 @@
 	private void generarBalance()
 	{
 		cuentaBalance = encontrarCuenta(cuentaActual, cuentas);
-		if (cuenta.Nombre != null)
+		if (cuentaBalance.Nombre != null)
 		{
 			cuentaEncontrada = true;
-			cuentaBalance = cuenta;
+			//cuentaBalance = cuenta;
 			EncontrarCambio(cuentaBalance);
 			balanceCalculado = reporte.BalanceCuentas(cuentaBalance);
 		} else
