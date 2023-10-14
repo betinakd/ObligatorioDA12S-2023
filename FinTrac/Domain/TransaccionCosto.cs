@@ -49,7 +49,11 @@ namespace Domain
 				_cuenta = transaccion.CuentaMonetaria,
 				FechaTransaccion = DateTime.Today,
 			};
-
+			if (_cuenta is Ahorro)
+			{
+				Ahorro ahorro = (Ahorro)_cuenta;
+				ahorro.EgresoMonetario(transaccion.Monto);
+			}
 			return clon;
 		}
 	}

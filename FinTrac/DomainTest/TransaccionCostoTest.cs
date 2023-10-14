@@ -11,11 +11,18 @@ namespace DomainTest
 		[TestInitialize]
 		public void InitTests()
 		{
+			var cuenta = new Ahorro()
+			{
+				Nombre = "Cuenta1",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+			};
 			transaccion1 = new TransaccionCosto()
 			{
 				Monto = 100,
 				Titulo = "Transaccion1",
 				Moneda = TipoCambiario.Dolar,
+				CuentaMonetaria = cuenta,
 				FechaTransaccion = DateTime.Today,
 			};
 		}
