@@ -71,7 +71,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void TransaccionIngreso_Clon()
+		public void TransaccionCosto_Clon()
 		{
 			var transaccionClon = transaccion1.ClonTransaccion(transaccion1);
 			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
@@ -82,7 +82,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Valida()
+		public void TransaccionCosto_Tiene_Cuenta_Monetaria_Valida()
 		{
 			transaccion1.CuentaMonetaria = new Ahorro()
 			{
