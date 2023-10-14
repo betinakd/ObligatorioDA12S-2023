@@ -7,13 +7,25 @@ namespace DomainTest
     public class TransaccionIngresoTest
     {
         private TransaccionIngreso transaccion1;
+        private Credito credito1;
+        private Ahorro ahorro1;
+
         [TestInitialize]
         public void InitTests()
         {
+            credito1 = new Credito()
+            {
+                NumeroTarjeta = "4444",
+                Moneda = TipoCambiario.Dolar,
+                CreditoDisponible = 100,
+                FechaCierre = DateTime.Today.AddDays(4),
+                BancoEmisor = "Banco1",
+			};
             transaccion1 = new TransaccionIngreso() { 
                 Monto = 100,
 				Titulo = "Transaccion1",
 				Moneda = TipoCambiario.Dolar,
+                CuentaMonetaria = credito1,
 				FechaTransaccion = DateTime.Today,
 			};
 		}
@@ -63,7 +75,7 @@ namespace DomainTest
 		}
 
         [TestMethod]
-        public void TransaccionIngreso_Clon()
+        public void TransaccionIngreso_Clon_Cuenta_Credito()
         { 
             var transaccionClon = transaccion1.ClonTransaccion();
 			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
