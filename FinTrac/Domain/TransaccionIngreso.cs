@@ -49,6 +49,11 @@ namespace Domain
 				_cuenta = this.CuentaMonetaria,
 				FechaTransaccion = DateTime.Today,
 			};
+			if (this.CuentaMonetaria is Credito)
+			{
+				Credito credito = (Credito) this.CuentaMonetaria;
+				credito.IngresoMonetario(this.Monto);
+			}
 
 			return clon;
 		}
