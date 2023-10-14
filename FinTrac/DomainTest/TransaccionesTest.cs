@@ -157,10 +157,10 @@ namespace DomainTest
 		}
 		[TestMethod]
 		[ExpectedException(typeof(NotImplementedException))]
-		public void Transaccion_Modificada()
+		public void Transaccion_Modificada_NotImplemented_Exception()
 		{
 			Transaccion transaccion = new Transaccion();
-			transaccion.ModificarTransaccion();
+			transaccion.ModificarTransaccion(transaccion);
 		}
 	}
 }
