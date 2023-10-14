@@ -7,12 +7,19 @@ namespace DomainTest
     public class TransaccionIngresoTest
     {
         private TransaccionIngreso transaccion1;
+        private TransaccionIngreso transaccion2;
         private Credito credito1;
         private Ahorro ahorro1;
 
         [TestInitialize]
         public void InitTests()
         {
+            ahorro1 = new Ahorro()
+            {
+                Nombre = "Ahorro1",
+                Moneda = TipoCambiario.Dolar,
+                Monto = 100,
+            };
             credito1 = new Credito()
             {
                 NumeroTarjeta = "4444",
@@ -26,6 +33,14 @@ namespace DomainTest
 				Titulo = "Transaccion1",
 				Moneda = TipoCambiario.Dolar,
                 CuentaMonetaria = credito1,
+				FechaTransaccion = DateTime.Today,
+			};
+			transaccion2 = new TransaccionIngreso()
+			{
+				Monto = 1000,
+				Titulo = "Transaccion2",
+				Moneda = TipoCambiario.Dolar,
+				CuentaMonetaria = ahorro1,
 				FechaTransaccion = DateTime.Today,
 			};
 		}
@@ -85,7 +100,17 @@ namespace DomainTest
 			Assert.AreEqual(transaccion1.Monto, transaccionClon.Monto);
 		}
 
-        [TestMethod]
+		public void TransaccionIngreso_Clon_Cuenta_Ahorro()
+		{
+			var transaccionClon = transaccion2.ClonTransaccion();
+			Assert.AreEqual(transaccion2.Titulo, transaccionClon.Titulo);
+			Assert.AreEqual(transaccion2.Moneda, transaccionClon.Moneda);
+			Assert.AreEqual(transaccion2.CuentaMonetaria, transaccionClon.CuentaMonetaria);
+			Assert.AreEqual(transaccion2.CategoriaTransaccion, transaccionClon.CategoriaTransaccion);
+			Assert.AreEqual(transaccion2.Monto, transaccionClon.Monto);
+		}
+
+		[TestMethod]
         public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Valida()
         {
             transaccion1.CuentaMonetaria = new Ahorro()
