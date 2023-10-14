@@ -78,5 +78,10 @@ namespace Domain
 		{
 			throw new DomainEspacioException("No implementado");
 		}
+
+		public virtual void ModificarTransaccion()
+		{
+			throw new NotImplementedException("No implementado");
+		}
 	}
 }
