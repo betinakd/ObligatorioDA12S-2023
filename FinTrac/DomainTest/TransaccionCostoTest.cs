@@ -94,7 +94,7 @@ namespace DomainTest
 
 		[TestMethod]
 		[ExpectedException(typeof(DomainEspacioException))]
-		public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Invalida()
+		public void TransaccionCosto_Tiene_Cuenta_Monetaria_Invalida()
 		{
 			transaccion1.CuentaMonetaria = new Ahorro()
 			{
@@ -106,7 +106,7 @@ namespace DomainTest
 
 		[TestMethod]
 		[ExpectedException(typeof(DomainEspacioException))]
-		public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Nula()
+		public void TransaccionCosto_Tiene_Cuenta_Monetaria_Nula()
 		{
 			transaccion1.CuentaMonetaria = null;
 		}
