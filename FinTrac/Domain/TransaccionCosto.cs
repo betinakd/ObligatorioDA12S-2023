@@ -54,6 +54,11 @@ namespace Domain
 				Ahorro ahorro = (Ahorro)_cuenta;
 				ahorro.EgresoMonetario(transaccion.Monto);
 			}
+			if (_cuenta is Credito)
+			{
+				Credito credito = (Credito)_cuenta;
+				credito.EgresoMonetario(transaccion.Monto);
+			}
 			return clon;
 		}
 	}
