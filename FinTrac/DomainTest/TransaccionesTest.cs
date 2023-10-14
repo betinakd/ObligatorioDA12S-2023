@@ -121,7 +121,7 @@ namespace DomainTest
 		[ExpectedException(typeof(DomainEspacioException))]
 		public void Transaccion_Clon()
 		{ 
-			transaccion1.ClonTransaccion(transaccion1);
+			transaccion1.ClonTransaccion();
 		}
 
 		[TestMethod]

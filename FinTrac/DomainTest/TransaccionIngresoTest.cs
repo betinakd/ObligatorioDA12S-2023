@@ -65,7 +65,7 @@ namespace DomainTest
         [TestMethod]
         public void TransaccionIngreso_Clon()
         { 
-            var transaccionClon = transaccion1.ClonTransaccion(transaccion1);
+            var transaccionClon = transaccion1.ClonTransaccion();
 			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
 			Assert.AreEqual(transaccion1.Moneda, transaccionClon.Moneda);
 			Assert.AreEqual(transaccion1.CuentaMonetaria, transaccionClon.CuentaMonetaria);

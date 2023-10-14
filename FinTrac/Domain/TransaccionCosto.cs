@@ -38,26 +38,26 @@ namespace Domain
 				_categoria = value;
 			}
 		}
-		public override Transaccion ClonTransaccion(Transaccion transaccion)
+		public override Transaccion ClonTransaccion()
 		{
 			var clon = new TransaccionCosto()
 			{
-				Monto = transaccion.Monto,
-				Titulo = transaccion.Titulo,
-				Moneda = transaccion.Moneda,
-				_categoria = transaccion.CategoriaTransaccion,
-				_cuenta = transaccion.CuentaMonetaria,
+				Monto = this.Monto,
+				Titulo = this.Titulo,
+				Moneda = this.Moneda,
+				_categoria = this.CategoriaTransaccion,
+				_cuenta = this.CuentaMonetaria,
 				FechaTransaccion = DateTime.Today,
 			};
 			if (_cuenta is Ahorro)
 			{
 				Ahorro ahorro = (Ahorro)_cuenta;
-				ahorro.EgresoMonetario(transaccion.Monto);
+				ahorro.EgresoMonetario(this.Monto);
 			}
 			if (_cuenta is Credito)
 			{
 				Credito credito = (Credito)_cuenta;
-				credito.EgresoMonetario(transaccion.Monto);
+				credito.EgresoMonetario(this.Monto);
 			}
 			return clon;
 		}

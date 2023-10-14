@@ -91,7 +91,7 @@ namespace DomainTest
 		[TestMethod]
 		public void TransaccionCosto_Clon_Cuenta_Ahorro()
 		{
-			var transaccionClon = transaccion1.ClonTransaccion(transaccion1);
+			var transaccionClon = transaccion1.ClonTransaccion();
 			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
 			Assert.AreEqual(transaccion1.Moneda, transaccionClon.Moneda);
 			Assert.AreEqual(transaccion1.CuentaMonetaria, transaccionClon.CuentaMonetaria);
@@ -102,7 +102,7 @@ namespace DomainTest
 		[TestMethod]
 		public void TransaccionCosto_Clon_Cuenta_Credito()
 		{
-			var transaccionClon = transaccion2.ClonTransaccion(transaccion2);
+			var transaccionClon = transaccion2.ClonTransaccion();
 			Assert.AreEqual(transaccion2.Titulo, transaccionClon.Titulo);
 			Assert.AreEqual(transaccion2.Moneda, transaccionClon.Moneda);
 			Assert.AreEqual(transaccion2.CuentaMonetaria, transaccionClon.CuentaMonetaria);
