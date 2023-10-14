@@ -71,7 +71,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void TransaccionCosto_Clon()
+		public void TransaccionCosto_Clon_Cuenta_Credito()
 		{
 			var transaccionClon = transaccion1.ClonTransaccion(transaccion1);
 			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
