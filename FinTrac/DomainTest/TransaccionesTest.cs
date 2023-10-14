@@ -155,5 +155,12 @@ namespace DomainTest
 			Cambio cambio1 = transaccion.EncontrarCambio(espacio);
 			Assert.IsTrue(cambio1.FechaDeCambio != transaccion.FechaTransaccion);
 		}
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Transaccion_Modificada()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.ModificarTransaccion();
+		}
 	}
 }
