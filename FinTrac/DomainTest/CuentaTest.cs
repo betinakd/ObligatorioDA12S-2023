@@ -79,5 +79,12 @@ namespace DomainTest
 			Cuenta cuenta = new Cuenta();
 			cuenta.Modificar(cuenta);
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_Moneda_Euro()
+		{
+			cuenta.Moneda = TipoCambiario.Euro;
+			Assert.AreEqual(cuenta.Moneda, TipoCambiario.Euro);
+		}
 	}
 }
