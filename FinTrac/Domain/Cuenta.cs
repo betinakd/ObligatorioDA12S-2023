@@ -5,7 +5,8 @@ namespace Domain
 	public enum TipoCambiario
 	{
 		PesosUruguayos,
-		Dolar
+		Dolar,
+		Euro
 	}
 	public class Cuenta
 	{
