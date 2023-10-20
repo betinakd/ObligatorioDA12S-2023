@@ -350,6 +350,7 @@ namespace DomainTest
 			};
 			Espacio espacio = new Espacio();
 			Cambio cambio = new Cambio();
+			cambio.Moneda = TipoCambiario.Dolar;
 			espacio.AgregarCambio(cambio);
 			espacio.AgregarTransaccion(transaccion);
 			Assert.AreEqual(espacio.Transacciones.Count, 1);
