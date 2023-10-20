@@ -6,9 +6,18 @@
 
 <form>
 	<table>
+		
 		<tr>
-			<td><label for="moneda">Moneda:</label></td>
-			<td><input type="text" class="form-control" id="moneda" value="Dolar" readonly /></td>
+			<td><label class="text-gray-600">Moneda</label></td>
+			<td>
+				<select @onchange="SeleccionarMoneda" class="text-600">
+				<option value="">Seleccione una Opcion</option>
+				@foreach (var moneda in monedas.Where(m => m != Domain.TipoCambiario.PesosUruguayos))
+				{
+					<option value="@moneda">@moneda</option>
+				}
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td><label for="valorPesos">Valor en Pesos Uruguayos:</label></td>
@@ -33,9 +42,20 @@
 	private string Moneda { get; set; } = "";
 	private double Pesos { get; set; } = 0;
 	private DateTime FechaDeCambio { get; set; } = DateTime.Now;
-
+	private Domain.TipoCambiario tipoMonedaSeleccionado;
+	private List<Domain.TipoCambiario> monedas;
 
 	private Cambio nuevoCambio = new Cambio();
+
+	protected override void OnInitialized()
+	{
+		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
+	}
+
+	private void SeleccionarMoneda(ChangeEventArgs e)
+	{
+		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
+	}
 
 	private void AgregarCambio()
 	{
@@ -44,7 +64,7 @@
 			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 			Cambio cambio = new Cambio()
 				{
-					Moneda = Domain.TipoCambiario.Dolar,
+					Moneda = tipoMonedaSeleccionado,
 					Pesos = Pesos,
 					FechaDeCambio = FechaDeCambio.Date
 				};
