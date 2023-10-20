@@ -17,9 +17,12 @@
 		<tr>
 			<td><label for="moneda">Moneda:</label></td>
 			<td>
-				<select class="form-control" id="moneda" @bind="Moneda">
-					<option value="PesosUruguayos">Pesos Uruguayos</option>
-					<option value="Dolar">Dólar</option>
+				<select @onchange="SeleccionarMoneda" class="text-600">
+					<option value="">Seleccione una Opcion</option>
+					@foreach (var moneda in monedas)
+					{
+						<option value="@moneda">@moneda</option>
+					}
 				</select>
 			</td>
 		</tr>
@@ -38,7 +41,18 @@
 	private string ErrorMsg { get; set; }
 	private string Nombre { get; set; } = "";
 	private double Monto { get; set; } = 0;
-	private TipoCambiario Moneda { get; set; } = TipoCambiario.Dolar;
+	private Domain.TipoCambiario tipoMonedaSeleccionado;
+	private List<Domain.TipoCambiario> monedas;
+
+	protected override void OnInitialized()
+	{
+		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
+	}
+
+	private void SeleccionarMoneda(ChangeEventArgs e)
+	{
+		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
+	}
 
 	private void CrearCuenta()
 	{
@@ -46,7 +60,7 @@
 		{
 			Ahorro nuevaCuentaAhorro = new Ahorro
 				{
-					Moneda = Moneda,
+					Moneda = tipoMonedaSeleccionado,
 					Nombre = Nombre,
 					Monto = Monto
 				};
