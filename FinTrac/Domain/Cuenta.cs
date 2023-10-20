@@ -27,9 +27,13 @@ namespace Domain
 			{
 				moneda = "Pesos Uruguayos - ";
 			}
-			else
+			else if (Moneda == TipoCambiario.Dolar)
 			{
 				moneda = "Dolar - ";
+			}
+			else
+			{
+				moneda = "Euro - ";
 			}
 			return moneda;
 		}
