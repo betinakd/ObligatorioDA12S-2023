@@ -155,5 +155,44 @@ namespace DomainTest
 			Cambio cambio1 = transaccion.EncontrarCambio(espacio);
 			Assert.IsTrue(cambio1.FechaDeCambio != transaccion.FechaTransaccion);
 		}
+
+		[TestMethod]
+		public void EncontrarCambio_Distinta_Moneda()
+		{
+			Espacio espacio = new Espacio();
+			
+			Cambio cambio = new Cambio
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 40,
+			};
+			Cambio cambio1 = new Cambio
+			{
+				Moneda = TipoCambiario.Euro,
+				Pesos = 41,
+			};
+			espacio.AgregarCambio(cambio);
+			espacio.AgregarCambio(cambio1);
+			Cuenta cuenta = new Cuenta { Moneda = TipoCambiario.Dolar, };
+			espacio.AgregarCuenta(cuenta);
+			Categoria cuategoria = new Categoria
+			{
+				EstadoActivo = true,
+				Nombre = "nombre",
+				Tipo = TipoCategoria.Ingreso,
+			};
+			espacio.AgregarCategoria(cuategoria);
+			Transaccion transaccion = new Transaccion
+			{
+				CategoriaTransaccion = cuategoria,
+				CuentaMonetaria = cuenta,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "hola",
+				FechaTransaccion = DateTime.Today,
+			};
+			Cambio cambio2 = transaccion.EncontrarCambio(espacio);
+			Assert.AreEqual(cambio2.Moneda.ToString(), "Dolar");
+		}
 	}
 }
