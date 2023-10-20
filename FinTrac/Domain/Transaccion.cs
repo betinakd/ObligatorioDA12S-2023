@@ -66,7 +66,8 @@ namespace Domain
 			Cambio toRet = new Cambio();
 			foreach (Cambio cambio in espacioActual.Cambios)
 			{
-				if (cambio.FechaDeCambio.Day == FechaTransaccion.Day && cambio.FechaDeCambio.Month == FechaTransaccion.Month && cambio.FechaDeCambio.Year == FechaTransaccion.Year)
+				if (cambio.FechaDeCambio.Day == FechaTransaccion.Day && cambio.FechaDeCambio.Month == FechaTransaccion.Month
+					&& cambio.FechaDeCambio.Year == FechaTransaccion.Year && cambio.Moneda == Moneda)
 				{
 					toRet = cambio;
 				}
