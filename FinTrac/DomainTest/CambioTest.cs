@@ -102,5 +102,25 @@ namespace DomainTest
 			var tipoDeCambio = new Cambio();
 			tipoDeCambio.Pesos = -200;
 		}
+
+        [TestMethod]
+		public void Equals_Cambio_Distinta_Moneda_False()
+        {
+			var tipoDeCambio1 = new Cambio()
+            {
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 50,
+			};
+
+			var tipoDeCambio2 = new Cambio()
+            {
+				Moneda = TipoCambiario.PesosUruguayos,
+				Pesos = 51,
+			};
+
+			bool resultado = tipoDeCambio1.Equals(tipoDeCambio2);
+
+			Assert.IsFalse(resultado);
+		}
 	}
 }
