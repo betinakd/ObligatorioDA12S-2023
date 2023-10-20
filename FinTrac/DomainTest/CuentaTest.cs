@@ -86,5 +86,14 @@ namespace DomainTest
 			cuenta.Moneda = TipoCambiario.Euro;
 			Assert.AreEqual(cuenta.Moneda, TipoCambiario.Euro);
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_ToString_Euro()
+		{
+			Cuenta cuenta = new Cuenta();
+			cuenta.Moneda = TipoCambiario.Euro;
+			string fecha = DateTime.Now.ToString();
+			Assert.AreEqual(cuenta.ToString(), "Euro - ");
+		}
 	}
 }
