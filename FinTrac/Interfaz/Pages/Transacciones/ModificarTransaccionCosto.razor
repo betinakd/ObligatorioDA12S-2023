@@ -13,9 +13,12 @@
 		</div>
 		<div>
 			<label class="text-gray-600">Moneda</label>
-			<select @bind="inputMoneda" class="border rounded-md px-2 py-1">
-				<option value="@TipoCambiario.Dolar">Dólar</option>
-				<option value="@TipoCambiario.PesosUruguayos">Pesos uruguayos</option>
+			<select @onchange="SeleccionarMoneda" class="border rounded-md px-2 py-1">
+				<option value="">Seleccione una Opcion</option>
+				@foreach (var moneda in monedas)
+				{
+					<option value="@moneda">@moneda</option>
+				}
 			</select>
 		</div>
 		<div>
@@ -42,18 +45,26 @@
 	[Parameter] public int IdTrans { get; set; }
 	private string ErrorMsg { get; set; } = "";
 	private double inputMonto { get; set; } = 0;
-	private TipoCambiario inputMoneda { get; set; }
 	private string inputCategoria { get; set; }
 	private Espacio espacio = new Espacio();
 	private List<Categoria> categorias = new List<Categoria>();
 	private Categoria categoria;
 	private Transaccion transaccion;
+	private Domain.TipoCambiario tipoMonedaSeleccionado;
+	private List<Domain.TipoCambiario> monedas;
+
+
+	private void SeleccionarMoneda(ChangeEventArgs e)
+	{
+		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
+	}
 
 	protected override void OnInitialized()
 	{
 		espacio = EspacioLogic.FindEspacio(Id);
 		categorias = espacio.Categorias;
 		transaccion = espacio.Transacciones.Find(t => t.IdTransaccion.Equals(IdTrans));
+		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
 	}
 
 	private void SeleccionarCategoria(ChangeEventArgs e)
@@ -67,7 +78,7 @@
 		try
 		{
 			transaccion.Monto = inputMonto;
-			transaccion.Moneda = inputMoneda;
+			transaccion.Moneda = tipoMonedaSeleccionado;
 			transaccion.CategoriaTransaccion = categoria;
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
