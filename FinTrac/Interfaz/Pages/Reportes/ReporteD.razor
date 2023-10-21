@@ -30,7 +30,8 @@
 			<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
 				<h1 style="padding-left:6px">No hay transacciones que permitan esta operacion.</h1>
 			</div>
-		} else
+		}
+		else
 		{
 			<table class="min-w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
@@ -39,26 +40,26 @@
 							Titulo
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Monto
+							Monto $
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 							Fecha
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Moneda
+							Moneda - Monto
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 							Banco
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Valor dolar
+							Valor moneda
 						</th>
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
 					@foreach (Transaccion transaccion in gastosTarjeta)
 					{
-						if (transaccion.Moneda.Equals(TipoCambiario.Dolar))
+						if (transaccion.Moneda != TipoCambiario.PesosUruguayos)
 						{
 							<tr>
 								<td class="px-6 py-4 whitespace-nowrap">
@@ -71,7 +72,7 @@
 									@transaccion.FechaTransaccion
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@transaccion.Moneda - U$D @transaccion.Monto
+									@transaccion.Moneda - @transaccion.Monto
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
@@ -80,7 +81,8 @@
 									@transaccion.EncontrarCambio(reporte.MiEspacio).Pesos
 								</td>
 							</tr>
-						} else
+						}
+						else
 						{
 							<tr>
 								<td class="px-6 py-4 whitespace-nowrap">
@@ -99,7 +101,6 @@
 									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									
 								</td>
 							</tr>
 						}

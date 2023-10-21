@@ -80,17 +80,17 @@
 							Moneda
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Monto Usado
+							Monto Usado $
 						</th>
 						<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-							Valor Dolar
+							Valor Moneda - Monto Usado
 						</th>
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
 					@foreach (var gasto in listaGastos)
 					{
-						if (gasto.Moneda.Equals(TipoCambiario.Dolar))
+						if (gasto.Moneda != TipoCambiario.PesosUruguayos)
 						{
 							<tr>
 								<td class="px-6 py-4 whitespace-nowrap">
@@ -103,7 +103,7 @@
 									$@(gasto.Monto * gasto.EncontrarCambio(reporte.MiEspacio).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@gasto.EncontrarCambio(reporte.MiEspacio).Pesos - U$D @gasto.Monto
+									@gasto.EncontrarCambio(reporte.MiEspacio).Pesos - @gasto.Monto
 								</td>
 							</tr>
 						} else
