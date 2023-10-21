@@ -23,14 +23,14 @@ namespace EspacioReporte
                 foreach (Transaccion t in transacciones)
                 {
 					Cambio cambio = new Cambio();
-					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					if (t.Moneda != TipoCambiario.PesosUruguayos)
 					{
 						cambio = t.EncontrarCambio(MiEspacio);
 					}
 					if (TransaccionEntraObjetivo(o, t) && TransaccionMismoYearYMes(t, fechaActual) && TransaccionCategoriaCosto(t))
                     {
 						transaccionesAceptadas = true;
-						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						if (t.Moneda != TipoCambiario.PesosUruguayos)
 						{
 							_montoAcumulado += t.Monto * cambio.Pesos;
 						}
@@ -77,14 +77,14 @@ namespace EspacioReporte
                 foreach (Transaccion t in transacciones)
                 {
 					Cambio cambio = new Cambio();
-					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					if (t.Moneda != TipoCambiario.PesosUruguayos)
                     {
                         cambio = t.EncontrarCambio(MiEspacio);
                     }
                     if (TransaccionMismaCategoria(c, t) && TransaccionMismoMes(t, mes) && TransaccionCategoriaCosto(t))
                     {
                         transaccionAceptada = true;
-                        if (t.Moneda.Equals(TipoCambiario.Dolar))
+                        if (t.Moneda != TipoCambiario.PesosUruguayos)
                         {
 							_montoAcumulado += t.Monto * cambio.Pesos;
 						} else
@@ -122,7 +122,7 @@ namespace EspacioReporte
 				Cambio cambio = new Cambio();
 				if (TransaccionMismoMes(t, mes) && TransaccionCategoriaCosto(t))
                 {
-					if (t.Moneda.Equals(TipoCambiario.Dolar))
+					if (t.Moneda != TipoCambiario.PesosUruguayos)
 					{
 						cambio = t.EncontrarCambio(MiEspacio);
 						montoTotal += t.Monto * cambio.Pesos;
@@ -264,7 +264,7 @@ namespace EspacioReporte
                 {
 					if (TransaccionCategoriaIngreso(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
 					{
-						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						if (t.Moneda != TipoCambiario.PesosUruguayos)
 						{
 							_montoIngresos += t.Monto * cambioUtilizado.Pesos;
 						}
@@ -298,7 +298,7 @@ namespace EspacioReporte
                 {
 					if (TransaccionCategoriaCosto(t) && MismaCuentaAhorro(account, (Ahorro)t.CuentaMonetaria))
 					{
-						if (t.Moneda.Equals(TipoCambiario.Dolar))
+						if (t.Moneda != TipoCambiario.PesosUruguayos)
 						{
 							_montoCostos += t.Monto * cambioUtilizado.Pesos;
 						}
