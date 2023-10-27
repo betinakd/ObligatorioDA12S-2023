@@ -4,8 +4,12 @@ using Repository;
 using Domain;
 using BussinesLogic;
 using Microsoft.AspNetCore.Hosting;
-
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<UsuariosDbContext>
+	(options => options.UseSqlServer
+	(builder.Configuration.GetConnectionString("UsuariosDbConection")));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
