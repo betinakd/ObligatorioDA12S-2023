@@ -14,8 +14,10 @@ builder.Services.AddDbContext<UsuariosDbContext>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<IRepository<Usuario>, UsuarioMemoryRepository>();
-builder.Services.AddSingleton<UsuarioLogic>();
+builder.Services.AddScoped<IRepository<Usuario>, UsuarioMemoryRepository>();
+//builder.Services.AddSingleton<IRepository<Usuario>, UsuarioMemoryRepository>();
+//builder.Services.AddSingleton<UsuarioLogic>();
+builder.Services.AddScoped<UsuarioLogic>();
 builder.Services.AddSingleton<IRepository<Espacio>, EspacioMemoryRepository>();
 builder.Services.AddSingleton<EspacioLogic>();
 builder.Services.AddSingleton<Persistencia>();
