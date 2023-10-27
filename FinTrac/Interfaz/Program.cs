@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<EspacioDBContext>(options =>
 {
-	options.UseSqlServer(Environment.GetEnvironmentVariable("EspacioDataConnection"));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("EspacioDataConnection"));
 });
 
 // Add services to the container.

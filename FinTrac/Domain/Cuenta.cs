@@ -1,4 +1,5 @@
 ﻿using Excepcion;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -12,9 +13,11 @@ namespace Domain
 	{
 		public TipoCambiario Moneda { get; set; }
 		private readonly DateTime _fechaCreacion = DateTime.Now;
+		[Key]
 		public DateTime FechaCreacion
 		{
 			get { return _fechaCreacion; }
+			set { }
 		}
 		public Cuenta()
 		{

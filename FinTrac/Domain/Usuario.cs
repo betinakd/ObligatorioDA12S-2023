@@ -1,4 +1,5 @@
 ﻿using Excepcion;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 namespace Domain
 {
@@ -23,7 +24,7 @@ namespace Domain
 			}
 		}
 		private string _correo;
-
+		[Key]
 		public string Correo
 		{
 			get { return _correo; }

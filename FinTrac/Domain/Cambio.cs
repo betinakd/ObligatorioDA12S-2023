@@ -1,4 +1,5 @@
 ﻿using Excepcion;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -6,6 +7,7 @@ namespace Domain
 	{
 		private DateTime _fechaDeCambio = DateTime.Now.Date;
 		private double _pesos;
+		[Key]
 		public DateTime FechaDeCambio
 		{
 			get { return _fechaDeCambio; }

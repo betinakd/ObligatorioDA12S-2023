@@ -1,4 +1,5 @@
 ﻿using Excepcion;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -6,6 +7,7 @@ namespace Domain
 	{
 		public static int _contadorIdTransaccion = 1;
 		private string _titulo;
+		[Key]
 		public int IdTransaccion { get; set; }
 		public string Titulo
 		{
