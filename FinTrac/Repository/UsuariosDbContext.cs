@@ -10,10 +10,10 @@ namespace Repository
 		public UsuariosDbContext(DbContextOptions<UsuariosDbContext> options) : base(options)
 		{
 		}
-
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
-		//{
-		//	modelBuilder.Entity<Usuario>().ToTable("Usuarios");
-		//}
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Usuario>()
+				.HasKey(u => u.Correo);
+		}
 	}
 }

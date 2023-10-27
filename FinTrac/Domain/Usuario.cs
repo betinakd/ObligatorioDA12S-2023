@@ -1,5 +1,6 @@
 ﻿using Excepcion;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 namespace Domain
 {
 	public class Usuario
@@ -22,8 +23,8 @@ namespace Domain
 				_contrasena = value;
 			}
 		}
+		[Key]
 		private string _correo;
-
 		public string Correo
 		{
 			get { return _correo; }
@@ -135,6 +136,4 @@ namespace Domain
 			return Correo == user.Correo;
 		}
 	}
-
-
 }
