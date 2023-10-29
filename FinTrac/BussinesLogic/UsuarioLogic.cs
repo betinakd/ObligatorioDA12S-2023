@@ -15,7 +15,7 @@ namespace BussinesLogic
 
         public Usuario AddUsuario(Usuario oneElement)
         {
-            IList<Usuario> usuarios = _repository.FindAll();
+			IList<Usuario> usuarios = _repository.FindAll();
             bool existe = usuarios.Contains(oneElement);
             if (existe)
             {
@@ -24,6 +24,16 @@ namespace BussinesLogic
             _repository.Add(oneElement);
             return oneElement;
         }
+
+        public Usuario UpdateUsuario(Usuario updateEntity)
+        {
+			var usuario = _repository.Find(u => u.Correo == updateEntity.Correo);
+			if (usuario != null)
+            {
+				_repository.Update(updateEntity);
+			}
+			return usuario;
+		}
 
 		public Usuario UsuarioByCorreoContrasena(string correo, string contrasena)
 		{

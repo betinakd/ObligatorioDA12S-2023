@@ -1,43 +1,56 @@
-﻿using Domain;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Domain;
 
 namespace Repository
 {
-    public class EspacioMemoryRepository : IRepository<Espacio>
-    {
-        private readonly List<Espacio> _espacios = new List<Espacio>();
-        public Espacio Add(Espacio oneElement)
-        {
-            _espacios.Add(oneElement);
-            return oneElement;
-        }
+	public class EspacioMemoryRepository : IRepository<Espacio>
+	{
+		private readonly UsuariosDbContext _context;
 
-        public Espacio? Find(Func<Espacio, bool> filter)
-        {
-            return _espacios.FirstOrDefault(filter);
-        }
+		public EspacioMemoryRepository(UsuariosDbContext context)
+		{
+			_context = context;
+		}
 
-        public IList<Espacio> FindAll()
-        {
-            return _espacios;
-        }
+		public Espacio Add(Espacio oneElement)
+		{
+			_context.Espacios.Add(oneElement);
+			_context.SaveChanges();
+			return oneElement;
+		}
 
-        public Espacio? Update(Espacio updateEntity)
-        {
-            var espacio = Find(u => u.Admin == updateEntity.Admin);
-            if (espacio != null)
-            {               
-                espacio.Admin = updateEntity.Admin;
-            }
-            return espacio;
-        }
+		public Espacio Find(Func<Espacio, bool> filter)
+		{
+			return _context.Espacios.FirstOrDefault(filter);
+		}
 
-        public void Delete(string id)
-        {
-            var espacio = Find(u => u.Admin.Correo == id);
-            if (espacio != null)
-            {
-                _espacios.Remove(espacio);
-            }
-        }
-    }
+		public IList<Espacio> FindAll()
+		{
+			var espacios = _context.Espacios
+				.Include(e => e.Admin)
+				.Include(e => e.Cambios) // Cargar la lista de Cambios para cada Espacio
+				.ToList();
+
+			return espacios;
+		}
+
+		public Espacio Update(Espacio updateEntity)
+		{
+			_context.Entry(updateEntity).State = EntityState.Modified;
+			_context.SaveChanges();
+			return updateEntity;
+		}
+
+		public void Delete(string id)
+		{
+			var espacio = _context.Espacios.Find(id);
+			if (espacio != null)
+			{
+				_context.Espacios.Remove(espacio);
+				_context.SaveChanges();
+			}
+		}
+	}
 }

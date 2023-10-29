@@ -9,7 +9,7 @@ namespace Domain
 		{
 		}
 
-		private static int _contadorId = 1;
+		//private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
@@ -184,16 +184,16 @@ namespace Domain
 		{
 			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
 		}
-		public static void AumentarContadorId()
-		{
-			_contadorId++;
-		}
+		//public static void AumentarContadorId()
+		//{
+		//	_contadorId++;
+		//}
 
-		public void AsignarId()
-		{			
-            Id = _contadorId;
-            AumentarContadorId();
-        }
+		//public void AsignarId()
+		//{			
+  //          Id = _contadorId;
+  //          AumentarContadorId();
+  //      }
 
 		public void ModificarCuenta(Cuenta modificacion, Cuenta modificada)
 		{

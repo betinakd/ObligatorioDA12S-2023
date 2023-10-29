@@ -29,6 +29,10 @@ namespace Repository
 			{
 				usuario.Contrasena = updateEntity.Contrasena;
 				usuario.Correo = updateEntity.Correo;
+				usuario.Nombre = updateEntity.Nombre;
+				usuario.Apellido = updateEntity.Apellido;
+				usuario.Direccion = updateEntity.Direccion;
+				usuario.IdEspacioPrincipal = updateEntity.IdEspacioPrincipal;
 				_dbContext.SaveChanges();
 			}
 			return usuario;

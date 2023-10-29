@@ -54,6 +54,14 @@ namespace BussinesLogic
 			
 		}
 
-
+        public int EspacioMayorId()
+        {
+			var espacioConMayorId = _repository.FindAll().OrderByDescending(e => e.Id).FirstOrDefault();
+            if (espacioConMayorId == null)
+            {
+				return 0;
+			}
+			return espacioConMayorId.Id;
+		}
 	}
 }

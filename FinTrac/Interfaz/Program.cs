@@ -18,8 +18,8 @@ builder.Services.AddScoped<IRepository<Usuario>, UsuarioMemoryRepository>();
 //builder.Services.AddSingleton<IRepository<Usuario>, UsuarioMemoryRepository>();
 //builder.Services.AddSingleton<UsuarioLogic>();
 builder.Services.AddScoped<UsuarioLogic>();
-builder.Services.AddSingleton<IRepository<Espacio>, EspacioMemoryRepository>();
-builder.Services.AddSingleton<EspacioLogic>();
+builder.Services.AddScoped<IRepository<Espacio>, EspacioMemoryRepository>();
+builder.Services.AddScoped<EspacioLogic>();
 builder.Services.AddSingleton<Persistencia>();
 
 var app = builder.Build();

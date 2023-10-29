@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    partial class UsuariosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231029043918_DataBase3")]
+    partial class DataBase3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,13 +33,13 @@ namespace Repository.Migrations
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
 
-                    b.Property<int>("EspacioId")
+                    b.Property<int?>("EspacioId")
                         .HasColumnType("int");
 
                     b.Property<double>("Pesos")
                         .HasColumnType("float");
 
-                    b.HasKey("FechaDeCambio", "Moneda", "EspacioId");
+                    b.HasKey("FechaDeCambio", "Moneda");
 
                     b.HasIndex("EspacioId");
 
@@ -211,9 +214,7 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Domain.Espacio", null)
                         .WithMany("Cambios")
-                        .HasForeignKey("EspacioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EspacioId");
                 });
 
             modelBuilder.Entity("Domain.Categoria", b =>

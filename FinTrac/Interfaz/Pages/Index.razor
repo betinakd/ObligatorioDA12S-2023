@@ -59,8 +59,9 @@
 		try
 		{
 			Usuario usuarioLogeado = UsuarioLogic.UsuarioByCorreoContrasena(Correo, Password);
-			NavigationManager.NavigateTo($"/home/{usuarioLogeado.IdEspacioPrincipal}/{usuarioLogeado.Correo}");
+			Console.WriteLine(usuarioLogeado.Correo);
 			Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
+			NavigationManager.NavigateTo($"/home/{usuarioLogeado.IdEspacioPrincipal}/{usuarioLogeado.Correo}");
 			Persistencia.Correo = usuarioLogeado.Correo;
 		}
 		catch (BussinesLogicUsuarioException e)
