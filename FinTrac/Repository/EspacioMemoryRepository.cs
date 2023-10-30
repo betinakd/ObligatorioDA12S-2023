@@ -43,11 +43,12 @@ namespace Repository
 
 		public void Delete(string id)
         {
-			/*  var espacio = Find(u => u.Admin.Correo == id);
-			  if (espacio != null)
-			  {
-				  _espacios.Remove(espacio);
-			  } */
+			var espacio = _context.Espacios.FirstOrDefault(e => e.Admin.Correo == id);
+			if (espacio != null)
+			{
+				_context.Espacios.Remove(espacio);
+				_context.SaveChanges();
+			}
 		}
     }
 }
