@@ -54,7 +54,9 @@
 	{
 		try
 		{
-			EspacioLogic.FindEspacio(Persistencia.Id).InvitarUsuario(usuario);
+			Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+			espacio.InvitarUsuario(usuario);
+			EspacioLogic.UpdateEspacio(espacio);
 			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
 		}
 		catch (Exception ex)

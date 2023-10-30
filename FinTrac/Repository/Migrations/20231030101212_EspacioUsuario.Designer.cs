@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    partial class UsuariosDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231030101212_EspacioUsuario")]
+    partial class EspacioUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,8 +126,6 @@ namespace Repository.Migrations
 
                     b.HasKey("IdEspacio", "CorreoUsuario");
 
-                    b.HasIndex("CorreoUsuario");
-
                     b.ToTable("EspaciosUsuarios");
                 });
 
@@ -205,6 +206,9 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EspacioId")
+                        .HasColumnType("int");
+
                     b.Property<int>("IdEspacioPrincipal")
                         .HasColumnType("int");
 
@@ -213,6 +217,8 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Correo");
+
+                    b.HasIndex("EspacioId");
 
                     b.ToTable("Usuarios");
                 });
@@ -255,25 +261,6 @@ namespace Repository.Migrations
                     b.Navigation("Admin");
                 });
 
-            modelBuilder.Entity("Domain.EspacioUsuario", b =>
-                {
-                    b.HasOne("Domain.Usuario", "Usuario")
-                        .WithMany("EspaciosUsuarios")
-                        .HasForeignKey("CorreoUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Espacio", "Espacio")
-                        .WithMany("UsuariosInvitados")
-                        .HasForeignKey("IdEspacio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Espacio");
-
-                    b.Navigation("Usuario");
-                });
-
             modelBuilder.Entity("Domain.Objetivo", b =>
                 {
                     b.HasOne("Domain.Espacio", null)
@@ -304,6 +291,13 @@ namespace Repository.Migrations
                     b.Navigation("CuentaMonetaria");
                 });
 
+            modelBuilder.Entity("Domain.Usuario", b =>
+                {
+                    b.HasOne("Domain.Espacio", null)
+                        .WithMany("UsuariosInvitados")
+                        .HasForeignKey("EspacioId");
+                });
+
             modelBuilder.Entity("Domain.Espacio", b =>
                 {
                     b.Navigation("Cambios");
@@ -322,11 +316,6 @@ namespace Repository.Migrations
             modelBuilder.Entity("Domain.Objetivo", b =>
                 {
                     b.Navigation("Categorias");
-                });
-
-            modelBuilder.Entity("Domain.Usuario", b =>
-                {
-                    b.Navigation("EspaciosUsuarios");
                 });
 #pragma warning restore 612, 618
         }

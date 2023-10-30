@@ -12,15 +12,40 @@ namespace Repository
 		public DbSet<Cuenta> Cuentas { get; set; }
 		public DbSet<Transaccion> Transacciones { get; set; }
 		public DbSet<Objetivo> Objetivos { get; set; }
-
+		public DbSet<EspacioUsuario> EspaciosUsuarios { get; set; }
 		public UsuariosDbContext(DbContextOptions<UsuariosDbContext> options) : base(options)
 		{
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			modelBuilder.Entity<EspacioUsuario>()
+				.HasKey(eu => new
+				{
+					eu.IdEspacio,
+					eu.CorreoUsuario
+				});
+
+			modelBuilder.Entity<EspacioUsuario>()
+				.HasOne(ue => ue.Usuario)
+				.WithMany(u => u.EspaciosUsuarios)
+				.HasForeignKey(ue => ue.CorreoUsuario);
+
+			modelBuilder.Entity<EspacioUsuario>()
+				.HasOne(ue => ue.Espacio)
+				.WithMany(e => e.UsuariosInvitados)
+				.HasForeignKey(ue => ue.IdEspacio);
+
 			modelBuilder.Entity<Usuario>()
 				.HasKey(u => u.Correo);
+			modelBuilder.Entity<Usuario>()
+	.HasMany(u => u.EspaciosUsuarios)
+	.WithOne(eu => eu.Usuario)
+	.HasForeignKey(eu => eu.CorreoUsuario);
 
+			modelBuilder.Entity<Espacio>()
+				.HasMany(e => e.UsuariosInvitados)
+				.WithOne(eu => eu.Espacio)
+				.HasForeignKey(eu => eu.IdEspacio);
 			modelBuilder.Entity<Espacio>()
 				.HasKey(e => e.Id);
 			modelBuilder.Entity<Espacio>()

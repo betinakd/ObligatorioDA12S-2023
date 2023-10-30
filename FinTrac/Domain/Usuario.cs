@@ -7,6 +7,7 @@ namespace Domain
 {
 	public class Usuario
 	{
+		public List<EspacioUsuario> EspaciosUsuarios { get; set; }
 		public int IdEspacioPrincipal { get; set; }
 		private string _contrasena;
 		public string Direccion { get; set; }

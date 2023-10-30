@@ -14,7 +14,7 @@ namespace Domain
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Categoria> _categorias = new List<Categoria>();
-		private List<Usuario> _usuariosInvitados = new List<Usuario>();
+		private List<EspacioUsuario> _usuariosInvitados = new List<EspacioUsuario>();
 		private List<Transaccion> _transacciones = new List<Transaccion>();
 		private List<Objetivo> _objetivos = new List<Objetivo>();
 		private List<Cambio> _cambios = new List<Cambio>();
@@ -69,19 +69,7 @@ namespace Domain
 				return _cuentas;
 			}
 		}
-		public List<Usuario> UsuariosInvitados
-		{
-			get
-			{
-				return _usuariosInvitados;
-			}
-			set
-			{
-				if (value.Contains(_admin))
-					throw new DomainEspacioException("El administrador no puede estar en la lista de invitados");
-				_usuariosInvitados = value;
-			}
-		}
+		public List<EspacioUsuario> UsuariosInvitados { get; set; }
 		public Usuario Admin
 		{
 			get
@@ -98,9 +86,15 @@ namespace Domain
 
 		public void InvitarUsuario(Usuario usuario)
 		{
-			if (UsuariosInvitados.Contains(usuario) || usuario.Equals(Admin))
+			var espacioUsuario = new EspacioUsuario() { 
+				IdEspacio = Id,
+				CorreoUsuario = usuario.Correo,
+				Usuario = usuario,
+				Espacio = this
+			};
+			if (UsuariosInvitados.Contains(espacioUsuario) || usuario.Equals(Admin))
 				throw new DomainEspacioException("El usuario ya se encuentra presente en el espacio.");
-			UsuariosInvitados.Add(usuario);
+			UsuariosInvitados.Add(espacioUsuario);
 		}
 
 		public void AgregarCuenta(Cuenta cuenta)
@@ -139,7 +133,7 @@ namespace Domain
 
 		public bool PerteneceCorreo(string correo)
 		{
-			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Correo == correo));
+			return (Admin.Correo == correo || UsuariosInvitados.Any(u => u.Usuario.Correo == correo));
 		}
 
 		public void BorrarCategoria(Categoria categoria)
