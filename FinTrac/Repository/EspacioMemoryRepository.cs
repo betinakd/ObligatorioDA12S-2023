@@ -21,8 +21,7 @@ namespace Repository
 
         public Espacio? Find(Func<Espacio, bool> filter)
         {
-			return null;
-			/* return _espacios.FirstOrDefault(filter);*/
+			return _context.Espacios.FirstOrDefault(filter);
 		}
 
 		public IList<Espacio> FindAll()
