@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
+﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 
@@ -19,15 +14,14 @@ namespace RepositoryTest
         private List<Cuenta> _cuentas;
         private List<Usuario> _usuariosInvitados;
         private Usuario _admin;
-        private Espacio _espacio;
-        private EspacioMemoryRepository _repository;
 		private UsuariosDbContext _context;
 
 		[TestInitialize]
         public void TestInitialize()
         {
 			var options = new DbContextOptionsBuilder<UsuariosDbContext>()
-				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EspaciosTest; Integrated Security = True; Connect Timeout = 30; Encrypt = False").Options;
+				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EspaciosTest;" +
+                " Integrated Security = True; Connect Timeout = 30; Encrypt = False").Options;
 
 			_context = new UsuariosDbContext(options);
 			_context.Database.EnsureDeleted();
@@ -121,8 +115,8 @@ namespace RepositoryTest
             espacio2.Admin = _admin;
             espacio2.Nombre = "Espacio2";
             var repository = new EspacioMemoryRepository(_context);
-            var espacioAgregado1 = repository.Add(espacio1);
-            var espacioAgregado2 = repository.Add(espacio2);
+            repository.Add(espacio1);
+            repository.Add(espacio2);
             var espacios = repository.FindAll();
             Assert.IsNotNull(espacios);
             Assert.AreEqual(2, espacios.Count);
@@ -135,7 +129,7 @@ namespace RepositoryTest
             espacio1.Admin = _admin;
             espacio1.Nombre = "Espacio1";
             var repository = new EspacioMemoryRepository(_context);
-            var espacioAgregado1 = repository.Add(espacio1);
+            repository.Add(espacio1);
             espacio1.Admin = new Usuario
             {
                 Correo = "usuario2@yy.com",
