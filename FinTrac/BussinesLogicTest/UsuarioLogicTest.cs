@@ -12,11 +12,12 @@ namespace BussinesLogicTest
 		private UsuarioLogic usuarioLogic;
 		private Usuario usuario1;
 		private Usuario usuario2;
+		private UsuariosDbContext _context;
 
 		[TestInitialize]
 		public void Setup()
 		{
-			repository = new UsuarioMemoryRepository();
+			repository = new UsuarioMemoryRepository(_context);
 			usuarioLogic = new UsuarioLogic(repository);
 			usuario1 = new Usuario()
 			{
@@ -41,7 +42,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Nuevo_UsuarioLogic()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Assert.IsNotNull(usuarioLogic);
 		}
@@ -49,7 +50,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Agregar_Usuario()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Usuario usuario = new Usuario();
 			usuario.Correo = "xxxx@yyyy.com";
@@ -67,7 +68,7 @@ namespace BussinesLogicTest
 		[ExpectedException(typeof(DomainUsuarioException))]
 		public void Contrasena_invalida_UL()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xxxx@yyyy.com";
@@ -79,7 +80,7 @@ namespace BussinesLogicTest
 		[ExpectedException(typeof(DomainUsuarioException))]
 		public void Correo_invalido_UL()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xxxx@yyyy.co";
@@ -90,7 +91,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Buscar_Todos_Usuarios()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xx@yy.com";
@@ -108,7 +109,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Eliminar_Usuario()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xx@yy.com";
@@ -127,7 +128,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Buscar_Usuario()
 		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
+			IRepository<Usuario> repository = new UsuarioMemoryRepository(_context);
 			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xxxx@yyyy.com";
@@ -156,7 +157,7 @@ namespace BussinesLogicTest
 				Correo = "Juann@xxxx.com",
 				Contrasena = "123456ggggU",
 			};
-			var repository = new UsuarioMemoryRepository();
+			var repository = new UsuarioMemoryRepository(_context);
 			var logica = new UsuarioLogic(repository);
 			var usuarioAgregado1 = logica.AddUsuario(usuario1);
 			var usuarioAgregado2 = logica.AddUsuario(usuario2);
@@ -181,7 +182,7 @@ namespace BussinesLogicTest
 				Contrasena = "123456aasaU",
 				Correo = "Juan@xxxx.com"
 			};
-			var repository = new UsuarioMemoryRepository();
+			var repository = new UsuarioMemoryRepository(_context);
 			var logica = new UsuarioLogic(repository);
 			logica.AddUsuario(usuario1);
 			logica.AddUsuario(usuario2);
