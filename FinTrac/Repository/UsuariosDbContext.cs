@@ -6,6 +6,8 @@ namespace Repository
 	public class UsuariosDbContext : DbContext
 	{
 		public DbSet<Usuario> Usuarios { get; set; }
+		public DbSet<Espacio> Espacios { get; set; }
+
 		public UsuariosDbContext(DbContextOptions<UsuariosDbContext> options) : base(options)
 		{
 		}
