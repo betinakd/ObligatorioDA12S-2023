@@ -13,11 +13,12 @@ namespace BussinesLogicTest
         private EspacioLogic espacioLogic;
         private Espacio espacio1;
         private Espacio espacio2;
+		private readonly UsuariosDbContext _context;
 
-        [TestInitialize]
+		[TestInitialize]
         public void Setup()
         {
-            repository = new EspacioMemoryRepository();
+            repository = new EspacioMemoryRepository(_context);
             espacioLogic = new EspacioLogic(repository);
             espacio1 = new Espacio()
             {

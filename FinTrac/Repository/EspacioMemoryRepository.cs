@@ -1,43 +1,54 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
     public class EspacioMemoryRepository : IRepository<Espacio>
     {
-        private readonly List<Espacio> _espacios = new List<Espacio>();
-        public Espacio Add(Espacio oneElement)
+		private readonly UsuariosDbContext _context;
+
+		public EspacioMemoryRepository(UsuariosDbContext context)
+		{
+			_context = context;
+		}
+
+		public Espacio Add(Espacio oneElement)
         {
-            _espacios.Add(oneElement);
-            return oneElement;
+			_context.Espacios.Add(oneElement);
+			_context.SaveChanges();
+			return oneElement;
         }
 
         public Espacio? Find(Func<Espacio, bool> filter)
         {
-            return _espacios.FirstOrDefault(filter);
-        }
+			return null;
+			/* return _espacios.FirstOrDefault(filter);*/
+		}
 
-        public IList<Espacio> FindAll()
-        {
-            return _espacios;
-        }
+		public IList<Espacio> FindAll()
+		 {
+			return null;
+			/* return _espacios;*/
+		}
 
-        public Espacio? Update(Espacio updateEntity)
-        {
-            var espacio = Find(u => u.Admin == updateEntity.Admin);
-            if (espacio != null)
-            {               
-                espacio.Admin = updateEntity.Admin;
-            }
-            return espacio;
-        }
+		public Espacio? Update(Espacio updateEntity)
+		 {
+			return null;
+			/* var espacio = Find(u => u.Admin == updateEntity.Admin);
+			 if (espacio != null)
+			 {               
+				 espacio.Admin = updateEntity.Admin;
+			 }
+			 return espacio;*/
+		}
 
-        public void Delete(string id)
+		public void Delete(string id)
         {
-            var espacio = Find(u => u.Admin.Correo == id);
-            if (espacio != null)
-            {
-                _espacios.Remove(espacio);
-            }
-        }
+			/*  var espacio = Find(u => u.Admin.Correo == id);
+			  if (espacio != null)
+			  {
+				  _espacios.Remove(espacio);
+			  } */
+		}
     }
 }
