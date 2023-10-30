@@ -50,7 +50,7 @@ namespace RepositoryTest
             Assert.IsNotNull(usuarioAgregado2);
             Assert.AreEqual(_usuario2, usuarioAgregado2);   
         }
- /*       
+       
         [TestMethod]
         public void Actualizar_Usuario()
         {
@@ -61,7 +61,7 @@ namespace RepositoryTest
             Assert.IsNotNull(usuarioAgregado2);
             Assert.AreEqual("1234567Yuuuuui", usuarioAgregado2.Contrasena);
         }
-
+/* 
         [TestMethod]
         public void Eliminar_Usuario()
         {

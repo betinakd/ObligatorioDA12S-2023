@@ -25,14 +25,18 @@ namespace Repository
 
         public Usuario? Update(Usuario updateEntity)
 		{
-			return null;/*
-            var usuario = Find(u => u.Correo == updateEntity.Correo);
-            if (usuario != null)
-            {
-                usuario.Contrasena = updateEntity.Contrasena;
-                usuario.Correo = updateEntity.Correo;
-            }
-            return usuario; */
+			var usuario = Find(u => u.Correo == updateEntity.Correo);
+			if (usuario != null)
+			{
+				usuario.Contrasena = updateEntity.Contrasena;
+				usuario.Correo = updateEntity.Correo;
+				usuario.Nombre = updateEntity.Nombre;
+				usuario.Apellido = updateEntity.Apellido;
+				usuario.Direccion = updateEntity.Direccion;
+				usuario.IdEspacioPrincipal = updateEntity.IdEspacioPrincipal;
+				_dbContext.SaveChanges();
+			}
+			return usuario;
 		}
 
         public void Delete(string id)
