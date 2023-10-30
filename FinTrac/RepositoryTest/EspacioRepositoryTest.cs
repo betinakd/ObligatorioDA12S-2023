@@ -127,24 +127,28 @@ namespace RepositoryTest
             Assert.IsNotNull(espacios);
             Assert.AreEqual(2, espacios.Count);
         }
-/*
+
         [TestMethod]
         public void Actualizar_Espacio()
         {
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
-            var repository = new EspacioMemoryRepository();
+            espacio1.Nombre = "Espacio1";
+            var repository = new EspacioMemoryRepository(_context);
             var espacioAgregado1 = repository.Add(espacio1);
             espacio1.Admin = new Usuario
             {
                 Correo = "usuario2@yy.com",
                 Contrasena = "123456789B",
+                Nombre = "Usuario",
+                Apellido = "Admin",
+                Direccion = "Dir",
             };
             var espacioAgregado2 = repository.Update(espacio1);
             Assert.IsNotNull(espacioAgregado2);
             Assert.AreEqual(espacio1, espacioAgregado2);
         }
-
+/*
         [TestMethod]
         public void Eliminar_Espacio()
         {

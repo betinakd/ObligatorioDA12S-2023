@@ -36,13 +36,9 @@ namespace Repository
 
 		public Espacio? Update(Espacio updateEntity)
 		 {
-			return null;
-			/* var espacio = Find(u => u.Admin == updateEntity.Admin);
-			 if (espacio != null)
-			 {               
-				 espacio.Admin = updateEntity.Admin;
-			 }
-			 return espacio;*/
+			_context.Entry(updateEntity).State = EntityState.Modified;
+			_context.SaveChanges();
+			return updateEntity;
 		}
 
 		public void Delete(string id)
