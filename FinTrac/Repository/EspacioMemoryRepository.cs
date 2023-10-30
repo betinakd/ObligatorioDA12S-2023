@@ -26,8 +26,12 @@ namespace Repository
 
 		public IList<Espacio> FindAll()
 		 {
-			return null;
-			/* return _espacios;*/
+			var espacios = _context.Espacios
+				.Include(e => e.Admin)
+				.Include(e => e.Cambios) 
+				.ToList();
+
+			return espacios;
 		}
 
 		public Espacio? Update(Espacio updateEntity)
