@@ -28,17 +28,31 @@ namespace RepositoryTest
 				Direccion = "address"
 			});
 			_context.SaveChanges();
+
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio1",
+				Admin = _context.Usuarios.FirstOrDefault(u => u.Correo == "a@a.com"),
+			};
+
+			_context.Espacios.Add(espacio);
+			_context.SaveChanges();
+
 		}
 
 		[TestMethod]
 		public void DB_Get_Usuario()
 		{
-
 			var usuario = _context.Usuarios.FirstOrDefault(u => u.Correo == "a@a.com");
 			Assert.AreEqual("a@a.com", usuario.Correo);
 		}
-		
-		
+
+		[TestMethod]
+		public void DB_Get_Espacio()
+		{
+			var espacio = _context.Espacios.FirstOrDefault(e => e.Nombre == "Espacio1");
+			Assert.AreEqual("Espacio1", espacio.Nombre);
+		}
 	}
 }
 
