@@ -81,26 +81,16 @@ namespace RepositoryTest
             Assert.IsNotNull(usuarioAgregado2);
             Assert.AreEqual(_usuario1, usuarioAgregado2);
         }
-/*
+
         [TestMethod]
         public void Buscar_Todos_Usuarios()
         {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuuuuuu",
-            };
-            var usuario2 = new Usuario
-            {
-                Correo = "Jose@xxxxx.com",
-                Contrasena = "1234567Yuuuuuu",
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            var usuarioAgregado2 = repository.Add(usuario2);
+            var repository = new UsuarioMemoryRepository(_context);
+            repository.Add(_usuario1);
+            repository.Add(_usuario2);
             var usuarios = repository.FindAll();
             Assert.IsNotNull(usuarios);
             Assert.AreEqual(2, usuarios.Count);
-        } */
+        } 
     }
 }

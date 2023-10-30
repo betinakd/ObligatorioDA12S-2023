@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -51,8 +52,9 @@ namespace Repository
 
         public IList<Usuario> FindAll()
         {
-			return null;/*
-            return _usuarios; */
+			var usuarios = _dbContext.Usuarios
+			.ToList();
+			return usuarios;
 		}
 
     }
