@@ -1,4 +1,6 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
+
 namespace Repository
 {
 	public class UsuarioMemoryRepository : IRepository<Usuario>
@@ -50,7 +52,10 @@ namespace Repository
 
 		public IList<Usuario> FindAll()
 		{
-			return _dbContext.Usuarios.ToList();
+			var usuarios = _dbContext.Usuarios
+			.Include(e => e.EspaciosUsuarios)
+			.ToList();
+			return usuarios;
 		}
 	}
 }

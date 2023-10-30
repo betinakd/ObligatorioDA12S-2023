@@ -35,6 +35,7 @@ namespace Repository
 				.Include(e => e.Cuentas)
 				.Include(e => e.Categorias)
 				.Include(e => e.Cambios)
+				.Include(e => e.Objetivos)
 				.Include(e => e.Transacciones)
 				.ToList();
 

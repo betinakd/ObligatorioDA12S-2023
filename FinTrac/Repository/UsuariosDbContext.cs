@@ -37,17 +37,20 @@ namespace Repository
 
 			modelBuilder.Entity<Usuario>()
 				.HasKey(u => u.Correo);
+			
 			modelBuilder.Entity<Usuario>()
-	.HasMany(u => u.EspaciosUsuarios)
-	.WithOne(eu => eu.Usuario)
-	.HasForeignKey(eu => eu.CorreoUsuario);
+				.HasMany(u => u.EspaciosUsuarios)
+				.WithOne(eu => eu.Usuario)
+				.HasForeignKey(eu => eu.CorreoUsuario);
 
 			modelBuilder.Entity<Espacio>()
 				.HasMany(e => e.UsuariosInvitados)
 				.WithOne(eu => eu.Espacio)
 				.HasForeignKey(eu => eu.IdEspacio);
+			
 			modelBuilder.Entity<Espacio>()
 				.HasKey(e => e.Id);
+			
 			modelBuilder.Entity<Espacio>()
 				.HasMany(c => c.Cambios);
 
@@ -70,6 +73,11 @@ namespace Repository
 
 			modelBuilder.Entity<Objetivo>()
 						.HasKey(o => o.Titulo);
+
+			modelBuilder.Entity<Objetivo>()
+						.HasMany(o => o.Categorias)
+						.WithMany(c => c.Objetivos)
+						.UsingEntity(j => j.ToTable("ObjetivoCategoria"));
 		}
 
 		public Espacio ObtenerEspacioConMayorId()
