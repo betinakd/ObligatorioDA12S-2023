@@ -50,9 +50,12 @@ namespace BussinesLogic
 
 		public Espacio FindEspacio(int id)
 		{
-			return _repository.Find(e => e.Id == id);
-			
+            IList<Espacio> totalesEspacios = _repository.FindAll();
+			return totalesEspacios.FirstOrDefault(e => e.Id == id);
 		}
+        public void UpdateEspacio(Espacio espacio) {
+            _repository.Update(espacio);
+        }
 
         public int EspacioMayorId()
         {

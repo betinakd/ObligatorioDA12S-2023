@@ -71,6 +71,7 @@
 			try
 			{
 				espacio.AgregarCambio(cambio);
+				EspacioLogic.UpdateEspacio(espacio);
 				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
 			}
 			catch (DomainEspacioException ex)

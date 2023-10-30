@@ -30,7 +30,12 @@ namespace Repository
 		{
 			var espacios = _context.Espacios
 				.Include(e => e.Admin)
-				.Include(e => e.Cambios) // Cargar la lista de Cambios para cada Espacio
+				.Include(e => e.Cambios)
+				.Include(e => e.UsuariosInvitados)
+				.Include(e => e.Cuentas)
+				.Include(e => e.Categorias)
+				.Include(e => e.Cambios)
+				.Include(e => e.Transacciones)
 				.ToList();
 
 			return espacios;

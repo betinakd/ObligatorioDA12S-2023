@@ -25,10 +25,6 @@ namespace Repository
 				.HasKey(e => e.Id);
 			modelBuilder.Entity<Espacio>()
 				.HasMany(c => c.Cambios);
-			//modelBuilder.Entity<Espacio>()
-			//	.HasMany(e => e.Cambios)
-			//	.WithOne(c => c.Espacio)  // La propiedad de navegación en la entidad Cambio
-			//	.HasForeignKey(c => c.EspacioId);  // La clave foránea en la entidad Cambio
 
 			modelBuilder.Entity<Cambio>()
 					.HasKey(c => new
