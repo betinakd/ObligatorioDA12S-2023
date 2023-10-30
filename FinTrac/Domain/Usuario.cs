@@ -24,7 +24,6 @@ namespace Domain
 			}
 		}
 		private string _correo;
-		[Key]
 		public string Correo
 		{
 			get { return _correo; }

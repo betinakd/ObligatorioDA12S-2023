@@ -8,7 +8,6 @@ namespace Domain
         private string _titulo;
         private double _montoMaximo;
         private List<Categoria> _categorias = new List<Categoria>();
-        [Key]
         public string Titulo 
         {
             get

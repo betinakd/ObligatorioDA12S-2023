@@ -9,7 +9,6 @@ namespace Domain
 		DateTime _fechaCreacion = DateTime.Today;
 		public bool EstadoActivo { get; set; }
 		public TipoCategoria Tipo { get; set; }
-		[Key]
 		public string Nombre
 		{
 			get { return _nombre; }
