@@ -20,9 +20,8 @@ namespace Repository
 
 		public Usuario? Find(Func<Usuario, bool> filter)
         {
-            return null;
-           /* return _usuarios.FirstOrDefault(filter); */
-        }
+			return _dbContext.Usuarios.FirstOrDefault(filter);
+		}
 
         public Usuario? Update(Usuario updateEntity)
 		{
