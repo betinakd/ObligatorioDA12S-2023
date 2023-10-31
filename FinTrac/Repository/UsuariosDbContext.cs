@@ -81,9 +81,30 @@ namespace Repository
 				.WithMany(c => c.Objetivos)
 				.UsingEntity(j => j.ToTable("ObjetivoCategoria"));
 
+
+			modelBuilder.Entity<Cuenta>()
+				.HasDiscriminator<string>("Tipo_cuenta")
+				.HasValue<Ahorro>("Ahorro")
+				.HasValue<Credito>("Credito");
+
 			modelBuilder.Entity<Cuenta>()
 				.HasKey(c => c.Id);
 
+			modelBuilder.Entity<Cuenta>()
+				.Property(c => c.Id)
+				.ValueGeneratedOnAdd();
+
+			modelBuilder.Entity<Ahorro>()
+				.Property(a => a.Nombre)
+				.IsRequired();
+
+			modelBuilder.Entity<Credito>()
+				.Property(c => c.BancoEmisor)
+				.IsRequired();
+
+			modelBuilder.Entity<Credito>()
+				.Property(c => c.NumeroTarjeta)
+				.IsRequired();
 		}
 
 		public Espacio ObtenerEspacioConMayorId()
