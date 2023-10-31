@@ -36,6 +36,7 @@ namespace Repository
 				.Include(e => e.Categorias)
 				.Include(e => e.Cambios)
 				.Include(e => e.Objetivos)
+					.ThenInclude(o => o.Categorias)
 				.Include(e => e.Transacciones)
 				.ToList();
 
