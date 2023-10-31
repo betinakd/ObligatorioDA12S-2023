@@ -10,6 +10,10 @@ namespace Repository
 
 		public UsuariosDbContext(DbContextOptions<UsuariosDbContext> options) : base(options)
 		{
+			if (!Database.IsInMemory())
+			{
+				Database.Migrate();
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
