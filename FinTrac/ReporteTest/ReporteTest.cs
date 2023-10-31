@@ -146,7 +146,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.AreEqual(cambioRet, miCambio);
 		}
 
@@ -165,7 +165,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsNotNull(cambioRet);
 		}
 
@@ -183,7 +183,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsFalse(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
@@ -201,7 +201,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsFalse(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
@@ -219,7 +219,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsTrue(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
@@ -266,7 +266,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
-			double monto = reporte.SumatoriaCostos(cuenta, miCambio);
+			double monto = reporte.SumatoriaCostos(cuenta);
 			Assert.IsTrue(monto == 40);
 		}
 		[TestMethod]
@@ -312,7 +312,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
-			double monto = reporte.SumatoriaIngresos(cuenta, miCambio);
+			double monto = reporte.SumatoriaIngresos(cuenta);
 			Assert.IsTrue(monto == 40);
 		}
 
@@ -1333,8 +1333,8 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-			DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+			DateTime fIni = new DateTime(2023, 9, 1);
+			DateTime fEnd = new DateTime(2023, 12, 31);
 			List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria, fIni, fEnd, _cuenta);
 			Assert.IsTrue(toAnalize.Count != 0);
 		}
@@ -1385,8 +1385,8 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(transaccion1);
 			_miEspacio.AgregarTransaccion(transaccion2);
 			_reporte.MiEspacio = _miEspacio;
-			DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-			DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+			DateTime fIni = new DateTime(2023, 9, 1);
+			DateTime fEnd = new DateTime(2023, 12, 31);
 			List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria1, fIni, fEnd, _cuenta);
 			Assert.IsTrue(toAnalize.Count == 1);
 		}
@@ -1661,7 +1661,7 @@ namespace DomainTest
 			{
 				BancoEmisor = "Santander",
 				CreditoDisponible = 1000,
-				FechaCierre = new DateTime(DateTime.Now.Year, 12, 31),
+				FechaCierre = new DateTime(2024, 12, 31),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
 			};

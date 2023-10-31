@@ -72,13 +72,19 @@
 									@transaccion.FechaTransaccion
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@transaccion.Moneda - @transaccion.Monto
+									@if (transaccion.Moneda.Equals(TipoCambiario.Euro))
+									{
+										<div>@transaccion.Moneda - Є @transaccion.Monto</div>
+									} else
+									{
+										<div>@transaccion.Moneda - U$D @transaccion.Monto</div>
+									}
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@transaccion.EncontrarCambio(reporte.MiEspacio).Pesos
+									$@transaccion.EncontrarCambio(reporte.MiEspacio).Pesos
 								</td>
 							</tr>
 						}

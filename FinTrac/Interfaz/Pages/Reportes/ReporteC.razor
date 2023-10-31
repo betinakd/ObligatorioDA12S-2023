@@ -103,7 +103,13 @@
 									$@(gasto.Monto * gasto.EncontrarCambio(reporte.MiEspacio).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@gasto.EncontrarCambio(reporte.MiEspacio).Pesos - @gasto.Monto
+									@if (gasto.EncontrarCambio(reporte.MiEspacio).Moneda.Equals(TipoCambiario.Dolar))
+									{
+										<div>$@gasto.EncontrarCambio(reporte.MiEspacio).Pesos -  U$D @gasto.Monto</div>
+									} else
+									{
+										<div>$@gasto.EncontrarCambio(reporte.MiEspacio).Pesos -  Є @gasto.Monto</div>
+									}
 								</td>
 							</tr>
 						} else

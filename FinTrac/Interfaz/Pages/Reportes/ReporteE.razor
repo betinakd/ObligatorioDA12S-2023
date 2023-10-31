@@ -34,7 +34,7 @@
 	}
 	else
 	{
-		@if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+		@if (!cuentaBalance.Moneda.Equals(TipoCambiario.PesosUruguayos))
 		{
 			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -49,25 +49,45 @@
 							Moneda
 						</th>
 						<th scope="col" class="px-6 py-3">
-							Valor dolar
+							Valor moneda
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 						<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@cuentaBalance.Nombre</td>
-						<td class="px-6 py-4">$ @balanceCalculado</td>
+						<td class="px-6 py-4">
+							@if (cambioActual.Pesos == 0)
+							{
+								@if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+								{
+									<div>U$D @balanceCalculado</div>
+								}
+								else
+								{
+									<div>Є @balanceCalculado</div>
+								}
+
+							} else
+							{
+								<div>$ @balanceCalculado</div>
+							}
+						</td>
 						<td class="px-6 py-4">@cuentaBalance.Moneda</td>
 						<td class="px-6 py-4">
-							$ @if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+							@if (cambioActual.Pesos == 0)
 							{
-								@cambioActual.Pesos
+								<div>No hay un cambio disponible</div>
+							} else
+							{
+								<div>$ @cambioActual.Pesos</div>
 							}
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		} else
+		}
+		else
 		{
 			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -120,7 +140,8 @@
 			//cuentaBalance = cuenta;
 			EncontrarCambio(cuentaBalance);
 			balanceCalculado = reporte.BalanceCuentas(cuentaBalance);
-		} else
+		}
+		else
 		{
 			cuentaEncontrada = false;
 		}
@@ -145,10 +166,12 @@
 	private void EncontrarCambio(Ahorro cuenta)
 	{
 		Cambio cambioRet = new Cambio();
+		bool cambioEncontrado = false;
 		foreach (Cambio cambio in reporte.MiEspacio.Cambios)
 		{
-			if (cambio.FechaDeCambio.Day == cuenta.FechaCreacion.Day && cambio.FechaDeCambio.Month == cuenta.FechaCreacion.Month && cambio.FechaDeCambio.Year == cuenta.FechaCreacion.Year)
+			if (!cambioEncontrado && cuenta.Moneda.Equals(cambio.Moneda))
 			{
+				cambioEncontrado = true;
 				cambioRet = cambio;
 			}
 		}
