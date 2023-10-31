@@ -6,7 +6,7 @@ namespace RepositoryTest
 {
 	[TestClass]
 	public class UsuariosDbContextTest
-	{
+	{	
 		private UsuariosDbContext _context;
 		private UsuarioMemoryRepository _repository;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
@@ -56,6 +56,20 @@ namespace RepositoryTest
 		{
 			var espacio = _context.Espacios.FirstOrDefault(e => e.Nombre == "Espacio1");
 			Assert.AreEqual("Espacio1", espacio.Nombre);
+		}
+
+		[TestMethod]
+		public void UsuariosDbContext_No_Esta_En_Memoria()
+		{
+			var options = new DbContextOptionsBuilder<UsuariosDbContext>()
+				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EspaciosTest;" +
+				" Integrated Security = True; Connect Timeout = 30; Encrypt = False")
+				.Options;
+
+			using (var context = new UsuariosDbContext(options))
+			{
+				Assert.IsFalse(context.Database.IsInMemory());
+			}
 		}
 	}
 }
