@@ -4,7 +4,8 @@ namespace Domain
 {
     public class Objetivo
     {
-        public int Id { get; set; }
+        public int EspacioId { get; set; }
+        public Espacio Espacio { get; set; }
         private string _titulo;
         private double _montoMaximo;
         private List<Categoria> _categorias = new List<Categoria>();

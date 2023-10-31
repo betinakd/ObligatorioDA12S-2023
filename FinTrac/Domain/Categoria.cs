@@ -4,7 +4,7 @@ namespace Domain
 {
 	public class Categoria
 	{
-		public int Id { get; set; }
+		public int EspacioId { get; set; }
 		public List<Objetivo> Objetivos { get; set; }
 		private string _nombre;
 		DateTime _fechaCreacion = DateTime.Today;
