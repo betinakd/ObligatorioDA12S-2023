@@ -31,7 +31,6 @@
 				Admin = usuario,
 			};
 			EspacioLogic.AddEspacio(espacio);
-			espacio.AsignarId();
 			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
 		}
 		catch (DomainEspacioException e)

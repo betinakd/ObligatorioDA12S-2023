@@ -1,43 +1,59 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
     public class EspacioMemoryRepository : IRepository<Espacio>
     {
-        private readonly List<Espacio> _espacios = new List<Espacio>();
-        public Espacio Add(Espacio oneElement)
+        private readonly FintracDbContext _espacios;
+        public EspacioMemoryRepository(FintracDbContext espacios)
         {
-            _espacios.Add(oneElement);
-            return oneElement;
-        }
+			_espacios = espacios;
+		}
+		public Espacio Add(Espacio oneElement)
+		{
+			_espacios.Espacios.Add(oneElement);
+			_espacios.SaveChanges();
+			return oneElement;
+		}
 
-        public Espacio? Find(Func<Espacio, bool> filter)
-        {
-            return _espacios.FirstOrDefault(filter);
-        }
+		public Espacio Find(Func<Espacio, bool> filter)
+		{
+			return _espacios.Espacios.FirstOrDefault(filter);
+		}
 
-        public IList<Espacio> FindAll()
-        {
-            return _espacios;
-        }
+		public IList<Espacio> FindAll()
+		{
+			var espacios = _espacios.Espacios
+				.Include(e => e.Admin)
+				.Include(e => e.Cambios)
+				.Include(e => e.UsuariosInvitados)
+				.Include(e => e.Cuentas)
+				.Include(e => e.Categorias)
+				.Include(e => e.Cambios)
+				.Include(e => e.Objetivos)
+					.ThenInclude(o => o.Categorias)
+				.Include(e => e.Transacciones)
+				.ToList();
 
-        public Espacio? Update(Espacio updateEntity)
-        {
-            var espacio = Find(u => u.Admin == updateEntity.Admin);
-            if (espacio != null)
-            {               
-                espacio.Admin = updateEntity.Admin;
-            }
-            return espacio;
-        }
+			return espacios;
+		}
 
-        public void Delete(string id)
-        {
-            var espacio = Find(u => u.Admin.Correo == id);
-            if (espacio != null)
-            {
-                _espacios.Remove(espacio);
-            }
-        }
-    }
+		public Espacio Update(Espacio updateEntity)
+		{
+			_espacios.Entry(updateEntity).State = EntityState.Modified;
+			_espacios.SaveChanges();
+			return updateEntity;
+		}
+
+		public void Delete(string id)
+		{
+			var espacio = _espacios.Espacios.Find(id);
+			if (espacio != null)
+			{
+				_espacios.Espacios.Remove(espacio);
+				_espacios.SaveChanges();
+			}
+		}
+	}
 }

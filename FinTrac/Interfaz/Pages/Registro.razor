@@ -88,7 +88,6 @@
 				{
 					UsuarioLogic.AddUsuario(usuario);
 					EspacioLogic.AddEspacio(espacioPrincipal);
-					espacioPrincipal.AsignarId();
 					usuario.IdEspacioPrincipal = espacioPrincipal.Id;
 					Persistencia.Id = espacioPrincipal.Id;
 					Persistencia.Correo = usuario.Correo;

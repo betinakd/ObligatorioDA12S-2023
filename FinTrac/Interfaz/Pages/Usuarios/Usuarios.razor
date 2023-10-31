@@ -45,13 +45,13 @@ href="/home/@Persistencia.Id/@Persistencia.Correo/InvitarUsuarios">Invitar Usuar
             {
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        @usuario.Nombre
+                        @usuario.Usuario.Nombre
                     </td>
                     <td class="px-6 py-4 font-medium">
-                        @usuario.Apellido
+                        @usuario.Usuario.Apellido
                     </td>
                     <td class="px-6 py-4 font-medium">
-                        @usuario.Correo
+                        @usuario.Usuario.Correo
                     </td>
                     @if (espacio.Admin.Correo.Equals(Persistencia.Correo))
                     {
@@ -75,7 +75,7 @@ href="/home/@Persistencia.Id/@Persistencia.Correo/InvitarUsuarios">Invitar Usuar
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-    public List<Usuario> usuarios { get; set; }
+    public List<EspacioUsuario> usuarios { get; set; }
     public Espacio espacio { get; set; }
 
     protected override void OnInitialized()
@@ -83,7 +83,7 @@ href="/home/@Persistencia.Id/@Persistencia.Correo/InvitarUsuarios">Invitar Usuar
 		usuarios = EspacioLogic.FindEspacio(Persistencia.Id).UsuariosInvitados;
         espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 	}
-	private void EliminarUsuario(Usuario usuario)
+    private void EliminarUsuario(EspacioUsuario usuario)
 	{
 		try
 		{

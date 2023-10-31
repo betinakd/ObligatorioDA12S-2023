@@ -1,9 +1,13 @@
 ﻿using Excepcion;
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Domain
 {
 	public class Usuario
 	{
+		public List<EspacioUsuario> EspaciosUsuarios { get; set; }
 		public int IdEspacioPrincipal { get; set; }
 		private string _contrasena;
 		public string Direccion { get; set; }
@@ -23,7 +27,6 @@ namespace Domain
 			}
 		}
 		private string _correo;
-
 		public string Correo
 		{
 			get { return _correo; }
@@ -135,6 +138,4 @@ namespace Domain
 			return Correo == user.Correo;
 		}
 	}
-
-
 }
