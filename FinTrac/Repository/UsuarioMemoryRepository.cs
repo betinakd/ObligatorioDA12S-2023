@@ -53,7 +53,6 @@ namespace Repository
 		public IList<Usuario> FindAll()
 		{
 			var usuarios = _dbContext.Usuarios
-			.Include(e => e.EspaciosUsuarios)
 			.ToList();
 			return usuarios;
 		}

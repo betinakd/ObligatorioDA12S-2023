@@ -66,7 +66,9 @@
 				};
 			try
 			{
-				EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaAhorro);
+				Espacio espacio = EspacioLogic.FindEspacio(Id);
+				espacio.AgregarCuenta(nuevaCuentaAhorro);
+				EspacioLogic.UpdateEspacio(espacio);
 				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
 			}
 			catch (DomainEspacioException ex)

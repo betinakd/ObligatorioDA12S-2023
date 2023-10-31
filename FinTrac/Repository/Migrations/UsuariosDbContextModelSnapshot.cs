@@ -88,8 +88,15 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Cuenta", b =>
                 {
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EspacioId")
                         .HasColumnType("int");
@@ -97,11 +104,15 @@ namespace Repository.Migrations
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
 
-                    b.HasKey("FechaCreacion");
+                    b.HasKey("Id");
 
                     b.HasIndex("EspacioId");
 
                     b.ToTable("Cuentas");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Cuenta");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Espacio", b =>
@@ -175,8 +186,8 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CuentaMonetariaFechaCreacion")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("CuentaMonetariaId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("EspacioId")
                         .HasColumnType("int");
@@ -196,7 +207,7 @@ namespace Repository.Migrations
 
                     b.HasKey("IdTransaccion");
 
-                    b.HasIndex("CuentaMonetariaFechaCreacion");
+                    b.HasIndex("CuentaMonetariaId");
 
                     b.HasIndex("EspacioId");
 
@@ -232,6 +243,41 @@ namespace Repository.Migrations
                     b.HasKey("Correo");
 
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("Domain.Ahorro", b =>
+                {
+                    b.HasBaseType("Domain.Cuenta");
+
+                    b.Property<double>("Monto")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Ahorro");
+                });
+
+            modelBuilder.Entity("Domain.Credito", b =>
+                {
+                    b.HasBaseType("Domain.Cuenta");
+
+                    b.Property<string>("BancoEmisor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("CreditoDisponible")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("FechaCierre")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NumeroTarjeta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Credito");
                 });
 
             modelBuilder.Entity("CategoriaObjetivo", b =>
@@ -290,13 +336,13 @@ namespace Repository.Migrations
                     b.HasOne("Domain.Usuario", "Usuario")
                         .WithMany("EspaciosUsuarios")
                         .HasForeignKey("CorreoUsuario")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Espacio", "Espacio")
                         .WithMany("UsuariosInvitados")
                         .HasForeignKey("IdEspacio")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Espacio");
@@ -319,7 +365,7 @@ namespace Repository.Migrations
                 {
                     b.HasOne("Domain.Cuenta", "CuentaMonetaria")
                         .WithMany()
-                        .HasForeignKey("CuentaMonetariaFechaCreacion")
+                        .HasForeignKey("CuentaMonetariaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

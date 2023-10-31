@@ -12,8 +12,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    [Migration("20231029024814_DataBase2")]
-    partial class DataBase2
+    [Migration("20231031154003_InitialEspacioDataBase")]
+    partial class InitialEspacioDataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,27 @@ namespace Repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CategoriaObjetivo", b =>
+                {
+                    b.Property<int>("CategoriasEspacioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoriasNombre")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ObjetivosTitulo")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ObjetivosEspacioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoriasEspacioId", "CategoriasNombre", "ObjetivosTitulo", "ObjetivosEspacioId");
+
+                    b.HasIndex("ObjetivosTitulo", "ObjetivosEspacioId");
+
+                    b.ToTable("ObjetivoCategoria", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Cambio", b =>
                 {
                     b.Property<DateTime>("FechaDeCambio")
@@ -33,13 +54,13 @@ namespace Repository.Migrations
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EspacioId")
+                    b.Property<int>("EspacioId")
                         .HasColumnType("int");
 
                     b.Property<double>("Pesos")
                         .HasColumnType("float");
 
-                    b.HasKey("FechaDeCambio", "Moneda");
+                    b.HasKey("FechaDeCambio", "Moneda", "EspacioId");
 
                     b.HasIndex("EspacioId");
 
@@ -48,11 +69,11 @@ namespace Repository.Migrations
 
             modelBuilder.Entity("Domain.Categoria", b =>
                 {
+                    b.Property<int>("EspacioId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("EspacioId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("EstadoActivo")
                         .HasColumnType("bit");
@@ -60,25 +81,25 @@ namespace Repository.Migrations
                     b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ObjetivoTitulo")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
 
-                    b.HasKey("Nombre");
-
-                    b.HasIndex("EspacioId");
-
-                    b.HasIndex("ObjetivoTitulo");
+                    b.HasKey("EspacioId", "Nombre");
 
                     b.ToTable("Categorias");
                 });
 
             modelBuilder.Entity("Domain.Cuenta", b =>
                 {
-                    b.Property<DateTime>("FechaCreacion")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("EspacioId")
                         .HasColumnType("int");
@@ -86,11 +107,15 @@ namespace Repository.Migrations
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
 
-                    b.HasKey("FechaCreacion");
+                    b.HasKey("Id");
 
                     b.HasIndex("EspacioId");
 
                     b.ToTable("Cuentas");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Cuenta");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Espacio", b =>
@@ -116,18 +141,33 @@ namespace Repository.Migrations
                     b.ToTable("Espacios");
                 });
 
+            modelBuilder.Entity("Domain.EspacioUsuario", b =>
+                {
+                    b.Property<int>("IdEspacio")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CorreoUsuario")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IdEspacio", "CorreoUsuario");
+
+                    b.HasIndex("CorreoUsuario");
+
+                    b.ToTable("EspaciosUsuarios");
+                });
+
             modelBuilder.Entity("Domain.Objetivo", b =>
                 {
                     b.Property<string>("Titulo")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("EspacioId")
+                    b.Property<int>("EspacioId")
                         .HasColumnType("int");
 
                     b.Property<double>("MontoMaximo")
                         .HasColumnType("float");
 
-                    b.HasKey("Titulo");
+                    b.HasKey("Titulo", "EspacioId");
 
                     b.HasIndex("EspacioId");
 
@@ -142,12 +182,15 @@ namespace Repository.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTransaccion"));
 
+                    b.Property<int>("CategoriaTransaccionEspacioId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CategoriaTransaccionNombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("CuentaMonetariaFechaCreacion")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("CuentaMonetariaId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("EspacioId")
                         .HasColumnType("int");
@@ -167,11 +210,11 @@ namespace Repository.Migrations
 
                     b.HasKey("IdTransaccion");
 
-                    b.HasIndex("CategoriaTransaccionNombre");
-
-                    b.HasIndex("CuentaMonetariaFechaCreacion");
+                    b.HasIndex("CuentaMonetariaId");
 
                     b.HasIndex("EspacioId");
+
+                    b.HasIndex("CategoriaTransaccionEspacioId", "CategoriaTransaccionNombre");
 
                     b.ToTable("Transacciones");
                 });
@@ -193,9 +236,6 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("EspacioId")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdEspacioPrincipal")
                         .HasColumnType("int");
 
@@ -205,27 +245,75 @@ namespace Repository.Migrations
 
                     b.HasKey("Correo");
 
-                    b.HasIndex("EspacioId");
-
                     b.ToTable("Usuarios");
+                });
+
+            modelBuilder.Entity("Domain.Ahorro", b =>
+                {
+                    b.HasBaseType("Domain.Cuenta");
+
+                    b.Property<double>("Monto")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Ahorro");
+                });
+
+            modelBuilder.Entity("Domain.Credito", b =>
+                {
+                    b.HasBaseType("Domain.Cuenta");
+
+                    b.Property<string>("BancoEmisor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("CreditoDisponible")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("FechaCierre")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NumeroTarjeta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("Credito");
+                });
+
+            modelBuilder.Entity("CategoriaObjetivo", b =>
+                {
+                    b.HasOne("Domain.Categoria", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriasEspacioId", "CategoriasNombre")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Objetivo", null)
+                        .WithMany()
+                        .HasForeignKey("ObjetivosTitulo", "ObjetivosEspacioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Cambio", b =>
                 {
                     b.HasOne("Domain.Espacio", null)
                         .WithMany("Cambios")
-                        .HasForeignKey("EspacioId");
+                        .HasForeignKey("EspacioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Categoria", b =>
                 {
                     b.HasOne("Domain.Espacio", null)
                         .WithMany("Categorias")
-                        .HasForeignKey("EspacioId");
-
-                    b.HasOne("Domain.Objetivo", null)
-                        .WithMany("Categorias")
-                        .HasForeignKey("ObjetivoTitulo");
+                        .HasForeignKey("EspacioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Cuenta", b =>
@@ -246,24 +334,41 @@ namespace Repository.Migrations
                     b.Navigation("Admin");
                 });
 
+            modelBuilder.Entity("Domain.EspacioUsuario", b =>
+                {
+                    b.HasOne("Domain.Usuario", "Usuario")
+                        .WithMany("EspaciosUsuarios")
+                        .HasForeignKey("CorreoUsuario")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Espacio", "Espacio")
+                        .WithMany("UsuariosInvitados")
+                        .HasForeignKey("IdEspacio")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Espacio");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Domain.Objetivo", b =>
                 {
-                    b.HasOne("Domain.Espacio", null)
+                    b.HasOne("Domain.Espacio", "Espacio")
                         .WithMany("Objetivos")
-                        .HasForeignKey("EspacioId");
+                        .HasForeignKey("EspacioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Espacio");
                 });
 
             modelBuilder.Entity("Domain.Transaccion", b =>
                 {
-                    b.HasOne("Domain.Categoria", "CategoriaTransaccion")
-                        .WithMany()
-                        .HasForeignKey("CategoriaTransaccionNombre")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Cuenta", "CuentaMonetaria")
                         .WithMany()
-                        .HasForeignKey("CuentaMonetariaFechaCreacion")
+                        .HasForeignKey("CuentaMonetariaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -271,16 +376,15 @@ namespace Repository.Migrations
                         .WithMany("Transacciones")
                         .HasForeignKey("EspacioId");
 
+                    b.HasOne("Domain.Categoria", "CategoriaTransaccion")
+                        .WithMany()
+                        .HasForeignKey("CategoriaTransaccionEspacioId", "CategoriaTransaccionNombre")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CategoriaTransaccion");
 
                     b.Navigation("CuentaMonetaria");
-                });
-
-            modelBuilder.Entity("Domain.Usuario", b =>
-                {
-                    b.HasOne("Domain.Espacio", null)
-                        .WithMany("UsuariosInvitados")
-                        .HasForeignKey("EspacioId");
                 });
 
             modelBuilder.Entity("Domain.Espacio", b =>
@@ -298,9 +402,9 @@ namespace Repository.Migrations
                     b.Navigation("UsuariosInvitados");
                 });
 
-            modelBuilder.Entity("Domain.Objetivo", b =>
+            modelBuilder.Entity("Domain.Usuario", b =>
                 {
-                    b.Navigation("Categorias");
+                    b.Navigation("EspaciosUsuarios");
                 });
 #pragma warning restore 612, 618
         }
