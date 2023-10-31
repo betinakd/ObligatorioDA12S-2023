@@ -8,43 +8,47 @@ namespace RepositoryTest
 	public class UsuariosDbContextTest
 	{
 		private UsuariosDbContext _context;
+		private UsuarioMemoryRepository _repository;
+		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]
 		public void Setup()
 		{
-			var options = new DbContextOptionsBuilder<UsuariosDbContext>()
-				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EspaciosTest; Integrated Security = True; Connect Timeout = 30; Encrypt = False").Options;
-
-			_context = new UsuariosDbContext(options);
-			_context.Database.EnsureDeleted();
-			_context.Database.EnsureCreated();
+			_context = _contextFactory.CreateDbContext();
+			_repository = new UsuarioMemoryRepository(_context);
 
 			_context.Usuarios.Add(new Usuario
 			{
 				Nombre = "Maxi",
 				Apellido = "Gimenez",
-				Correo = "a@a.com",
+				Correo = "maxx@a.com",
 				Contrasena = "123456789A",
 				Direccion = "address"
 			});
 			_context.SaveChanges();
 
-			Espacio espacio = new Espacio
+			_context.Espacios.Add( new Espacio
 			{
 				Nombre = "Espacio1",
-				Admin = _context.Usuarios.FirstOrDefault(u => u.Correo == "a@a.com"),
-			};
-
-			_context.Espacios.Add(espacio);
+				Admin = _context.Usuarios.FirstOrDefault(u => u.Correo == "maxx@a.com")
+			});
 			_context.SaveChanges();
 
+		}
+
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			_context.Database.EnsureDeleted();
 		}
 
 		[TestMethod]
 		public void DB_Get_Usuario()
 		{
-			var usuario = _context.Usuarios.FirstOrDefault(u => u.Correo == "a@a.com");
-			Assert.AreEqual("a@a.com", usuario.Correo);
+			var usuarios = _repository.Find(u => u.Correo == "maxx@a.com");
+			Assert.IsNotNull(usuarios);
+			var usuarioInDb = _context.Usuarios.FirstOrDefault(u => u.Correo == "maxx@a.com");
+			Assert.AreEqual(usuarioInDb, usuarios);
 		}
 
 		[TestMethod]
