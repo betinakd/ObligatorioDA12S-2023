@@ -28,6 +28,7 @@ namespace Repository
 
 		public IList<Espacio> FindAll()
 		{
+
 			var espacios = _context.Espacios
 				.Include(e => e.Admin)
 				.Include(e => e.Cambios)
@@ -38,8 +39,10 @@ namespace Repository
 				.Include(e => e.Objetivos)
 					.ThenInclude(o => o.Categorias)
 				.Include(e => e.Transacciones)
+					.ThenInclude(t => t.CuentaMonetaria)
+				.Include(e => e.Transacciones)
+					.ThenInclude(t => t.CategoriaTransaccion)
 				.ToList();
-
 			return espacios;
 		}
 

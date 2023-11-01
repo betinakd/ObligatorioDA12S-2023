@@ -105,6 +105,18 @@ namespace Repository
 			modelBuilder.Entity<Credito>()
 				.Property(c => c.NumeroTarjeta)
 				.IsRequired();
+
+			modelBuilder.Entity<Transaccion>()
+				.HasKey(c => c.IdTransaccion);
+
+			modelBuilder.Entity<Transaccion>()
+				.Property(c => c.IdTransaccion)
+				.ValueGeneratedOnAdd();
+
+			modelBuilder.Entity<Transaccion>()
+				.HasDiscriminator<string>("Tipo_Transaccion")
+				.HasValue<TransaccionCosto>("Costo")
+				.HasValue<TransaccionIngreso>("Ingreso");
 		}
 
 		public Espacio ObtenerEspacioConMayorId()

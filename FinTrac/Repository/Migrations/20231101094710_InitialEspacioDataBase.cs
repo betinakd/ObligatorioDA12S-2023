@@ -95,8 +95,8 @@ namespace Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Moneda = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EspacioId = table.Column<int>(type: "int", nullable: true),
+                    Tipo_cuenta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Monto = table.Column<double>(type: "float", nullable: true),
                     FechaCierre = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -170,7 +170,8 @@ namespace Repository.Migrations
                     CuentaMonetariaId = table.Column<int>(type: "int", nullable: false),
                     CategoriaTransaccionEspacioId = table.Column<int>(type: "int", nullable: false),
                     CategoriaTransaccionNombre = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EspacioId = table.Column<int>(type: "int", nullable: true)
+                    EspacioId = table.Column<int>(type: "int", nullable: true),
+                    Tipo_Transaccion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

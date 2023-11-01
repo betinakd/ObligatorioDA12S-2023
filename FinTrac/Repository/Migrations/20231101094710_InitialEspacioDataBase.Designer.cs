@@ -12,8 +12,8 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    [Migration("20231031155134_Cuenta")]
-    partial class Cuenta
+    [Migration("20231101094710_InitialEspacioDataBase")]
+    partial class InitialEspacioDataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,6 +204,10 @@ namespace Repository.Migrations
                     b.Property<double>("Monto")
                         .HasColumnType("float");
 
+                    b.Property<string>("Tipo_Transaccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -217,6 +221,10 @@ namespace Repository.Migrations
                     b.HasIndex("CategoriaTransaccionEspacioId", "CategoriaTransaccionNombre");
 
                     b.ToTable("Transacciones");
+
+                    b.HasDiscriminator<string>("Tipo_Transaccion").HasValue("Transaccion");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Domain.Usuario", b =>
@@ -281,6 +289,20 @@ namespace Repository.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Credito");
+                });
+
+            modelBuilder.Entity("Domain.TransaccionCosto", b =>
+                {
+                    b.HasBaseType("Domain.Transaccion");
+
+                    b.HasDiscriminator().HasValue("Costo");
+                });
+
+            modelBuilder.Entity("Domain.TransaccionIngreso", b =>
+                {
+                    b.HasBaseType("Domain.Transaccion");
+
+                    b.HasDiscriminator().HasValue("Ingreso");
                 });
 
             modelBuilder.Entity("CategoriaObjetivo", b =>

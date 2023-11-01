@@ -83,6 +83,7 @@
 			transaccion.Monto = inputMonto;
 			transaccion.Moneda = tipoMonedaSeleccionado;
 			transaccion.CategoriaTransaccion = categoria;
+			EspacioLogic.UpdateEspacio(espacio);
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}
