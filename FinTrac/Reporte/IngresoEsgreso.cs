@@ -14,7 +14,7 @@ namespace EspacioReporte
 
 		public IngresoEgreso() 
 		{ 
-			Fecha = DateTime.Now;
+			Fecha = DateTime.Today;
 		}
 
 		public IngresoEgreso(DateTime fecha, double ingresos, double egresos)
