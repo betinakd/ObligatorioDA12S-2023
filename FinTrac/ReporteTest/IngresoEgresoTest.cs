@@ -28,7 +28,7 @@ namespace EspacioReporteTest
 		public void IngresoEgreso_Valores_En_Cero()
 		{
 			IngresoEgreso ingresoEgreso = new IngresoEgreso();
-			Assert.IsTrue(ingresoEgreso.Ingresos != 0 && ingresoEgreso.Egresos != 0);
+			Assert.IsTrue(ingresoEgreso.Ingresos == 0 && ingresoEgreso.Egresos == 0);
 		}
 	}
 }
