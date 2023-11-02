@@ -38,7 +38,7 @@ namespace EspacioReporteTest
 			double egresos = 0;
 			DateTime fecha = new DateTime(2023, 11, 2);
 			IngresoEgreso ingresoEgreso = new IngresoEgreso(fecha, ingresos, egresos);
-			Assert.IsFalse(ingresoEgreso.Fecha.Equals(fecha));
+			Assert.IsTrue(ingresoEgreso.Fecha.Equals(fecha));
 		}
 	}
 }
