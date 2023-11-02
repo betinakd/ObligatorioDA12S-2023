@@ -1917,5 +1917,42 @@ namespace DomainTest
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
 			Assert.IsTrue(ingresoEgreso.First().Egresos == totalGastado);
 		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_Meses_Distintos()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				CreditoDisponible = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Categoria _categoriaCosto = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaCosto);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaCosto,
+				Monto = 10,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month+1, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			//double totalGastado = 10;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			Assert.IsFalse(ingresoEgreso.First().Egresos == 0);
+		}
 	}
 }
