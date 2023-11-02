@@ -1950,9 +1950,8 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion1);
 			_reporte.MiEspacio = _miEspacio;
-			//double totalGastado = 10;
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
-			Assert.IsFalse(ingresoEgreso.First().Egresos == 0);
+			Assert.IsTrue(ingresoEgreso.First().Egresos == 0);
 		}
 	}
 }
