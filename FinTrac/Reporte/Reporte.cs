@@ -352,7 +352,10 @@ namespace EspacioReporte
 			return cambioRet;
 		}
 
-
+		/*public List<KeyValuePair<DateTime, int>> ReporteIngresosEgresos(int mes)
+		{
+			
+		}*/
 
 	}
 }
