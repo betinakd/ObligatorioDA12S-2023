@@ -23,5 +23,12 @@ namespace EspacioReporteTest
 			IngresoEgreso ingresoEgreso = new IngresoEgreso();
 			Assert.IsFalse(ingresoEgreso.Fecha != DateTime.Today);
 		}
+
+		[TestMethod]
+		public void IngresoEgreso_Valores_En_Cero()
+		{
+			IngresoEgreso ingresoEgreso = new IngresoEgreso();
+			Assert.IsTrue(ingresoEgreso.Ingresos != 0 && ingresoEgreso.Egresos != 0);
+		}
 	}
 }
