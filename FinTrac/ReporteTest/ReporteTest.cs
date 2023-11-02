@@ -1878,7 +1878,7 @@ namespace DomainTest
 			Espacio _miEspacio = new Espacio();
 			_reporte.MiEspacio = _miEspacio;
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
-			Assert.IsFalse(ingresoEgreso.Count == 30);
+			Assert.IsTrue(ingresoEgreso.Count == 30);
 		}
 	}
 }
