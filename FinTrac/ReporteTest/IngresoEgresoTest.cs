@@ -21,7 +21,7 @@ namespace EspacioReporteTest
 		public void IngresoEgreso_Fecha_Hoy()
 		{
 			IngresoEgreso ingresoEgreso = new IngresoEgreso();
-			Assert.IsFalse(ingresoEgreso.Fecha == DateTime.Today);
+			Assert.IsFalse(ingresoEgreso.Fecha != DateTime.Today);
 		}
 	}
 }
