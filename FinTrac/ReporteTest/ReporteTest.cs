@@ -1868,7 +1868,7 @@ namespace DomainTest
 			Espacio _miEspacio = new Espacio();
 			_reporte.MiEspacio = _miEspacio;
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
-			Assert.IsNull(ingresoEgreso);
+			Assert.IsNotNull(ingresoEgreso);
 		}
 	}
 }
