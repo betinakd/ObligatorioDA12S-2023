@@ -1870,5 +1870,15 @@ namespace DomainTest
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
 			Assert.IsNotNull(ingresoEgreso);
 		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_Noviembre_Treinta_Datos()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
+			Assert.IsFalse(ingresoEgreso.Count == 30);
+		}
 	}
 }
