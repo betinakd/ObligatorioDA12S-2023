@@ -352,10 +352,45 @@ namespace EspacioReporte
 			return cambioRet;
 		}
 
-		/*public List<KeyValuePair<DateTime, int>> ReporteIngresosEgresos(int mes)
+		public List<IngresoEgreso> ReporteIngresosEgresos(int mes)
 		{
-			
-		}*/
+			List<IngresoEgreso> reporteIngresosEgresos = new List<IngresoEgreso> ();
+			int ultimoDiaMes = new DateTime(DateTime.Today.Year, mes, 1).AddMonths(1).AddDays(-1).Day;
+			for (int dia=1; dia<=ultimoDiaMes; dia++)
+			{
+				double ingresos = 0;
+				double egresos = 0;
+				foreach (Transaccion transaccion in MiEspacio.Transacciones)
+				{
+					if (transaccion.FechaTransaccion.Month == mes && transaccion.FechaTransaccion.Day == dia)
+					{
+						if (transaccion.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso))
+						{
+							ingresos += DarValorEnPesos(transaccion);
+						} else
+						{
+							egresos += DarValorEnPesos(transaccion);
+						}
+					}
+				}
+				DateTime fecha = new DateTime(DateTime.Today.Year, mes, dia);
+				IngresoEgreso ingresoEgreso = new IngresoEgreso (fecha, ingresos, egresos);
+				reporteIngresosEgresos.Add(ingresoEgreso);
+			}
+			return reporteIngresosEgresos;
+		}
+
+		public double DarValorEnPesos(Transaccion transaccion)
+		{
+			Cambio cambioUsado = transaccion.EncontrarCambio(MiEspacio);
+			if (transaccion.Moneda.Equals(TipoCambiario.Dolar) || transaccion.Moneda.Equals(TipoCambiario.Euro))
+			{
+				return cambioUsado.Pesos * transaccion.Monto;
+			} else
+			{
+				return transaccion.Monto;
+			}
+		}
 
 	}
 }

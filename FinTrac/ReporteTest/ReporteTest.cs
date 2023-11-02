@@ -406,7 +406,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
-			double monto = reporte.Calcular_MontoTotal(10);
+			double monto = reporte.Calcular_MontoTotal(DateTime.Today.Month);
 			Assert.IsTrue(40 == monto);
 		}
 
@@ -1146,7 +1146,7 @@ namespace DomainTest
 			_miEspacio.AgregarCambio(cambio);
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			Assert.IsTrue(toAnalize.First().MontoUsado == 40);
 		}
 
@@ -1181,7 +1181,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			double montoTotal = 10;
 			CategoriaGasto cg = new CategoriaGasto
 			{
@@ -1222,7 +1222,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			Assert.IsTrue(toAnalize.First().Porcentaje == 100);
 		}
 
@@ -1272,7 +1272,7 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(transaccion);
 			_miEspacio.AgregarTransaccion(transaccion2);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			Assert.IsTrue(toAnalize.First().Porcentaje == 50);
 		}
 
@@ -1859,6 +1859,16 @@ namespace DomainTest
 			_reporte.MiEspacio = _miEspacio;
 			DateTime fecha = new DateTime(DateTime.Now.Year, 1, DateTime.Now.Day);
 			Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
+		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_No_Vacio()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
+			Assert.IsNull(ingresoEgreso);
 		}
 	}
 }
