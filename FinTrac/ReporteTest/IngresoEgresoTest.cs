@@ -40,5 +40,15 @@ namespace EspacioReporteTest
 			IngresoEgreso ingresoEgreso = new IngresoEgreso(fecha, ingresos, egresos);
 			Assert.IsTrue(ingresoEgreso.Fecha.Equals(fecha));
 		}
+
+		[TestMethod]
+		public void IngresoEgreso_Valores_Bien_Definidos()
+		{
+			double ingresos = 200;
+			double egresos = 500;
+			DateTime fecha = new DateTime(2023, 11, 2);
+			IngresoEgreso ingresoEgreso = new IngresoEgreso(fecha, ingresos, egresos);
+			Assert.IsFalse(ingresoEgreso.Ingresos.Equals(ingresos) && ingresoEgreso.Egresos.Equals(egresos));
+		}
 	}
 }
