@@ -1915,7 +1915,7 @@ namespace DomainTest
 			_reporte.MiEspacio = _miEspacio;
 			double totalGastado = 10;
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
-			Assert.IsFalse(ingresoEgreso.First().Egresos == totalGastado);
+			Assert.IsTrue(ingresoEgreso.First().Egresos == totalGastado);
 		}
 	}
 }
