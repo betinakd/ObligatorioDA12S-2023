@@ -14,7 +14,7 @@ namespace EspacioReporteTest
 		public void IngresoEgreso_No_Vacio() 
 		{
 			IngresoEgreso ingresoEgreso = new IngresoEgreso();
-			Assert.IsNull(ingresoEgreso);
+			Assert.IsNotNull(ingresoEgreso);
 		}
 	}
 }
