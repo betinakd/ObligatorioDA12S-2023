@@ -32,7 +32,8 @@ namespace Repository
 
 		public Espacio Update(Espacio updateEntity)
 		{
-
+			_context.Entry(updateEntity).State = EntityState.Modified;
+			_context.SaveChanges();
 			return updateEntity;
 		}
 
