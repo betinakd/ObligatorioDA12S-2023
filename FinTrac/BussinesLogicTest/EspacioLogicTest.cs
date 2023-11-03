@@ -206,5 +206,29 @@ namespace BussinesLogicTest
 			List<Espacio> espacios = espacioLogic.EspaciosByCorreo("usuario2@gmail.com");
 			Assert.IsTrue(espacios.Count == 1);
 		}
+
+		[TestMethod]
+		public void Update_Recibe_Espacio_Modificado_Y_Actualiza_Correctamente()
+		{
+			var espacio1 = new Espacio
+			{
+				Id = 1,
+				Nombre = "Espacio 1",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 1,
+					Nombre = "Usuario1",
+					Apellido = "Apellido1",
+					Correo = "usuario@gmail.com",
+					Contrasena = "HOLAhola123",
+					Direccion = "Direccion1",
+				}
+			};
+			espacioLogic.AddEspacio(espacio1);
+			espacio1.Nombre = "Espacio 2";
+			espacioLogic.Update(espacio1);
+			Assert.IsTrue(espacioLogic.FindAllEspacios().Contains(espacio1));
+			Assert.AreEqual(espacio1.Nombre, espacioLogic.FindEspacio(espacio1.Id).Nombre);
+		}
 	}
 }
