@@ -26,6 +26,7 @@ namespace Repository
 		{
 			var espacios = _context.Espacios
 				.Include(e => e.Admin)
+				.Include(e => e.Categorias)
 				.ToList();
 			return espacios;
 		}
