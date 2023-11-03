@@ -97,5 +97,42 @@ namespace RepositoryTest
 			Assert.IsTrue(espacios.Contains(espacio));
 		}
 
+		[TestMethod]
+		public void Find_EspacioPorID()
+		{
+			var espacio1 = new Espacio
+			{
+				Id = 1,
+				Nombre = "Espacio 1",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 1,
+					Nombre = "Usuario1",
+					Apellido = "Apellido1",
+					Contrasena = "HOLAhola123",
+					Correo = "hola@gmail.com",
+					Direccion = "Direccion1"
+				}
+			};
+			var espacio2 = new Espacio
+			{
+				Id = 2,
+				Nombre = "Espacio 2",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 2,
+					Nombre = "Usuario2",
+					Apellido = "Apellido2",
+					Contrasena = "HOLAhola123",
+					Correo = "hola2@gmail.com",
+					Direccion = "Direccion2"
+				}
+			};
+			_repository.Add(espacio1);
+			_repository.Add(espacio2);
+			var espacio = _repository.Find(e => e.Id == 1);
+			Assert.AreEqual(espacio1, espacio);	
+			Assert.AreEqual(espacio1.Id, espacio.Id);
+		}
 	}
 }

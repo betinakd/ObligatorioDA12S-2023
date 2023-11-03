@@ -19,7 +19,7 @@ namespace Repository
 
 		public Espacio? Find(Func<Espacio, bool> filter)
 		{
-			return _context.Espacios.FirstOrDefault(filter);
+
 		}
 
 		public IList<Espacio> FindAll()
