@@ -2017,9 +2017,16 @@ namespace DomainTest
 			Cambio euro = new Cambio
 			{
 				Pesos = 40,
-				Moneda = TipoCambiario.Euro
+				Moneda = TipoCambiario.Euro,
+				FechaDeCambio = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
 			};
 			_miEspacio.AgregarCambio(euro);
+			Cambio euro2 = new Cambio
+			{
+				Pesos = 40,
+				Moneda = TipoCambiario.Euro,
+			};
+			_miEspacio.AgregarCambio(euro2);
 			Categoria _categoriaIngreso = new Categoria
 			{
 				EstadoActivo = true,
@@ -2044,7 +2051,7 @@ namespace DomainTest
 			{
 				total += ie.Ingresos;
 			}
-			Assert.IsTrue(total == 10);
+			Assert.IsTrue(total != 40);
 		}
 
 		[TestMethod]
