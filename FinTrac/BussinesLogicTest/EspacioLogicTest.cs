@@ -3,32 +3,34 @@ using Domain;
 using Repository;
 using BussinesLogic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace BussinesLogicTest
 {
 	[TestClass]
 	public class EspacioLogicTest
 	{
-		private IRepository<Espacio> repository;
+		private IRepository<Espacio> _repository;
 		private EspacioLogic espacioLogic;
+		private FintracDbContext _context;
+		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]
 		public void Setup()
 		{
-			var options = new DbContextOptionsBuilder<FintracDbContext>()
-			.UseInMemoryDatabase(databaseName: "FintracDbConectionTest").Options;
-			repository = new EspacioMemoryRepository(new FintracDbContext(options));
-			espacioLogic = new EspacioLogic(repository);
+			_context = _contextFactory.CreateDbContext();
+			_repository = new EspacioMemoryRepository(_context);
+			espacioLogic = new EspacioLogic(_repository);
 		}
 
 		[TestCleanup]
-		public void CleanUp()
+		public void Cleanup()
 		{
-			var dbContext = repository as FintracDbContext;
-			dbContext.Database.EnsureDeleted();
+			_context.Database.EnsureDeleted();
+			_context.Dispose();
+			_context = null;
+			_repository = null;
+			espacioLogic = null;
 		}
-		[TestCleanup]
 
 		[TestMethod]
 		public void Nuevo_EspacioLogic()
@@ -68,7 +70,7 @@ namespace BussinesLogicTest
 				}
 			};
 			espacioLogic.AddEspacio(espacio1);
-			Assert.IsTrue(repository.FindAll().Contains(espacio1));
+			Assert.IsTrue(_repository.FindAll().Contains(espacio1));
 		}
 
 		[TestMethod]
@@ -201,7 +203,7 @@ namespace BussinesLogicTest
 			};
 			espacioLogic.AddEspacio(espacio1);
 			espacioLogic.AddEspacio(espacio2);
-			List<Espacio> espacios = espacioLogic.EspaciosByCorreo("xx@yy.com");
+			List<Espacio> espacios = espacioLogic.EspaciosByCorreo("usuario2@gmail.com");
 			Assert.IsTrue(espacios.Count == 1);
 		}
 	}
