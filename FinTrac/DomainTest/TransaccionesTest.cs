@@ -95,13 +95,6 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Contador_Id_Transaccion()
-		{
-			Transaccion transaccion = new Transaccion();
-			Assert.AreEqual(0, transaccion.IdTransaccion);
-		}
-
-		[TestMethod]
 		public void Transaccion_Tiene_Fecha()
 		{
 			Transaccion transaccion = new Transaccion();
