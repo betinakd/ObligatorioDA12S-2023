@@ -3,12 +3,12 @@
 namespace Repository;
 
 
-public interface IAppContextFactory
+public interface IDbContextFactory
 {
 	FintracDbContext CreateDbContext();
 }
 
-public class InMemoryDbContextFactory : IAppContextFactory
+public class InMemoryDbContextFactory : IDbContextFactory
 {
 	public FintracDbContext CreateDbContext()
 	{
