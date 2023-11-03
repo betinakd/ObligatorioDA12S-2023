@@ -18,5 +18,11 @@ namespace RepositoryTest
 			_context = _contextFactory.CreateDbContext();
 			_repository = new EspacioMemoryRepository(_context);
 		}
+
+		[TestCleanup]
+		public void CleanUp()
+		{
+			_context.Database.EnsureDeleted();
+		}
 	}
 }
