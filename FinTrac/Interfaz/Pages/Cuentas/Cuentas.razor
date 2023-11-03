@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Cuentas"
 
-
 <div style="left: 3%; position: relative; width: 95%">
 	<PageTitle>FinTrac Cuentas</PageTitle>
 	<TituloRosado Titulo="Cuentas del espacio actual." Subtitulo="Cree elimine y modifique las cuentas del espacio."></TituloRosado>
@@ -184,7 +183,6 @@
 </div>
 <div style="height:500px"></div>
 
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -217,6 +215,7 @@
 		cuentaClickeada = cuenta;
 		LimpiarImputs();
 	}
+
 	private void ModificarCuentaBancoTarjeta(Cuenta cuenta)
 	{
 		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
@@ -242,7 +241,6 @@
 		}
 	}
 
-
 	private void ModificarCuentaFecha(Cuenta cuenta)
 	{
 		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
@@ -261,6 +259,7 @@
 			}
 		}
 	}
+
 	private void ModificarCuentaAhorro(Cuenta cuenta)
 	{
 		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
