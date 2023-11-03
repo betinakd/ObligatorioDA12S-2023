@@ -58,5 +58,16 @@ namespace BussinesLogic
 		{
 			_repository.Update(updateEntity);
 		}
+
+		public int EspacioMayorId()
+		{
+			Espacio espacioConMayorId = null;
+			if (espacioConMayorId == null)
+			{
+				return 0;
+			}
+			return espacioConMayorId.Id;
+		}
 	}
 }
+
