@@ -5,7 +5,7 @@ namespace Domain
 	public class Transaccion
 	{
 		private string _titulo;
-		public int IdTransaccion { get; set; }
+		public int Id { get; set; }
 		public string Titulo
 		{
 			get
