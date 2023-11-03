@@ -19,11 +19,6 @@ namespace Repository
 
 		}
 
-		//public Espacio ObtenerEspacioConMayorId()
-		//{
-		//	return Espacios.OrderByDescending(e => e.Id).FirstOrDefault();
-		//}
-
 	}
 }
 

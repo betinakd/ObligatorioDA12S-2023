@@ -122,5 +122,13 @@ namespace DomainTest
 
 			Assert.IsFalse(resultado);
 		}
+
+		[TestMethod]
+		public void Cambio_Tiene_Id()
+		{ 
+			Cambio cambio = new Cambio();
+			cambio.Id = 1;
+			Assert.AreEqual(1, cambio.Id);
+		}
 	}
 }
