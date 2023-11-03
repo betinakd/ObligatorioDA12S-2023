@@ -61,7 +61,7 @@ namespace BussinesLogic
 
 		public int EspacioMayorId()
 		{
-			Espacio espacioConMayorId = null;
+			Espacio espacioConMayorId = _repository.FindAll().OrderByDescending(e => e.Id).FirstOrDefault();
 			if (espacioConMayorId == null)
 			{
 				return 0;
