@@ -2,18 +2,19 @@
 
 namespace Repository;
 
-public interface IDbContextFactory
+
+public interface IAppContextFactory
 {
-	UsuariosDbContext CreateDbContext();
+	FintracDbContext CreateDbContext();
 }
 
-public class InMemoryDbContextFactory : IDbContextFactory
+public class InMemoryDbContextFactory : IAppContextFactory
 {
-	public UsuariosDbContext CreateDbContext()
+	public FintracDbContext CreateDbContext()
 	{
-		var optionsBuilder = new DbContextOptionsBuilder<UsuariosDbContext>();
-		optionsBuilder.UseInMemoryDatabase("UsuariosDbConectionTest");
+		var optionsBuilder = new DbContextOptionsBuilder<FintracDbContext>();
+		optionsBuilder.UseInMemoryDatabase("FintracDbConectionTest");
 
-		return new UsuariosDbContext(optionsBuilder.Options);
+		return new FintracDbContext(optionsBuilder.Options);
 	}
 }

@@ -9,7 +9,10 @@ namespace Repository
 		public DbSet<Espacio> Espacios { get; set; }
 		public FintracDbContext(DbContextOptions<FintracDbContext> options) : base(options)
 		{
-
+			if (!Database.IsInMemory())
+			{
+				Database.Migrate();
+			}
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
