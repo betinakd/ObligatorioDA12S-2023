@@ -37,14 +37,5 @@ namespace Repository
 			return updateEntity;
 		}
 
-		public void Delete(string id)
-		{
-			var espacio = _context.Espacios.Find(id);
-			if (espacio != null)
-			{
-				_context.Espacios.Remove(espacio);
-				_context.SaveChanges();
-			}
-		}
 	}
 }

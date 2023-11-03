@@ -96,5 +96,6 @@ namespace RepositoryTest
 			var espacios = _repository.FindAll();
 			Assert.IsTrue(espacios.Contains(espacio));
 		}
+
 	}
 }

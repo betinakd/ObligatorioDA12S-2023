@@ -6,8 +6,6 @@
 
         T? Update (T updateEntity);
 
-        void Delete (string id);
-
         T? Find(Func<T,bool> filter);
 
         IList<T> FindAll ();
