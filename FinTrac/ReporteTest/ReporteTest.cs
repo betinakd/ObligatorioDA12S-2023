@@ -1951,7 +1951,53 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(transaccion1);
 			_reporte.MiEspacio = _miEspacio;
 			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
-			Assert.IsTrue(ingresoEgreso.First().Egresos == 0);
+			double totalGastado = 0;
+			foreach (IngresoEgreso ie in ingresoEgreso)
+			{
+				totalGastado += ie.Egresos;
+			}
+			Assert.IsTrue(totalGastado == 0);
+		}
+
+		[TestMethod]
+		public void ReporteIngresoEgreso_Solo_Ingreso()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				CreditoDisponible = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Categoria _categoriaIngreso = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Ingreso,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaIngreso);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaIngreso,
+				Monto = 10,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			double totalIngresado = 0;
+			foreach (IngresoEgreso ie in ingresoEgreso)
+			{
+				totalIngresado += ie.Ingresos;
+			}
+			Assert.IsTrue(totalIngresado != 10);
 		}
 	}
 }
