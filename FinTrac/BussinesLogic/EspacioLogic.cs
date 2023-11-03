@@ -50,6 +50,10 @@ namespace BussinesLogic
 			
 		}
 
+        public void Update(Espacio updateEntity)
+        {
+			_repository.Update(updateEntity);
+		}
 
 	}
 }
