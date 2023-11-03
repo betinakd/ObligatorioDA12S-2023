@@ -58,7 +58,6 @@
 
 	protected override void OnInitialized()
 	{
-		// Cargar la lista de categorías desde el espacio
 		categorias = EspacioLogic.FindEspacio(Persistencia.Id).Categorias;
 	}
 
@@ -70,33 +69,30 @@
 
 	private void Crear()
 	{
-			categorias2.Clear();
-			// Crear un nuevo objetivo con los valores ingresados
-			foreach (var categoria in categoriasSeleccionadas)
-			{
-				categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
-			}
+		categorias2.Clear();
+		foreach (var categoria in categoriasSeleccionadas)
+		{
+			categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
+		}
 
-			try
-			{
-				Objetivo nuevoObjetivo = new Objetivo
-					{
+		try
+		{
+			Objetivo nuevoObjetivo = new Objetivo
+				{
+					Titulo = tituloObjetivo,
+					MontoMaximo = montoObjetivo,
+					Categorias = categorias2
+				};
+			Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
+			espacioActual.AgregarObjetivo(nuevoObjetivo);
+			EspacioLogic.UpdateEspacio(espacioActual);
 
-						Titulo = tituloObjetivo,
-						MontoMaximo = montoObjetivo,
-						Categorias = categorias2
-					};
-				// Agregar el objetivo al espacio actual
-				Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
-				espacioActual.AgregarObjetivo(nuevoObjetivo);
-
-				// Redireccionar a la página de Objetivos
-				string newHref = $"/home/{Id}/{Correo}/Objetivos";
-				NavigationManager.NavigateTo(newHref);
-			}
+			string newHref = $"/home/{Id}/{Correo}/Objetivos";
+			NavigationManager.NavigateTo(newHref);
+		}
 		catch (DomainEspacioException e)
-			{
-				ErrorMsg = e.Message;
-			}
+		{
+			ErrorMsg = e.Message;
+		}
 	}
 }
