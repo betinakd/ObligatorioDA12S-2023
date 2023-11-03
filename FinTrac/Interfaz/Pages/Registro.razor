@@ -15,10 +15,6 @@
 		<label class="">Contraseña</label>
 		<input @bind="Password" type="password" class="input-estilo" placeholder="Contraseña" />
 	</div>
-	<div class="col-md-6">
-		<label class="">Confirmar contraseña</label>
-		<input @bind="ConfirmPassword" type="password" class="input-estilo" placeholder="Contraseña" />
-	</div>
 </div>
 
 <div class="row">
@@ -72,22 +68,19 @@
 					Apellido = Apellido,
 					Direccion = Direccion,
 					Correo = Email,
-					Contrasena = Password
+					Contrasena = Password,
+					IdEspacioPrincipal = EspacioLogic.EspacioMayorId() + 1,
 				};
 			Espacio espacioPrincipal = new Espacio()
 				{
 					Nombre = $"Principal {usuario.Nombre}",
 					Admin = usuario,
 				};
-
-
 			LimpiarInputs();
 			try
 			{
 				UsuarioLogic.AddUsuario(usuario);
 				EspacioLogic.AddEspacio(espacioPrincipal);
-				espacioPrincipal.AsignarId();
-				usuario.IdEspacioPrincipal = espacioPrincipal.Id;
 				Persistencia.Id = espacioPrincipal.Id;
 				Persistencia.Correo = usuario.Correo;
 				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
@@ -98,7 +91,6 @@
 				LimpiarInputs();
 				ErrorMensaje = exception.Message;
 			}
-
 		}
 		catch (DomainUsuarioException exception)
 		{
