@@ -1,11 +1,13 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Repository;
 using Domain;
 using BussinesLogic;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<FintracDbContext>
+	(options => options.UseSqlServer
+	(builder.Configuration.GetConnectionString("FintracDbConection")));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
