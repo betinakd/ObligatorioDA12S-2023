@@ -11,6 +11,10 @@ namespace Domain
 	}
 	public class Cuenta
 	{
+		public int Id { get; set; }
+		public int EspacioId { get; set; }
+		public Espacio Espacio { get; set; }
+		public List<Transaccion> Transacciones { get; set; }
 		public TipoCambiario Moneda { get; set; }
 		private readonly DateTime _fechaCreacion = DateTime.Now;
 		public DateTime FechaCreacion

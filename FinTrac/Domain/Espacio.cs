@@ -1,4 +1,5 @@
 ﻿using Excepcion;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
@@ -8,7 +9,7 @@ namespace Domain
 		public Espacio()
 		{
 		}
-
+		public int AdminId { get; set; }
 		private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;

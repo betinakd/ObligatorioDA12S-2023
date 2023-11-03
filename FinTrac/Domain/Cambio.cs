@@ -5,6 +5,9 @@ namespace Domain
 {
 	public class Cambio
 	{
+		public int Id { get; set; }
+		public int EspacioId { get; set; }
+		public Espacio Espacio { get; set; }
 		private DateTime _fechaDeCambio = DateTime.Now.Date;
 		private double _pesos;
 		public DateTime FechaDeCambio
