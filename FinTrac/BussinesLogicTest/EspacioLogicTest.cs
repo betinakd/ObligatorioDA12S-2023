@@ -2,7 +2,7 @@
 using Domain;
 using Repository;
 using BussinesLogic;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace BussinesLogicTest
 {
@@ -17,8 +17,11 @@ namespace BussinesLogicTest
         [TestInitialize]
         public void Setup()
         {
-            repository = new EspacioMemoryRepository();
-            espacioLogic = new EspacioLogic(repository);
+			var options = new DbContextOptionsBuilder<FintracDbContext>()
+	        .UseInMemoryDatabase(databaseName: "FintracDbConectionTest").Options;
+			repository = new EspacioMemoryRepository(new FintracDbContext(options));
+			espacioLogic = new EspacioLogic(repository);
+
             espacio1 = new Espacio()
             {
                 Admin = new Usuario()
@@ -58,14 +61,6 @@ namespace BussinesLogicTest
         {
             espacioLogic.AddEspacio(espacio1);
             espacioLogic.AddEspacio(espacio1);
-        }
-
-        [TestMethod]
-        public void Eliminar_Espacio()
-        {
-            espacioLogic.AddEspacio(espacio1);
-            espacioLogic.DeleteEspacio(espacio1);
-            Assert.IsFalse(repository.FindAll().Contains(espacio1));
         }
 
         [TestMethod]

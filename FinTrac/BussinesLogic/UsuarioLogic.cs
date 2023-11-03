@@ -44,11 +44,6 @@ namespace BussinesLogic
             return _repository.FindAll();
         }
 
-        public void DeleteUsuario(string id)
-        {
-            _repository.Delete(id);
-        }
-
         public Usuario? FindUsuario(string id)
         {
             return _repository.Find(u => u.Correo == id);

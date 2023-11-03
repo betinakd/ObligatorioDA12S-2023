@@ -38,10 +38,6 @@ namespace BussinesLogic
 			}
 			return espaciosUsuario;
 		}
-		public void DeleteEspacio(Espacio oneElement)
-        {
-            _repository.Delete(oneElement.Admin.Correo);
-        }
 
         public IList<Espacio> FindAllEspacios()
         {

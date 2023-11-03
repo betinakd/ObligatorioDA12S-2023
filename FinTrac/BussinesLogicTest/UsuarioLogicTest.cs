@@ -16,6 +16,7 @@ namespace BussinesLogicTest
 		[TestInitialize]
 		public void Setup()
 		{
+
 			repository = new UsuarioMemoryRepository();
 			usuarioLogic = new UsuarioLogic(repository);
 			usuario1 = new Usuario()
@@ -103,25 +104,6 @@ namespace BussinesLogicTest
 			var usuarios = usuarioLogic.FindAllUsuario();
 			Assert.IsNotNull(usuarios);
 			Assert.AreEqual(2, usuarios.Count);
-		}
-
-		[TestMethod]
-		public void Eliminar_Usuario()
-		{
-			IRepository<Usuario> repository = new UsuarioMemoryRepository();
-			UsuarioLogic usuarioLogic = new UsuarioLogic(repository);
-			Usuario usuario1 = new Usuario();
-			usuario1.Correo = "xx@yy.com";
-			usuario1.Contrasena = "123456789A";
-			Usuario usuario2 = new Usuario();
-			usuario2.Correo = "xxxx@yyyy.com";
-			usuario2.Contrasena = "123456789A";
-			usuarioLogic.AddUsuario(usuario1);
-			usuarioLogic.AddUsuario(usuario2);
-			usuarioLogic.DeleteUsuario(usuario1.Correo);
-			var usuarios = usuarioLogic.FindAllUsuario();
-			Assert.IsNotNull(usuarios);
-			Assert.AreEqual(1, usuarios.Count);
 		}
 
 		[TestMethod]
