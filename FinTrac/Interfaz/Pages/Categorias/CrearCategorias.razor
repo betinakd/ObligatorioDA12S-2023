@@ -44,7 +44,6 @@
 	</div>
 </div>
 
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -91,6 +90,7 @@
 			{
 				Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
 				espacioActual.AgregarCategoria(nuevaCategoria);
+				EspacioLogic.UpdateEspacio(espacioActual);
 				string newHref = $"/home/{Id}/{Correo}/Categorias";
 				NavigationManager.NavigateTo(newHref);
 			}
