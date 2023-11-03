@@ -156,5 +156,12 @@ namespace BussinesLogicTest
 			Assert.IsTrue(espacioLogic.FindAllEspacios().Contains(espacio1));
 			Assert.AreEqual(espacio1.Nombre, espacioLogic.FindEspacio(espacio1.Id).Nombre);
 		}
+
+        [TestMethod]
+        public void EspacioMayorId_No_Hay_Espacios_Null_Retorna_0()
+        {
+            int resultado = espacioLogic.EspacioMayorId();
+			Assert.AreEqual(0, resultado);
+		}
 	}
 }
