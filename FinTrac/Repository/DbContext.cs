@@ -9,6 +9,7 @@ namespace Repository
 		public DbSet<Espacio> Espacios { get; set; }
 		public FintracDbContext(DbContextOptions<FintracDbContext> options) : base(options)
 		{
+
 		}
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
