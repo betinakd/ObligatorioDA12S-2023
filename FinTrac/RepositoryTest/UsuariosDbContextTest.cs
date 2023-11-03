@@ -33,7 +33,6 @@ namespace RepositoryTest
 				Admin = _context.Usuarios.FirstOrDefault(u => u.Correo == "maxx@a.com")
 			});
 			_context.SaveChanges();
-
 		}
 
 		[TestCleanup]

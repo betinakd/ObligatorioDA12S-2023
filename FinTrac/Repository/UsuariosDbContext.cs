@@ -35,8 +35,7 @@ namespace Repository
 					.HasKey(c => new
 					{
 						c.FechaDeCambio,
-						c.Moneda,
-						
+						c.Moneda,		
 					});
 
 			modelBuilder.Entity<Categoria>()

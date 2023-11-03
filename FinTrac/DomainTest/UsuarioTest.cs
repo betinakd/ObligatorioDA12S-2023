@@ -163,6 +163,14 @@ namespace DomainTest
 			usuario.IdEspacioPrincipal = 1;
 			Assert.AreEqual(usuario.IdEspacioPrincipal, 1);
 		}
+
+		[TestMethod]
+		public void Usuario_Tiene_Lista_Espacios()
+		{
+			Usuario usuario = new Usuario();
+			usuario.Espacios = new List<Espacio>();
+			Assert.IsNotNull(usuario.Espacios);
+		}
 	}
 }
 
