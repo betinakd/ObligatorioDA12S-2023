@@ -164,5 +164,37 @@ namespace RepositoryTest
 			var espacioDevuelto = espacios.FirstOrDefault();
 			Assert.AreEqual(espacioDevuelto.Admin, espacio.Admin);
 		}
+
+		[TestMethod]
+		public void FindAll_Devuelve_Espacios_Con_Categorias()
+		{
+			var espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Espacio 1",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 1,
+					Nombre = "Usuario1",
+					Apellido = "Apellido1",
+					Contrasena = "HOLAhola123",
+					Correo = "hola@gmail.com",
+					Direccion = "Dirección de ejemplo"
+				}
+			};
+			var categoria = new Categoria
+			{
+				Id = 1,
+				Nombre = "Categoria 1",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Ingreso,
+				FechaCreacion = DateTime.Now,
+			};
+			espacio.Categorias.Add(categoria);
+			_repository.Add(espacio);
+			var espacios = _repository.FindAll().ToList();
+			var espacioDevuelto = espacios.FirstOrDefault();
+			Assert.AreEqual(espacioDevuelto.Categorias.FirstOrDefault(), espacio.Categorias.FirstOrDefault());
+		}
 	}
 }
