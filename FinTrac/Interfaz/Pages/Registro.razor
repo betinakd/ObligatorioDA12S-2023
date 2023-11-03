@@ -64,56 +64,46 @@
 
 	public void ClickRegistro()
 	{
-		if (ConfirmPassword == Password)
+		try
 		{
+			Usuario usuario = new Usuario()
+				{
+					Nombre = Nombre,
+					Apellido = Apellido,
+					Direccion = Direccion,
+					Correo = Email,
+					Contrasena = Password
+				};
+			Espacio espacioPrincipal = new Espacio()
+				{
+					Nombre = $"Principal {usuario.Nombre}",
+					Admin = usuario,
+				};
+
+
+			LimpiarInputs();
 			try
 			{
-				Usuario usuario = new Usuario()
-					{
-						Nombre = Nombre,
-						Apellido = Apellido,
-						Direccion = Direccion,
-						Correo = Email,
-						Contrasena = Password
-					};
-				Espacio espacioPrincipal = new Espacio()
-					{
-						Nombre = $"Principal {usuario.Nombre}",
-						Admin = usuario,
-					};
-
-
-				LimpiarInputs();
-				try
-				{
-					UsuarioLogic.AddUsuario(usuario);
-					EspacioLogic.AddEspacio(espacioPrincipal);
-					espacioPrincipal.AsignarId();
-					usuario.IdEspacioPrincipal = espacioPrincipal.Id;
-					Persistencia.Id = espacioPrincipal.Id;
-					Persistencia.Correo = usuario.Correo;
-					NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
-					ErrorMensaje = "";
-				}
-				catch (Exception exception)
-				{
-					LimpiarInputs();
-					ErrorMensaje = exception.Message;
-				}
-
+				UsuarioLogic.AddUsuario(usuario);
+				EspacioLogic.AddEspacio(espacioPrincipal);
+				espacioPrincipal.AsignarId();
+				usuario.IdEspacioPrincipal = espacioPrincipal.Id;
+				Persistencia.Id = espacioPrincipal.Id;
+				Persistencia.Correo = usuario.Correo;
+				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
+				ErrorMensaje = "";
 			}
-			catch (DomainUsuarioException exception)
+			catch (Exception exception)
 			{
 				LimpiarInputs();
 				ErrorMensaje = exception.Message;
 			}
-		} else
+
+		}
+		catch (DomainUsuarioException exception)
 		{
-			ErrorMensaje = "La contraseña no fue confirmada.";
 			LimpiarInputs();
+			ErrorMensaje = exception.Message;
 		}
 	}
-
-
-
 }
