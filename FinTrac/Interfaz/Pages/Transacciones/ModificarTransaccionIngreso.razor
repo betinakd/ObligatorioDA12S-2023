@@ -4,7 +4,6 @@
 <TituloRosado Titulo="Modificar Transacción de Ingreso" Subtitulo="Modifiqué sus transacciones de ingreso."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-
 <div class="mt-4">
 	<h3 class="text-lg font-medium mb-2">Detalles de la Transacción</h3>
 	<div class="flex flex-col space-y-2">
@@ -39,7 +38,6 @@
 		</button>
 	</div>
 </div>
-
 
 @code {
 	[Parameter] public int Id { get; set; }
@@ -77,12 +75,12 @@
 
 	private void ModificarTransaccion()
 	{
-
 		try
 		{
 			transaccion.Monto = inputMonto;
 			transaccion.Moneda = tipoMonedaSeleccionado;
 			transaccion.CategoriaTransaccion = categoria;
+			EspacioLogic.UpdateEspacio(espacio);
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}
