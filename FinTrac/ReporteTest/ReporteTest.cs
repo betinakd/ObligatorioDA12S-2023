@@ -2098,7 +2098,7 @@ namespace DomainTest
 			{
 				total += ie.Ingresos;
 			}
-			Assert.IsTrue(total != 40);
+			Assert.IsTrue(total == 40);
 		}
 	}
 }
