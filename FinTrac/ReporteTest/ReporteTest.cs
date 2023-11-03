@@ -1997,7 +1997,7 @@ namespace DomainTest
 			{
 				totalIngresado += ie.Ingresos;
 			}
-			Assert.IsTrue(totalIngresado != 10);
+			Assert.IsTrue(totalIngresado == 10);
 		}
 	}
 }
