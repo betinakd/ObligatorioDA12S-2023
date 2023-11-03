@@ -134,5 +134,12 @@ namespace RepositoryTest
 			Assert.AreEqual(espacio1, espacio);	
 			Assert.AreEqual(espacio1.Id, espacio.Id);
 		}
+
+		[TestMethod]
+		public void Find_EspacioNull()
+		{
+			var espacio = _repository.Find(e => e.Id == 1);
+			Assert.AreEqual(null, espacio);
+		}
 	}
 }
