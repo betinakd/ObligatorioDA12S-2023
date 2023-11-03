@@ -75,7 +75,7 @@
 	private Cuenta cuenta;
 	private Domain.TipoCambiario tipoMonedaSeleccionado;
 	private List<Domain.TipoCambiario> monedas;
-	
+
 
 	protected override void OnInitialized()
 	{
@@ -100,14 +100,12 @@
 	{
 		string selectedValue = e.Value.ToString();
 		categoria = categorias.FirstOrDefault(c => c.Nombre == selectedValue);
-
 	}
 
 	private void CrearTransaccion()
 	{
 		try
 		{
-
 			TransaccionCosto transaccion = new TransaccionCosto()
 				{
 					Titulo = inputTitulo,
@@ -117,7 +115,7 @@
 					CategoriaTransaccion = categoria,
 				};
 			espacio.AgregarTransaccion(transaccion);
-			transaccion.AsignarIdTransaccion();
+
 			if (cuenta is Ahorro)
 			{
 				Ahorro ahorro = (Ahorro)cuenta;
@@ -128,8 +126,9 @@
 				Credito credito = (Credito)cuenta;
 				credito.EgresoMonetario(inputMonto);
 			}
-			NavigationManager.NavigateTo
-	($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
+
+			EspacioLogic.UpdateEspacio(espacio);
+			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}
 		catch (DomainEspacioException ex)
 		{
