@@ -67,7 +67,8 @@
 					{
 						<td class="px-1 py-4 text-left">
 							<button @onclick="() =>MostrarInput(espacio)" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
-								Cambiar Nombre</button>
+								Cambiar Nombre
+							</button>
 						</td>
 					}
 					else
@@ -101,9 +102,6 @@
 	</table>
 </div>
 
-
-
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -130,7 +128,6 @@
 		mostrarInput = !mostrarInput;
 		inputNombre = "";
 		ErrorMsg = "";
-
 	}
 
 	private void CambiarNombre(Espacio espacio)
@@ -153,6 +150,5 @@
 		mostrarInput = false;
 		inputNombre = "";
 		ErrorMsg = "";
-
 	}
 }
