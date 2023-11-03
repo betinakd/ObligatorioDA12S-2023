@@ -131,7 +131,7 @@ namespace RepositoryTest
 			_repository.Add(espacio1);
 			_repository.Add(espacio2);
 			var espacio = _repository.Find(e => e.Id == 1);
-			Assert.AreEqual(espacio1, espacio);	
+			Assert.AreEqual(espacio1, espacio);
 			Assert.AreEqual(espacio1.Id, espacio.Id);
 		}
 
@@ -140,6 +140,29 @@ namespace RepositoryTest
 		{
 			var espacio = _repository.Find(e => e.Id == 1);
 			Assert.AreEqual(null, espacio);
+		}
+
+		[TestMethod]
+		public void FindAll_Devuelve_Espacios_Con_Administrador()
+		{
+			var espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Espacio 1",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 1,
+					Nombre = "Usuario1",
+					Apellido = "Apellido1",
+					Contrasena = "HOLAhola123",
+					Correo = "hola@gmail.com",
+					Direccion = "Dirección de ejemplo"
+				}
+			};
+			_repository.Add(espacio);
+			var espacios = _repository.FindAll().ToList();
+			var espacioDevuelto = espacios.FirstOrDefault();
+			Assert.AreEqual(espacioDevuelto.Admin, espacio.Admin);
 		}
 	}
 }

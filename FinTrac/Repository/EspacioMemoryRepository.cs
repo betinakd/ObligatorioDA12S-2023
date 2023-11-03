@@ -25,7 +25,6 @@ namespace Repository
 		public IList<Espacio> FindAll()
 		{
 			var espacios = _context.Espacios
-			.Include(e => e.Admin)
 			.ToList();
 			return espacios;
 		}
