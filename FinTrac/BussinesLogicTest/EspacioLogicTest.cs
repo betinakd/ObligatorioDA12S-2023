@@ -163,5 +163,14 @@ namespace BussinesLogicTest
             int resultado = espacioLogic.EspacioMayorId();
 			Assert.AreEqual(0, resultado);
 		}
+
+		[TestMethod]
+		public void EspacioMayorId_Retorna_El_Id_Mayor_De_Espacio()
+		{
+            espacioLogic.AddEspacio(espacio1);
+            espacioLogic.AddEspacio(espacio2);
+			int resultado = espacioLogic.EspacioMayorId();
+			Assert.AreEqual(2, resultado);
+		}
 	}
 }
