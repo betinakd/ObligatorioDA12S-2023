@@ -124,5 +124,12 @@ namespace DomainTest
 			};
 			Assert.IsTrue(categoria1.Equals(categoria2));
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Id()
+		{
+			categoria.Id = 1;
+			Assert.AreEqual(1, categoria.Id);
+		}
 	}
 }
