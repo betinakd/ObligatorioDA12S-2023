@@ -13,7 +13,6 @@ namespace Repository
 		public Espacio Add(Espacio context)
 		{
 			_context.Espacios.Add(context);
-			_context.SaveChanges();
 			return context;
 		}
 

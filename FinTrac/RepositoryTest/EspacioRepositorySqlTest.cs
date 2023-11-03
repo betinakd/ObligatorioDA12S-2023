@@ -49,5 +49,28 @@ namespace RepositoryTest
 			Assert.IsTrue(espacios.Contains(espacio));
 			Assert.AreEqual(1, espacios.Count);
 		}
+
+		[TestMethod]
+		public void Add_Espacio_Se_Guarda_Correctamente()
+		{
+			var espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Espacio 1",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 1,
+					Nombre = "Usuario1",
+					Apellido = "Apellido1",
+					Correo = "usuario@gmail.com",
+					Contrasena = "HOLAhola123",
+					Direccion = "Direccion1",
+				}
+			};
+			_repository.Add(espacio);
+			var espacios = _repository.FindAll();
+			Assert.IsTrue(espacios.Contains(espacio));
+			Assert.AreEqual(1, espacios.Count);
+		}
 	}
 }
