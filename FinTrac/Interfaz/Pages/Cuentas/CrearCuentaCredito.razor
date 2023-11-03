@@ -9,18 +9,24 @@
 	<table>
 		<tr>
 			<td><label for="bancoEmisor">Banco Emisor:</label></td>
-			<td><input type="text" class="form-control" id="bancoEmisor" placeholder="Banco Emisor"
-				@bind="BancoEmisor"></td>
+			<td>
+				<input type="text" class="form-control" id="bancoEmisor" placeholder="Banco Emisor"
+				@bind="BancoEmisor">
+			</td>
 		</tr>
 		<tr>
 			<td><label for="numeroTarjeta">Número de Tarjeta:</label></td>
-			<td><input type="text" class="form-control" id="numeroTarjeta" placeholder="Número de tarjeta"
-				@bind="NumeroTarjeta"></td>
+			<td>
+				<input type="text" class="form-control" id="numeroTarjeta" placeholder="Número de tarjeta"
+				@bind="NumeroTarjeta">
+			</td>
 		</tr>
 		<tr>
 			<td><label for="creditoDisponible">Crédito Disponible:</label></td>
-			<td><input type="number" class="form-control" id="creditoDisponible" placeholder="Crédito disponible"
-				@bind="CreditoDisponible"></td>
+			<td>
+				<input type="number" class="form-control" id="creditoDisponible" placeholder="Crédito disponible"
+				@bind="CreditoDisponible">
+			</td>
 		</tr>
 		<tr>
 			<td><label for="moneda">Moneda:</label></td>
@@ -82,7 +88,9 @@
 				};
 			try
 			{
-				EspacioLogic.FindEspacio(Id).AgregarCuenta(nuevaCuentaCredito);
+				Espacio espacio = EspacioLogic.FindEspacio(Id);
+				espacio.AgregarCuenta(nuevaCuentaCredito);
+				EspacioLogic.UpdateEspacio(espacio);
 				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
 			}
 			catch (DomainEspacioException ex)
