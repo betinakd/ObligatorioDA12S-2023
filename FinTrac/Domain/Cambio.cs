@@ -1,11 +1,11 @@
 ﻿using Excepcion;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
 	public class Cambio
 	{
-		public int Id { get; set; }	
+		public int Id { get; set; }
+		public Espacio Espacio { get; set; }
 		private DateTime _fechaDeCambio = DateTime.Now.Date;
 		private double _pesos;
 		public DateTime FechaDeCambio
