@@ -7,6 +7,7 @@ namespace Domain
 	{
 		public int Id { get; set; }
 		public List<Espacio> Espacios { get; set; }
+		public List<Espacio> EspaciosAdmin { get; set; }
 		public int IdEspacioPrincipal { get; set; }
 		private string _contrasena;
 		public string Direccion { get; set; }
