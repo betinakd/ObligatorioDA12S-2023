@@ -110,5 +110,12 @@ namespace DomainTest
 			var resultado = objetivo.ContieneCategoria(categoria);
 			Assert.IsTrue(resultado);
 		}
+
+		[TestMethod]
+		public void Objetivo_Tiene_Id()
+		{
+			_objetivo.Id = 1;
+			Assert.AreEqual(1, _objetivo.Id);
+		}
 	}
 }
