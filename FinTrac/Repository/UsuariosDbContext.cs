@@ -18,41 +18,90 @@ namespace Repository
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
-			modelBuilder.Entity<Usuario>()
-				.HasKey(u => u.Correo);
+			modelBuilder.Entity<Espacio>()
+			.HasOne(e => e.Admin)
+			.WithMany(u => u.EspaciosAdmin)
+			.HasForeignKey(e => e.AdminId)
+			.OnDelete(DeleteBehavior.Restrict);
 
 			modelBuilder.Entity<Espacio>()
-				.HasMany(e => e.UsuariosInvitados);
-			
-			modelBuilder.Entity<Espacio>()
-				.HasKey(e => e.Id);
+				.HasMany(e => e.Cambios)
+				.WithOne(o => o.Espacio)
+				.HasForeignKey(o => o.EspacioId);
 
 			modelBuilder.Entity<Espacio>()
-				.HasMany(c => c.Cambios);
+				.HasMany(e => e.Categorias)
+				.WithOne(o => o.Espacio)
+				.HasForeignKey(o => o.EspacioId)
+				.OnDelete(DeleteBehavior.Restrict);
 
-			modelBuilder.Entity<Cambio>()
-					.HasKey(c => new
-					{
-						c.FechaDeCambio,
-						c.Moneda,
-						
-					});
+			modelBuilder.Entity<Espacio>()
+				.HasMany(e => e.Cuentas)
+				.WithOne(o => o.Espacio)
+				.HasForeignKey(o => o.EspacioId);
 
-			modelBuilder.Entity<Categoria>()
-				.HasKey(c => c.Nombre);
+			modelBuilder.Entity<Espacio>()
+				.HasMany(e => e.Transacciones)
+				.WithOne(o => o.Espacio)
+				.HasForeignKey(o => o.EspacioId);
+
+			modelBuilder.Entity<Espacio>()
+				.HasMany(e => e.Objetivos)
+				.WithOne(o => o.Espacio)
+				.HasForeignKey(o => o.EspacioId)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<Objetivo>()
+				.HasMany(o => o.Categorias)
+				.WithMany(c => c.Objetivos)
+				.UsingEntity(j => j.ToTable("ObjetivoCategoria"));
 
 			modelBuilder.Entity<Cuenta>()
-						.HasKey(c => c.FechaCreacion);
+				.HasDiscriminator<string>("Tipo_cuenta")
+				.HasValue<Ahorro>("Ahorro")
+				.HasValue<Credito>("Credito");
 
 			modelBuilder.Entity<Transaccion>()
-						.HasKey(t => t.Id);
+				.HasDiscriminator<string>("Tipo_Transaccion")
+				.HasValue<TransaccionCosto>("TransaccionCosto")
+				.HasValue<TransaccionIngreso>("TransaccionIngreso");
 
-			modelBuilder.Entity<Objetivo>()
-						.HasKey(o => o.Titulo);
+			modelBuilder.Entity<Categoria>()
+				.HasMany(c => c.Transacciones)
+				.WithOne(t => t.CategoriaTransaccion)
+				.HasForeignKey(t => t.CategoriaId);
 
-			modelBuilder.Entity<Objetivo>()
-						.HasMany(o => o.Categorias);
+			modelBuilder.Entity<Cuenta>()
+				.HasMany(c => c.Transacciones)
+				.WithOne(t => t.CuentaMonetaria)
+				.HasForeignKey(t => t.CuentaId);
+
+			modelBuilder.Entity<Transaccion>()
+				.HasOne(t => t.CategoriaTransaccion)
+				.WithMany(c => c.Transacciones)
+				.HasForeignKey(t => t.CategoriaId)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<Transaccion>()
+				.HasOne(t => t.CuentaMonetaria)
+				.WithMany(c => c.Transacciones)
+				.HasForeignKey(t => t.CuentaId)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			modelBuilder.Entity<Transaccion>()
+				.HasOne(t => t.Espacio)
+				.WithMany(e => e.Transacciones)
+				.HasForeignKey(t => t.EspacioId);
+
+			modelBuilder.Entity<Cuenta>()
+				.HasOne(c => c.Espacio)
+				.WithMany(e => e.Cuentas)
+				.HasForeignKey(c => c.EspacioId);
+
+			modelBuilder.Entity<Categoria>()
+				.HasOne(c => c.Espacio)
+				.WithMany(e => e.Categorias)
+				.HasForeignKey(c => c.EspacioId);
 		}
 	}
 }
