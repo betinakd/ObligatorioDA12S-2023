@@ -105,6 +105,14 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		public void Cuenta_Tiene_EspacioId()
+		{
+			Cuenta cuenta = new Cuenta();
+			cuenta.EspacioId = 1;
+			Assert.AreEqual(cuenta.EspacioId, 1);
+		}
+
+		[TestMethod]
 		public void Cuenta_Tiene_Transacciones()
 		{
 			Categoria categoriaTest = new Categoria()
