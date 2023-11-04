@@ -16,8 +16,6 @@ builder.Services.AddDbContext<UsuariosDbContext>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<IRepository<Usuario>, UsuarioMemoryRepository>();
-//builder.Services.AddSingleton<IRepository<Usuario>, UsuarioMemoryRepository>();
-//builder.Services.AddSingleton<UsuarioLogic>();
 builder.Services.AddScoped<UsuarioLogic>();
 builder.Services.AddScoped<IRepository<Espacio>, EspacioMemoryRepository>();
 builder.Services.AddScoped<EspacioLogic>();
