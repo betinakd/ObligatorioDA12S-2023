@@ -117,5 +117,12 @@ namespace DomainTest
 			_objetivo.Id = 1;
 			Assert.AreEqual(1, _objetivo.Id);
 		}
+
+		[TestMethod]
+		public void Objetivo_Tiene_EspacioId()
+		{
+			_objetivo.EspacioId = 1;
+			Assert.AreEqual(1, _objetivo.EspacioId);
+		}
 	}
 }
