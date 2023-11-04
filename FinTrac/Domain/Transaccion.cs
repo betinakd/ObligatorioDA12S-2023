@@ -8,6 +8,7 @@ namespace Domain
 		public static int _contadorIdTransaccion = 1;
 		private string _titulo;
 		public int Id { get; set; }
+		public int CategoriaId { get; set; }
 		public string Titulo
 		{
 			get
