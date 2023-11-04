@@ -120,7 +120,7 @@ namespace DomainTest
 		[TestMethod]
 		[ExpectedException(typeof(DomainEspacioException))]
 		public void Transaccion_Clon()
-		{ 
+		{
 			transaccion1.ClonTransaccion();
 		}
 
@@ -136,8 +136,8 @@ namespace DomainTest
 			espacio.AgregarCambio(cambio);
 			Cuenta cuenta = new Cuenta { Moneda = TipoCambiario.Dolar, };
 			espacio.AgregarCuenta(cuenta);
-			Categoria cuategoria = new Categoria 
-			{ 
+			Categoria cuategoria = new Categoria
+			{
 				EstadoActivo = true,
 				Nombre = "nombre",
 				Tipo = TipoCategoria.Costo,
@@ -172,16 +172,35 @@ namespace DomainTest
 
 		[TestMethod]
 		public void Transaccion_Tiene_EspacioId()
-		{ 
+		{
 			transaccion1.EspacioId = 1;
 			Assert.AreEqual(1, transaccion1.EspacioId);
+		}
+
+		[TestMethod]
+		public void Transaccion_Tiene_Espacio()
+		{
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = new Usuario()
+				{
+					Correo = "test@gmail.com",
+					Contrasena = "HOLAhola123",
+					Nombre = "test",
+					Apellido = "test",
+					Direccion = "test"
+				}
+			};
+			transaccion1.Espacio = espacio;
+			Assert.AreEqual(espacio, transaccion1.Espacio);
 		}
 
 		[TestMethod]
 		public void EncontrarCambio_Distinta_Moneda()
 		{
 			Espacio espacio = new Espacio();
-			
+
 			Cambio cambio = new Cambio
 			{
 				Moneda = TipoCambiario.Dolar,
