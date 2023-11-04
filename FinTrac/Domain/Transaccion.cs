@@ -9,6 +9,7 @@ namespace Domain
 		private string _titulo;
 		public int Id { get; set; }
 		public int CategoriaId { get; set; }
+		public int CuentaId { get; set; }
 		public string Titulo
 		{
 			get
