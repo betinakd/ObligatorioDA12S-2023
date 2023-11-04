@@ -149,5 +149,29 @@ namespace DomainTest
 			categoriaTest.EspacioId = 1;
 			Assert.AreEqual(1, categoria.EspacioId);
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Objetivos()
+		{
+			Categoria categoriaTest = new Categoria()
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				FechaCreacion = new DateTime(2015, 1, 1),
+			};
+			List<Categoria> categorias = new List<Categoria>();
+			categorias.Add(categoriaTest);
+			Objetivo objetivoTest = new Objetivo()
+			{
+				Titulo = "ObjetivoPrueba",
+				MontoMaximo = 500,
+				Categorias = categorias,
+			};
+			List<Objetivo> objetivos = new List<Objetivo>();
+			objetivos.Add(objetivoTest);
+			categoriaTest.Objetivos = objetivos;
+			Assert.AreEqual(1, categoria.Objetivos.Count);
+		}
 	}
 }
