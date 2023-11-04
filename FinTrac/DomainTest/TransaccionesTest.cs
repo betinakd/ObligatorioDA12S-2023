@@ -164,6 +164,13 @@ namespace DomainTest
 		}
 
 		[TestMethod]
+		public void Transaccion_Tiene_CuentaId()
+		{
+			transaccion1.CuentaId = 1;
+			Assert.AreEqual(1, transaccion1.CuentaId);
+		}
+
+		[TestMethod]
 		public void EncontrarCambio_Distinta_Moneda()
 		{
 			Espacio espacio = new Espacio();
