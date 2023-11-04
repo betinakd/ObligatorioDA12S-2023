@@ -10,6 +10,7 @@ namespace Domain
 		}
 
 		public int Id { get; set; }
+		public int AdminId { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Categoria> _categorias = new List<Categoria>();
