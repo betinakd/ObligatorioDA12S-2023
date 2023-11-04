@@ -95,5 +95,13 @@ namespace DomainTest
 			string fecha = DateTime.Now.ToString();
 			Assert.AreEqual(cuenta.ToString(), "Euro - ");
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_Id()
+		{
+			Cuenta cuenta = new Cuenta();
+			cuenta.Id = 1;
+			Assert.AreEqual(cuenta.Id, 1);
+		}
 	}
 }
