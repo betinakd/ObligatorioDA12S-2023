@@ -148,7 +148,7 @@ namespace DomainTest
 			List<Transaccion> transacciones = new List<Transaccion>();
 			transacciones.Add(transaccionTest);
 			cuentaTest.Transacciones = transacciones;
-			Assert.AreEqual(1, categoriaTest.Transacciones.Count);
+			Assert.AreEqual(1, cuentaTest.Transacciones.Count);
 		}
 	}
 }
