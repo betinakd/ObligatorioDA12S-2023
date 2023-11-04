@@ -9,6 +9,7 @@ namespace Domain
 		public int EspacioId { get; set; }
 		public Espacio Espacio { get; set; }
 		public List<Objetivo> Objetivos { get; set; }
+		public List<Transaccion> Transacciones { get; set; }
 		private string _nombre;
 		DateTime _fechaCreacion = DateTime.Today;
 		public bool EstadoActivo { get; set; }
