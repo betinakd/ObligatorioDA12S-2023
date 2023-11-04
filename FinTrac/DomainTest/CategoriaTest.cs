@@ -171,7 +171,7 @@ namespace DomainTest
 			List<Objetivo> objetivos = new List<Objetivo>();
 			objetivos.Add(objetivoTest);
 			categoriaTest.Objetivos = objetivos;
-			Assert.AreEqual(1, categoria.Objetivos.Count);
+			Assert.AreEqual(1, categoriaTest.Objetivos.Count);
 		}
 	}
 }

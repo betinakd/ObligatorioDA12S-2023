@@ -8,6 +8,7 @@ namespace Domain
 		public int Id { get; set; }
 		public int EspacioId { get; set; }
 		public Espacio Espacio { get; set; }
+		public List<Objetivo> Objetivos { get; set; }
 		private string _nombre;
 		DateTime _fechaCreacion = DateTime.Today;
 		public bool EstadoActivo { get; set; }
