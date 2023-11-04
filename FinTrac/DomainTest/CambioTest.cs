@@ -129,5 +129,14 @@ namespace DomainTest
 			tipoDeCambio.Id = 1;
 			Assert.AreEqual(1, tipoDeCambio.Id);
 		}
+
+		[TestMethod]
+		public void Cambio_Tiene_Espacio()
+		{
+			var tipoDeCambio = new Cambio();
+			var espacio = new Espacio();
+			tipoDeCambio.Espacio = espacio;
+			Assert.AreEqual(espacio, tipoDeCambio.Espacio);
+		}
 	}
 }
