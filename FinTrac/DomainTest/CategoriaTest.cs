@@ -132,5 +132,14 @@ namespace DomainTest
 			categoriaTest.Id = 1;
 			Assert.AreEqual(1, categoria.Id);
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Espacio()
+		{
+			Categoria categoriaTest = new Categoria();
+			Espacio espacio = new Espacio();
+			categoriaTest.Espacio = espacio;
+			Assert.AreEqual(espacio, categoria.Espacio);
+		}
 	}
 }
