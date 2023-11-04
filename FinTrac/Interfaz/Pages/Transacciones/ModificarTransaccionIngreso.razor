@@ -63,7 +63,7 @@
 	{
 		espacio = EspacioLogic.FindEspacio(Id);
 		categorias = espacio.Categorias;
-		transaccion = espacio.Transacciones.Find(t => t.IdTransaccion.Equals(IdTrans));
+		transaccion = espacio.Transacciones.Find(t => t.Id.Equals(IdTrans));
 		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
 	}
 

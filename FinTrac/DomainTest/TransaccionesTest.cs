@@ -98,7 +98,7 @@ namespace DomainTest
 		public void Contador_Id_Transaccion()
 		{
 			Transaccion transaccion = new Transaccion();
-			Assert.AreEqual(0, transaccion.IdTransaccion);
+			Assert.AreEqual(0, transaccion.Id);
 		}
 
 		[TestMethod]
@@ -154,6 +154,13 @@ namespace DomainTest
 			};
 			Cambio cambio1 = transaccion.EncontrarCambio(espacio);
 			Assert.IsTrue(cambio1.FechaDeCambio != transaccion.FechaTransaccion);
+		}
+
+		[TestMethod]
+		public void Transaccion_Tiene_CategoriaId()
+		{
+			transaccion1.CategoriaId = 1;
+			Assert.AreEqual(1, transaccion1.CategoriaId);
 		}
 
 		[TestMethod]

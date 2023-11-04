@@ -46,7 +46,7 @@ namespace Repository
 						.HasKey(c => c.FechaCreacion);
 
 			modelBuilder.Entity<Transaccion>()
-						.HasKey(t => t.IdTransaccion);
+						.HasKey(t => t.Id);
 
 			modelBuilder.Entity<Objetivo>()
 						.HasKey(o => o.Titulo);

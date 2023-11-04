@@ -7,7 +7,7 @@ namespace Domain
 	{
 		public static int _contadorIdTransaccion = 1;
 		private string _titulo;
-		public int IdTransaccion { get; set; }
+		public int Id { get; set; }
 		public string Titulo
 		{
 			get
@@ -58,7 +58,7 @@ namespace Domain
 
 		public void AsignarIdTransaccion()
 		{
-			IdTransaccion = _contadorIdTransaccion;
+			Id = _contadorIdTransaccion;
 			AumentarContadorIdTransaccion();
 		}
 
