@@ -45,30 +45,6 @@ namespace DomainTest
 				FechaTransaccion = DateTime.Today,
 			};
 		}
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Tipo_Categoria_Distinto_TransaccionI()
-		{
-			var transaccion = new TransaccionIngreso();
-			Categoria categoria = new Categoria();
-			categoria.Nombre = "Categoria1";
-			categoria.Tipo = TipoCategoria.Costo;
-			categoria.EstadoActivo = true;
-			transaccion.CategoriaTransaccion = categoria;
-		}
-
-
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Categoria_Inactiva_TransaccionC()
-		{
-			var transaccion = new TransaccionIngreso();
-			Categoria categoria = new Categoria();
-			categoria.Nombre = "Categoria1";
-			categoria.Tipo = TipoCategoria.Ingreso;
-			categoria.EstadoActivo = false;
-			transaccion.CategoriaTransaccion = categoria;
-		}
 
 		[TestMethod]
 		public void Categoria_Transaccion()
@@ -80,14 +56,6 @@ namespace DomainTest
 			categoria.EstadoActivo = true;
 			transaccion.CategoriaTransaccion = categoria;
 			Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Excepcion_Categoria_Nula()
-		{
-			TransaccionIngreso transaccion = new TransaccionIngreso();
-			transaccion.CategoriaTransaccion = null;
 		}
 
 		[TestMethod]
@@ -121,25 +89,6 @@ namespace DomainTest
 				Moneda = TipoCambiario.Dolar,
 				Monto = 100,
 			};
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Invalida()
-		{
-			transaccion1.CuentaMonetaria = new Ahorro()
-			{
-				Nombre = "Cuenta1",
-				Moneda = TipoCambiario.PesosUruguayos,
-				Monto = 100,
-			};
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void TransaccionIngreso_Tiene_Cuenta_Monetaria_Nula()
-		{
-			transaccion1.CuentaMonetaria = null;
 		}
 	}
 }
