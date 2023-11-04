@@ -313,14 +313,20 @@ namespace Repository.Migrations
                 {
                     b.HasBaseType("Domain.Transaccion");
 
-                    b.HasDiscriminator().HasValue("Costo");
+                    b.Property<int>("Costo")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("TransaccionCosto");
                 });
 
             modelBuilder.Entity("Domain.TransaccionIngreso", b =>
                 {
                     b.HasBaseType("Domain.Transaccion");
 
-                    b.HasDiscriminator().HasValue("Ingreso");
+                    b.Property<int>("Ingreso")
+                        .HasColumnType("int");
+
+                    b.HasDiscriminator().HasValue("TransaccionIngreso");
                 });
 
             modelBuilder.Entity("CategoriaObjetivo", b =>

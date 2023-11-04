@@ -180,7 +180,9 @@ namespace Repository.Migrations
                     FechaTransaccion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Monto = table.Column<double>(type: "float", nullable: false),
                     Moneda = table.Column<int>(type: "int", nullable: false),
-                    Tipo_Transaccion = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Tipo_Transaccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Costo = table.Column<int>(type: "int", nullable: true),
+                    Ingreso = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

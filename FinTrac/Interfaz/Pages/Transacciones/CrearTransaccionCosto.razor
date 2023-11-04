@@ -106,14 +106,13 @@
 	{
 		try
 		{
-			Categoria costo = espacio.Categorias.FirstOrDefault();
 			TransaccionCosto transaccion = new TransaccionCosto()
 				{
 					Titulo = inputTitulo,
 					Monto = inputMonto,
 					Moneda = tipoMonedaSeleccionado,
 					CuentaMonetaria = cuenta,
-					CategoriaTransaccion = costo,
+					CategoriaTransaccion = categoria,
 				};
 			espacio.AgregarTransaccion(transaccion);
 

@@ -63,9 +63,10 @@ namespace Repository
 				.HasValue<Credito>("Credito");
 
 			modelBuilder.Entity<Transaccion>()
-				.HasDiscriminator<string>("Tipo_Transaccion")
-				.HasValue<TransaccionCosto>("Costo")
-				.HasValue<TransaccionIngreso>("Ingreso");
+	.HasDiscriminator<string>("Tipo_Transaccion")
+	.HasValue<TransaccionCosto>("TransaccionCosto")
+	.HasValue<TransaccionIngreso>("TransaccionIngreso");
+
 
 			modelBuilder.Entity<Categoria>()
 				.HasMany(c => c.Transacciones)

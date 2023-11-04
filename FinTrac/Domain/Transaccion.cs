@@ -5,6 +5,9 @@ namespace Domain
 {
 	public class Transaccion
 	{
+		public Transaccion()
+		{
+		}
 		public int CategoriaId { get; set; }
 		public int CuentaId { get; set; }
 		public int Id { get; set; }
