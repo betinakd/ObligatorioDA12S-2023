@@ -10,6 +10,7 @@ namespace Domain
 		public int Id { get; set; }
 		public int CategoriaId { get; set; }
 		public int CuentaId { get; set; }
+		public int EspacioId { get; set; }
 		public string Titulo
 		{
 			get
