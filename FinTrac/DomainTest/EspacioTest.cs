@@ -462,7 +462,6 @@ namespace DomainTest
 		[TestMethod]
 		public void CategoriaAsociadaObjetivos_Retorna_True_Al_Tener_Objetivo_Asociado()
 		{
-
 			List<Categoria> categorias = new List<Categoria>();
 			espacio1.AgregarCategoria(categoria1);
 			categorias.Add(categoria1);
@@ -617,6 +616,18 @@ namespace DomainTest
 			espacio1.AgregarCuenta(ahorro1);
 			espacio1.ModificarCuenta(ahorro2, ahorro1);
 			Assert.AreEqual(ahorro1.Nombre, ahorro2.Nombre);
+		}
+
+		[TestMethod]
+		public void Espacio_Tiene_AdminId()
+		{
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio",
+				Admin = usuario1,
+			};
+			espacio.AdminId = 1;
+			Assert.AreEqual(espacio.AdminId, 1);
 		}
 	}
 }
