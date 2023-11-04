@@ -103,5 +103,33 @@ namespace DomainTest
 			cuenta.Id = 1;
 			Assert.AreEqual(cuenta.Id, 1);
 		}
+
+		[TestMethod]
+		public void Cuenta_Tiene_Transacciones()
+		{
+			Categoria categoriaTest = new Categoria()
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				FechaCreacion = new DateTime(2015, 1, 1),
+			};
+			Ahorro cuentaTest = new Ahorro()
+			{
+				Nombre = "CuentaPrueba",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+			};
+			TransaccionCosto transaccionTest = new TransaccionCosto()
+			{
+				Titulo = "TransaccionPrueba",
+				Monto = 100,
+				Moneda = TipoCambiario.Dolar,
+				CategoriaTransaccion = categoriaTest,
+				CuentaMonetaria = cuentaTest
+			};
+			cuentaTest.Transacciones = new List<Transaccion> { transaccionTest };
+			Assert.AreEqual(1, categoriaTest.Transacciones.Count);
+		}
 	}
 }
