@@ -9,7 +9,6 @@ namespace Domain
 		{
 		}
 
-		private static int _contadorId = 1;
 		public int Id { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
@@ -82,6 +81,7 @@ namespace Domain
 				_usuariosInvitados = value;
 			}
 		}
+
 		public Usuario Admin
 		{
 			get
@@ -109,12 +109,14 @@ namespace Domain
 				throw new DomainEspacioException("La cuenta ya esta agregada");
 			_cuentas.Add(cuenta);
 		}
+
 		public void AgregarCategoria(Categoria categoria)
 		{
 			if (Categorias.Contains(categoria))
 				throw new DomainEspacioException("No se pueden agregar dos categorías con el mismo nombre.");
 			_categorias.Add(categoria);
 		}
+
 		public void AgregarTransaccion(Transaccion transaccion)
 		{
 			Cambio cambioHoy = new Cambio();
@@ -153,6 +155,7 @@ namespace Domain
 				Categorias.Remove(categoria);
 			}
 		}
+
 		public void BorrarCuenta(Cuenta cuenta)
 		{
 			if (Cuentas.Contains(cuenta))
@@ -184,16 +187,6 @@ namespace Domain
 		{
 			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
 		}
-		public static void AumentarContadorId()
-		{
-			_contadorId++;
-		}
-
-		public void AsignarId()
-		{			
-            Id = _contadorId;
-            AumentarContadorId();
-        }
 
 		public void ModificarCuenta(Cuenta modificacion, Cuenta modificada)
 		{

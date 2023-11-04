@@ -460,13 +460,6 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Suma_Uno_A_Contador_Static_Y_Lo_Asigna_A_Id()
-		{
-			espacio1.AsignarId();
-			Assert.AreEqual(espacio1.Id, 1);
-		}
-
-		[TestMethod]
 		public void CategoriaAsociadaObjetivos_Retorna_True_Al_Tener_Objetivo_Asociado()
 		{
 
