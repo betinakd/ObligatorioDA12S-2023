@@ -11,6 +11,7 @@ namespace Domain
 		public int CategoriaId { get; set; }
 		public int CuentaId { get; set; }
 		public int EspacioId { get; set; }
+		public Espacio Espacio { get; set; }
 		public string Titulo
 		{
 			get
