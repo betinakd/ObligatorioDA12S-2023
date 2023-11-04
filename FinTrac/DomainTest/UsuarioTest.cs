@@ -178,6 +178,38 @@ namespace DomainTest
 			usuario.Id = 1;
 			Assert.AreEqual(usuario.Id, 1);
 		}
+
+		[TestMethod]
+		public void Usuario_Tiene_Espacios()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = "correo@gmail.com",
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "test"
+			};
+
+			Usuario admin = new Usuario()
+			{
+				Correo = "admin@gmail.com",
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "test"
+			};
+
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "test",
+				Admin = admin
+			};
+
+			List<Espacio> espacios = new List<Espacio>();
+			espacios.Add(espacio);
+			usuario.Espacios = espacios;
+		}
 	}
 }
 
