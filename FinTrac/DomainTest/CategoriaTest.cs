@@ -130,7 +130,7 @@ namespace DomainTest
 		{
 			Categoria categoriaTest = new Categoria();
 			categoriaTest.Id = 1;
-			Assert.AreEqual(1, categoria.Id);
+			Assert.AreEqual(1, categoriaTest.Id);
 		}
 
 		[TestMethod]
@@ -139,7 +139,7 @@ namespace DomainTest
 			Categoria categoriaTest = new Categoria();
 			Espacio espacio = new Espacio();
 			categoriaTest.Espacio = espacio;
-			Assert.AreEqual(espacio, categoria.Espacio);
+			Assert.AreEqual(espacio, categoriaTest.Espacio);
 		}
 
 		[TestMethod]
@@ -147,7 +147,7 @@ namespace DomainTest
 		{
 			Categoria categoriaTest = new Categoria();
 			categoriaTest.EspacioId = 1;
-			Assert.AreEqual(1, categoria.EspacioId);
+			Assert.AreEqual(1, categoriaTest.EspacioId);
 		}
 
 		[TestMethod]
