@@ -23,13 +23,10 @@ namespace Controlador
 			Contrasena = usuario.Contrasena;
 		}
 
-		public void ModificarUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
+		public void ModificarNombre(string nombre)
 		{
-			UsuarioLogic.ModificarDatosUsuario(correo,nombre,apellido,contrasena,direccion);
+			UsuarioLogic.ModificarNombre(Correo, nombre);
 			Nombre = nombre;
-			Apellido = apellido;
-			Direccion = direccion;
-			Contrasena = contrasena;
 		}
 	}
 }
