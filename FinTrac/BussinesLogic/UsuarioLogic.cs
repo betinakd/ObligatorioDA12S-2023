@@ -93,7 +93,7 @@ namespace BussinesLogic
                 Direccion = direccion,
                 IdEspacioPrincipal = idEspacioPrincipal
 			};
-            _repository.Add(usuario);
+            AddUsuario(usuario);
 		}
 	}
 }

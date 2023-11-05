@@ -48,55 +48,34 @@
 	public string Nombre { get; set; } = "";
 	public string Apellido { get; set; } = "";
 	public string Direccion { get; set; } = "";
-
-	public void LimpiarInputs()
+	private ControladorRegistro controlador;
+	private int idEspacioPrincipal;
+	protected override void OnInitialized()
 	{
-		Email = "";
-		Password = "";
-		ConfirmPassword = "";
-		Nombre = "";
-		Apellido = "";
-		Direccion = "";
+		controlador = new ControladorRegistro(UsuarioLogic, EspacioLogic);
 	}
 
 	public void ClickRegistro()
 	{
 		try
 		{
-			Usuario usuario = new Usuario()
-				{
-					Nombre = Nombre,
-					Apellido = Apellido,
-					Direccion = Direccion,
-					Correo = Email,
-					Contrasena = Password,
-					IdEspacioPrincipal = EspacioLogic.EspacioMayorId() + 1,
-				};
-			Espacio espacioPrincipal = new Espacio()
-				{
-					Nombre = $"Principal {usuario.Nombre}",
-					Admin = usuario,
-				};
-			LimpiarInputs();
-			try
-			{
-				UsuarioLogic.AddUsuario(usuario);
-				EspacioLogic.AddEspacio(espacioPrincipal);
-				Persistencia.Id = espacioPrincipal.Id;
-				Persistencia.Correo = usuario.Correo;
-				NavigationManager.NavigateTo($"/home/{espacioPrincipal.Id}/{usuario.Correo}");
-				ErrorMensaje = "";
-			}
-			catch (Exception exception)
-			{
-				LimpiarInputs();
-				ErrorMensaje = exception.Message;
-			}
+			idEspacioPrincipal = EspacioLogic.EspacioMayorId() + 1;
+			controlador.RegistrarUsuario(Email, Nombre, Apellido, Password, Direccion, idEspacioPrincipal);
+			Persistencia.Id = idEspacioPrincipal;
+			Persistencia.Correo = Email;
+			NavigationManager.NavigateTo($"/home/{idEspacioPrincipal}/{Email}");
 		}
-		catch (DomainUsuarioException exception)
+		catch (DomainUsuarioException ex)
 		{
-			LimpiarInputs();
-			ErrorMensaje = exception.Message;
+			ErrorMensaje = ex.Message;
+		}
+		catch (BussinesLogicUsuarioException ex)
+		{
+			ErrorMensaje = ex.Message;
+		}
+		catch (DomainEspacioException ex)
+		{
+			ErrorMensaje = ex.Message;
 		}
 	}
 }

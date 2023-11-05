@@ -304,9 +304,5 @@ namespace BussinesLogicTest
 			Assert.IsNotNull(usuarioCreado);
 			Assert.AreEqual("norberto@gmail.com", usuarioCreado.Correo);
 		}
-
-
-
-
 	}
 }
