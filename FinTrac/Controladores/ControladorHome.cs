@@ -28,5 +28,11 @@ namespace Controlador
 			UsuarioLogic.ModificarNombre(Correo, nombre);
 			Nombre = nombre;
 		}
+
+		public void ModificarApellido(string apellido)
+		{
+			UsuarioLogic.ModificarApellido(Correo, apellido);
+			Apellido = apellido;
+		}
 	}
 }
