@@ -32,6 +32,9 @@ namespace Domain
 			get { return _correo; }
 			set
 			{
+				if (value is null) { 
+					throw new DomainUsuarioException("El correo electrónico es requerido");
+				}
 				if (Validar_Correo(value))
 				{
 					_correo = value;
