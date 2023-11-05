@@ -15,6 +15,7 @@ namespace Controlador
 		public ControladorHome(UsuarioLogic usuarioLogic, string Correo)
 		{
 			Usuario usuario = usuarioLogic.FindUsuario(Correo);
+			UsuarioLogic = usuarioLogic;
 			Nombre = usuario.Nombre;
 		}
 	}
