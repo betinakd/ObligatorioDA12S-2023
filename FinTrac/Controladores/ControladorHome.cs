@@ -10,7 +10,7 @@ namespace Controlador
 		public string Nombre { get; set; }
 		public string Apellido { get; set; }
 		public string Direccion { get; set; }
-		public string Contrasena { get; set; }	
+		public string Contrasena { get; set; }
 
 		public ControladorHome(UsuarioLogic usuarioLogic, string correo)
 		{
@@ -21,6 +21,15 @@ namespace Controlador
 			Nombre = usuario.Nombre;
 			Direccion = usuario.Direccion;
 			Contrasena = usuario.Contrasena;
+		}
+
+		public void ModificarUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
+		{
+			UsuarioLogic.ModificarDatosUsuario(correo,nombre,apellido,contrasena,direccion);
+			Nombre = nombre;
+			Apellido = apellido;
+			Direccion = direccion;
+			Contrasena = contrasena;
 		}
 	}
 }
