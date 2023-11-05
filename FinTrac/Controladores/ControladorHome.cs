@@ -12,10 +12,11 @@ namespace Controlador
 		public string Direccion { get; set; }
 		public string Contrasena { get; set; }	
 
-		public ControladorHome(UsuarioLogic usuarioLogic, string Correo)
+		public ControladorHome(UsuarioLogic usuarioLogic, string correo)
 		{
-			Usuario usuario = usuarioLogic.FindUsuario(Correo);
+			Usuario usuario = usuarioLogic.FindUsuario(correo);
 			UsuarioLogic = usuarioLogic;
+			Correo = correo;
 			Nombre = usuario.Nombre;
 		}
 	}
