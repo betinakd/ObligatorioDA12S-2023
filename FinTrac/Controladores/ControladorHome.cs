@@ -34,5 +34,11 @@ namespace Controlador
 			UsuarioLogic.ModificarApellido(Correo, apellido);
 			Apellido = apellido;
 		}
+
+		public void ModificarContrasena(string contrasena)
+		{
+			UsuarioLogic.ModificarContrasena(Correo, contrasena);
+			Contrasena = contrasena;
+		}
 	}
 }
