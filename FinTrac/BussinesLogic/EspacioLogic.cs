@@ -5,26 +5,26 @@ using Excepcion;
 
 namespace BussinesLogic
 {
-    public class EspacioLogic
-    {
-        private readonly IRepository<Espacio> _repository;
+	public class EspacioLogic
+	{
+		private readonly IRepository<Espacio> _repository;
 
-        public EspacioLogic(IRepository<Espacio> repository)
-        {
-            _repository = repository;
-        }
+		public EspacioLogic(IRepository<Espacio> repository)
+		{
+			_repository = repository;
+		}
 
-        public Espacio AddEspacio(Espacio oneElement)
-        {
-            IList<Espacio> espacios = _repository.FindAll();
-            bool existe = espacios.Contains(oneElement);
-            if (existe)
-            {
-                throw new BusinessLogicEspacioException("El espacio ya existe");
-            }
-            _repository.Add(oneElement);
-            return oneElement;
-        }
+		public Espacio AddEspacio(Espacio oneElement)
+		{
+			IList<Espacio> espacios = _repository.FindAll();
+			bool existe = espacios.Contains(oneElement);
+			if (existe)
+			{
+				throw new BusinessLogicEspacioException("El espacio ya existe");
+			}
+			_repository.Add(oneElement);
+			return oneElement;
+		}
 		public List<Espacio> EspaciosByCorreo(string correo)
 		{
 			IList<Espacio> espacios = _repository.FindAll();
@@ -39,19 +39,19 @@ namespace BussinesLogic
 			return espaciosUsuario;
 		}
 		public void DeleteEspacio(Espacio oneElement)
-        {
-            _repository.Delete(oneElement.Admin.Correo);
-        }
+		{
+			_repository.Delete(oneElement.Admin.Correo);
+		}
 
-        public IList<Espacio> FindAllEspacios()
-        {
-            return _repository.FindAll();
-        }
+		public IList<Espacio> FindAllEspacios()
+		{
+			return _repository.FindAll();
+		}
 
 		public Espacio FindEspacio(int id)
 		{
 			return _repository.Find(e => e.Id == id);
-			
+
 		}
 
 		public void UpdateEspacio(Espacio updateEntity)
@@ -67,6 +67,12 @@ namespace BussinesLogic
 				return 0;
 			}
 			return espacioConMayorId.Id;
+		}
+
+		public void CrearEspacio(string nombre, Usuario admin)
+		{
+			Espacio espacio = new Espacio() { Nombre = nombre, Admin = admin };
+			AddEspacio(espacio);
 		}
 	}
 }
