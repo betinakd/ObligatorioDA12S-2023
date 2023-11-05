@@ -81,5 +81,11 @@ namespace ControladorTest
 			controladorTest.Correo = "test@gmail.com";
 		}
 
+		[TestMethod]
+		public void ControladorHome_Tiene_Contrasena()
+		{
+			ControladorHome controladorTest = new ControladorHome();
+			controladorTest.Contrasena = "HOLAhola123";
+		}
 	}
 }
