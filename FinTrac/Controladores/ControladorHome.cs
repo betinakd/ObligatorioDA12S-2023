@@ -19,6 +19,7 @@ namespace Controlador
 			Correo = correo;
 			Apellido = usuario.Apellido;
 			Nombre = usuario.Nombre;
+			Direccion = usuario.Direccion;
 		}
 	}
 }
