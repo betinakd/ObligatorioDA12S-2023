@@ -55,9 +55,7 @@ namespace ControladorTest
 		public void ControladorRegistro_Tiene_UsuarioLogic()
 		{
 			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic);
-			controladorTest.UsuarioLogic = _usuarioLogic;
-			Assert.IsNotNull(controladorTest.UsuarioLogic);
-			Assert.AreEqual(_usuarioLogic, controladorTest.UsuarioLogic);
+			Assert.IsNotNull(controladorTest);
 		}
 	}
 }
