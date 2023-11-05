@@ -17,6 +17,7 @@ namespace Controlador
 			Usuario usuario = usuarioLogic.FindUsuario(correo);
 			UsuarioLogic = usuarioLogic;
 			Correo = correo;
+			Apellido = usuario.Apellido;
 			Nombre = usuario.Nombre;
 		}
 	}
