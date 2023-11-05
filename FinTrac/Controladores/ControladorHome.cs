@@ -40,5 +40,11 @@ namespace Controlador
 			UsuarioLogic.ModificarContrasena(Correo, contrasena);
 			Contrasena = contrasena;
 		}
+
+		public void ModificarDireccion(string direccion)
+		{
+			UsuarioLogic.ModificarDireccion(Correo, direccion);
+			Direccion = direccion;
+		}
 	}
 }
