@@ -10,7 +10,8 @@ namespace Domain
         public Espacio Espacio { get; set; }
 		private string _titulo;
         private double _montoMaximo;
-        private List<Categoria> _categorias = new List<Categoria>();
+		private string? _token;
+		private List<Categoria> _categorias = new List<Categoria>();
         public string Titulo 
         {
             get
@@ -49,8 +50,19 @@ namespace Domain
 				_categorias = value;
             }
         }
+		public string? Token
+		{
+			get
+			{
+				return _token;
+			}
+			set
+			{
+				_token = value;
+			}
+		}
 
-        public bool ContieneCategoria(Categoria categoria)
+		public bool ContieneCategoria(Categoria categoria)
         {
 			return _categorias.Contains(categoria);
 		}
