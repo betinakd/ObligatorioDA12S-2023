@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BussinesLogic\BussinesLogic.csproj" />
+    <ProjectReference Include="..\Controladores\Controlador.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Excepcion\Excepcion.csproj" />
     <ProjectReference Include="..\Reporte\EspacioReporte.csproj" />
