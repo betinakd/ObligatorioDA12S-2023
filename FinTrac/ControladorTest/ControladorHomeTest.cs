@@ -74,5 +74,12 @@ namespace ControladorTest
 			Assert.AreEqual("street 56 av rety", controladorTest.Direccion);
 		}
 
+		[TestMethod]
+		public void ControladorHome_Tiene_Correo()
+		{
+			ControladorHome controladorTest = new ControladorHome();
+			controladorTest.Correo = "test@gmail.com";
+		}
+
 	}
 }
