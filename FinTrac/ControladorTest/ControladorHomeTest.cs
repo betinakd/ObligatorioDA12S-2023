@@ -144,5 +144,12 @@ namespace ControladorTest
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			Assert.AreEqual("street 56 av rety", controladorTest.Direccion);
 		}
+
+		[TestMethod]
+		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Contrasena()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			Assert.AreEqual("123456789Aaa", controladorTest.Contrasena);
+		}
 	}
 }
