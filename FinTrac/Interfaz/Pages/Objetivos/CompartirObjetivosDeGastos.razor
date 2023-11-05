@@ -1,5 +1,5 @@
-﻿@page "/{Titulo}/{MontoMaximo:double}/{Id:int}/objetivo/{Token}"
-@layout CompartirObjetivosDeGastosLayout
+﻿@page "/{objetivoId:int}/{MontoMaximo:double}/{Id:int}/objetivo/{Token}"
+@layout CompartirObjetivoDeGastosLayout
 <PageTitle>FinTrac Objetivos</PageTitle>
 <TituloRosado Titulo="Objetivo de gasto"></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -37,7 +37,7 @@
 						Gastado actualmente: $
 						@foreach (var objetivoGasto in objetivosDeGasto)
 						{
-							if (objetivoGasto.Objetivo.Titulo.Equals(objetivo.Titulo))
+							if (objetivoGasto.Objetivo.Id.Equals(objetivoId))
 							{
 								@if (objetivoGasto.MontoAcumulado != null)
 								{
@@ -66,7 +66,6 @@
 		<h1>Error al compartir objetivo de gasto</h1>
 		<br />
 		<h3>Lo sentimos, el token utilizado no está disponible.</h3>
-
 	}
 }
 
@@ -75,7 +74,7 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Token { get; set; }
 	[Parameter] public double MontoMaximo { get; set; }
-	[Parameter] public string Titulo { get; set; }
+	[Parameter] public int objetivoId { get; set; }
 	public List<ObjetivoGasto>? objetivosDeGasto { get; set; }
 	private Objetivo objetivo;
 	private Espacio espacio;
@@ -85,7 +84,7 @@
 	{
 		var espacios = EspacioLogic.FindAllEspacios();
 		espacio = espacios.FirstOrDefault(e => e.Id == Id);
-		objetivo = espacio.Objetivos.FirstOrDefault(o => o.Titulo == Titulo);
+		objetivo = espacio.Objetivos.FirstOrDefault(o => o.Id == objetivoId);
 		Reporte reporte = new Reporte() { MiEspacio = espacio };
 		objetivosDeGasto = reporte.ReporteObjetivosDeGastos();
 	}

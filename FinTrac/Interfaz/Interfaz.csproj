@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Pages\Registro - Copia.razor.css" />
     <None Remove="Pages\Registro.razor.css" />
   </ItemGroup>
