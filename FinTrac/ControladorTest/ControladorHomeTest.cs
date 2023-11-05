@@ -127,7 +127,7 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Correo()
 		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic,"hola@gmail.com");
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			Assert.AreEqual("hola@gmail.com", controladorTest.Correo);
 		}
 
@@ -150,6 +150,23 @@ namespace ControladorTest
 		{
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			Assert.AreEqual("123456789Aaa", controladorTest.Contrasena);
+		}
+
+		[TestMethod]
+		public void ModificarUsuario_Recibe_Correo_Nombre_Apellido_Contrasena_Direccion_Y_Llama_A_ModificarDatosUsuario_De_UsuarioLogic()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			string nuevoNombre = "NuevoNombre";
+			string nuevoApellido = "NuevoApellido";
+			string nuevaContrasena = "NuevaContrasena";
+			string nuevaDireccion = "NuevaDireccion";
+
+			controladorTest.ModificarUsuario("hola@gmail.com", nuevoNombre, nuevoApellido, nuevaContrasena, nuevaDireccion);
+
+			Assert.AreEqual(nuevoNombre, controladorTest.Nombre);
+			Assert.AreEqual(nuevoApellido, controladorTest.Apellido);
+			Assert.AreEqual(nuevaContrasena, controladorTest.Contrasena);
+			Assert.AreEqual(nuevaDireccion, controladorTest.Direccion);
 		}
 	}
 }
