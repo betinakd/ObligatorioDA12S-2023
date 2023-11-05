@@ -143,5 +143,12 @@ namespace DomainTest
 			_objetivo.Espacio = espacio;
 			Assert.AreEqual(espacio, _objetivo.Espacio);
 		}
+
+		[TestMethod]
+		public void Objetivo_Get_Token() 
+		{
+			_objetivo.Token = "token";
+			Assert.AreEqual("token", _objetivo.Token);
+		}
 	}
 }
