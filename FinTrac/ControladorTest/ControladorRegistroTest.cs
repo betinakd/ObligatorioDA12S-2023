@@ -57,5 +57,14 @@ namespace ControladorTest
 			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
+
+		[TestMethod]
+		public void ControladorRegistro_Registra_Nuevo_Usuario_UsuarioLogic()
+		{
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic);
+			controladorTest.RegistrarUsuario("test@gmail.com", "Alberto", "Lopez", "HOLAhola123", "Direccion 123");
+			Usuario usuarioRegistrado = _usuarioLogic.FindUsuario("test@gmail.com");
+			Assert.IsNotNull(usuarioRegistrado);
+		}
 	}
 }
