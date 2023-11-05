@@ -13,7 +13,13 @@
 		<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Nombre: @controlador.Nombre @controlador.Apellido</h5>
 		<p class="text-sm text-gray-500 dark:text-gray-400">Dirección: @controlador.Direccion</p>
 		<p class="text-sm text-gray-500 dark:text-gray-400">Correo: @controlador.Correo</p>
-		<p class="text-sm text-gray-500 dark:text-gray-400">Contraseña: @controlador.Contrasena</p>
+		<p class="text-sm text-gray-500 dark:text-gray-400">Contraseña:
+			@if (mostrarContrasena)
+			{
+				<p>@controlador.Contrasena</p>
+			}
+		<a @onclick="ClickMostrarContrasena">@botonNombre</a>
+		</p>
 	</div>
 </div>
 
@@ -22,10 +28,25 @@
 	public int Id { get; set; }
 	[Parameter]
 	public string Correo { get; set; }
+	private bool mostrarContrasena = false;
 	private ControladorHome controlador;
+	private string botonNombre = "Mostrar";
 
 	protected override void OnInitialized()
 	{
 		controlador = new ControladorHome(UsuarioLogic, Persistencia.Correo);
+	}
+
+	private void ClickMostrarContrasena()
+	{
+		mostrarContrasena = !mostrarContrasena;
+		if (mostrarContrasena)
+		{
+			botonNombre = "Ocultar";
+		}
+		else
+		{
+			botonNombre = "Mostrar";
+		}
 	}
 }
