@@ -285,7 +285,7 @@ namespace BussinesLogicTest
 		[ExpectedException(typeof(DomainUsuarioException))]
 		public void CrearUsuario_ConCorreoInvalido_DebeLanzarExcepcion()
 		{
-			_usuarioLogic.CrearUsuario("correoInvalido", "Juan", "Perez", "123456789Aaa", "street 56 av rety");
+			_usuarioLogic.CrearUsuario("correoInvalido", "Juan", "Perez", "123456789Aaa", "street 56 av rety",1);
 
 		}
 
@@ -293,13 +293,13 @@ namespace BussinesLogicTest
 		[ExpectedException(typeof(DomainUsuarioException))]
 		public void CrearUsuario_ConCorreoNulo_DebeLanzarExcepcion()
 		{
-			_usuarioLogic.CrearUsuario(null, "Juan", "Perez", "123456789Aaa", "street 56 av rety");
+			_usuarioLogic.CrearUsuario(null, "Juan", "Perez", "123456789Aaa", "street 56 av rety",1);
 		}
 
 		[TestMethod]
 		public void CrearUsuario_ConCorreoValido_Correctamente()
 		{
-			_usuarioLogic.CrearUsuario("norberto@gmail.com", "Juan", "Perez", "123456789Aaa", "street 56 av rety");
+			_usuarioLogic.CrearUsuario("norberto@gmail.com", "Juan", "Perez", "123456789Aaa", "street 56 av rety",1);
 			Usuario usuarioCreado =_usuarioLogic.FindUsuario("norberto@gmail.com");
 			Assert.IsNotNull(usuarioCreado);
 			Assert.AreEqual("norberto@gmail.com", usuarioCreado.Correo);

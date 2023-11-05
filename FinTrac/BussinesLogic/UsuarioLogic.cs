@@ -82,7 +82,7 @@ namespace BussinesLogic
             _repository.Update(usuario);
         }
 
-        public void CrearUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
+        public void CrearUsuario(string correo, string nombre, string apellido, string contrasena, string direccion, int idEspacioPrincipal)
         {
 			Usuario usuario = new Usuario()
             {
@@ -91,6 +91,7 @@ namespace BussinesLogic
                 Apellido = apellido,
                 Contrasena = contrasena,
                 Direccion = direccion,
+                IdEspacioPrincipal = idEspacioPrincipal
 			};
             _repository.Add(usuario);
 		}

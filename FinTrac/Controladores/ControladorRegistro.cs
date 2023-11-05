@@ -21,9 +21,9 @@ namespace Controlador
 			_espacioLogic.CrearEspacio(nombre, admin);
 		}
 
-		public void RegistrarUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
+		public void RegistrarUsuario(string correo, string nombre, string apellido, string contrasena, string direccion,int idEspacioPrincipal)
 		{
-			_usuarioLogic.CrearUsuario(correo, nombre, apellido, contrasena, direccion);
+			_usuarioLogic.CrearUsuario(correo, nombre, apellido, contrasena, direccion,idEspacioPrincipal);
 			CrearEspacioPrincipal(correo);
 		}
 	}
