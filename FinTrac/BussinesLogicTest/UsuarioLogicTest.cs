@@ -91,7 +91,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Buscar_Todos_Usuarios()
 		{
-			
+
 			_usuarioLogic.AddUsuario(_usuario1);
 			_usuarioLogic.AddUsuario(_usuario2);
 			var usuarios = _usuarioLogic.FindAllUsuario();
@@ -203,6 +203,25 @@ namespace BussinesLogicTest
 			_usuarioLogic.AddUsuario(_usuario1);
 			_usuarioLogic.AddUsuario(_usuario2);
 			Usuario resultado = _usuarioLogic.UsuarioByCorreoContrasena("123456789Aaa", null);
+		}
+
+		[TestMethod]
+		public void Modificar_Datos_Usuario_Debe_Modificar_Nombre()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = "alberto@gmail.com",
+				Nombre = "Alberto",
+				Apellido = "Lopez",
+				Contrasena = "HOLAhola123",
+				Direccion = "Bv España 5566"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+
+			_usuarioLogic.ModificarDatosUsuario(usuario.Correo, "Juan", usuario.Apellido, usuario.Contrasena, usuario.Direccion);
+
+			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
+			Assert.AreEqual("Juan", usuarioModificado.Nombre);
 		}
 	}
 }
