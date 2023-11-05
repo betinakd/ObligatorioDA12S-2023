@@ -21,7 +21,7 @@ namespace Domain
 			{
 				if (!Validar_Contrasena(value))
 				{
-					throw new DomainUsuarioException("La contraseña no es válida");
+					throw new DomainUsuarioException("La contraseña no es válida, debe contener al menos una mayúscula, largo mayor igual a 10 y menor igual a 30");
 				}
 				_contrasena = value;
 			}
@@ -41,7 +41,7 @@ namespace Domain
 				}
 				else
 				{
-					throw new DomainUsuarioException("El correo electrónico no es válido");
+					throw new DomainUsuarioException("El correo electrónico no es válido, debe terminar en .com y tener @ entre carácteres.");
 				}
 			}
 		}
