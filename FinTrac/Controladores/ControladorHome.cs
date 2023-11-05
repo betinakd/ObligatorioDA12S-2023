@@ -10,5 +10,9 @@ namespace Controlador
 		public string Apellido { get; set; }
 		public string Direccion { get; set; }
 		public string Contrasena { get; set; }	
+
+		public ControladorHome(UsuarioLogic usuarioLogic, string Correo)
+		{
+		}
 	}
 }
