@@ -60,6 +60,7 @@ namespace BussinesLogic
             usuario.Nombre = nombre;
 			usuario.Apellido = apellido;
             usuario.Contrasena = contrasena;
+            usuario.Direccion = direccion;
 			_repository.Update(usuario);
 		}
     }
