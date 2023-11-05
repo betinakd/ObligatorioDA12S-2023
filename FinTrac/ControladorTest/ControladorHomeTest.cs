@@ -11,8 +11,6 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repository;
 		private UsuarioLogic _usuarioLogic;
-		private Usuario _usuario1;
-		private Usuario _usuario2;
 		private UsuariosDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
