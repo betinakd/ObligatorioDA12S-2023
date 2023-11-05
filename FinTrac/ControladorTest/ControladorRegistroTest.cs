@@ -1,8 +1,7 @@
 ﻿using BussinesLogic;
+using Controlador;
 using Domain;
 using Repository;
-using Controlador;
-using Microsoft.EntityFrameworkCore;
 
 namespace ControladorTest
 {
@@ -72,8 +71,29 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorRegistro_Tiene_EspacioLogic()
 		{
-			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic,_espacioLogic);
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
 			Assert.IsNotNull(controladorTest);
+		}
+
+		[TestMethod]
+		public void ControladorRegistro_Crea_Espacio_Principal()
+		{
+			var usuario = new Usuario()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "test",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
+			
+			controladorTest.CrearEspacioPrincipal("test@gmail.com");
+			Espacio espacioPrincipal = _espacioLogic.FindEspacio(1);
+
+			Assert.IsNotNull(espacioPrincipal);
+			Assert.AreEqual(espacioPrincipal.Nombre, "Principal test");
 		}
 	}
 }
