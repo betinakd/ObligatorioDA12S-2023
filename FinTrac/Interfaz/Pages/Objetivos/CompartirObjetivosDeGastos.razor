@@ -1,0 +1,91 @@
+﻿@page "/{objetivoId:int}/{MontoMaximo:double}/{Id:int}/objetivo/{Token}"
+@layout CompartirObjetivoDeGastosLayout
+<PageTitle>FinTrac Objetivos</PageTitle>
+<TituloRosado Titulo="Objetivo de gasto"></TituloRosado>
+<EspacioActual></EspacioActual>
+
+
+@if (objetivo != null)
+{
+	@if (objetivo.Token == Token)
+	{
+		<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+			<div class=" px-4 pt-4 mb-5">
+				<div class="flex flex-col pb-10">
+					<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+						El objetivo de @espacio.Admin.Nombre
+					</h5>
+					<p class="text-sm text-gray-500 dark:text-gray-400">
+						Categoria: @foreach (var categoria in objetivo.Categorias)
+						{
+							<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
+								rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
+								@categoria.Nombre
+							</span>
+						}
+					</p>
+
+					<p class="text-sm text-gray-500 dark:text-gray-400">
+						Objetivo: Gastar menos de $
+						<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
+							rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
+							@objetivo.MontoMaximo
+						</span>
+					</p>
+
+					<p class="text-sm text-gray-500 dark:text-gray-400">
+						Gastado actualmente: $
+						@foreach (var objetivoGasto in objetivosDeGasto)
+						{
+							if (objetivoGasto.Objetivo.Id.Equals(objetivoId))
+							{
+								@if (objetivoGasto.MontoAcumulado != null)
+								{
+									montoAcumulado = objetivoGasto.MontoAcumulado;
+									<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
+										rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
+										@objetivoGasto.MontoAcumulado
+									</span>
+								}
+							}
+						}
+						@if (montoAcumulado == 0)
+						{
+							<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
+								rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
+								0
+							</span>
+						}
+					</p>
+				</div>
+			</div>
+		</ul>
+	}
+	else
+	{
+		<h1>Error al compartir objetivo de gasto</h1>
+		<br />
+		<h3>Lo sentimos, el token utilizado no está disponible.</h3>
+	}
+}
+
+@code
+{
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Token { get; set; }
+	[Parameter] public double MontoMaximo { get; set; }
+	[Parameter] public int objetivoId { get; set; }
+	public List<ObjetivoGasto>? objetivosDeGasto { get; set; }
+	private Objetivo objetivo;
+	private Espacio espacio;
+	private double montoAcumulado;
+
+	protected override void OnInitialized()
+	{
+		var espacios = EspacioLogic.FindAllEspacios();
+		espacio = espacios.FirstOrDefault(e => e.Id == Id);
+		objetivo = espacio.Objetivos.FirstOrDefault(o => o.Id == objetivoId);
+		Reporte reporte = new Reporte() { MiEspacio = espacio };
+		objetivosDeGasto = reporte.ReporteObjetivosDeGastos();
+	}
+}

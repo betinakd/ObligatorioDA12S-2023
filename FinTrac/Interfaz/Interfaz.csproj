@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
     <_ContentIncludedByDefault Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
   </ItemGroup>
 
@@ -43,6 +44,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
   </ItemGroup>
 
 </Project>

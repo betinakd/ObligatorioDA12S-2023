@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    [Migration("20231104151904_InitialEspacioDataBase")]
+    [Migration("20231105175010_InitialEspacioDataBase")]
     partial class InitialEspacioDataBase
     {
         /// <inheritdoc />
@@ -168,6 +168,9 @@ namespace Repository.Migrations
 
                     b.Property<string>("Titulo")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Token")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
