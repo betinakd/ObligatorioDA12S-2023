@@ -63,5 +63,11 @@ namespace BussinesLogic
             usuario.Direccion = direccion;
 			_repository.Update(usuario);
 		}
+        public void ModificarNombre(string correo, string nombre)
+        {
+			Usuario usuario = FindUsuario(correo);
+			usuario.Nombre = nombre;
+			_repository.Update(usuario);
+		}
     }
 }
