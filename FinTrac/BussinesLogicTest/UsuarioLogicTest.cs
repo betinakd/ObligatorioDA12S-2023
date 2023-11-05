@@ -256,7 +256,7 @@ namespace BussinesLogicTest
 			};
 			_usuarioLogic.AddUsuario(usuario);
 
-			_usuarioLogic.ModificarDatosUsuario(usuario.Correo, usuario.Nombre, usuario.Apellido, "123456789Aaa", usuario.Direccion);
+			_usuarioLogic.ModificarContrasena(usuario.Correo,"123456789Aaa");
 
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
 			Assert.AreEqual("123456789Aaa", usuarioModificado.Contrasena);

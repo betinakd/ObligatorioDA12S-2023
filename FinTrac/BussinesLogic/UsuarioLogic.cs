@@ -76,5 +76,12 @@ namespace BussinesLogic
 			usuario.Apellido = apellido;
 			_repository.Update(usuario);
 		}
+
+        public void ModificarContrasena(string correo, string contrasena)
+        {
+			Usuario usuario = FindUsuario(correo);
+			usuario.Contrasena = contrasena;
+			_repository.Update(usuario);
+		}
 	}
 }
