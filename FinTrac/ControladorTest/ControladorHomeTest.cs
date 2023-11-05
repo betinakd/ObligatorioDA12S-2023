@@ -109,5 +109,12 @@ namespace ControladorTest
 			Assert.AreEqual(_usuarioLogic, controladorTest.UsuarioLogic);
 		}
 
+		[TestMethod]
+		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Correo()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic,"hola@gmail.com");
+			Assert.AreEqual("hola@gmail.com", controladorTest.Correo);
+		}
+
 	}
 }
