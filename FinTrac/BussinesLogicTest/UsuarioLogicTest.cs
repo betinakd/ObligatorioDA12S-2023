@@ -280,5 +280,21 @@ namespace BussinesLogicTest
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
 			Assert.AreEqual("street 56 av rety", usuarioModificado.Direccion);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void CrearUsuario_ConCorreoInvalido_DebeLanzarExcepcion()
+		{
+			_usuarioLogic.CrearUsuario("correoInvalido", "Juan", "Perez", "123456789Aaa", "street 56 av rety");
+
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void CrearUsuario_ConCorreoNulo_DebeLanzarExcepcion()
+		{
+			_usuarioLogic.CrearUsuario(null, "Juan", "Perez", "123456789Aaa", "street 56 av rety");
+		}
+
 	}
 }
