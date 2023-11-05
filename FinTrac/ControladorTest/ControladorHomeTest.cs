@@ -2,20 +2,25 @@ using BussinesLogic;
 using Domain;
 using Repository;
 using Controlador;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControladorTest
 {
 	[TestClass]
 	public class ControladorHomeTest
 	{
+		private IRepository<Usuario> _repository;
 		private UsuarioLogic _usuarioLogic;
+		private Usuario _usuario1;
+		private Usuario _usuario2;
+		private UsuariosDbContext _context;
+		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
-			IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-			UsuariosDbContext _context = _contextFactory.CreateDbContext();
-			IRepository<Usuario> _repository = new UsuarioMemoryRepository(_context);
+			_context = _contextFactory.CreateDbContext();
+			_repository = new UsuarioMemoryRepository(_context);
 			_usuarioLogic = new UsuarioLogic(_repository);
 			var usuario1 = new Usuario()
 			{
@@ -36,6 +41,16 @@ namespace ControladorTest
 			};
 			_usuarioLogic.AddUsuario(usuario1);
 			_usuarioLogic.AddUsuario(usuario2);
+		}
+
+		[TestCleanup]
+		public void Cleanup()
+		{
+			_context.Database.EnsureDeleted();
+			_context.Dispose();
+			_context = null;
+			_repository = null;
+			_usuarioLogic = null;
 		}
 
 		[TestMethod]
