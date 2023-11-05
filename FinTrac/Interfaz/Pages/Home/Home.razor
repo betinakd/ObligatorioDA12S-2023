@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager NavigationManager;
-
+@using Controlador;
 @page "/home/{Id:int}/{Correo}"
 
 <PageTitle>FinTrac Home</PageTitle>
@@ -7,28 +7,25 @@
 <EspacioActual></EspacioActual>
 <a href="/home/@Persistencia.Id/@Persistencia.Correo/EditarUsuario" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Editar Datos</a>
 
-@if (usuarioLog != null)
-{
-	<div class=" px-4 pt-4 mb-5">
-		<div class="flex flex-col pb-10">
-			<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white"> Datos del usuario</h5>
-			<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Nombre: @usuarioLog.Nombre @usuarioLog.Apellido</h5>
-			<p class="text-sm text-gray-500 dark:text-gray-400">Dirección: @usuarioLog.Direccion</p>
-			<p class="text-sm text-gray-500 dark:text-gray-400">Correo: @usuarioLog.Correo</p>
-			<p class="text-sm text-gray-500 dark:text-gray-400">Contraseña: @usuarioLog.Contrasena</p>
-		</div>
+<div class=" px-4 pt-4 mb-5">
+	<div class="flex flex-col pb-10">
+		<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white"> Datos del usuario</h5>
+		<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">Nombre: @controlador.Nombre @controlador.Apellido</h5>
+		<p class="text-sm text-gray-500 dark:text-gray-400">Dirección: @controlador.Direccion</p>
+		<p class="text-sm text-gray-500 dark:text-gray-400">Correo: @controlador.Correo</p>
+		<p class="text-sm text-gray-500 dark:text-gray-400">Contraseña: @controlador.Contrasena</p>
 	</div>
-}
+</div>
 
 @code {
 	[Parameter]
 	public int Id { get; set; }
 	[Parameter]
 	public string Correo { get; set; }
-	private Usuario usuarioLog;
+	private ControladorHome controlador;
 
 	protected override void OnInitialized()
 	{
-		usuarioLog = UsuarioLogic.FindUsuario(Correo);
+		controlador = new ControladorHome(UsuarioLogic, Persistencia.Correo);
 	}
 }
