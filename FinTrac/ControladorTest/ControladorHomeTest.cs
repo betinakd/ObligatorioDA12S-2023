@@ -178,5 +178,14 @@ namespace ControladorTest
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("HOLAhola123", usuarioModificado.Contrasena);
 		}
+
+		[TestMethod]
+		public void Modificar_Datos_Usuario_Debe_Modificar_Direccion()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			controladorTest.ModificarDireccion("Av Bvar españa 3456");
+			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Assert.AreEqual("Av Bvar españa 3456", usuarioModificado.Direccion);
+		}
 	}
 }
