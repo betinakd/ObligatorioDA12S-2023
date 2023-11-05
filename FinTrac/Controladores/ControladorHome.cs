@@ -1,4 +1,5 @@
 ﻿using BussinesLogic;
+using Domain;
 
 namespace Controlador
 {
@@ -13,6 +14,8 @@ namespace Controlador
 
 		public ControladorHome(UsuarioLogic usuarioLogic, string Correo)
 		{
+			Usuario usuario = usuarioLogic.FindUsuario(Correo);
+			Nombre = usuario.Nombre;
 		}
 	}
 }
