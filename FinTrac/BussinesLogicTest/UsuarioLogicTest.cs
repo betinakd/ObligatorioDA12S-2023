@@ -237,7 +237,7 @@ namespace BussinesLogicTest
 			};
 			_usuarioLogic.AddUsuario(usuario);
 
-			_usuarioLogic.ModificarApellido(usuario.Correo,"Perez");
+			_usuarioLogic.ModificarApellido(usuario.Correo, "Perez");
 
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
 			Assert.AreEqual("Perez", usuarioModificado.Apellido);
@@ -256,7 +256,7 @@ namespace BussinesLogicTest
 			};
 			_usuarioLogic.AddUsuario(usuario);
 
-			_usuarioLogic.ModificarContrasena(usuario.Correo,"123456789Aaa");
+			_usuarioLogic.ModificarContrasena(usuario.Correo, "123456789Aaa");
 
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
 			Assert.AreEqual("123456789Aaa", usuarioModificado.Contrasena);
@@ -275,7 +275,7 @@ namespace BussinesLogicTest
 			};
 			_usuarioLogic.AddUsuario(usuario);
 
-			_usuarioLogic.ModificarDatosUsuario(usuario.Correo, usuario.Nombre, usuario.Apellido, usuario.Contrasena, "street 56 av rety");
+			_usuarioLogic.ModificarDireccion(usuario.Correo, "street 56 av rety");
 
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
 			Assert.AreEqual("street 56 av rety", usuarioModificado.Direccion);

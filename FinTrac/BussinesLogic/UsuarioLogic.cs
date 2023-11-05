@@ -54,15 +54,6 @@ namespace BussinesLogic
             return _repository.Find(u => u.Correo == correo);
         }
 
-        public void ModificarDatosUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
-		{
-            Usuario usuario = FindUsuario(correo);
-            usuario.Nombre = nombre;
-			usuario.Apellido = apellido;
-            usuario.Contrasena = contrasena;
-            usuario.Direccion = direccion;
-			_repository.Update(usuario);
-		}
         public void ModificarNombre(string correo, string nombre)
         {
 			Usuario usuario = FindUsuario(correo);
@@ -83,5 +74,12 @@ namespace BussinesLogic
 			usuario.Contrasena = contrasena;
 			_repository.Update(usuario);
 		}
+
+        public void ModificarDireccion(string correo, string direccion)
+        {
+            Usuario usuario = FindUsuario(correo);
+            usuario.Direccion = direccion;
+            _repository.Update(usuario);
+        }
 	}
 }
