@@ -50,7 +50,7 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Tiene_Nombre()
 		{
-			ControladorHome controladorTest = new ControladorHome();
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.Nombre = "Juan";
 			Assert.IsNotNull(controladorTest.Nombre);
 			Assert.AreEqual("Juan", controladorTest.Nombre);
@@ -59,7 +59,7 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Tiene_Apellido()
 		{
-			ControladorHome controladorTest = new ControladorHome();
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.Apellido = "Perez";
 			Assert.IsNotNull(controladorTest.Apellido);
 			Assert.AreEqual("Perez", controladorTest.Apellido);
@@ -68,7 +68,7 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Tiene_Direccion()
 		{
-			ControladorHome controladorTest = new ControladorHome();
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.Direccion = "street 56 av rety";
 			Assert.IsNotNull(controladorTest.Direccion);
 			Assert.AreEqual("street 56 av rety", controladorTest.Direccion);
@@ -77,15 +77,21 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Tiene_Correo()
 		{
-			ControladorHome controladorTest = new ControladorHome();
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.Correo = "test@gmail.com";
 		}
 
 		[TestMethod]
 		public void ControladorHome_Tiene_Contrasena()
 		{
-			ControladorHome controladorTest = new ControladorHome();
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.Contrasena = "HOLAhola123";
+		}
+
+		[TestMethod]
+		public void ControladorHome_Tiene_Constructor()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 		}
 	}
 }
