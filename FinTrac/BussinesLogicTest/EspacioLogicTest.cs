@@ -172,5 +172,13 @@ namespace BussinesLogicTest
 			int resultado = espacioLogic.EspacioMayorId();
 			Assert.AreEqual(2, resultado);
 		}
+
+		[TestMethod]
+        public void CrearEspacio_Crea_Espacio_Correctamente()
+        {
+			espacioLogic.CrearEspacio("Espacio1", usuario1);
+			Assert.IsTrue(espacioLogic.FindAllEspacios().Count == 1);
+            Assert.AreEqual("Espacio1", espacioLogic.FindAllEspacios()[0].Nombre);
+		}
 	}
 }
