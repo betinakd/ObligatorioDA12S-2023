@@ -56,6 +56,7 @@ namespace ControladorTest
 			Assert.AreEqual("Juan", controladorTest.Nombre);
 		}
 
+		[TestMethod]
 		public void ControladorHome_Tiene_Apellido()
 		{
 			ControladorHome controladorTest = new ControladorHome();
@@ -63,5 +64,15 @@ namespace ControladorTest
 			Assert.IsNotNull(controladorTest.Apellido);
 			Assert.AreEqual("Perez", controladorTest.Apellido);
 		}
+
+		[TestMethod]
+		public void ControladorHome_Tiene_Direccion()
+		{
+			ControladorHome controladorTest = new ControladorHome();
+			controladorTest.Direccion = "street 56 av rety";
+			Assert.IsNotNull(controladorTest.Direccion);
+			Assert.AreEqual("street 56 av rety", controladorTest.Direccion);
+		}
+
 	}
 }
