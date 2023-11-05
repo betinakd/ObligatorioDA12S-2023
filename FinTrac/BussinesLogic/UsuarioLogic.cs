@@ -49,9 +49,16 @@ namespace BussinesLogic
             _repository.Delete(id);
         }
 
-        public Usuario? FindUsuario(string id)
+        public Usuario? FindUsuario(string correo)
         {
-            return _repository.Find(u => u.Correo == id);
+            return _repository.Find(u => u.Correo == correo);
         }
+
+        public void ModificarDatosUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
+		{
+            Usuario usuario = FindUsuario(correo);
+            usuario.Nombre = nombre;
+			_repository.Update(usuario);
+		}
     }
 }
