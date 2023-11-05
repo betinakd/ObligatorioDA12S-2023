@@ -24,6 +24,7 @@ namespace Controlador
 		public void RegistrarUsuario(string correo, string nombre, string apellido, string contrasena, string direccion)
 		{
 			_usuarioLogic.CrearUsuario(correo, nombre, apellido, contrasena, direccion);
+			CrearEspacioPrincipal(correo);
 		}
 	}
 }

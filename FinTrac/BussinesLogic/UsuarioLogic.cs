@@ -90,7 +90,7 @@ namespace BussinesLogic
                 Nombre = nombre,
                 Apellido = apellido,
                 Contrasena = contrasena,
-                Direccion = direccion
+                Direccion = direccion,
 			};
             _repository.Add(usuario);
 		}
