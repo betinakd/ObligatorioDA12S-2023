@@ -20,6 +20,7 @@ namespace Controlador
 			Apellido = usuario.Apellido;
 			Nombre = usuario.Nombre;
 			Direccion = usuario.Direccion;
+			Contrasena = usuario.Contrasena;
 		}
 	}
 }
