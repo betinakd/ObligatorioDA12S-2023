@@ -16,7 +16,7 @@ namespace ControladorTest
 			IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 			UsuariosDbContext _context = _contextFactory.CreateDbContext();
 			IRepository<Usuario> _repository = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repository); // Asigna la variable de instancia
+			_usuarioLogic = new UsuarioLogic(_repository);
 			var usuario1 = new Usuario()
 			{
 				Correo = "hola@gmail.com",
@@ -41,7 +41,7 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Tiene_UsuarioLogic()
 		{
-			ControladorHome controladorTest = new ControladorHome();
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.UsuarioLogic = _usuarioLogic;
 			Assert.IsNotNull(controladorTest.UsuarioLogic);
 			Assert.AreEqual(_usuarioLogic, controladorTest.UsuarioLogic);
@@ -92,6 +92,15 @@ namespace ControladorTest
 		public void ControladorHome_Tiene_Constructor()
 		{
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			Assert.IsNotNull(controladorTest);
 		}
+
+		[TestMethod]
+		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Nombre_De_Usuario()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			Assert.AreEqual("Juan", controladorTest.Nombre);
+		}
+
 	}
 }
