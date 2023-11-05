@@ -160,5 +160,14 @@ namespace ControladorTest
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Juan", usuarioModificado.Nombre);
 		}
+
+		[TestMethod]
+		public void Modificar_Datos_Usuario_Debe_Modificar_Apellido()
+		{
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			controladorTest.ModificarApellido("Nuñez");
+			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Assert.AreEqual("Nuñez", usuarioModificado.Apellido);
+		}
 	}
 }
