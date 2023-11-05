@@ -52,7 +52,10 @@
 	{
 		try
 		{
-			controlador.ModificarUsuario(Persistencia.Correo, nombreInput, apellidoInput, passwordInput, direccionInput);
+			controlador.ModificarNombre(nombreInput);
+			controlador.ModificarContrasena(passwordInput);
+			controlador.ModificarApellido(apellidoInput);
+			controlador.ModificarDireccion(direccionInput);
 			NavigationManager.NavigateTo($"/home/{Id}/{Correo}");
 		}
 		catch (DomainUsuarioException e)
