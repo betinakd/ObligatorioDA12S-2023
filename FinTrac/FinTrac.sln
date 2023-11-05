@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Re
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RepositoryTest", "RepositoryTest\RepositoryTest.csproj", "{221146AB-C7C2-4C0F-B2AE-A3FF44DC62A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EspacioReporte", "Reporte\EspacioReporte.csproj", "{DF6C3312-405C-4FBE-BFBA-ADA55C4DEE03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EspacioReporte", "Reporte\EspacioReporte.csproj", "{DF6C3312-405C-4FBE-BFBA-ADA55C4DEE03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EspacioReporteTest", "ReporteTest\EspacioReporteTest.csproj", "{5FA7AB78-992F-4619-A77F-564C606CF0C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EspacioReporteTest", "ReporteTest\EspacioReporteTest.csproj", "{5FA7AB78-992F-4619-A77F-564C606CF0C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excepcion", "Excepcion\Excepcion.csproj", "{49C5E60E-FCC8-418D-BC68-DA6704582650}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excepcion", "Excepcion\Excepcion.csproj", "{49C5E60E-FCC8-418D-BC68-DA6704582650}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

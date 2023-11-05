@@ -154,7 +154,8 @@ namespace Repository.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EspacioId = table.Column<int>(type: "int", nullable: false),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MontoMaximo = table.Column<double>(type: "float", nullable: false)
+                    MontoMaximo = table.Column<double>(type: "float", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
