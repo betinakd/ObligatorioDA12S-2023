@@ -87,7 +87,12 @@ namespace BussinesLogic
 			Usuario usuario = new Usuario()
             {
 				Correo = correo,
+                Nombre = nombre,
+                Apellido = apellido,
+                Contrasena = contrasena,
+                Direccion = direccion
 			};
+            _repository.Add(usuario);
 		}
 	}
 }
