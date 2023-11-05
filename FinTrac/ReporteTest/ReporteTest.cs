@@ -1818,7 +1818,7 @@ namespace DomainTest
 			};
 			_reporte.MiEspacio = _miEspacio;
 			DateTime fecha = new DateTime(2024, DateTime.Now.Month, DateTime.Now.Day);
-			Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
+			Assert.IsTrue(!_reporte.TransaccionMismoAnioYMes(transaccion1, fecha));
 		}
 
 		[TestMethod]
@@ -1858,7 +1858,7 @@ namespace DomainTest
 			};
 			_reporte.MiEspacio = _miEspacio;
 			DateTime fecha = new DateTime(DateTime.Now.Year, 1, DateTime.Now.Day);
-			Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
+			Assert.IsTrue(!_reporte.TransaccionMismoAnioYMes(transaccion1, fecha));
 		}
 
 		[TestMethod]

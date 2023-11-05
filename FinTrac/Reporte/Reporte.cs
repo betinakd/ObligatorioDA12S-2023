@@ -27,7 +27,7 @@ namespace EspacioReporte
 					{
 						cambio = t.EncontrarCambio(MiEspacio);
 					}
-					if (TransaccionEntraObjetivo(o, t) && TransaccionMismoYearYMes(t, fechaActual) && TransaccionCategoriaCosto(t))
+					if (TransaccionEntraObjetivo(o, t) && TransaccionMismoAnioYMes(t, fechaActual) && TransaccionCategoriaCosto(t))
 					{
 						transaccionesAceptadas = true;
 						if (t.Moneda != TipoCambiario.PesosUruguayos)
@@ -49,17 +49,17 @@ namespace EspacioReporte
 			return ret;
 		}
 
-		public bool TransaccionEntraObjetivo(Objetivo o, Transaccion t)
+		private bool TransaccionEntraObjetivo(Objetivo o, Transaccion t)
 		{
 			return (o.Categorias.Contains(t.CategoriaTransaccion));
 		}
 
-		public bool TransaccionMismoYearYMes(Transaccion t, DateTime fecha)
+		public bool TransaccionMismoAnioYMes(Transaccion t, DateTime fecha)
 		{
 			return (t.FechaTransaccion.Month.Equals(fecha.Month)) && (t.FechaTransaccion.Year.Equals(fecha.Year));
 		}
 
-		public bool TransaccionCategoriaCosto(Transaccion t)
+		private bool TransaccionCategoriaCosto(Transaccion t)
 		{
 			return (t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Costo));
 		}
@@ -104,12 +104,12 @@ namespace EspacioReporte
 			return _reporteGastos;
 		}
 
-		public bool TransaccionMismaCategoria(Categoria c, Transaccion t)
+		private bool TransaccionMismaCategoria(Categoria c, Transaccion t)
 		{
 			return (t.CategoriaTransaccion.Equals(c));
 		}
 
-		public bool TransaccionMismoMes(Transaccion t, int mes)
+		private bool TransaccionMismoMes(Transaccion t, int mes)
 		{
 			return (t.FechaTransaccion.Month.Equals(mes));
 		}
@@ -151,12 +151,12 @@ namespace EspacioReporte
 			return _listaGastos;
 		}
 
-		public bool CumpleFiltroCategoria(Categoria _catFiltro, Categoria _catTrans)
+		private bool CumpleFiltroCategoria(Categoria _catFiltro, Categoria _catTrans)
 		{
 			return _catTrans.Equals(_catFiltro) && _catTrans.Tipo.Equals(_catFiltro.Tipo);
 		}
 
-		public bool MismaCuenta(Cuenta _cuenta1, Cuenta _cuenta2)
+		private bool MismaCuenta(Cuenta _cuenta1, Cuenta _cuenta2)
 		{
 			return _cuenta1.Equals(_cuenta2);
 		}
@@ -211,13 +211,13 @@ namespace EspacioReporte
 			return _reporteGastos;
 		}
 
-		public bool CuentaVenceEseMes(Credito CA, DateTime actualDate)
+		private bool CuentaVenceEseMes(Credito CA, DateTime actualDate)
 		{
 			DateTime fechaCierre = CA.FechaCierre;
 			return fechaCierre.Month == actualDate.Month;
 		}
 
-		public bool CuentaVencida(Credito CA, DateTime actualDate)
+		private bool CuentaVencida(Credito CA, DateTime actualDate)
 		{
 			DateTime fechaCierre = CA.FechaCierre;
 			return fechaCierre < actualDate;
@@ -245,7 +245,7 @@ namespace EspacioReporte
 			return saldoCuenta;
 		}
 
-		public double EncontrarMontoInicial(Ahorro account, Cambio cambioUtilizado)
+		private double EncontrarMontoInicial(Ahorro account, Cambio cambioUtilizado)
 		{
 			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
 			{
@@ -297,12 +297,12 @@ namespace EspacioReporte
 			return _montoIngresos;
 		}
 
-		public bool TransaccionCategoriaIngreso(Transaccion t)
+		private bool TransaccionCategoriaIngreso(Transaccion t)
 		{
 			return t.CategoriaTransaccion.Tipo.Equals(TipoCategoria.Ingreso);
 		}
 
-		public bool MismaCuentaAhorro(Ahorro c1, Ahorro c2)
+		private bool MismaCuentaAhorro(Ahorro c1, Ahorro c2)
 		{
 			return c1.Equals(c2);
 		}
@@ -380,7 +380,7 @@ namespace EspacioReporte
 			return reporteIngresosEgresos;
 		}
 
-		public double DarValorEnPesos(Transaccion transaccion)
+		private double DarValorEnPesos(Transaccion transaccion)
 		{
 			Cambio cambioUsado = transaccion.EncontrarCambio(MiEspacio);
 			if (transaccion.Moneda.Equals(TipoCambiario.Dolar) || transaccion.Moneda.Equals(TipoCambiario.Euro))
