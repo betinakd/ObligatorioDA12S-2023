@@ -69,5 +69,12 @@ namespace BussinesLogic
 			usuario.Nombre = nombre;
 			_repository.Update(usuario);
 		}
-    }
+
+		public void ModificarApellido(string correo, string apellido)
+		{
+			Usuario usuario = FindUsuario(correo);
+			usuario.Apellido = apellido;
+			_repository.Update(usuario);
+		}
+	}
 }

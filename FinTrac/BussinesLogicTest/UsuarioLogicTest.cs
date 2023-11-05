@@ -237,7 +237,7 @@ namespace BussinesLogicTest
 			};
 			_usuarioLogic.AddUsuario(usuario);
 
-			_usuarioLogic.ModificarDatosUsuario(usuario.Correo, usuario.Nombre, "Perez", usuario.Contrasena, usuario.Direccion);
+			_usuarioLogic.ModificarApellido(usuario.Correo,"Perez");
 
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
 			Assert.AreEqual("Perez", usuarioModificado.Apellido);
