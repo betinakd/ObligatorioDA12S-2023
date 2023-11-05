@@ -59,6 +59,7 @@ namespace BussinesLogic
             Usuario usuario = FindUsuario(correo);
             usuario.Nombre = nombre;
 			usuario.Apellido = apellido;
+            usuario.Contrasena = contrasena;
 			_repository.Update(usuario);
 		}
     }
