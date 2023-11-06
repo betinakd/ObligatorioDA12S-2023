@@ -93,5 +93,28 @@ namespace ControladorTest
 			Assert.AreEqual("Espacio Test", espacioCreado.Nombre);
 			Assert.AreEqual(creadorEspacio, espacioCreado.Admin);
 		}
+
+		[TestMethod]
+		public void ModificarNombreEspacio_Modifica_Nombre_Espacio_Correctamente()
+		{
+			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
+			Usuario creadorEspacio = new Usuario()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(creadorEspacio);
+			Espacio espacioCreado = new Espacio()
+			{
+				Id = 1,
+				Nombre = "Espacio Test",
+				Admin = creadorEspacio
+			};
+			controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
+			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
+		}
 	}
 }

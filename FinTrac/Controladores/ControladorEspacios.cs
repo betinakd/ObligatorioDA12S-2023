@@ -18,5 +18,9 @@ namespace Controlador
 			Usuario admin = _usuarioLogic.FindUsuario(correoAdmin);
 			_espacioLogic.CrearEspacio(nombre, admin);
 		}
+
+		public void ModificarNombreEspacio(int espacioId, string nuevoNombre)
+		{
+		}
 	}
 }
