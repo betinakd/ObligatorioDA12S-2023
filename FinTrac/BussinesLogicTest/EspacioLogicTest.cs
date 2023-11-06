@@ -184,7 +184,6 @@ namespace BussinesLogicTest
         [TestMethod]
         public void ModificarEspacioNombre_Modifica_El_Nombre_De_Espacio()
 		{
-			// Arrange
 			Espacio espacio = new Espacio
 			{
 				Id = 5,
@@ -207,6 +206,38 @@ namespace BussinesLogicTest
 			Espacio espacioModificado = espacioLogic.FindEspacio(espacio.Id);
 			Assert.AreEqual("EspacioModificado", espacioModificado.Nombre);
 			Assert.AreNotEqual(nombreAnterior, espacioModificado.Nombre);
+		}
+
+        [TestMethod]
+        public void AgregarUsuarioAEspacio_Agrega_Usuario_Al_Espacio()
+        {
+			Espacio espacio = new Espacio
+			{
+				Id = 5,
+				Nombre = "Test",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 5,
+					Nombre = "test",
+					Apellido = "test",
+					Direccion = "address2",
+					Correo = "test@gmail.com",
+					Contrasena = "123456789Csss"
+				}
+			};
+            Usuario usuario = new Usuario
+            {
+                IdEspacioPrincipal = 6,
+                Nombre = "testing",
+                Apellido = "teset",
+                Direccion = "address2",
+                Contrasena = "123456789Caaaa",
+                Correo = "hola@gmail.com"
+            };
+            espacioLogic.AddEspacio(espacio);
+            espacioLogic.AgregarUsuarioAEspacio(espacio.Id, usuario);
+            bool resultado = espacioLogic.FindEspacio(espacio.Id).UsuariosInvitados.Contains(usuario);
+            Assert.IsTrue(resultado);
 		}
 	}
 }
