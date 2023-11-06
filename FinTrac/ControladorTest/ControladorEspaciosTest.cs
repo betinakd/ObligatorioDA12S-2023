@@ -58,5 +58,12 @@ namespace ControladorTest
 			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
+
+		[TestMethod]
+		public void ControladorEspacios_Tiene_EspacioLogic()
+		{
+			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
+			Assert.IsNotNull(controladorTest);
+		}
 	}
 }
