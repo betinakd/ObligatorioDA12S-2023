@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BussinesLogic;
+using Domain;
 
 namespace Controlador
 {
 	public class ControladorEspacios
 	{
+		private UsuarioLogic _usuarioLogic;
+		public ControladorEspacios(UsuarioLogic usuarioLogic, EspacioLogic espacioLogic)
+		{
+			_usuarioLogic = usuarioLogic;
+		}
 	}
 }
