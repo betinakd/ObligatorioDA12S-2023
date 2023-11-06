@@ -329,7 +329,7 @@ namespace BussinesLogicTest
 				Correo = "test3@gmail.com",
 				Nombre = "Julio",
 				Apellido = "Martinez",
-				Contrasena = "HOLeeehola123",
+				Contrasena = "HOLee4ehola123",
 				Direccion = "Bv España 546"
 			};
 			_usuarioLogic.AddUsuario(usuario);
