@@ -55,7 +55,14 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorUsuarios_Tiene_UsuarioLogic()
 		{
-			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic);
+			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic,_espacioLogic);
+			Assert.IsNotNull(controladorTest);
+		}
+
+		[TestMethod]
+		public void ControladorUsuarios_Tiene_EspacioLogic()
+		{
+			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic,_espacioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
 	}
