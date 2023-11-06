@@ -180,5 +180,33 @@ namespace BussinesLogicTest
 			Assert.IsTrue(espacioLogic.FindAllEspacios().Count == 1);
             Assert.AreEqual("Espacio1", espacioLogic.FindAllEspacios()[0].Nombre);
 		}
+
+        [TestMethod]
+        public void ModificarEspacioNombre_Modifica_El_Nombre_De_Espacio()
+		{
+			// Arrange
+			Espacio espacio = new Espacio
+			{
+				Id = 5,
+				Nombre = "Test",
+				Admin = new Usuario
+				{
+					IdEspacioPrincipal = 5,
+					Nombre = "test",
+					Apellido = "test",
+					Direccion = "address2",
+					Correo = "test@gmail.com",
+					Contrasena = "123456789Csss"
+				}
+			};
+			string nombreAnterior = espacio.Nombre;
+
+			espacioLogic.AddEspacio(espacio);
+			espacioLogic.ModificarNombreEspacio(espacio.Id, "EspacioModificado");
+
+			Espacio espacioModificado = espacioLogic.FindEspacio(espacio.Id);
+			Assert.AreEqual("EspacioModificado", espacioModificado.Nombre);
+			Assert.AreNotEqual(nombreAnterior, espacioModificado.Nombre);
+		}
 	}
 }
