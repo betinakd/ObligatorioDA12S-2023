@@ -74,6 +74,13 @@ namespace BussinesLogic
 			Espacio espacio = new Espacio() { Nombre = nombre, Admin = admin };
 			AddEspacio(espacio);
 		}
+
+		public void ModificarNombreEspacio(int espacioId, string nuevoNombre)
+		{
+			Espacio espacio = FindEspacio(espacioId);
+			espacio.Nombre = nuevoNombre;
+			UpdateEspacio(espacio);
+		}
 	}
 }
 
