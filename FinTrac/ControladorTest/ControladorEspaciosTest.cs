@@ -1,6 +1,7 @@
 ﻿using BussinesLogic;
 using Controlador;
 using Domain;
+using Excepcion;
 using Repository;
 
 namespace ControladorTest
@@ -64,6 +65,14 @@ namespace ControladorTest
 		{
 			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
 			Assert.IsNotNull(controladorTest);
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void CrearEspacio_Lanza_Excepcion_Crear_Espacio_CorreoAdmin_No_Existe()
+		{
+			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
+			controladorTest.CrearEspacio("test@gmail.com", "EspacioTest");
 		}
 	}
 }
