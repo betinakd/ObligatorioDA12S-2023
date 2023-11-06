@@ -36,5 +36,19 @@ namespace Controlador
 			}
 			return datos;
 		}
+
+		public string[,] DatosUsuariosNoPresentesEspacio(int idEspacio)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			List<Usuario> usuariosNoPresentes =_usuarioLogic.UsuariosNoPresentesEspacio(espacio);
+			string[,] datos = new string[usuariosNoPresentes.Count, 3];
+			for(int i=0; i<usuariosNoPresentes.Count; i++)
+			{
+				datos[i, 0] = usuariosNoPresentes[i].Nombre;
+				datos[i, 1] = usuariosNoPresentes[i].Apellido;
+				datos[i, 2] = usuariosNoPresentes[i].Correo;
+			}
+			return datos;
+		}
 	}
 }
