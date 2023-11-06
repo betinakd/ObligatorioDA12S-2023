@@ -13,5 +13,10 @@ namespace Controlador
 			_usuarioLogic = usuarioLogic;
 			_espacioLogic = espacioLogic;
 		}
+
+		public void CrearEspacio(string correoAdmin, string nombre) { 
+			Usuario admin = _usuarioLogic.FindUsuario(correoAdmin);
+			_espacioLogic.CrearEspacio(nombre, admin);
+		}
 	}
 }
