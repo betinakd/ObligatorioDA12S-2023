@@ -81,6 +81,12 @@ namespace BussinesLogic
 			espacio.Nombre = nuevoNombre;
 			UpdateEspacio(espacio);
 		}
+
+		public void AgregarUsuarioAEspacio(int idEspacio, Usuario usuario)
+		{
+			Espacio espacio = FindEspacio(idEspacio);
+			espacio.InvitarUsuario(usuario);
+			UpdateEspacio(espacio);
+		}
 	}
 }
-
