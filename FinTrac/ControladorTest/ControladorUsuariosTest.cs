@@ -23,26 +23,6 @@ namespace ControladorTest
 			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
 			_repositorioEspacio = new EspacioMemoryRepository(_context);
 			_espacioLogic = new EspacioLogic(_repositorioEspacio);
-
-			var usuario1 = new Usuario()
-			{
-				Correo = "hola@gmail.com",
-				Nombre = "Juan",
-				Apellido = "Perez",
-				Contrasena = "123456789Aaa",
-				Direccion = "street 56 av rety"
-			};
-
-			var usuario2 = new Usuario()
-			{
-				Correo = "holaSoy2@gmail.com",
-				Nombre = "Alberto",
-				Apellido = "Rodriguez",
-				Contrasena = "123tttt9Aaa",
-				Direccion = "street 67 av white"
-			};
-			_usuarioLogic.AddUsuario(usuario1);
-			_usuarioLogic.AddUsuario(usuario2);
 		}
 
 		[TestCleanup]
@@ -64,6 +44,34 @@ namespace ControladorTest
 		{
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic,_espacioLogic);
 			Assert.IsNotNull(controladorTest);
+		}
+
+		[TestMethod]
+		public void ControladorUsuarios_DatosAdminEspacio()
+		{			
+			Usuario admin = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			Espacio espacio = new Espacio()
+			{
+				Id = 1,
+				Nombre = "Principal " + admin.Nombre,
+				Admin = admin
+			};
+			_usuarioLogic.AddUsuario(admin);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
+			
+			string[] datos = controladorTest.DatosAdminEspacio(1);
+			
+			Assert.AreEqual("Juan", datos[0]);
+			Assert.AreEqual("Perez", datos[1]);
+			Assert.AreEqual("hola@gmail.com", datos[2]);
 		}
 	}
 }
