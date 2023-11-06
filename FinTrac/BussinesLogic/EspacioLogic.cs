@@ -88,5 +88,15 @@ namespace BussinesLogic
 			espacio.InvitarUsuario(usuario);
 			UpdateEspacio(espacio);
 		}
+
+		public void EliminarUsuarioDeEspacio(int idEspacio, Usuario usuario)
+		{
+			Espacio espacio = FindEspacio(idEspacio);
+			if (espacio.PerteneceCorreo(usuario.Correo) /*&& !usuario.Equals(espacio.Admin)*/)
+			{
+				espacio.UsuariosInvitados.Remove(usuario);
+			}
+			UpdateEspacio(espacio);
+		}
 	}
 }
