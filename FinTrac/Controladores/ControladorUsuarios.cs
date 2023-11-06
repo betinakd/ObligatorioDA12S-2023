@@ -56,5 +56,11 @@ namespace Controlador
 			Usuario usuario = _usuarioLogic.FindUsuario(correoUsuario);
 			_espacioLogic.AgregarUsuarioAEspacio(idEspacio, usuario);
 		}
+
+		public void EliminarUsuarioDeEspacio(int idEspacio, string correoUsuario)
+		{
+			Usuario usuario = _usuarioLogic.FindUsuario(correoUsuario);
+			_espacioLogic.EliminarUsuarioDeEspacio(idEspacio, usuario);
+		}
 	}
 }
