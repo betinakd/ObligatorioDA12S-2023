@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearEspacios"
-
+@using Controlador;
 <PageTitle>FinTrac Crear Espacio</PageTitle>
 
 <TituloRosado Titulo="Crear Espacio" Subtitulo="Ingrese el nombre del espacio y creé un nuevo espacio, usted será el Administrador."></TituloRosado>
@@ -15,23 +15,19 @@
 	[Parameter] public string ErrorMsg { get; set; }
 	private List<Espacio> espacios { get; set; } = new List<Espacio>();
 	private Usuario usuario { get; set; } = new Usuario();
+	private ControladorEspacios controlador;
 
 	protected override void OnInitialized()
 	{
-		espacios = EspacioLogic.EspaciosByCorreo(Correo);
-		usuario = UsuarioLogic.FindUsuario(Correo);
+		controlador = new ControladorEspacios(UsuarioLogic, EspacioLogic);
 	}
 
 	private void ClickCrearUsuario()
 	{
 		try
 		{
-			Espacio espacio = new Espacio()
-				{
-					Nombre = inputNombre,
-					Admin = usuario,
-				};
-			EspacioLogic.AddEspacio(espacio);
+
+			controlador.CrearEspacio(Correo, inputNombre);
 			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
 		}
 		catch (DomainEspacioException e)
