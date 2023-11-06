@@ -50,5 +50,11 @@ namespace Controlador
 			}
 			return datos;
 		}
+
+		public void AgregarUsuarioAEspacio(int idEspacio, string correoUsuario)
+		{
+			Usuario usuario = _usuarioLogic.FindUsuario(correoUsuario);
+			_espacioLogic.AgregarUsuarioAEspacio(idEspacio, usuario);
+		}
 	}
 }
