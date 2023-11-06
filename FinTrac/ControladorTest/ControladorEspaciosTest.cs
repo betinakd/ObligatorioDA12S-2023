@@ -74,5 +74,24 @@ namespace ControladorTest
 			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
 			controladorTest.CrearEspacio("test@gmail.com", "EspacioTest");
 		}
+
+		[TestMethod]
+		public void CrearEspacio_Crea_Espacio_Correctamente_Con_Admin_Existente()
+		{
+			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
+			Usuario creadorEspacio = new Usuario()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(creadorEspacio);
+			controladorTest.CrearEspacio("test@gmail.com", "Espacio Test");
+			Espacio espacioCreado = _espacioLogic.FindEspacio(1);
+			Assert.AreEqual("Espacio Test", espacioCreado.Nombre);
+			Assert.AreEqual(creadorEspacio, espacioCreado.Admin);
+		}
 	}
 }
