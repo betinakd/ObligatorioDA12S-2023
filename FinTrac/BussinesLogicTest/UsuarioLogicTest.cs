@@ -304,5 +304,46 @@ namespace BussinesLogicTest
 			Assert.IsNotNull(usuarioCreado);
 			Assert.AreEqual("norberto@gmail.com", usuarioCreado.Correo);
 		}
+
+		[TestMethod]
+		public void UsuariosNoPresentesEnEspacio_Devuelve_Lista_Valida()
+		{ 
+			Usuario usuario = new Usuario()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "Alberto",
+				Apellido = "Lopez",
+				Contrasena = "HOLAhola123",
+				Direccion = "Bv España 5566"
+			};
+			Usuario usuarioTest1 = new Usuario()
+			{
+				Correo = "test2@gmail.com",
+				Nombre = "Roberto",
+				Apellido = "Ramirez",
+				Contrasena = "HOLAeehola123",
+				Direccion = "Bv España 4444"
+			};
+			Usuario usuarioTest2 = new Usuario()
+			{
+				Correo = "test3@gmail.com",
+				Nombre = "Julio",
+				Apellido = "Martinez",
+				Contrasena = "HOLeeehola123",
+				Direccion = "Bv España 546"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AddUsuario(usuarioTest1);
+			_usuarioLogic.AddUsuario(usuarioTest2);
+			Espacio espacio = new Espacio()
+			{
+				Id = 1,
+				Nombre = "Principal " + usuario.Nombre,
+				Admin = usuario
+			};
+			List<Usuario> usuariosNoPresentes = _usuarioLogic.UsuariosNoPresentesEspacio(espacio);
+			Assert.IsNotNull(usuariosNoPresentes);
+			Assert.AreEqual(2, usuariosNoPresentes.Count);
+		}
 	}
 }
