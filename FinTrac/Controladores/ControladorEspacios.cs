@@ -21,6 +21,7 @@ namespace Controlador
 
 		public void ModificarNombreEspacio(int espacioId, string nuevoNombre)
 		{
+			_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
 		}
 	}
 }
