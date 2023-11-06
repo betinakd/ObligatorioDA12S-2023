@@ -274,43 +274,10 @@ namespace BussinesLogicTest
 			Assert.IsFalse(espacioLogic.FindEspacio(espacio.Id).UsuariosInvitados.Contains(usuario));
 		}
 
-		//[TestMethod]
-		//public void EliminarUsuarioDeEspacio_No_Elimina_Usuario_De_Espacio_Es_Admin()
-		//{
-		//	Usuario admin = new Usuario
-		//	{
-		//		IdEspacioPrincipal = 5,
-		//		Nombre = "test",
-		//		Apellido = "test",
-		//		Direccion = "address2",
-		//		Correo = "test@gmail.com",
-		//		Contrasena = "123456789Csss"
-		//	};
-		//	Espacio espacio = new Espacio
-		//	{
-		//		Id = 5,
-		//		Nombre = "Test",
-		//		Admin = admin
-		//	};
-		//	Usuario usuario = new Usuario
-		//	{
-		//		IdEspacioPrincipal = 6,
-		//		Nombre = "testing",
-		//		Apellido = "teset",
-		//		Direccion = "address2",
-		//		Contrasena = "123456789Caaaa",
-		//		Correo = "hola@gmail.com"
-		//	};
-		//	espacio.UsuariosInvitados.Add(usuario);
-		//	espacioLogic.AddEspacio(espacio);
-		//	Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).PerteneceCorreo(admin.Correo));
-		//	espacioLogic.EliminarUsuarioDeEspacio(espacio.Id, admin);
-		//	Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).PerteneceCorreo(admin.Correo));
-		//}
 
 		[TestMethod]
 		[ExpectedException(typeof(DomainUsuarioException))]
-		public void EliminarUsuarioDeEspacio_No_Elimina_Usuario_De_Espacio_No_Pertenece()
+		public void EliminarUsuarioDeEspacio_Lanza_Excepcion_Usuario_Null()
 		{
 			Usuario admin = new Usuario
 			{
