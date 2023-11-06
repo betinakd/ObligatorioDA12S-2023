@@ -111,5 +111,54 @@ namespace ControladorTest
 			Assert.AreEqual(1, resultado.GetLength(0));
 			Assert.AreEqual(3, resultado.GetLength(1));
 		}
+
+		[TestMethod]
+		public void ControladorUsuarios_DatosUsuariosNoPresentesEspacio()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "Alberto",
+				Apellido = "Lopez",
+				Contrasena = "HOLAhola123",
+				Direccion = "Bv España 5566"
+			};
+			Usuario usuarioTest1 = new Usuario()
+			{
+				Correo = "test2@gmail.com",
+				Nombre = "Roberto",
+				Apellido = "Ramirez",
+				Contrasena = "HOLAeehola123",
+				Direccion = "Bv España 4444"
+			};
+			Usuario usuarioTest2 = new Usuario()
+			{
+				Correo = "test3@gmail.com",
+				Nombre = "Julio",
+				Apellido = "Martinez",
+				Contrasena = "HOLeeehola123",
+				Direccion = "Bv España 546"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AddUsuario(usuarioTest1);
+			_usuarioLogic.AddUsuario(usuarioTest2);
+			Espacio espacio = new Espacio()
+			{
+				Id = 1,
+				Nombre = "Principal " + usuario.Nombre,
+				Admin = usuario
+			};
+			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
+			_espacioLogic.AddEspacio(espacio);
+			string[,] resultado = controladorTest.DatosUsuariosNoPresentesEspacio(1);
+			Assert.AreEqual("Roberto", resultado[0, 0]);
+			Assert.AreEqual("Ramirez", resultado[0, 1]);
+			Assert.AreEqual("test2@gmail.com", resultado[0, 2]);
+			Assert.AreEqual("Julio", resultado[1, 0]);
+			Assert.AreEqual("Martinez", resultado[1, 1]);
+			Assert.AreEqual("test3@gmail.com", resultado[1, 2]);
+			Assert.AreEqual(2, resultado.GetLength(0));
+			Assert.AreEqual(3, resultado.GetLength(1));
+		}
 	}
 }
