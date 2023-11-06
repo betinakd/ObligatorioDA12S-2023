@@ -21,5 +21,20 @@ namespace Controlador
 			string[] datos = { admin.Nombre, admin.Apellido, admin.Correo};
 			return datos;
 		}
+
+		public string[,] DatosUsuariosInvitadosEspacio(int idEspacio)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			List<Usuario> usuarios = espacio.UsuariosInvitados;
+			string[,] datos = new string[ usuarios.Count , 3];
+
+			for (int i = 0; i < usuarios.Count; i++)
+			{
+				datos[i, 0] = usuarios[i].Nombre;
+				datos[i, 1] = usuarios[i].Apellido;
+				datos[i, 2] = usuarios[i].Correo;
+			}
+			return datos;
+		}
 	}
 }
