@@ -23,5 +23,26 @@ namespace Controlador
 		{
 			_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
 		}
+
+		public string[,] EspaciosDeUsuario(string correo)
+		{
+			List<Espacio> espacios = _espacioLogic.EspaciosByCorreo(correo);
+			string[,] nombresEspacios = new string[espacios.Count, 3];
+
+			for (int i = 0; i < espacios.Count; i++)
+			{
+				nombresEspacios[i, 0] = espacios[i].Nombre;
+				if (espacios[i].Admin.Correo == correo)
+				{
+					nombresEspacios[i, 1] = "Administrador";
+				}
+				else
+				{
+					nombresEspacios[i, 1] = "Invitado";
+				}
+				nombresEspacios[i, 2] = espacios[i].Id.ToString();
+			}
+			return nombresEspacios;
+		}
 	}
 }
