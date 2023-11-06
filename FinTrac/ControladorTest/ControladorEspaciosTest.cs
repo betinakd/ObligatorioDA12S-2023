@@ -117,5 +117,51 @@ namespace ControladorTest
 			controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
 			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
 		}
+
+		[TestMethod]
+		public void EspaciosDeUsuario_Retorna_Espacios_Correctamente()
+		{
+			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
+			Usuario creadorEspacio1 = new Usuario()
+			{
+				Correo = "alberto@gmail.com",
+				Nombre = "Alberto",
+				Apellido = "Rodriguez",
+				Contrasena = "123tttt9Aaa",
+				Direccion = "street 67 av white"
+			};
+			Usuario creadorEspacio2 = new Usuario()
+			{
+				Correo = "leticia@gmail.com",
+				Nombre = "Leticia",
+				Apellido = "Lopez",
+				Contrasena = "123tttt9Aaa",
+				Direccion = "street 67 av white"
+			};
+			_usuarioLogic.AddUsuario(creadorEspacio1);
+			_usuarioLogic.AddUsuario(creadorEspacio2);
+			Espacio espacioCreado1 = new Espacio()
+			{
+				Id = 1,
+				Nombre = "Espacio Test",
+				Admin = creadorEspacio1
+			};
+			Espacio espacioCreado2 = new Espacio()
+			{
+				Id = 2,
+				Nombre = "Espacio Test2",
+				Admin = creadorEspacio2
+			};
+			espacioCreado2.InvitarUsuario(creadorEspacio1);
+			_espacioLogic.AddEspacio(espacioCreado1);
+			_espacioLogic.AddEspacio(espacioCreado2);
+			string[,] espacios = controladorTest.EspaciosDeUsuario("alberto@gmail.com");
+			Assert.AreEqual("Espacio Test", espacios[0, 0]);
+			Assert.AreEqual("Administrador", espacios[0, 1]);
+			Assert.AreEqual("1", espacios[0, 2]);
+			Assert.AreEqual("Espacio Test2", espacios[1, 0]);
+			Assert.AreEqual("Invitado", espacios[1, 1]);
+			Assert.AreEqual("2", espacios[1, 2]);
+		}
 	}
 }
