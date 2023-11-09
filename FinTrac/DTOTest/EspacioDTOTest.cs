@@ -94,5 +94,31 @@ namespace DTOTest
 			Assert.AreEqual(cambios, espacioDTO.Cambios);
 			Assert.AreEqual(cambio, espacioDTO.Cambios[0]);
 		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_Objetivos()
+		{
+			EspacioDTO espacioDTO = new EspacioDTO();
+			List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
+			var categorias = new List<CategoriaDTO>();
+			CategoriaDTO categoria = new CategoriaDTO
+			{
+				Nombre = "CategoriaTest",
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoriaDTO.Ingreso
+			};
+			categorias.Add(categoria);
+			ObjetivoDTO objetivo = new ObjetivoDTO
+			{
+				Titulo = "ObjetivoTest",
+				MontoMaximo = 1000,
+				Categorias = categorias
+			};
+			objetivos.Add(objetivo);
+			espacioDTO.Objetivos = objetivos;
+			Assert.AreEqual(objetivos, espacioDTO.Objetivos);
+			Assert.AreEqual(objetivo, espacioDTO.Objetivos[0]);
+		}
 	}
 }
