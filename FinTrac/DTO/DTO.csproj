@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Excepcion\Excepcion.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Enums\" />
+    <Folder Include="EnumsDTO\" />
   </ItemGroup>
 
 </Project>
