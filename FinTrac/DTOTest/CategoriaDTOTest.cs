@@ -20,5 +20,14 @@ namespace DTOTest
 			categoria.EstadoActivo = true;
 			Assert.AreEqual(true, categoria.EstadoActivo);
 		}
+
+		[TestMethod]
+		public void CategoriaDTO_Tiene_FechaCreacion()
+		{
+			CategoriaDTO categoria = new CategoriaDTO();
+			DateTime fecha = DateTime.Now;
+			categoria.FechaCreacion = fecha;
+			Assert.AreEqual(fecha, categoria.FechaCreacion);
+		}
 	}
 }
