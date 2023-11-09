@@ -66,5 +66,20 @@ namespace DTOTest
 			Assert.IsNotNull(transaccionDTO.FechaTransaccion);
 			Assert.AreEqual(fecha, transaccionDTO.FechaTransaccion);
 		}
+
+		[TestMethod]
+		public void TransaccionDTO_Tiene_CategoriaTransaccion()
+		{
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			CategoriaDTO categoriaDTO = new CategoriaDTO()
+			{
+				Nombre = "Categoria",
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoriaDTO.Ingreso,
+			};
+			transaccionDTO.CategoriaTransaccion = categoriaDTO;
+			Assert.IsNotNull(transaccionDTO.CategoriaTransaccion);
+		}
 	}
 }
