@@ -27,5 +27,14 @@ namespace DTOTest
 			usuario.Correo = "Lopez@gmail.com";
 			Assert.AreEqual("Lopez@gmail.com", usuario.Correo);
 		}
+
+		[TestMethod]
+		public void UsuarioDTO_Tiene_Contrasena()
+		{
+			UsuarioDTO usuario = new UsuarioDTO();
+			string contrasena = "TestTest123";
+			usuario.Contrasena = contrasena;
+			Assert.AreEqual(contrasena, usuario.Contrasena);
+		}
 	}
 }
