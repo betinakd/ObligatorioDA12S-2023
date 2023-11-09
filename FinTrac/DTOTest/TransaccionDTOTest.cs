@@ -56,5 +56,6 @@ namespace DTOTest
 			transaccionDTO.CuentaMonetaria = cuentaDTO;
 			Assert.IsNotNull(transaccionDTO.CuentaMonetaria);
 		}
+
 	}
 }

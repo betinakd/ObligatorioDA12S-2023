@@ -9,5 +9,6 @@ namespace DTO
 		public DateTime FechaTransaccion { get; set; }
 		public double Monto { get; set; }
 		public TipoCambiarioDTO Moneda { get; set; }
+		public CuentaDTO CuentaMonetaria { get; set; }
 	}
 }
