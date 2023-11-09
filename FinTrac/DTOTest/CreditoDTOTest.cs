@@ -20,5 +20,13 @@ namespace DTOTest
 			creditoDTO.NumeroTarjeta = "1234";
 			Assert.AreEqual("1234", creditoDTO.NumeroTarjeta);
 		}
+
+		[TestMethod]
+		public void CreditoDTO_Tiene_CreditoDisponible()
+		{
+			var creditoDTO = new CreditoDTO();
+			creditoDTO.CreditoDisponible = 1000;
+			Assert.AreEqual(1000, creditoDTO.CreditoDisponible);
+		}
 	}
 }
