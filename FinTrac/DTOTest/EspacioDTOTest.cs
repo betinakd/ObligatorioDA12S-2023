@@ -77,5 +77,22 @@ namespace DTOTest
 			Assert.AreEqual(categorias, espacioDTO.Categorias);
 			Assert.AreEqual(categoria, espacioDTO.Categorias[0]);
 		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_Cambios()
+		{ 
+			EspacioDTO espacioDTO = new EspacioDTO();
+			List<CambioDTO> cambios = new List<CambioDTO>();
+			CambioDTO cambio = new CambioDTO
+			{
+				Moneda = TipoCambiarioDTO.Dolar,
+				FechaDeCambio = DateTime.Now,
+				Pesos = 1000
+			};
+			cambios.Add(cambio);
+			espacioDTO.Cambios = cambios;
+			Assert.AreEqual(cambios, espacioDTO.Cambios);
+			Assert.AreEqual(cambio, espacioDTO.Cambios[0]);
+		}
 	}
 }
