@@ -83,7 +83,7 @@ namespace DTOTest
 		{ 
 			EspacioDTO espacioDTO = new EspacioDTO();
 			List<CambioDTO> cambios = new List<CambioDTO>();
-			CambioDTO cambio = new CambioDTO
+			CambioDTO cambio = new CambioDTO()
 			{
 				Moneda = TipoCambiarioDTO.Dolar,
 				FechaDeCambio = DateTime.Now,
@@ -101,7 +101,7 @@ namespace DTOTest
 			EspacioDTO espacioDTO = new EspacioDTO();
 			List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
 			var categorias = new List<CategoriaDTO>();
-			CategoriaDTO categoria = new CategoriaDTO
+			CategoriaDTO categoria = new CategoriaDTO()
 			{
 				Nombre = "CategoriaTest",
 				EstadoActivo = true,
