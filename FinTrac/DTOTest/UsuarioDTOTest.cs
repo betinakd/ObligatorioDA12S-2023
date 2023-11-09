@@ -36,5 +36,14 @@ namespace DTOTest
 			usuario.Contrasena = contrasena;
 			Assert.AreEqual(contrasena, usuario.Contrasena);
 		}
+
+		[TestMethod]
+		public void UsuarioDTO_Tiene_Direccion()
+		{
+			UsuarioDTO usuario = new UsuarioDTO();
+			string direccion = "Av españa 4567";
+			usuario.Direccion = direccion;
+			Assert.AreEqual(direccion, usuario.Direccion);
+		}
 	}
 }
