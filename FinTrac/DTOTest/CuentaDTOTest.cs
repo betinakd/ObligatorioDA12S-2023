@@ -12,11 +12,11 @@ namespace DTOTest
 			CuentaDTO cuentaDTO = new CuentaDTO();
 			cuentaDTO.Moneda = TipoCambiarioDTO.PesosUruguayos;
 			CuentaDTO cuentaDTO2 = new CuentaDTO();
-			cuentaDTO.Moneda = TipoCambiarioDTO.Euro;
+			cuentaDTO2.Moneda = TipoCambiarioDTO.Euro;
 			CuentaDTO cuentaDTO3 = new CuentaDTO();
-			cuentaDTO.Moneda = TipoCambiarioDTO.Dolar;
-			Assert.AreEqual(cuentaDTO.Moneda, TipoCambiarioDTO.Dolar);
-			Assert.AreEqual(cuentaDTO.Moneda, TipoCambiarioDTO.Euro);
+			cuentaDTO3.Moneda = TipoCambiarioDTO.Dolar;
+			Assert.AreEqual(cuentaDTO3.Moneda, TipoCambiarioDTO.Dolar);
+			Assert.AreEqual(cuentaDTO2.Moneda, TipoCambiarioDTO.Euro);
 			Assert.AreEqual(cuentaDTO.Moneda, TipoCambiarioDTO.PesosUruguayos);
 		}
 
@@ -24,8 +24,9 @@ namespace DTOTest
 		public void CuentaDTO_Tiene_FechaCreacion()
 		{
 			CuentaDTO cuentaDTO = new CuentaDTO();
-			cuentaDTO.FechaCreacion = DateTime.Now;
-			Assert.AreEqual(cuentaDTO.FechaCreacion, DateTime.Now);
+			DateTime dateTime = new DateTime(2019, 1, 1);
+			cuentaDTO.FechaCreacion = dateTime;
+			Assert.AreEqual(cuentaDTO.FechaCreacion, dateTime);
 		}
 	}
 }
