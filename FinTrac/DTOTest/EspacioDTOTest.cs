@@ -34,7 +34,7 @@ namespace DTOTest
 
 		[TestMethod]
 		public void EspacioDTO_Tiene_Id()
-		{ 
+		{
 			EspacioDTO espacioDTO = new EspacioDTO();
 			int id = 1;
 			espacioDTO.Id = id;
@@ -80,7 +80,7 @@ namespace DTOTest
 
 		[TestMethod]
 		public void EspacioDTO_Tiene_Cambios()
-		{ 
+		{
 			EspacioDTO espacioDTO = new EspacioDTO();
 			List<CambioDTO> cambios = new List<CambioDTO>();
 			CambioDTO cambio = new CambioDTO()
@@ -131,11 +131,46 @@ namespace DTOTest
 				FechaCreacion = DateTime.Now,
 				Nombre = "AhorroTest",
 				Monto = 1000,
+				Moneda = TipoCambiarioDTO.Dolar,
 			};
 			cuentas.Add(ahorro);
 			espacioDTO.Cuentas = cuentas;
 			Assert.AreEqual(cuentas, espacioDTO.Cuentas);
 			Assert.AreEqual(ahorro, espacioDTO.Cuentas[0]);
+		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_Transacciones()
+		{
+			AhorroDTO ahorro = new AhorroDTO()
+			{
+				FechaCreacion = DateTime.Now,
+				Nombre = "AhorroTest",
+				Monto = 1000,
+				Moneda = TipoCambiarioDTO.Dolar,
+			};
+			CategoriaDTO categoria = new CategoriaDTO()
+			{
+				Nombre = "CategoriaTest",
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoriaDTO.Ingreso
+			};
+			TransaccionDTO transaccion = new TransaccionDTO()
+			{
+				CategoriaTransaccion = categoria,
+				CuentaMonetaria = ahorro,
+				FechaTransaccion = DateTime.Now,
+				Id = 1,
+				Monto = 1000,
+				Titulo = "TransaccionTest"
+			};
+			EspacioDTO espacioDTO = new EspacioDTO();
+			var transacciones = new List<TransaccionDTO>();
+			transacciones.Add(transaccion);
+			espacioDTO.Transacciones = transacciones;
+			Assert.AreEqual(transacciones, espacioDTO.Transacciones);
+			Assert.AreEqual(transaccion, espacioDTO.Transacciones[0]);
 		}
 	}
 }
