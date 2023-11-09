@@ -39,5 +39,24 @@ namespace DTOTest
 			espacioDTO.Id = id;
 			Assert.AreEqual(id, espacioDTO.Id);
 		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_UsuariosInvitados()
+		{
+			EspacioDTO espacioDTO = new EspacioDTO();
+			List<UsuarioDTO> usuariosInvitados = new List<UsuarioDTO>();
+			UsuarioDTO usuarioInvitado = new UsuarioDTO
+			{
+				Nombre = "Juan",
+				Apellido = "Lopez",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest123",
+				Direccion = "Av españa 4567"
+			};
+			usuariosInvitados.Add(usuarioInvitado);
+			espacioDTO.UsuariosInvitados = usuariosInvitados;
+			Assert.AreEqual(usuariosInvitados, espacioDTO.UsuariosInvitados);
+			Assert.AreEqual(usuarioInvitado, espacioDTO.UsuariosInvitados[0]);
+		}
 	}
 }
