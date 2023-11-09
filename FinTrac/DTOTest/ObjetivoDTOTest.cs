@@ -13,5 +13,14 @@ namespace DTOTest
 			objetivoDTO.Titulo = titulo;
 			Assert.AreEqual(titulo, objetivoDTO.Titulo);
 		}
+
+		[TestMethod]
+		public void ObjetivoDTO_Tiene_MontoMaximo()
+		{
+			ObjetivoDTO objetivoDTO = new ObjetivoDTO();
+			double montoMaximo = 1000;
+			objetivoDTO.MontoMaximo = montoMaximo;
+			Assert.AreEqual(montoMaximo, objetivoDTO.MontoMaximo);
+		}
 	}
 }
