@@ -1,5 +1,5 @@
 ﻿using DTO;
-
+using DTO.EnumsDTO;
 namespace DTOTest
 {
 	[TestClass]
@@ -28,6 +28,19 @@ namespace DTOTest
 			DateTime fecha = DateTime.Now;
 			categoria.FechaCreacion = fecha;
 			Assert.AreEqual(fecha, categoria.FechaCreacion);
+		}
+
+		[TestMethod]
+		public void CategoriaDTO_Tiene_Tipo()
+		{
+			CategoriaDTO categoria = new CategoriaDTO();
+			TipoCategoriaDTO tipo = TipoCategoriaDTO.Costo;
+			categoria.Tipo = tipo;
+			CategoriaDTO categoria2 = new CategoriaDTO();
+			TipoCategoriaDTO tipo2 = TipoCategoriaDTO.Ingreso;
+			categoria2.Tipo = tipo2;
+			Assert.AreEqual(tipo, categoria.Tipo);
+			Assert.AreEqual(tipo2, categoria2.Tipo);
 		}
 	}
 }
