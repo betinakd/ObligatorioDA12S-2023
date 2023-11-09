@@ -120,5 +120,22 @@ namespace DTOTest
 			Assert.AreEqual(objetivos, espacioDTO.Objetivos);
 			Assert.AreEqual(objetivo, espacioDTO.Objetivos[0]);
 		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_Cuentas()
+		{
+			EspacioDTO espacioDTO = new EspacioDTO();
+			List<CuentaDTO> cuentas = new List<CuentaDTO>();
+			AhorroDTO ahorro = new AhorroDTO()
+			{
+				FechaCreacion = DateTime.Now,
+				Nombre = "AhorroTest",
+				Monto = 1000,
+			};
+			cuentas.Add(ahorro);
+			espacioDTO.Cuentas = cuentas;
+			Assert.AreEqual(cuentas, espacioDTO.Cuentas);
+			Assert.AreEqual(ahorro, espacioDTO.Cuentas[0]);
+		}
 	}
 }
