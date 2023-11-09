@@ -42,5 +42,13 @@ namespace DTOTest
 			Assert.AreEqual(tipo, categoria.Tipo);
 			Assert.AreEqual(tipo2, categoria2.Tipo);
 		}
+
+		[TestMethod]
+		public void CategoriaDTO_Tiene_Id()
+		{
+			CategoriaDTO categoria = new CategoriaDTO();
+			categoria.Id = 1;
+			Assert.AreEqual(1, categoria.Id);
+		}
 	}
 }
