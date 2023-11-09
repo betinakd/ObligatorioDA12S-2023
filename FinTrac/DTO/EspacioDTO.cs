@@ -6,5 +6,6 @@
 		public string Nombre { get; set; }
 		public UsuarioDTO Admin { get; set; }
 		public List<UsuarioDTO> UsuariosInvitados { get; set; }
+		public List<CategoriaDTO> Categorias { get; set; }
 	}
 }
