@@ -10,5 +10,6 @@ namespace DTO
 		public double Monto { get; set; }
 		public TipoCambiarioDTO Moneda { get; set; }
 		public CuentaDTO CuentaMonetaria { get; set; }
+		public CategoriaDTO CategoriaTransaccion { get; set; }
 	}
 }
