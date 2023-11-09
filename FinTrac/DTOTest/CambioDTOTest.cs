@@ -19,5 +19,19 @@ namespace DTOTest
 			Assert.AreEqual(TipoCambiarioDTO.Euro, cambio2.Moneda);
 			Assert.AreEqual(TipoCambiarioDTO.Dolar, cambio.Moneda);
 		}
+
+		[TestMethod]
+		public void CambioDTO_Tiene_FechaDeCambio()
+		{
+			CambioDTO cambio = new CambioDTO();
+			cambio.FechaDeCambio = new DateTime(2019, 10, 10);
+			CambioDTO cambio2 = new CambioDTO();
+			cambio2.FechaDeCambio = new DateTime(2019, 10, 11);
+			CambioDTO cambio3 = new CambioDTO();
+			cambio3.FechaDeCambio = new DateTime(2019, 10, 12);
+			Assert.AreEqual(new DateTime(2019, 10, 12), cambio3.FechaDeCambio);
+			Assert.AreEqual(new DateTime(2019, 10, 11), cambio2.FechaDeCambio);
+			Assert.AreEqual(new DateTime(2019, 10, 10), cambio.FechaDeCambio);
+		}
 	}
 }
