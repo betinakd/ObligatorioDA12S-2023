@@ -29,5 +29,19 @@ namespace DTOTest
 			transaccionDTO.Monto = 1;
 			Assert.AreEqual(1, transaccionDTO.Monto);
 		}
+
+		[TestMethod]
+		public void TransaccionDTO_Tiene_Moneda()
+		{
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			transaccionDTO.Moneda = TipoCambiarioDTO.Euro;
+			TransaccionDTO transaccionDTO2 = new TransaccionDTO();
+			transaccionDTO2.Moneda = TipoCambiarioDTO.Dolar;
+			TransaccionDTO transaccionDTO3	 = new TransaccionDTO();
+			transaccionDTO3.Moneda = TipoCambiarioDTO.PesosUruguayos;
+			Assert.AreEqual(TipoCambiarioDTO.PesosUruguayos, transaccionDTO3.Moneda);
+			Assert.AreEqual(TipoCambiarioDTO.Dolar, transaccionDTO2.Moneda);
+			Assert.AreEqual(TipoCambiarioDTO.Euro, transaccionDTO.Moneda);
+		}
 	}
 }
