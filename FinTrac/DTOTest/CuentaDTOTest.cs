@@ -19,5 +19,13 @@ namespace DTOTest
 			Assert.AreEqual(cuentaDTO.Moneda, TipoCambiarioDTO.Euro);
 			Assert.AreEqual(cuentaDTO.Moneda, TipoCambiarioDTO.PesosUruguayos);
 		}
+
+		[TestMethod]
+		public void CuentaDTO_Tiene_FechaCreacion()
+		{
+			CuentaDTO cuentaDTO = new CuentaDTO();
+			cuentaDTO.FechaCreacion = DateTime.Now;
+			Assert.AreEqual(cuentaDTO.FechaCreacion, DateTime.Now);
+		}
 	}
 }
