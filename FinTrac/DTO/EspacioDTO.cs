@@ -9,5 +9,6 @@
 		public List<CategoriaDTO> Categorias { get; set; }
 		public List<CambioDTO> Cambios { get; set; }
 		public List<ObjetivoDTO> Objetivos { get; set; }
+		public List<CuentaDTO> Cuentas { get; set; }
 	}
 }
