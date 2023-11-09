@@ -40,5 +40,14 @@ namespace DTOTest
 			Assert.AreEqual(categorias, objetivoDTO.Categorias);
 			Assert.AreEqual(1, objetivoDTO.Categorias.Count);
 		}
+
+		[TestMethod]
+		public void ObjetivoDTO_Tiene_Id()
+		{
+			ObjetivoDTO objetivoDTO = new ObjetivoDTO();
+			int id = 1;
+			objetivoDTO.Id = id;
+			Assert.AreEqual(id, objetivoDTO.Id);
+		}
 	}
 }
