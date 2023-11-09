@@ -3,5 +3,6 @@
 	public class CategoriaDTO
 	{
 		public string Nombre { get; set; }
+		public bool EstadoActivo { get; set; }
 	}
 }
