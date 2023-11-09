@@ -33,5 +33,19 @@ namespace DTOTest
 			Assert.AreEqual(new DateTime(2019, 10, 11), cambio2.FechaDeCambio);
 			Assert.AreEqual(new DateTime(2019, 10, 10), cambio.FechaDeCambio);
 		}
+
+		[TestMethod]
+		public void CambioDTO_Tiene_Pesos()
+		{ 
+			CambioDTO cambio = new CambioDTO();
+			cambio.Pesos = 100;
+			CambioDTO cambio2 = new CambioDTO();
+			cambio2.Pesos = 200;
+			CambioDTO cambio3 = new CambioDTO();
+			cambio3.Pesos = 300;
+			Assert.AreEqual(300, cambio3.Pesos);
+			Assert.AreEqual(200, cambio2.Pesos);
+			Assert.AreEqual(100, cambio.Pesos);
+		}
 	}
 }
