@@ -6,6 +6,6 @@ namespace DTO
 	{
 		public TipoCambiarioDTO Moneda { get; set; }
 		public DateTime FechaDeCambio { get; set; }
-
+		public double Pesos { get; set; }
 	}
 }
