@@ -28,5 +28,13 @@ namespace DTOTest
 			cuentaDTO.FechaCreacion = dateTime;
 			Assert.AreEqual(cuentaDTO.FechaCreacion, dateTime);
 		}
+
+		[TestMethod]
+		public void CuentaDTO_Tiene_Id()
+		{
+			CuentaDTO cuentaDTO = new CuentaDTO();
+			cuentaDTO.Id = 1;
+			Assert.AreEqual(cuentaDTO.Id, 1);
+		}
 	}
 }
