@@ -43,5 +43,18 @@ namespace DTOTest
 			Assert.AreEqual(TipoCambiarioDTO.Dolar, transaccionDTO2.Moneda);
 			Assert.AreEqual(TipoCambiarioDTO.Euro, transaccionDTO.Moneda);
 		}
+
+		[TestMethod]
+		public void TransaccionDTO_Tiene_CuentaMonetaria()
+		{ 
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			CuentaDTO cuentaDTO = new CuentaDTO()
+			{
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiarioDTO.Dolar,
+			};
+			transaccionDTO.CuentaMonetaria = cuentaDTO;
+			Assert.IsNotNull(transaccionDTO.CuentaMonetaria);
+		}
 	}
 }
