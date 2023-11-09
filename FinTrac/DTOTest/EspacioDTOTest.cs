@@ -30,5 +30,14 @@ namespace DTOTest
 			espacio.Admin = admin;
 			Assert.AreEqual(admin, espacio.Admin);
 		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_Id()
+		{ 
+			EspacioDTO espacioDTO = new EspacioDTO();
+			int id = 1;
+			espacioDTO.Id = id;
+			Assert.AreEqual(id, espacioDTO.Id);
+		}
 	}
 }
