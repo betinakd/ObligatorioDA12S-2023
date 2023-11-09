@@ -28,5 +28,14 @@ namespace DTOTest
 			creditoDTO.CreditoDisponible = 1000;
 			Assert.AreEqual(1000, creditoDTO.CreditoDisponible);
 		}
+
+		[TestMethod]
+		public void CreditoDTO_Tiene_FechaCierre()
+		{
+			var creditoDTO = new CreditoDTO();
+			DateTime fecha = DateTime.Now;
+			creditoDTO.FechaCierre = fecha;
+			Assert.AreEqual(fecha, creditoDTO.FechaCierre);
+		}
 	}
 }
