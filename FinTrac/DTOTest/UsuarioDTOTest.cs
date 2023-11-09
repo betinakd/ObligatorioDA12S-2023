@@ -19,5 +19,13 @@ namespace DTOTest
 			usuario.Apellido = "Lopez";
 			Assert.AreEqual("Lopez", usuario.Apellido);
 		}
+
+		[TestMethod]
+		public void UsuarioDTO_Tiene_Correo()
+		{
+			UsuarioDTO usuario = new UsuarioDTO();
+			usuario.Correo = "Lopez@gmail.com";
+			Assert.AreEqual("Lopez@gmail.com", usuario.Correo);
+		}
 	}
 }
