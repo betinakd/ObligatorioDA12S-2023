@@ -47,5 +47,13 @@ namespace DTOTest
 			Assert.AreEqual(200, cambio2.Pesos);
 			Assert.AreEqual(100, cambio.Pesos);
 		}
+
+		[TestMethod]
+		public void CambioDTO_Tiene_Id()
+		{
+			CambioDTO cambio = new CambioDTO();
+			cambio.Id = 1;
+			Assert.AreEqual(1, cambio.Id);
+		}
 	}
 }
