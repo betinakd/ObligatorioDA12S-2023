@@ -57,5 +57,14 @@ namespace DTOTest
 			Assert.IsNotNull(transaccionDTO.CuentaMonetaria);
 		}
 
+		[TestMethod]
+		public void TransaccionDTO_Tiene_FechaTransaccion()
+		{
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			DateTime fecha = DateTime.Now;
+			transaccionDTO.FechaTransaccion = fecha;
+			Assert.IsNotNull(transaccionDTO.FechaTransaccion);
+			Assert.AreEqual(fecha, transaccionDTO.FechaTransaccion);
+		}
 	}
 }
