@@ -8,6 +8,6 @@ namespace DTO
 		public string Titulo { get; set; }
 		public DateTime FechaTransaccion { get; set; }
 		public double Monto { get; set; }
-
+		public TipoCambiarioDTO Moneda { get; set; }
 	}
 }
