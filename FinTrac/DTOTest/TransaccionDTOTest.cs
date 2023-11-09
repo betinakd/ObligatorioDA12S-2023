@@ -13,5 +13,13 @@ namespace DTOTest
 			transaccionDTO.Id = 1;
 			Assert.AreEqual(1, transaccionDTO.Id);
 		}
+
+		[TestMethod]
+		public void TransaccionDTO_Tiene_Titulo()
+		{
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			transaccionDTO.Titulo = "Titulo";
+			Assert.AreEqual("Titulo", transaccionDTO.Titulo);
+		}
 	}
 }
