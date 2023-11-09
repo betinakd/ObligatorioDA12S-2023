@@ -1,4 +1,5 @@
 ﻿using DTO;
+using DTO.EnumsDTO;
 namespace DTOTest
 {
 	[TestClass]
@@ -57,6 +58,24 @@ namespace DTOTest
 			espacioDTO.UsuariosInvitados = usuariosInvitados;
 			Assert.AreEqual(usuariosInvitados, espacioDTO.UsuariosInvitados);
 			Assert.AreEqual(usuarioInvitado, espacioDTO.UsuariosInvitados[0]);
+		}
+
+		[TestMethod]
+		public void EspacioDTO_Tiene_Categorias()
+		{
+			EspacioDTO espacioDTO = new EspacioDTO();
+			List<CategoriaDTO> categorias = new List<CategoriaDTO>();
+			CategoriaDTO categoria = new CategoriaDTO
+			{
+				Nombre = "CategoriaTest",
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoriaDTO.Ingreso
+			};
+			categorias.Add(categoria);
+			espacioDTO.Categorias = categorias;
+			Assert.AreEqual(categorias, espacioDTO.Categorias);
+			Assert.AreEqual(categoria, espacioDTO.Categorias[0]);
 		}
 	}
 }
