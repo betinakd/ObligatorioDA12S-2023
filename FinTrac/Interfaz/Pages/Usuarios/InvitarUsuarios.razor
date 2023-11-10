@@ -20,23 +20,25 @@
 			</tr>
 		</thead>
 		<tbody>
-			@for (int i = 0; i < usuariosNoPresentes.GetLength(0); i++)
+			@foreach (var usuario in usuariosNoPresentes)
 			{
-				int valorActual = i;
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-						@usuariosNoPresentes[i,0]
-					</td>
-					<td class="px-6 py-4 font-medium">
-						@usuariosNoPresentes[i,2]
-					</td>
-					<td>
-						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => AgregarUsuario(valorActual)">
-							Agregar Usuario
-						</button>
-					</td>
-				</tr>
+				@if (!EspacioLogic.FindEspacio(Persistencia.Id).PerteneceCorreo(usuario.Correo) && EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo.Equals(Persistencia.Correo))
+				{
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+							@usuario.Nombre
+						</td>
+						<td class="px-6 py-4 font-medium">
+							@usuario.Correo
+						</td>
+						<td>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => AgregarUsuario(usuario)">
+								Agregar Usuario
+							</button>
+						</td>
+					</tr>
+				}
 			}
 		</tbody>
 	</table>
@@ -47,7 +49,7 @@
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
 	private ControladorUsuarios controlador;
-	private string[,] usuariosNoPresentes;
+	private List<UsuarioDTO> usuariosNoPresentes;
 
 	protected override void OnInitialized()
 	{
@@ -55,17 +57,10 @@
 		usuariosNoPresentes = controlador.DatosUsuariosNoPresentesEspacio(Persistencia.Id);
 	}
 
-	private void AgregarUsuario(int i)
+	private void AgregarUsuario(UsuarioDTO usuarioDTO)
 	{
-		try
-		{
-			controlador.AgregarUsuarioAEspacio(Persistencia.Id, usuariosNoPresentes[i, 2]);
-			usuariosNoPresentes = controlador.DatosUsuariosNoPresentesEspacio(Persistencia.Id);
-			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
-		}
-		catch (Exception ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+		controlador.AgregarUsuarioAEspacio(Persistencia.Id, usuarioDTO.Correo);
+		usuariosNoPresentes = controlador.DatosUsuariosNoPresentesEspacio(Persistencia.Id);
+		NavigationManager.NavigateTo($"/home/{Id}/{Correo}/InvitarUsuarios");
 	}
 }
