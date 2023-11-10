@@ -58,21 +58,21 @@
 	public void ClickRegistro()
 	{
 
-		// var usuario = new UsuarioDTO()
-		// 	{
-		// 		Nombre = Nombre,
-		// 		Apellido = Apellido,
-		// 		Correo = Correo,
-		// 		Contrasena = Contrasena,
-		// 		Direccion = Direccion
-		// 	};
+		var usuario = new UsuarioDTO()
+			{
+				Nombre = Nombre,
+				Apellido = Apellido,
+				Correo = Correo,
+				Contrasena = Contrasena,
+				Direccion = Direccion
+			};
 
-		// ErrorMensaje = controlador.RegistrarUsuario(usuario);
-		// if (controlador.RegistradoConExito(usuario))
-		// {
-		// 	Persistencia.Id = usuario.IdEspacioPrincipal;
-		// 	Persistencia.Correo = usuario.Correo;
-		// 	NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
-		// }
+		ErrorMensaje = controlador.RegistrarUsuario(usuario);
+		if (controlador.RegistradoConExito(usuario))
+		{
+			Persistencia.Id = usuario.IdEspacioPrincipal;
+			Persistencia.Correo = usuario.Correo;
+			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+		}
 	}
 }
