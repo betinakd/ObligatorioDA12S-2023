@@ -1,6 +1,7 @@
 ﻿using BussinesLogic;
 using Domain;
 using DTO;
+using Excepcion;
 
 namespace Controlador
 {
@@ -23,10 +24,19 @@ namespace Controlador
 			};
 		}
 
-		public void ModificarNombre(string nombre)
+		public string ModificarNombre(string nombre)
 		{
-			_usuarioLogic.ModificarNombre(Usuario.Correo, nombre);
-			Usuario.Nombre = nombre;
+			string errorMsj = "Sus datos han sido modificados correctamente.";
+			try
+			{
+				_usuarioLogic.ModificarNombre(Usuario.Correo, nombre);
+			}
+			catch (DomainUsuarioException ex)
+			{
+				Usuario.Nombre = nombre;
+				errorMsj = ex.Message;
+			}
+			return errorMsj;
 		}
 
 		public void ModificarApellido(string apellido)
