@@ -121,6 +121,30 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
+		public void ModificarNombreEspacio_Lanza_Mensaje_De_Excepcion_Nombre_Vacio()
+		{
+			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
+			Usuario creadorEspacio = new Usuario()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(creadorEspacio);
+			Espacio espacioCreado = new Espacio()
+			{
+				Id = 1,
+				Nombre = "test",
+				Admin = creadorEspacio
+			};
+			_espacioLogic.AddEspacio(espacioCreado);
+			string mensaje = controladorTest.ModificarNombreEspacio(1, "");
+			Assert.AreEqual("El espacio debe tener un nombre", mensaje);
+		}
+
+		[TestMethod]
 		public void EspaciosDeUsuario_Retorna_Espacios_Correctamente()
 		{
 			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
