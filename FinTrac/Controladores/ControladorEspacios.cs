@@ -23,9 +23,11 @@ namespace Controlador
 			_espacioLogic.CrearEspacio(nombre, admin);
 		}
 
-		public void ModificarNombreEspacio(int espacioId, string nuevoNombre)
+		public string ModificarNombreEspacio(int espacioId, string nuevoNombre)
 		{
+			string errorMsj = "";
 			_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
+			return errorMsj;
 		}
 
 		public List<EspacioDTO> EspaciosDeUsuario(string correo)

@@ -115,7 +115,8 @@ namespace ControladorTest
 				Admin = creadorEspacio
 			};
 			_espacioLogic.AddEspacio(espacioCreado);
-			controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
+			string mensaje = controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
+			Assert.AreEqual("",mensaje);
 			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
 		}
 
@@ -162,5 +163,6 @@ namespace ControladorTest
 			Assert.AreEqual("Espacio Test2", espacios[1].Nombre);
 			Assert.AreEqual(2 ,espacios[1].Id);
 		}
+
 	}
 }
