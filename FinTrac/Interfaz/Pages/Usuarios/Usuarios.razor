@@ -1,5 +1,6 @@
-﻿@page "/home/{Id:int}/{Correo}/Usuarios"
-@using Controlador;
+﻿﻿
+@page "/home/{Id:int}/{Correo}/Usuarios"
+
 <PageTitle>FinTrac Usuarios</PageTitle>
 <TituloRosado Titulo="Usuarios del espacio" Subtitulo="Un listado de los usuarios invitados al espacio.Si es administrador puede eliminar y invitar usuarios."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -41,24 +42,23 @@
 					<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">Administrador</span>
 				</td>
 			</tr>
-			@for (int i= 0; i< usuariosPresentes.GetLength(0); i++)
+			@foreach (var espusuario in usuarios)
 			{
-				int valorActual = i;
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-						@usuariosPresentes[i,0]
+						@espusuario.Nombre
 					</td>
 					<td class="px-6 py-4 font-medium">
-						@usuariosPresentes[i,1]
+						@espusuario.Apellido
 					</td>
 					<td class="px-6 py-4 font-medium">
-						@usuariosPresentes[i,2]
+						@espusuario.Correo
 					</td>
 					@if (datosAdmin.Correo.Equals(Persistencia.Correo))
 					{
 						<td>
 							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-							@onclick="() => EliminarUsuario(valorActual)">
+							@onclick="() => EliminarUsuario(espusuario)">
 								Eliminar
 							</button>
 						</td>
@@ -78,28 +78,19 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	private ControladorUsuarios controlador;
-	private string[,] usuariosPresentes;
 	private UsuarioDTO datosAdmin;
-	private int clickValor;
+	private List<UsuarioDTO> usuarios { get; set; }
+	private ControladorUsuarios controlador;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorUsuarios(UsuarioLogic,EspacioLogic);
-		usuariosPresentes = controlador.DatosUsuariosInvitadosEspacio(Id);
-		datosAdmin = controlador.DatosAdminEspacio(Id);
+		controlador = new ControladorUsuarios(UsuarioLogic, EspacioLogic);
+		usuarios = controlador.DatosUsuariosInvitadosEspacio(Persistencia.Id);
+		datosAdmin = controlador.DatosAdminEspacio(Persistencia.Id);
 	}
-	private void EliminarUsuario(int i)
+	private void EliminarUsuario(UsuarioDTO usuario)
 	{
-		try
-		{
-			string correoEliminar = usuariosPresentes[i,2];
-			controlador.EliminarUsuarioDeEspacio(Persistencia.Id, correoEliminar);
-			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Usuarios", true);
-		}
-		catch (DomainUsuarioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+		controlador.EliminarUsuarioDeEspacio(Persistencia.Id, usuario.Correo);
+		NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Usuarios", true);
 	}
 }
