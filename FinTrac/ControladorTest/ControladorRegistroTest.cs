@@ -144,7 +144,22 @@ namespace ControladorTest
 			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
 			string msjError = controladorTest.RegistrarUsuario(usuario);
 			Assert.AreEqual(msjError, "El usuario ya existe");
+		}
 
+		[TestMethod]
+		public void UsuarioRegistradoConExito_True()
+		{
+			var usuario = new UsuarioDTO()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "test",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
+			controladorTest.RegistrarUsuario(usuario);
+			Assert.IsTrue(controladorTest.RegistradoConExito(usuario));
 		}
 	}
 }
