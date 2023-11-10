@@ -39,15 +39,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			@for (int i = 0; i < datosEspacio.GetLength(0); i++)
+			@foreach (var espacio in datosEspacio)
 			{
-				int valorActual = i;
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-						@datosEspacio[i,0]
+						@espacio.Nombre
 					</th>
 					<td class="px-6 py-4">
-						@if (datosEspacio[i, 1].Equals("Administrador"))
+						@if (espacio.Admin.Correo == Persistencia.Correo)
 						{
 							<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">Administrador</span>
 						}
@@ -55,19 +54,20 @@
 						{
 							<span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">Invitado</span>
 						}
+
 					</td>
 					<td class="px-6 py-4">
-						@datosEspacio[i,2]
+						@espacio.Id
 					</td>
 					<td class="px-1 py-4">
-						<button @onclick="() =>ClickCambiarDeEspacio(valorActual)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
+						<button @onclick="() =>ClickCambiarDeEspacio(espacio)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
 							Cargar Espacio
 						</button>
 					</td>
-					@if (datosEspacio[i, 1].Equals("Administrador"))
+					@if (espacio.Admin.Correo == Persistencia.Correo)
 					{
 						<td class="px-1 py-4 text-left">
-							<button @onclick="() =>MostrarInput(valorActual)" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
+							<button @onclick="() =>MostrarInput(espacio)" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
 								Cambiar Nombre
 							</button>
 						</td>
@@ -78,7 +78,8 @@
 						</td>
 					}
 				</tr>
-				@if (mostrarInput && clickValor == valorActual)
+
+				@if (mostrarInput && clickValor.Equals(espacio))
 				{
 					<tr>
 						<p style="color:red">@ErrorMsg</p>
@@ -88,7 +89,7 @@
 							<input class="fb-input" @bind=inputNombre type="text" placeholder="Cambiar Nombre">
 						</td>
 						<td>
-							<button @onclick="() =>CambiarNombre(clickValor)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
+							<button @onclick="() =>CambiarNombre(espacio)" class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2">
 								Cambiar Nombre
 							</button>
 							<button @onclick="CambiarNombreCerrar" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
@@ -108,9 +109,9 @@
 	private string? ErrorMsg { get; set; } = "";
 	private bool mostrarInput = false;
 	private string inputNombre = string.Empty;
-	private int clickValor;
+	private EspacioDTO clickValor;
 	private ControladorEspacios controlador;
-	private string[,] datosEspacio;
+	private List<EspacioDTO> datosEspacio;
 
 	protected override void OnInitialized()
 	{
@@ -118,26 +119,25 @@
 		datosEspacio = controlador.EspaciosDeUsuario(Correo);
 	}
 
-	public void ClickCambiarDeEspacio(int id)
+	public void ClickCambiarDeEspacio(EspacioDTO espacioDTO)
 	{
-		Persistencia.Id = int.Parse(datosEspacio[id, 2]);
+		Persistencia.Id = espacioDTO.Id;
 		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 	}
 
-	private void MostrarInput(int i)
+	private void MostrarInput(EspacioDTO espacio)
 	{
-		clickValor = i;
+		clickValor = espacio;
 		mostrarInput = !mostrarInput;
-		inputNombre = datosEspacio[i, 0];
+		inputNombre = espacio.Nombre;
 		ErrorMsg = "";
 	}
 
-	private void CambiarNombre(int id)
+	private void CambiarNombre(EspacioDTO espacio)
 	{
 		try
 		{
-			int idEspacio = int.Parse(datosEspacio[id, 2]);
-			controlador.ModificarNombreEspacio(idEspacio, inputNombre);
+			controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
 			datosEspacio = controlador.EspaciosDeUsuario(Correo);
 			ErrorMsg = "";
 			mostrarInput = false;
