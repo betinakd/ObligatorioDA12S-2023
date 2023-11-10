@@ -161,5 +161,17 @@ namespace DomainTest
 			cuenta.Modificar(modificacion);
 			Assert.AreEqual(cuenta.Nombre, modificacion.Nombre);
 		}
+
+		[TestMethod]
+		public void CuentaAhorro_Tiene_TipoCuenta()
+		{
+			var cuenta = new Ahorro
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				Nombre = "CuentaAhorroPrueba",
+				Monto = 100.01,
+			};
+			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsAhorro);
+		}
 	}
 }
