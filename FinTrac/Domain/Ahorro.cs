@@ -4,6 +4,7 @@ namespace Domain
 {
 	public class Ahorro : Cuenta
 	{
+		private TipoCuenta _tipoCuenta = TipoCuenta.EsAhorro;
 		private string _nombre;
 		private double _monto;
 		public string Nombre
@@ -52,6 +53,10 @@ namespace Domain
 		{
 			Ahorro ahorro = (Ahorro)cuenta;
 			Nombre = ahorro.Nombre;
+		}
+		public override TipoCuenta TipoDeCuenta()
+		{
+			return _tipoCuenta;
 		}
 
 		public override string ToString()
