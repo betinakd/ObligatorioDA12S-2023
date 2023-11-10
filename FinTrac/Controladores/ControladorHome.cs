@@ -54,10 +54,17 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public void ModificarContrasena(string contrasena)
+		public string ModificarContrasena(string contrasena)
 		{
-			_usuarioLogic.ModificarContrasena(Usuario.Correo, contrasena);
-			Usuario.Contrasena = contrasena;
+			string errorMsj = "Sus datos han sido modificados correctamente.";
+			try {
+				_usuarioLogic.ModificarContrasena(Usuario.Correo, contrasena);
+			}
+			catch (DomainUsuarioException)
+			{
+				Usuario.Contrasena = contrasena;
+			}
+			return errorMsj;
 		}
 
 		public void ModificarDireccion(string direccion)

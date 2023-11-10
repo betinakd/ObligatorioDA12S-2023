@@ -189,9 +189,10 @@ namespace ControladorTest
 			};
 			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.ModificarContrasena("HOLAhola123");
+			string mensaje = controladorTest.ModificarContrasena("HOLAhola123");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("HOLAhola123", usuarioModificado.Contrasena);
+			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
 		}
 
 		[TestMethod]
