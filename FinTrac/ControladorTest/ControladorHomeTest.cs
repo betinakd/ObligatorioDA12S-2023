@@ -151,9 +151,10 @@ namespace ControladorTest
 			};
 			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.ModificarApellido("Nuñez");
+			string mensaje = controladorTest.ModificarApellido("Nuñez");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Nuñez", usuarioModificado.Apellido);
+			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
 		}
 
 		[TestMethod]

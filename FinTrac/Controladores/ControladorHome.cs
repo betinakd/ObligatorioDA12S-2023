@@ -39,10 +39,19 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public void ModificarApellido(string apellido)
+		public string ModificarApellido(string apellido)
 		{
-			_usuarioLogic.ModificarApellido(Usuario.Correo, apellido);
-			Usuario.Apellido = apellido;
+			string errorMsj = "Sus datos han sido modificados correctamente.";
+			try
+			{
+				_usuarioLogic.ModificarApellido(Usuario.Correo, apellido);
+			}
+			catch (DomainUsuarioException ex)
+			{
+				Usuario.Apellido = apellido;
+				
+			}
+			return errorMsj;
 		}
 
 		public void ModificarContrasena(string contrasena)
