@@ -2,6 +2,7 @@
 using Controlador;
 using Domain;
 using Repository;
+using DTO;
 
 namespace ControladorTest
 {
@@ -62,8 +63,16 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorRegistro_Registra_Nuevo_Usuario_UsuarioLogic()
 		{
+			var usuario = new UsuarioDTO()
+			{
+				Correo = "test@gmail.com",
+				Nombre = "test",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
 			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
-			controladorTest.RegistrarUsuario("test@gmail.com", "Alberto", "Lopez", "HOLAhola123", "Direccion 123",1);
+			controladorTest.RegistrarUsuario(usuario);
 			Usuario usuarioRegistrado = _usuarioLogic.FindUsuario("test@gmail.com");
 			Assert.IsNotNull(usuarioRegistrado);
 		}
@@ -94,6 +103,48 @@ namespace ControladorTest
 
 			Assert.IsNotNull(espacioPrincipal);
 			Assert.AreEqual(espacioPrincipal.Nombre, "Principal test");
+		}
+
+		[TestMethod]
+		public void ControladorRegistro_Tira_Mensaje_Excepcion_DomainUsuario()
+		{
+			var usuario = new UsuarioDTO()
+			{
+				Correo = "",
+				Nombre = "test",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
+			string msjError = controladorTest.RegistrarUsuario(usuario);
+			Assert.AreEqual(msjError, "El correo electrónico no es válido, debe terminar en .com y tener @ entre carácteres.");
+		
+		}
+
+		[TestMethod]
+		public void ControladorRegistro_Tira_Mensaje_Excepcion_BussinesLogicUsuario()
+		{
+			var usuario = new UsuarioDTO()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "test",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			var usuario2 = new UsuarioDTO()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "teset",
+				Apellido = "Pereez",
+				Contrasena = "1234356789Aaa",
+				Direccion = "stre3et 56 av rety"
+			};
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
+			string msjError = controladorTest.RegistrarUsuario(usuario);
+			Assert.AreEqual(msjError, "El usuario ya existe");
+
 		}
 	}
 }
