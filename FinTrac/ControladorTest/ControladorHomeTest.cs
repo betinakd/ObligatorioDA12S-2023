@@ -116,7 +116,7 @@ namespace ControladorTest
 			mensaje = controladorTest.ModificarNombre("Juan");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Juan", usuarioModificado.Nombre);
-			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
+			Assert.AreEqual("Su nombre ha sido modificado correctamente.", mensaje);
 		}
 
 		[TestMethod]
@@ -155,7 +155,7 @@ namespace ControladorTest
 			string mensaje = controladorTest.ModificarApellido("Nuñez");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Nuñez", usuarioModificado.Apellido);
-			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
+			Assert.AreEqual("Su apellido ha sido modificado correctamente.", mensaje);
 		}
 
 		[TestMethod]
@@ -193,7 +193,7 @@ namespace ControladorTest
 			string mensaje = controladorTest.ModificarContrasena("HOLAhola123");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("HOLAhola123", usuarioModificado.Contrasena);
-			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
+			Assert.AreEqual("Su contraseña ha sido modificado correctamente.", mensaje);
 		}
 
 		[TestMethod]
@@ -231,7 +231,7 @@ namespace ControladorTest
 			string mensaje = controladorTest.ModificarDireccion("Av Bvar españa 3456");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Av Bvar españa 3456", usuarioModificado.Direccion);
-			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
+			Assert.AreEqual("Su dirección ha sido modificado correctamente.", mensaje);
 		}
 	}
 }

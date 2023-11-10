@@ -26,7 +26,7 @@ namespace Controlador
 
 		public string ModificarNombre(string nombre)
 		{
-			string errorMsj = "Sus datos han sido modificados correctamente.";
+			string errorMsj = "Su nombre ha sido modificado correctamente.";
 			try
 			{
 				_usuarioLogic.ModificarNombre(Usuario.Correo, nombre);
@@ -41,7 +41,7 @@ namespace Controlador
 
 		public string ModificarApellido(string apellido)
 		{
-			string errorMsj = "Sus datos han sido modificados correctamente.";
+			string errorMsj = "Su apellido ha sido modificado correctamente.";
 			try
 			{
 				_usuarioLogic.ModificarApellido(Usuario.Correo, apellido);
@@ -57,7 +57,7 @@ namespace Controlador
 
 		public string ModificarContrasena(string contrasena)
 		{
-			string errorMsj = "Sus datos han sido modificados correctamente.";
+			string errorMsj = "Su contraseña ha sido modificado correctamente.";
 			try
 			{
 				_usuarioLogic.ModificarContrasena(Usuario.Correo, contrasena);
@@ -72,9 +72,11 @@ namespace Controlador
 
 		public string ModificarDireccion(string direccion)
 		{
-			string errorMsj = "Sus datos han sido modificados correctamente.";
+			string errorMsj = "Su dirección ha sido modificado correctamente.";
+
 			_usuarioLogic.ModificarDireccion(Usuario.Correo, direccion);
 			Usuario.Direccion = direccion;
+
 			return errorMsj;
 		}
 	}
