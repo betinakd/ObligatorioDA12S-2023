@@ -49,7 +49,7 @@ namespace Controlador
 			catch (DomainUsuarioException ex)
 			{
 				Usuario.Apellido = apellido;
-				
+				errorMsj = ex.Message;
 			}
 			return errorMsj;
 		}
