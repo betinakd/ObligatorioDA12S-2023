@@ -150,5 +150,17 @@ namespace DomainTest
 			cuentaTest.Transacciones = transacciones;
 			Assert.AreEqual(1, cuentaTest.Transacciones.Count);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Cuenta_Tiene_Metodo_TipoCuenta_NoImplementado()
+		{
+			Cuenta cuentaTest = new Cuenta()
+			{
+				FechaCreacion = new DateTime(2015, 1, 1),
+				Moneda = TipoCambiario.Dolar,
+			};
+			cuentaTest.TipoDeCuenta();
+		}
 	}
 }
