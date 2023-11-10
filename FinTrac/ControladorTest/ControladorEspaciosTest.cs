@@ -73,7 +73,7 @@ namespace ControladorTest
 		{
 			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
 			string errorMensaje = controladorTest.CrearEspacio("test@gmail.com", "EspacioTest");
-			Assert.AreEqual("El usuario no existe", errorMensaje);
+			Assert.AreEqual("El espacio debe tener un administrador", errorMensaje);
 		}
 
 		[TestMethod]
