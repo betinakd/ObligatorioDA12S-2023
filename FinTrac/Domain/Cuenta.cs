@@ -9,6 +9,8 @@ namespace Domain
 		Dolar,
 		Euro
 	}
+
+
 	public class Cuenta
 	{
 		public int Id { get; set; }
@@ -55,6 +57,11 @@ namespace Domain
 		}
 
 		public virtual void Modificar(Cuenta cuenta)
+		{
+			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+		}
+
+		public virtual TipoCuenta TipoDeCuenta()
 		{
 			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
 		}
