@@ -30,7 +30,7 @@ namespace ControladorTest
 				Contrasena = "123tttt9Aaa",
 				Direccion = "street 67 av white"
 			};
-			
+
 			_usuarioLogic.AddUsuario(usuario2);
 		}
 
@@ -155,6 +155,25 @@ namespace ControladorTest
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Nuñez", usuarioModificado.Apellido);
 			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
+		}
+
+		[TestMethod]
+		public void Modificar_Datos_Usuario_No_Debe_Modificar_Apellido_Incorrecto ()
+		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			string mensaje = controladorTest.ModificarApellido("");
+			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Assert.AreEqual("Perez", usuarioModificado.Apellido);
+			Assert.AreEqual("El apellido es requerido", mensaje);
 		}
 
 		[TestMethod]
