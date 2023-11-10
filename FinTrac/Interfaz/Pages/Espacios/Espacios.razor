@@ -135,17 +135,10 @@
 
 	private void CambiarNombre(EspacioDTO espacio)
 	{
-		try
-		{
 			controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
 			datosEspacio = controlador.EspaciosDeUsuario(Correo);
 			ErrorMsg = "";
 			mostrarInput = false;
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
-		}
 	}
 
 	private void CambiarNombreCerrar()

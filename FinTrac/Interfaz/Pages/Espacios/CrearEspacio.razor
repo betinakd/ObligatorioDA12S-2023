@@ -24,15 +24,7 @@
 
 	private void ClickCrearUsuario()
 	{
-		try
-		{
-
-			controlador.CrearEspacio(Correo, inputNombre);
-			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Espacios");
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
-		}
+		ErrorMsg = controlador.CrearEspacio(Correo, inputNombre);
+		inputNombre = "";
 	}
 }

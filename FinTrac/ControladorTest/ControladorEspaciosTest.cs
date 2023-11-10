@@ -69,11 +69,11 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
 		public void CrearEspacio_Lanza_Excepcion_Crear_Espacio_CorreoAdmin_No_Existe()
 		{
 			ControladorEspacios controladorTest = new ControladorEspacios(_usuarioLogic, _espacioLogic);
-			controladorTest.CrearEspacio("test@gmail.com", "EspacioTest");
+			string errorMensaje = controladorTest.CrearEspacio("test@gmail.com", "EspacioTest");
+			Assert.AreEqual("El usuario no existe", errorMensaje);
 		}
 
 		[TestMethod]

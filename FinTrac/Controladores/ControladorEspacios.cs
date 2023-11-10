@@ -16,10 +16,20 @@ namespace Controlador
 			_espacioLogic = espacioLogic;
 		}
 
-		public void CrearEspacio(string correoAdmin, string nombre)
+		public string CrearEspacio(string correoAdmin, string nombre)
 		{
+			string errorMsj = "";
 			Usuario admin = _usuarioLogic.FindUsuario(correoAdmin);
-			_espacioLogic.CrearEspacio(nombre, admin);
+			try
+			{
+				_espacioLogic.CrearEspacio(nombre, admin);
+				errorMsj = "Espacio " + nombre + " Modificado con éxito.";
+			}
+			catch (DomainEspacioException ex)
+			{
+				errorMsj = ex.Message;
+			}
+			return errorMsj;
 		}
 
 		public string ModificarNombreEspacio(int espacioId, string nuevoNombre)
