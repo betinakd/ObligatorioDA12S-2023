@@ -151,15 +151,14 @@ namespace ControladorTest
 			};
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
 			_espacioLogic.AddEspacio(espacio);
-			string[,] resultado = controladorTest.DatosUsuariosNoPresentesEspacio(1);
-			Assert.AreEqual("Roberto", resultado[0, 0]);
-			Assert.AreEqual("Ramirez", resultado[0, 1]);
-			Assert.AreEqual("test2@gmail.com", resultado[0, 2]);
-			Assert.AreEqual("Julio", resultado[1, 0]);
-			Assert.AreEqual("Martinez", resultado[1, 1]);
-			Assert.AreEqual("test3@gmail.com", resultado[1, 2]);
-			Assert.AreEqual(2, resultado.GetLength(0));
-			Assert.AreEqual(3, resultado.GetLength(1));
+			List<UsuarioDTO> resultado = controladorTest.DatosUsuariosNoPresentesEspacio(1);
+			Assert.AreEqual("Roberto", resultado[0].Nombre);
+			Assert.AreEqual("Ramirez", resultado[0].Apellido);
+			Assert.AreEqual("test2@gmail.com", resultado[0].Correo);
+			Assert.AreEqual("Julio", resultado[1].Nombre);
+			Assert.AreEqual("Martinez", resultado[1].Apellido);
+			Assert.AreEqual("test3@gmail.com", resultado[1].Correo);
+			Assert.AreEqual(2, resultado.Count);
 		}
 
 		[TestMethod]
