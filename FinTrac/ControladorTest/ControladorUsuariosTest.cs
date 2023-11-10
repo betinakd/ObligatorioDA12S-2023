@@ -105,12 +105,12 @@ namespace ControladorTest
 			_usuarioLogic.AddUsuario(invitado2);
 			_espacioLogic.AddEspacio(espacio);
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
-			string[,] resultado = controladorTest.DatosUsuariosInvitadosEspacio(1);
-			Assert.AreEqual("Juana", resultado[0, 0]);
-			Assert.AreEqual("Perez", resultado[0, 1]);
-			Assert.AreEqual("chau@gmail.com", resultado[0, 2]);
-			Assert.AreEqual(1, resultado.GetLength(0));
-			Assert.AreEqual(3, resultado.GetLength(1));
+			List<UsuarioDTO> resultado = controladorTest.DatosUsuariosInvitadosEspacio(1);
+			UsuarioDTO usuario = resultado.FirstOrDefault();
+			Assert.AreEqual("Juana", usuario.Nombre);
+			Assert.AreEqual("Perez", usuario.Apellido);
+			Assert.AreEqual("chau@gmail.com", usuario.Correo);
+			Assert.AreEqual(1, resultado.Count);
 		}
 
 		[TestMethod]

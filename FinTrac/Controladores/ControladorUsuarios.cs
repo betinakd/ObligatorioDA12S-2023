@@ -28,17 +28,20 @@ namespace Controlador
 			return datos;
 		}
 
-		public string[,] DatosUsuariosInvitadosEspacio(int idEspacio)
+		public List<UsuarioDTO> DatosUsuariosInvitadosEspacio(int idEspacio)
 		{
 			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
 			List<Usuario> usuarios = espacio.UsuariosInvitados;
-			string[,] datos = new string[ usuarios.Count , 3];
+			List<UsuarioDTO> datos = new List<UsuarioDTO>();
 
-			for (int i = 0; i < usuarios.Count; i++)
+			foreach (Usuario usuario in usuarios)
 			{
-				datos[i, 0] = usuarios[i].Nombre;
-				datos[i, 1] = usuarios[i].Apellido;
-				datos[i, 2] = usuarios[i].Correo;
+				datos.Add(new UsuarioDTO()
+				{
+					Nombre = usuario.Nombre,
+					Apellido = usuario.Apellido,
+					Correo = usuario.Correo
+				});
 			}
 			return datos;
 		}
