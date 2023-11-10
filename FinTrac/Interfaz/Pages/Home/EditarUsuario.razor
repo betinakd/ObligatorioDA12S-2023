@@ -32,20 +32,22 @@
 	private string passwordInput = "";
 	private string direccionInput = "";
 	private string MsgError = "";
+	private UsuarioDTO usuarioActual;
 	private ControladorHome controlador;
 
 	protected override void OnInitialized()
 	{
 		controlador = new ControladorHome(UsuarioLogic, Persistencia.Correo);
+		usuarioActual = controlador.Usuario;
 		CargarImputs(controlador);
 	}
 
 	private void CargarImputs(ControladorHome controlador)
 	{
-		nombreInput = controlador.Nombre;
-		apellidoInput = controlador.Apellido;
-		passwordInput = controlador.Contrasena;
-		direccionInput = controlador.Direccion;
+		nombreInput = usuarioActual.Nombre;
+		apellidoInput = usuarioActual.Apellido;
+		passwordInput = usuarioActual.Contrasena;
+		direccionInput = usuarioActual.Direccion;
 	}
 
 	private void ClickModificar()

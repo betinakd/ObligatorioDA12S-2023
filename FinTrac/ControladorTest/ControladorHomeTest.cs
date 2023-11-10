@@ -2,7 +2,7 @@ using BussinesLogic;
 using Domain;
 using Repository;
 using Controlador;
-using Microsoft.EntityFrameworkCore;
+using DTO;
 
 namespace ControladorTest
 {
@@ -20,14 +20,7 @@ namespace ControladorTest
 			_context = _contextFactory.CreateDbContext();
 			_repository = new UsuarioMemoryRepository(_context);
 			_usuarioLogic = new UsuarioLogic(_repository);
-			var usuario1 = new Usuario()
-			{
-				Correo = "hola@gmail.com",
-				Nombre = "Juan",
-				Apellido = "Perez",
-				Contrasena = "123456789Aaa",
-				Direccion = "street 56 av rety"
-			};
+
 
 			var usuario2 = new Usuario()
 			{
@@ -37,7 +30,7 @@ namespace ControladorTest
 				Contrasena = "123tttt9Aaa",
 				Direccion = "street 67 av white"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			
 			_usuarioLogic.AddUsuario(usuario2);
 		}
 
@@ -54,105 +47,69 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorHome_Tiene_UsuarioLogic()
 		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.UsuarioLogic = _usuarioLogic;
-			Assert.IsNotNull(controladorTest.UsuarioLogic);
-			Assert.AreEqual(_usuarioLogic, controladorTest.UsuarioLogic);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Tiene_Nombre()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.Nombre = "Juan";
-			Assert.IsNotNull(controladorTest.Nombre);
-			Assert.AreEqual("Juan", controladorTest.Nombre);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Tiene_Apellido()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.Apellido = "Perez";
-			Assert.IsNotNull(controladorTest.Apellido);
-			Assert.AreEqual("Perez", controladorTest.Apellido);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Tiene_Direccion()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.Direccion = "street 56 av rety";
-			Assert.IsNotNull(controladorTest.Direccion);
-			Assert.AreEqual("street 56 av rety", controladorTest.Direccion);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Tiene_Correo()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.Correo = "test@gmail.com";
-		}
-
-		[TestMethod]
-		public void ControladorHome_Tiene_Contrasena()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.Contrasena = "HOLAhola123";
-		}
-
-		[TestMethod]
-		public void ControladorHome_Tiene_Constructor()
-		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			Assert.IsNotNull(controladorTest);
 		}
 
 		[TestMethod]
-		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Nombre_De_Usuario()
+		public void ControladorHome_Tiene_UsuarioDTO()
 		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			Assert.AreEqual("Juan", controladorTest.Nombre);
+			UsuarioDTO usuario = controladorTest.Usuario;
+			Assert.IsNotNull(usuario);
+			Assert.AreEqual("Juan", usuario.Nombre);
+			Assert.AreEqual("Perez", usuario.Apellido);
+			Assert.AreEqual("123456789Aaa", usuario.Contrasena);
+			Assert.AreEqual("street 56 av rety", usuario.Direccion);
+			Assert.AreEqual("123456789Aaa", usuario.Contrasena);
 		}
 
 		[TestMethod]
-		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_UsuarioLogic()
+		public void ControladorHome_Tiene_Constructor()
 		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			Assert.AreEqual(_usuarioLogic, controladorTest.UsuarioLogic);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Correo()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			Assert.AreEqual("hola@gmail.com", controladorTest.Correo);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Apellido()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			Assert.AreEqual("Perez", controladorTest.Apellido);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Direccion()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			Assert.AreEqual("street 56 av rety", controladorTest.Direccion);
-		}
-
-		[TestMethod]
-		public void ControladorHome_Recibe_UsuarioLogic_Y_Correo_Y_Carga_Contrasena()
-		{
-			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			Assert.AreEqual("123456789Aaa", controladorTest.Contrasena);
+			Assert.IsNotNull(controladorTest);
 		}
 
 		[TestMethod]
 		public void Modificar_Datos_Usuario_Debe_Modificar_Nombre()
 		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.ModificarNombre("Juan");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
@@ -162,6 +119,15 @@ namespace ControladorTest
 		[TestMethod]
 		public void Modificar_Datos_Usuario_Debe_Modificar_Apellido()
 		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.ModificarApellido("Nuñez");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
@@ -171,6 +137,15 @@ namespace ControladorTest
 		[TestMethod]
 		public void Modificar_Datos_Usuario_Debe_Modificar_Contrasena()
 		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.ModificarContrasena("HOLAhola123");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
@@ -180,6 +155,15 @@ namespace ControladorTest
 		[TestMethod]
 		public void Modificar_Datos_Usuario_Debe_Modificar_Direccion()
 		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
 			controladorTest.ModificarDireccion("Av Bvar españa 3456");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
