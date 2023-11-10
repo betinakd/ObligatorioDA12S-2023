@@ -55,7 +55,10 @@ namespace Controlador
 		public bool RegistradoConExito(UsuarioDTO usuario)
 		{
 			Usuario usuarioEncontrado = _usuarioLogic.FindUsuario(usuario.Correo);
-
+			if (usuarioEncontrado == null)
+			{
+				return false;
+			}
 			usuario.IdEspacioPrincipal = usuarioEncontrado.IdEspacioPrincipal;
 			return true;
 		}
