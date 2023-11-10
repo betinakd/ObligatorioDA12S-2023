@@ -161,5 +161,21 @@ namespace ControladorTest
 			controladorTest.RegistrarUsuario(usuario);
 			Assert.IsTrue(controladorTest.RegistradoConExito(usuario));
 		}
+
+		[TestMethod]
+		public void UsuarioRegistradoConExito_No_Registro_Retorna_False()
+		{
+			var usuario = new UsuarioDTO()
+			{
+				Correo = "",
+				Nombre = "test",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
+			controladorTest.RegistrarUsuario(usuario);
+			Assert.IsFalse(controladorTest.RegistradoConExito(usuario));
+		}
 	}
 }
