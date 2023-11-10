@@ -59,23 +59,32 @@
 	{
 		try
 		{
-			idEspacioPrincipal = EspacioLogic.EspacioMayorId() + 1;
-			controlador.RegistrarUsuario(Correo, Nombre, Apellido, Contrasena, Direccion, idEspacioPrincipal);
-			Persistencia.Id = idEspacioPrincipal;
-			Persistencia.Correo = Correo;
-			NavigationManager.NavigateTo($"/home/{idEspacioPrincipal}/{Correo}");
-		}
-		catch (DomainUsuarioException ex)
-		{
-			ErrorMensaje = ex.Message;
-		}
-		catch (BussinesLogicUsuarioException ex)
-		{
-			ErrorMensaje = ex.Message;
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMensaje = ex.Message;
-		}
+			var usuario = new UsuarioDTO()
+				{
+					Nombre = Nombre,
+					Apellido = Apellido,
+					Correo = Correo,
+					Contrasena = Contrasena,
+					Direccion = Direccion
+				};
+		
+		
+		controlador.RegistrarUsuario(Correo, Nombre, Apellido, Contrasena, Direccion, idEspacioPrincipal);
+		Persistencia.Id = idEspacioPrincipal;
+		Persistencia.Correo = Correo;
+		NavigationManager.NavigateTo($"/home/{idEspacioPrincipal}/{Correo}");
 	}
+	catch (DomainUsuarioException ex)
+	{
+		ErrorMensaje = ex.Message;
+	}
+	catch (BussinesLogicUsuarioException ex)
+	{
+		ErrorMensaje = ex.Message;
+	}
+	catch (DomainEspacioException ex)
+	{
+	ErrorMensaje = ex.Message;
+}
+}
 }

@@ -293,7 +293,7 @@ namespace BussinesLogicTest
 		[ExpectedException(typeof(DomainUsuarioException))]
 		public void CrearUsuario_ConCorreoNulo_DebeLanzarExcepcion()
 		{
-			_usuarioLogic.CrearUsuario(null, "Juan", "Perez", "123456789Aaa", "street 56 av rety",1);
+			_usuarioLogic.CrearUsuario(null);
 		}
 
 		[TestMethod]
