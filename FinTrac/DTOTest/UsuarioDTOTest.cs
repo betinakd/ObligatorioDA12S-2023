@@ -45,5 +45,14 @@ namespace DTOTest
 			usuario.Direccion = direccion;
 			Assert.AreEqual(direccion, usuario.Direccion);
 		}
+
+		[TestMethod]
+		public void UsuarioDTO_Tiene_IdEspacioPrincipal()
+		{
+			UsuarioDTO usuario = new UsuarioDTO();
+			int idEspacioPrincipal = 1;
+			usuario.IdEspacioPrincipal = idEspacioPrincipal;
+			Assert.AreEqual(idEspacioPrincipal, usuario.IdEspacioPrincipal);
+		}
 	}
 }
