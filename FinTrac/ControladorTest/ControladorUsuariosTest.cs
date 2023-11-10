@@ -2,6 +2,7 @@
 using Controlador;
 using Domain;
 using Repository;
+using DTO;
 
 namespace ControladorTest
 {
@@ -67,11 +68,11 @@ namespace ControladorTest
 			_espacioLogic.AddEspacio(espacio);
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
 			
-			string[] datos = controladorTest.DatosAdminEspacio(1);
+			UsuarioDTO usuarioDTO = controladorTest.DatosAdminEspacio(1);
 			
-			Assert.AreEqual("Juan", datos[0]);
-			Assert.AreEqual("Perez", datos[1]);
-			Assert.AreEqual("hola@gmail.com", datos[2]);
+			Assert.AreEqual("Juan", usuarioDTO.Nombre);
+			Assert.AreEqual("Perez", usuarioDTO.Apellido);
+			Assert.AreEqual("hola@gmail.com", usuarioDTO.Correo);
 		}
 
 		[TestMethod]

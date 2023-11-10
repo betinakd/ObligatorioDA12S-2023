@@ -29,13 +29,13 @@
 		<tbody>
 			<tr>
 				<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-					@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Nombre
+					@datosAdmin.Nombre
 				</td>
 				<td class="px-6 py-4 font-medium">
-					@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Apellido
+					@datosAdmin.Apellido
 				</td>
 				<td class="px-6 py-4 font-medium">
-					@EspacioLogic.FindEspacio(Persistencia.Id).Admin.Correo
+					@datosAdmin.Correo
 				</td>
 				<td>
 					<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">Administrador</span>
@@ -54,7 +54,7 @@
 					<td class="px-6 py-4 font-medium">
 						@usuariosPresentes[i,2]
 					</td>
-					@if (datosAdmin[2].Equals(Persistencia.Correo))
+					@if (datosAdmin.Correo.Equals(Persistencia.Correo))
 					{
 						<td>
 							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
@@ -80,7 +80,7 @@
 	public string ErrorMsg { get; set; }
 	private ControladorUsuarios controlador;
 	private string[,] usuariosPresentes;
-	private string[] datosAdmin;
+	private UsuarioDTO datosAdmin;
 	private int clickValor;
 
 	protected override void OnInitialized()
