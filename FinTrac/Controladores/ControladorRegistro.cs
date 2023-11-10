@@ -1,4 +1,5 @@
 ﻿using BussinesLogic;
+using Excepcion;
 using Domain;
 using DTO;
 
@@ -22,25 +23,35 @@ namespace Controlador
 			_espacioLogic.CrearEspacio(nombre, admin);
 		}
 
-		public void RegistrarUsuario(string correo, string nombre, string apellido, string contrasena, string direccion, int idEspacioPrincipal)
+		public string RegistrarUsuario(UsuarioDTO usuarioDTO)
 		{
-			_usuarioLogic.CrearUsuario(correo, nombre, apellido, contrasena, direccion, idEspacioPrincipal);
-			CrearEspacioPrincipal(correo);
+			string msjError = "";
+			int idEspacioPrincipal = _espacioLogic.EspacioMayorId() + 1;
+			try
+			{
+				Usuario usuario = new Usuario()
+				{
+					Correo = usuarioDTO.Correo,
+					Nombre = usuarioDTO.Nombre,
+					Apellido = usuarioDTO.Apellido,
+					Contrasena = usuarioDTO.Contrasena,
+					Direccion = usuarioDTO.Direccion,
+					IdEspacioPrincipal = idEspacioPrincipal
+				};
+				_usuarioLogic.CrearUsuario(usuario);
+				CrearEspacioPrincipal(usuarioDTO.Correo);
+			}
+			catch (BussinesLogicUsuarioException e)
+			{
+				msjError = e.Message;
+			}
+			catch (DomainUsuarioException e)
+			{
+				msjError = e.Message;
+			}
+			return msjError;
 		}
 
-		public void RegistrarUsuario(UsuarioDTO usuarioDTO)
-		{
-			Usuario usuario = new Usuario()
-			{
-				Correo = usuarioDTO.Correo,
-				Nombre = usuarioDTO.Nombre,
-				Apellido = usuarioDTO.Apellido,
-				Contrasena = usuarioDTO.Contrasena,
-				Direccion = usuarioDTO.Direccion
-			};
-			int idEspacioPrincipal = _espacioLogic.EspacioMayorId() + 1;
-			_usuarioLogic.CrearUsuario(usuarioDTO.Correo, usuarioDTO.Nombre, usuarioDTO.Apellido, usuarioDTO.Contrasena, usuarioDTO.Direccion, idEspacioPrincipal);
-			CrearEspacioPrincipal(usuarioDTO.Correo);
-		}
+
 	}
 }
