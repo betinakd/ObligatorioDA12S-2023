@@ -357,7 +357,7 @@ namespace DomainTest
 				NumeroTarjeta = "1234",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
 			};
-			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsAhorro);
+			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsCredito);
 		}
 	}
 }
