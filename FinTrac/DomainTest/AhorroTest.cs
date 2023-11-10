@@ -171,7 +171,7 @@ namespace DomainTest
 				Nombre = "CuentaAhorroPrueba",
 				Monto = 100.01,
 			};
-			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsAhorro);
+			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsCredito);
 		}
 	}
 }
