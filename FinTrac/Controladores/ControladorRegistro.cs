@@ -52,6 +52,12 @@ namespace Controlador
 			return msjError;
 		}
 
+		public bool RegistradoConExito(UsuarioDTO usuario)
+		{
+			Usuario usuarioEncontrado = _usuarioLogic.FindUsuario(usuario.Correo);
 
+			usuario.IdEspacioPrincipal = usuarioEncontrado.IdEspacioPrincipal;
+			return true;
+		}
 	}
 }
