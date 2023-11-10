@@ -228,9 +228,10 @@ namespace ControladorTest
 			};
 			_usuarioLogic.AddUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
-			controladorTest.ModificarDireccion("Av Bvar españa 3456");
+			string mensaje = controladorTest.ModificarDireccion("Av Bvar españa 3456");
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("Av Bvar españa 3456", usuarioModificado.Direccion);
+			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
 		}
 	}
 }

@@ -30,10 +30,10 @@ namespace Controlador
 			try
 			{
 				_usuarioLogic.ModificarNombre(Usuario.Correo, nombre);
+				Usuario.Nombre = nombre;
 			}
 			catch (DomainUsuarioException ex)
 			{
-				Usuario.Nombre = nombre;
 				errorMsj = ex.Message;
 			}
 			return errorMsj;
@@ -45,10 +45,11 @@ namespace Controlador
 			try
 			{
 				_usuarioLogic.ModificarApellido(Usuario.Correo, apellido);
+				Usuario.Apellido = apellido;
 			}
 			catch (DomainUsuarioException ex)
 			{
-				Usuario.Apellido = apellido;
+
 				errorMsj = ex.Message;
 			}
 			return errorMsj;
@@ -57,21 +58,24 @@ namespace Controlador
 		public string ModificarContrasena(string contrasena)
 		{
 			string errorMsj = "Sus datos han sido modificados correctamente.";
-			try {
+			try
+			{
 				_usuarioLogic.ModificarContrasena(Usuario.Correo, contrasena);
+				Usuario.Contrasena = contrasena;
 			}
 			catch (DomainUsuarioException ex)
 			{
-				Usuario.Contrasena = contrasena;
 				errorMsj = ex.Message;
 			}
 			return errorMsj;
 		}
 
-		public void ModificarDireccion(string direccion)
+		public string ModificarDireccion(string direccion)
 		{
+			string errorMsj = "Sus datos han sido modificados correctamente.";
 			_usuarioLogic.ModificarDireccion(Usuario.Correo, direccion);
 			Usuario.Direccion = direccion;
+			return errorMsj;
 		}
 	}
 }
