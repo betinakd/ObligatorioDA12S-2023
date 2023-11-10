@@ -60,9 +60,10 @@ namespace Controlador
 			try {
 				_usuarioLogic.ModificarContrasena(Usuario.Correo, contrasena);
 			}
-			catch (DomainUsuarioException)
+			catch (DomainUsuarioException ex)
 			{
 				Usuario.Contrasena = contrasena;
+				errorMsj = ex.Message;
 			}
 			return errorMsj;
 		}
