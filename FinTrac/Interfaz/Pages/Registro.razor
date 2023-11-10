@@ -57,34 +57,22 @@
 
 	public void ClickRegistro()
 	{
-		try
-		{
-			var usuario = new UsuarioDTO()
-				{
-					Nombre = Nombre,
-					Apellido = Apellido,
-					Correo = Correo,
-					Contrasena = Contrasena,
-					Direccion = Direccion
-				};
-		
-		
-		controlador.RegistrarUsuario(Correo, Nombre, Apellido, Contrasena, Direccion, idEspacioPrincipal);
-		Persistencia.Id = idEspacioPrincipal;
-		Persistencia.Correo = Correo;
-		NavigationManager.NavigateTo($"/home/{idEspacioPrincipal}/{Correo}");
+
+		// var usuario = new UsuarioDTO()
+		// 	{
+		// 		Nombre = Nombre,
+		// 		Apellido = Apellido,
+		// 		Correo = Correo,
+		// 		Contrasena = Contrasena,
+		// 		Direccion = Direccion
+		// 	};
+
+		// ErrorMensaje = controlador.RegistrarUsuario(usuario);
+		// if (controlador.RegistradoConExito(usuario))
+		// {
+		// 	Persistencia.Id = usuario.IdEspacioPrincipal;
+		// 	Persistencia.Correo = usuario.Correo;
+		// 	NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+		// }
 	}
-	catch (DomainUsuarioException ex)
-	{
-		ErrorMensaje = ex.Message;
-	}
-	catch (BussinesLogicUsuarioException ex)
-	{
-		ErrorMensaje = ex.Message;
-	}
-	catch (DomainEspacioException ex)
-	{
-	ErrorMensaje = ex.Message;
-}
-}
 }
