@@ -1,8 +1,7 @@
 ﻿using BussinesLogic;
 using Domain;
 using DTO;
-using System.Collections;
-using System.Collections.Generic;
+using Excepcion;
 
 namespace Controlador
 {
@@ -26,7 +25,14 @@ namespace Controlador
 		public string ModificarNombreEspacio(int espacioId, string nuevoNombre)
 		{
 			string errorMsj = "";
-			_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
+			try
+			{
+				_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
+			}
+			catch (DomainEspacioException e)
+			{
+				errorMsj = e.Message;
+			}
 			return errorMsj;
 		}
 
