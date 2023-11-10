@@ -119,6 +119,26 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
+		public void Modificar_Datos_Usuario_No_Debe_Modificar_Nombre_Incorrecto()
+		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			string mensaje = "";
+			_usuarioLogic.AddUsuario(usuario1);
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			mensaje = controladorTest.ModificarNombre("");
+			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Assert.AreEqual("Juan", usuarioModificado.Nombre);
+			Assert.AreEqual("El nombre es requerido", mensaje);
+		}
+
+		[TestMethod]
 		public void Modificar_Datos_Usuario_Debe_Modificar_Apellido()
 		{
 			var usuario1 = new Usuario()
