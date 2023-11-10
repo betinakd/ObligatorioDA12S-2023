@@ -3,6 +3,7 @@ using Controlador;
 using Domain;
 using Excepcion;
 using Repository;
+using DTO;
 
 namespace ControladorTest
 {
@@ -155,13 +156,11 @@ namespace ControladorTest
 			espacioCreado2.InvitarUsuario(creadorEspacio1);
 			_espacioLogic.AddEspacio(espacioCreado1);
 			_espacioLogic.AddEspacio(espacioCreado2);
-			string[,] espacios = controladorTest.EspaciosDeUsuario("alberto@gmail.com");
-			Assert.AreEqual("Espacio Test", espacios[0, 0]);
-			Assert.AreEqual("Administrador", espacios[0, 1]);
-			Assert.AreEqual("1", espacios[0, 2]);
-			Assert.AreEqual("Espacio Test2", espacios[1, 0]);
-			Assert.AreEqual("Invitado", espacios[1, 1]);
-			Assert.AreEqual("2", espacios[1, 2]);
+			List<EspacioDTO> espacios = controladorTest.EspaciosDeUsuario("alberto@gmail.com");
+			Assert.AreEqual("Espacio Test", espacios[0].Nombre);
+			Assert.AreEqual(1, espacios[0].Id);
+			Assert.AreEqual("Espacio Test2", espacios[1].Nombre);
+			Assert.AreEqual(2 ,espacios[1].Id);
 		}
 	}
 }

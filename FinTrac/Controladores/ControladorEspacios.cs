@@ -1,5 +1,8 @@
 ﻿using BussinesLogic;
 using Domain;
+using DTO;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Controlador
 {
@@ -14,7 +17,8 @@ namespace Controlador
 			_espacioLogic = espacioLogic;
 		}
 
-		public void CrearEspacio(string correoAdmin, string nombre) { 
+		public void CrearEspacio(string correoAdmin, string nombre)
+		{
 			Usuario admin = _usuarioLogic.FindUsuario(correoAdmin);
 			_espacioLogic.CrearEspacio(nombre, admin);
 		}
@@ -24,25 +28,36 @@ namespace Controlador
 			_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
 		}
 
-		public string[,] EspaciosDeUsuario(string correo)
+		public List<EspacioDTO> EspaciosDeUsuario(string correo)
 		{
 			List<Espacio> espacios = _espacioLogic.EspaciosByCorreo(correo);
-			string[,] nombresEspacios = new string[espacios.Count, 3];
+			List<EspacioDTO> nombresEspacios = new List<EspacioDTO>();
 
-			for (int i = 0; i < espacios.Count; i++)
+			foreach (Espacio espacio in espacios)
 			{
-				nombresEspacios[i, 0] = espacios[i].Nombre;
-				if (espacios[i].Admin.Correo == correo)
+				var admin = new UsuarioDTO()
 				{
-					nombresEspacios[i, 1] = "Administrador";
-				}
-				else
-				{
-					nombresEspacios[i, 1] = "Invitado";
-				}
-				nombresEspacios[i, 2] = espacios[i].Id.ToString();
+					Nombre = espacio.Admin.Nombre,
+					Apellido = espacio.Admin.Apellido,
+					Correo = espacio.Admin.Correo,
+				};
+
+				nombresEspacios.Add(
+					new EspacioDTO()
+					{
+						Id = espacio.Id,
+						Nombre = espacio.Nombre,
+						Admin = admin,
+					}
+				);
 			}
 			return nombresEspacios;
 		}
+
+
+
+
+
+
 	}
 }
