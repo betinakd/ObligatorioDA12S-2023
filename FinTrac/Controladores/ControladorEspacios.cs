@@ -28,6 +28,7 @@ namespace Controlador
 			try
 			{
 				_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
+				errorMsj = "Espacio " + nuevoNombre + " Modificado con éxito.";
 			}
 			catch (DomainEspacioException e)
 			{
