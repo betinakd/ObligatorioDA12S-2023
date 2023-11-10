@@ -3,6 +3,7 @@ using Domain;
 using Repository;
 using Controlador;
 using DTO;
+using System.ComponentModel;
 
 namespace ControladorTest
 {
@@ -193,6 +194,25 @@ namespace ControladorTest
 			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
 			Assert.AreEqual("HOLAhola123", usuarioModificado.Contrasena);
 			Assert.AreEqual("Sus datos han sido modificados correctamente.", mensaje);
+		}
+
+		[TestMethod]
+		public void Modificar_Datos_Usuario_No_Debe_Modificar_Contrasena_Incorrecta()
+		{
+			var usuario1 = new Usuario()
+			{
+				Correo = "hola@gmail.com",
+				Nombre = "Juan",
+				Apellido = "Perez",
+				Contrasena = "123456789Aaa",
+				Direccion = "street 56 av rety"
+			};
+			_usuarioLogic.AddUsuario(usuario1);
+			ControladorHome controladorTest = new ControladorHome(_usuarioLogic, "hola@gmail.com");
+			string mensaje = controladorTest.ModificarContrasena("H");
+			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Assert.AreEqual("123456789Aaa", usuarioModificado.Contrasena);
+			Assert.AreEqual("La contraseña no es válida, debe contener al menos una mayúscula, largo mayor igual a 10 y menor igual a 30", mensaje);
 		}
 
 		[TestMethod]
