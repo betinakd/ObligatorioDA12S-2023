@@ -1,6 +1,6 @@
 ﻿using BussinesLogic;
 using Domain;
-
+using DTO;
 
 namespace Controlador
 {
@@ -15,10 +15,16 @@ namespace Controlador
 			_espacioLogic = espacioLogic;
 		}
 
-		public string[] DatosAdminEspacio(int idEspacio) { 
+		public UsuarioDTO DatosAdminEspacio(int idEspacio)
+		{
 			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
 			Usuario admin = _usuarioLogic.FindUsuario(espacio.Admin.Correo);
-			string[] datos = { admin.Nombre, admin.Apellido, admin.Correo};
+			UsuarioDTO datos = new UsuarioDTO()
+			{
+				Nombre = admin.Nombre,
+				Apellido = admin.Apellido,
+				Correo = admin.Correo
+			};
 			return datos;
 		}
 
