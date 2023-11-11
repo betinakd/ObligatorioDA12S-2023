@@ -94,5 +94,59 @@ namespace ControladorTest
 			Assert.AreEqual(ahorro2.Monto, ahorros[1].Monto);
 			Assert.AreEqual(ahorro2.FechaCreacion, ahorros[1].FechaCreacion);
 		}
+
+		[TestMethod]
+		public void ControladorCuenta_CreditosDeEspacio_Retorna_ListaDeCreditos()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+			};
+			espacio.Cuentas.Add(ahorro);
+			Ahorro ahorro2 = new Ahorro
+			{
+				Nombre = "AhorroTest2",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+			};
+			espacio.Cuentas.Add(ahorro2);
+			Credito credito1 = new Credito()
+			{
+				NumeroTarjeta = "1234",
+				BancoEmisor = "CreditoTest",
+				CreditoDisponible = 100,
+				FechaCierre = new DateTime(2025, 4, 20),
+				FechaCreacion = new DateTime(2010, 4, 20),
+			};
+			espacio.Cuentas.Add(credito1);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			
+			List<CreditoDTO> creditos = controladorTest.CreditosDeEspacio(espacio.Id);
+			Assert.AreEqual(1, creditos.Count);
+			Assert.AreEqual(credito1.BancoEmisor, creditos[0].BancoEmisor);
+			Assert.AreEqual(credito1.NumeroTarjeta, creditos[0].NumeroTarjeta);
+			Assert.AreEqual(credito1.FechaCreacion, creditos[0].FechaCreacion);
+			Assert.AreEqual(credito1.FechaCierre, creditos[0].FechaCierre);
+			Assert.AreEqual(credito1.CreditoDisponible, creditos[0].CreditoDisponible);
+		}
 	}
 }
