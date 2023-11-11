@@ -299,7 +299,7 @@ namespace ControladorTest
 			string mensaje = controladorTest.EliminarAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(3, espacio.Cuentas.Count);
 			Assert.IsTrue(espacio.Cuentas.Contains(ahorro2));
-			Assert.AreEqual("No se puede borrar una categoría que tiene transacciones asociadas", mensaje);
+			Assert.AreEqual("No se puede borrar una cuenta que tiene transacciones asociadas", mensaje);
 		}
 
 		[TestMethod]
@@ -424,7 +424,7 @@ namespace ControladorTest
 			string mensaje = controladorTest.EliminarCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(3, espacio.Cuentas.Count);
 			Assert.IsTrue(espacio.Cuentas.Contains(credito1));
-			Assert.AreEqual("No se puede borrar una categoría que tiene transacciones asociadas", mensaje);
+			Assert.AreEqual("No se puede borrar una cuenta que tiene transacciones asociadas", mensaje);
 		}
 
 		[TestMethod]

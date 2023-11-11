@@ -65,8 +65,6 @@ namespace Controlador
 				{
 					Id = cuenta.Id,
 					Nombre = cuenta.Nombre,
-					Monto = cuenta.Monto,
-					FechaCreacion = cuenta.FechaCreacion,
 				};
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, ahorro);
 			}
@@ -87,9 +85,7 @@ namespace Controlador
 					Id = cuenta.Id,
 					BancoEmisor = cuenta.BancoEmisor,
 					NumeroTarjeta = cuenta.NumeroTarjeta,
-					FechaCreacion = cuenta.FechaCreacion,
 					FechaCierre = cuenta.FechaCierre,
-					CreditoDisponible = cuenta.CreditoDisponible,
 				};
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, credito);
 			}
@@ -109,8 +105,6 @@ namespace Controlador
 				{
 					Id = ahorroModificado.Id,
 					Nombre = ahorroModificado.Nombre,
-					Monto = ahorroModificado.Monto,
-					FechaCreacion = ahorroModificado.FechaCreacion,
 				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
 			}
@@ -131,9 +125,7 @@ namespace Controlador
 					Id = ahorroModificado.Id,
 					NumeroTarjeta = ahorroModificado.NumeroTarjeta,
 					BancoEmisor = ahorroModificado.BancoEmisor,
-					FechaCreacion = ahorroModificado.FechaCreacion,
 					FechaCierre = ahorroModificado.FechaCierre,
-					CreditoDisponible = ahorroModificado.CreditoDisponible,
 				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
 			}

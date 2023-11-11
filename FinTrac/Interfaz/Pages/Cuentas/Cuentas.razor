@@ -287,13 +287,19 @@
 
 	private void EliminarCuentaAhorro(AhorroDTO cuenta)
 	{
-		ErrorMsg = controlador.EliminarAhorro(Persistencia.Id, cuenta);
-		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
+		ErrorMsgEliminar = controlador.EliminarAhorro(Persistencia.Id, cuenta);
+		if (ErrorMsgEliminar.Equals(""))
+		{
+			ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
+		}
 	}
 
 	private void EliminarCuentaCredito(CreditoDTO cuenta)
 	{
-		ErrorMsg = controlador.EliminarCredito(Persistencia.Id, cuenta);
-		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		ErrorMsgEliminar = controlador.EliminarCredito(Persistencia.Id, cuenta);
+		if (ErrorMsgEliminar.Equals(""))
+		{
+			creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		}
 	}
 }

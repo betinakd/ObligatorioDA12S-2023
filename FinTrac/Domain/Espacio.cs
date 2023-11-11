@@ -162,7 +162,7 @@ namespace Domain
 			if (Cuentas.Contains(cuenta))
 			{
 				if (TransaccionesContieneCuenta(cuenta))
-					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
+					throw new DomainEspacioException("No se puede borrar una cuenta que tiene transacciones asociadas");
 				Cuentas.Remove(cuenta);
 			}
 		}
