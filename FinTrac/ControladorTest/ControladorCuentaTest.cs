@@ -698,5 +698,76 @@ namespace ControladorTest
 			Assert.AreEqual("El nombre de la cuenta no puede ser vacío", mensaje);
 		}
 
+
+		[TestMethod]
+		public void ControladorCuenta_Crea_CuentaCredito_Con_Exito()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			CreditoDTO creditoDTO = new CreditoDTO()
+			{
+				Id = 3,
+				BancoEmisor = "BancoTest",
+				NumeroTarjeta = "1234",
+				CreditoDisponible = 100,
+				FechaCreacion = DateTime.Now,
+				FechaCierre = new DateTime(2026,4,5),
+			};
+
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
+			Assert.AreEqual(1, espacio.Cuentas.Count);
+			Assert.AreEqual("", mensaje);
+		}
+
+		[TestMethod]
+		public void ControladorCuenta_No_Crea_CuentaCredito_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			CreditoDTO creditoDTO = new CreditoDTO()
+			{
+				Id = 3,
+				BancoEmisor = "",
+				NumeroTarjeta = "1234",
+				CreditoDisponible = 100,
+				FechaCreacion = DateTime.Now,
+				FechaCierre = new DateTime(2026, 4, 5),
+			};
+
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
+			Assert.AreEqual(0, espacio.Cuentas.Count);
+			Assert.AreEqual("El banco emisor no puede ser vacío", mensaje);
+		}
+
 	}
 }
