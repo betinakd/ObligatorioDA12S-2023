@@ -96,7 +96,21 @@ namespace Controlador
 			}
 			return mensaje;
 		}
+
+		public string ModificarAhorro(int espacioId, AhorroDTO ahorroModificado)
+		{
+			Cuenta cuenta = new Ahorro
+			{
+				Id = ahorroModificado.Id,
+				Nombre = ahorroModificado.Nombre,
+				Monto = ahorroModificado.Monto,
+				FechaCreacion = ahorroModificado.FechaCreacion,
+			};
+			string mensaje = "";
+
+				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
+
+			return mensaje;
+		}
 	}
-
-
 }
