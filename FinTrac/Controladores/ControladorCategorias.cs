@@ -14,5 +14,19 @@ namespace Controlador
 		{
 			_categoriaLogic = categoriaLogic;
 		}
+
+		public List<CategoriaDTO> CategoriasDeEspacio(int id)
+		{
+			Espacio espacio = _categoriaLogic.FindEspacio(id);
+			List<Categoria> categorias = espacio.Categorias;
+			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>();
+			foreach (Categoria categoria in categorias)
+			{
+				CategoriaDTO categoriaDTO = new CategoriaDTO();
+				categoriasDTO.Add(categoriaDTO);
+			}
+			return categoriasDTO;
+		}
+
 	}
 }
