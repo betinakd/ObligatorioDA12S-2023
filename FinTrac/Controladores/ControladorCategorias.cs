@@ -22,10 +22,26 @@ namespace Controlador
 			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>();
 			foreach (Categoria categoria in categorias)
 			{
-				CategoriaDTO categoriaDTO = new CategoriaDTO();
+				CategoriaDTO categoriaDTO = new CategoriaDTO()
+				{
+					Id = categoria.Id,
+					Nombre = categoria.Nombre,
+					EstadoActivo = categoria.EstadoActivo,
+					FechaCreacion = categoria.FechaCreacion,
+					Tipo = Cambiar_TipoCategoriaDTO(categoria.Tipo)
+				};
 				categoriasDTO.Add(categoriaDTO);
 			}
 			return categoriasDTO;
+		}
+
+		private TipoCategoriaDTO Cambiar_TipoCategoriaDTO(TipoCategoria tipoCategoria)
+		{
+			if (tipoCategoria.Equals(TipoCategoria.Costo))
+			{
+				return TipoCategoriaDTO.Costo;
+			}
+			return TipoCategoriaDTO.Ingreso;
 		}
 	}
 }
