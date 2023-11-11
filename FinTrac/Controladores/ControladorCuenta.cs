@@ -52,6 +52,22 @@ namespace Controlador
 				.ToList();
 			return creditos;
 		}
+
+		public string EliminarAhorro(int espacioId, AhorroDTO cuenta) 
+		{
+			Cuenta ahorro = new Ahorro
+			{
+				Id = cuenta.Id,
+				Nombre = cuenta.Nombre,
+				Monto = cuenta.Monto,
+				FechaCreacion = cuenta.FechaCreacion,
+			};
+			string mensaje = "";
+
+				_espacioLogic.EliminarCuentaDeEspacio(espacioId, ahorro);
+
+			return mensaje;
+		}
 	}
 
 
