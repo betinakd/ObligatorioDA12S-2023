@@ -112,5 +112,12 @@ namespace BussinesLogic
 			espacio.ModificarCuenta(cuenta);
 			UpdateEspacio(espacio);
 		}
+
+		public void CrearCuenta(int idEspacio, Cuenta cuenta)
+		{
+			Espacio espacio = FindEspacio(idEspacio);
+			espacio.AgregarCuenta(cuenta);
+			UpdateEspacio(espacio);
+		}
 	}
 }
