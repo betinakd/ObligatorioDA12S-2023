@@ -40,6 +40,8 @@ namespace Controlador
 			string msjError = "";
 			Espacio espacio = _categoriaLogic.FindEspacio(id);
 			TipoCategoria tipo = Cambiar_TipoCategoria(categoriaDTO.Tipo);
+			try
+			{
 				Categoria nuevaCategoria = new Categoria()
 				{
 					Nombre = categoriaDTO.Nombre,
@@ -49,6 +51,11 @@ namespace Controlador
 				};
 				espacio.AgregarCategoria(nuevaCategoria);
 				_categoriaLogic.UpdateEspacio(espacio);
+			}
+			catch (DomainEspacioException e)
+			{
+				msjError = e.Message;
+			}
 			return msjError;
 		}
 
