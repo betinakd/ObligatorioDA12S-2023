@@ -611,5 +611,92 @@ namespace ControladorTest
 			Assert.AreEqual("No se puede Modificar, hay cuentas ya registradas con ese nombre", mensaje);
 		}
 
+		[TestMethod]
+		public void ControladorCuenta_Crea_CuentaAhorro_Con_Exito()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			AhorroDTO ahorroDTO = new AhorroDTO()
+			{
+				Id = 3,
+				Nombre = "AhorroTest1",
+				Monto = 100,
+				Moneda = DTO.EnumsDTO.TipoCambiarioDTO.Dolar,
+				FechaCreacion = DateTime.Now,
+			};
+			AhorroDTO ahorroDTO2 = new AhorroDTO()
+			{
+				Id = 3,
+				Nombre = "AhorroTest2",
+				Monto = 100,
+				Moneda = DTO.EnumsDTO.TipoCambiarioDTO.Euro,
+				FechaCreacion = DateTime.Now,
+			};
+			AhorroDTO ahorroDTO3 = new AhorroDTO()
+			{
+				Id = 3,
+				Nombre = "AhorroTest3",
+				Monto = 100,
+				Moneda = DTO.EnumsDTO.TipoCambiarioDTO.PesosUruguayos,
+				FechaCreacion = DateTime.Now,
+			};
+
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
+			string mensaje2 = controladorTest.CrearAhorro(espacio.Id, ahorroDTO2);
+			string mensaje3 = controladorTest.CrearAhorro(espacio.Id, ahorroDTO3);
+			Assert.AreEqual(3, espacio.Cuentas.Count);
+			Assert.AreEqual("", mensaje);
+			Assert.AreEqual("", mensaje2);
+			Assert.AreEqual("", mensaje3);
+		}
+
+		[TestMethod]
+		public void ControladorCuenta_LNo_Crea_CuentaAhorro_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			AhorroDTO ahorroDTO = new AhorroDTO()
+			{
+				Id = 3,
+				Nombre = "",
+				Monto = 100,
+				Moneda = DTO.EnumsDTO.TipoCambiarioDTO.Dolar,
+				FechaCreacion = DateTime.Now,
+			};
+
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
+			Assert.AreEqual("El nombre de la cuenta no puede ser vacío", mensaje);
+		}
+
 	}
 }
