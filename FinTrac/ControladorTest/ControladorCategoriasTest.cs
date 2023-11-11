@@ -218,5 +218,35 @@ namespace ControladorTest
 			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2, "Categoria1");
 			Assert.AreEqual("Ya hay categorias con ese nombre.", msjError);
 		}
+
+		[TestMethod]
+		public void ControladorCategorias_EliminarCategoria()
+		{
+			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			CategoriaDTO categoriaDTO = new CategoriaDTO()
+			{
+				Nombre = "Categoria1",
+				Tipo = DTO.EnumsDTO.TipoCategoriaDTO.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			controladorTest.CrearCategoria(1, categoriaDTO);
+			CategoriaDTO categoriaDTO2 = new CategoriaDTO()
+			{
+				Id = 1,
+				Nombre = "Categoria2",
+				Tipo = DTO.EnumsDTO.TipoCategoriaDTO.Ingreso,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			string msjError = controladorTest.EliminarCategoria(1, categoriaDTO2);
+			Assert.AreEqual("", msjError);
+		}
 	}
 }
