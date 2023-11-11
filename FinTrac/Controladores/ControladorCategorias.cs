@@ -94,6 +94,14 @@ namespace Controlador
 			return errorMsj;
 		}
 
+		public void ModificarEstadoCategoria(int Id, CategoriaDTO categoriaDTO, bool estadoActivo)
+		{
+			Espacio espacio = _categoriaLogic.FindEspacio(Id);
+			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
+			categoria.EstadoActivo = estadoActivo;
+			_categoriaLogic.UpdateEspacio(espacio);
+		}
+
 		private TipoCategoriaDTO Cambiar_TipoCategoriaDTO(TipoCategoria tipoCategoria)
 		{
 			if (tipoCategoria.Equals(TipoCategoria.Costo))
