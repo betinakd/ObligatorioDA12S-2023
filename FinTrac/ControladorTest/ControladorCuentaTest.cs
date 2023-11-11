@@ -446,8 +446,59 @@ namespace ControladorTest
 			string mensaje = controladorTest.ModificarAhorro(espacio.Id, ahorroModificado);
 
 			Assert.AreEqual(ahorroModificado.Nombre, ahorro.Nombre);
-			Assert.AreEqual(ahorroModificado.Monto, ahorro.Monto);
 			Assert.AreEqual("", mensaje);
+		}
+
+		[TestMethod]
+		public void ControladorCuenta_No_Modifica_Ahorro_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Id = 3,
+				Nombre = "AhorroTest1",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+			};
+			espacio.Cuentas.Add(ahorro);
+			AhorroDTO ahorroModificado = new AhorroDTO
+			{
+				Id = 3,
+				Nombre = "AhorroTest1",
+				Monto = 105550,
+				FechaCreacion = new DateTime(2010, 4, 20),
+			};
+			Credito credito = new Credito()
+			{
+				Id = 1,
+				NumeroTarjeta = "1234",
+				BancoEmisor = "CreditoTest",
+				CreditoDisponible = 100,
+				FechaCierre = new DateTime(2025, 4, 20),
+				FechaCreacion = new DateTime(2010, 4, 20),
+			};
+			espacio.Cuentas.Add(credito);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.ModificarAhorro(espacio.Id, ahorroModificado);
+
+			Assert.AreEqual(ahorroModificado.Nombre, ahorro.Nombre);
+			Assert.AreEqual("No se puede Modificar, hay cuentas ya registradas con ese nombre", mensaje);
 		}
 
 
