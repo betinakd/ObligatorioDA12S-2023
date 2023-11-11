@@ -35,6 +35,23 @@ namespace Controlador
 			return categoriasDTO;
 		}
 
+		public string CrearCategoria(int id, CategoriaDTO categoriaDTO)
+		{
+			string msjError = "";
+			Espacio espacio = _categoriaLogic.FindEspacio(id);
+			TipoCategoria tipo = Cambiar_TipoCategoria(categoriaDTO.Tipo);
+				Categoria nuevaCategoria = new Categoria()
+				{
+					Nombre = categoriaDTO.Nombre,
+					Tipo = tipo,
+					EstadoActivo = categoriaDTO.EstadoActivo,
+					FechaCreacion = categoriaDTO.FechaCreacion
+				};
+				espacio.AgregarCategoria(nuevaCategoria);
+				_categoriaLogic.UpdateEspacio(espacio);
+			return msjError;
+		}
+
 		private TipoCategoriaDTO Cambiar_TipoCategoriaDTO(TipoCategoria tipoCategoria)
 		{
 			if (tipoCategoria.Equals(TipoCategoria.Costo))
@@ -42,6 +59,15 @@ namespace Controlador
 				return TipoCategoriaDTO.Costo;
 			}
 			return TipoCategoriaDTO.Ingreso;
+		}
+
+		private TipoCategoria Cambiar_TipoCategoria(TipoCategoriaDTO tipoCategoria)
+		{
+			if (tipoCategoria.Equals(TipoCategoriaDTO.Costo))
+			{
+				return TipoCategoria.Costo;
+			}
+			return TipoCategoria.Ingreso;
 		}
 	}
 }
