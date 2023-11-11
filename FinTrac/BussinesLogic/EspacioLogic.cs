@@ -105,5 +105,12 @@ namespace BussinesLogic
 			espacio.BorrarCuenta(cuenta);
 			UpdateEspacio(espacio);
 		}
+
+		//public void ModificarCuentaDeEspacio(int idEspacio, Cuenta cuenta)
+		//{
+		//	Espacio espacio = FindEspacio(idEspacio);
+		//	espacio.ModificarCuenta(cuentaAnterior,cuentaModificada);
+		//	UpdateEspacio(espacio);
+		//}
 	}
 }

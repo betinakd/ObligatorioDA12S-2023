@@ -189,12 +189,13 @@ namespace Domain
 			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
 		}
 
-		public void ModificarCuenta(Cuenta modificacion, Cuenta modificada)
+		public void ModificarCuenta(Cuenta modificacion)
 		{
 			if (Cuentas.Contains(modificacion))
 			{
 				throw new DomainEspacioException("No se puede Modificar, hay cuentas ya registradas con ese nombre");
 			}
+			Cuenta modificada = Cuentas.Find(c => c.Id == modificacion.Id);
 			modificada.Modificar(modificacion);
 		}
 

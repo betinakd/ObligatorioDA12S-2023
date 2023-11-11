@@ -241,7 +241,7 @@
 						BancoEmisor = inputNombreBanco,
 						FechaCierre = credito.FechaCierre
 					};
-				espacio.ModificarCuenta(modificacion, cuenta);
+				espacio.ModificarCuenta(modificacion);
 				LimpiarImputs();
 			}
 			catch (DomainEspacioException ex)
@@ -278,7 +278,7 @@
 			try
 			{
 				Ahorro modificacion = new Ahorro() { Nombre = inputAhorro };
-				espacio.ModificarCuenta(modificacion, cuenta);
+				espacio.ModificarCuenta(modificacion);
 				LimpiarImputs();
 			}
 			catch (DomainEspacioException ex)
