@@ -60,5 +60,19 @@ namespace ControladorTest
 			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
+
+		[TestMethod]
+		public void ControladorCategorias_CategoriasDeEspacio()
+		{
+			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			List<CategoriaDTO> categorias = controladorTest.CategoriasDeEspacio(1);
+			Assert.AreEqual(0, categorias.Count);
+		}
 	}
 }
