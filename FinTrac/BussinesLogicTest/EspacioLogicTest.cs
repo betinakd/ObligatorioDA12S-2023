@@ -402,5 +402,60 @@ namespace BussinesLogicTest
 			Assert.IsTrue(ahorro.Equals(ahorroModificada));
 			Assert.IsTrue(credito.Equals(creditoModificada));
 		}
+
+		[TestMethod]
+		public void EspacioLogic_Crea_Cuenta_De_Un_Espacio()
+		{
+			Usuario admin = new Usuario
+			{
+				IdEspacioPrincipal = 1,
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "address2",
+				Correo = "test@gmail.com",
+				Contrasena = "123456789Csss"
+			};
+			Espacio espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Test",
+				Admin = admin
+			};
+			Cuenta ahorro = new Ahorro()
+			{
+				Id = 1,
+				Nombre = "AhorroTest",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+			};
+			Cuenta credito = new Credito()
+			{
+				Id = 2,
+				BancoEmisor = "CreditoTest",
+				CreditoDisponible = 100,
+				FechaCreacion = DateTime.Now,
+				NumeroTarjeta = "1534",
+				FechaCierre = new DateTime(2026, 1, 1),
+				Moneda = TipoCambiario.Dolar,
+			};
+			Cuenta credito2 = new Credito()
+			{
+				Id = 3,
+				BancoEmisor = "CreditoTest2",
+				CreditoDisponible = 1000,
+				FechaCreacion = DateTime.Now,
+				NumeroTarjeta = "1544",
+				FechaCierre = new DateTime(2026, 1, 1),
+				Moneda = TipoCambiario.Euro,
+			};
+			espacioLogic.AddEspacio(espacio);
+			espacioLogic.CrearCuenta(espacio.Id, credito);
+			espacioLogic.CrearCuenta(espacio.Id, credito2);
+			espacioLogic.CrearCuenta(espacio.Id, ahorro);
+			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
+			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(credito));
+			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(credito2));
+		}
 	}
 }
