@@ -108,5 +108,26 @@ namespace ControladorTest
 			Assert.AreEqual(2, categorias.Count);
 			Assert.AreEqual(1, categorias[0].Id);
 		}
+
+		[TestMethod]
+		public void ControladorCategorias_CrearCategoria()
+		{
+			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			CategoriaDTO categoriaDTO = new CategoriaDTO()
+			{
+				Nombre = "Categoria1",
+				Tipo = DTO.EnumsDTO.TipoCategoriaDTO.Ingreso,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			string msjError = controladorTest.CrearCategoria(1, categoriaDTO);
+			Assert.AreEqual("", msjError);
+		}
 	}
 }
