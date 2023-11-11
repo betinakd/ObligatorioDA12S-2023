@@ -306,5 +306,36 @@ namespace BussinesLogicTest
 			espacioLogic.EliminarUsuarioDeEspacio(espacio.Id, null);
 
 		}
-	} 
+
+		[TestMethod]
+		public void EspacioLogic_Elimina_Cuenta_De_Un_Espacio()
+		{
+			Usuario admin = new Usuario
+			{
+				IdEspacioPrincipal = 1,
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "address2",
+				Correo = "test@gmail.com",
+				Contrasena = "123456789Csss"
+			};
+			Espacio espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Test",
+				Admin = admin
+			};
+			Cuenta ahorro = new Ahorro()
+			{
+				Nombre = "AhorroTest",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+			};
+			espacio.AgregarCuenta(ahorro);
+			espacioLogic.AddEspacio(espacio);
+			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
+			espacioLogic.EliminarCuentaDeEspacio(espacio.Id, ahorro);
+			Assert.IsFalse(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
+		}
+	}
 }
