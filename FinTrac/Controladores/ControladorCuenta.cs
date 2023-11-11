@@ -29,6 +29,7 @@ namespace Controlador
 					Nombre = ahorro.Nombre,
 					Monto = ahorro.Monto,
 					FechaCreacion = ahorro.FechaCreacion,
+					Moneda = ConversorMoneda(ahorro.Moneda),
 				})
 				.ToList();
 			return ahorros;
@@ -49,6 +50,7 @@ namespace Controlador
 					FechaCreacion = credito.FechaCreacion,
 					FechaCierre = credito.FechaCierre,
 					CreditoDisponible = credito.CreditoDisponible,
+					Moneda = ConversorMoneda(credito.Moneda),
 				})
 				.ToList();
 			return creditos;
@@ -56,16 +58,16 @@ namespace Controlador
 
 		public string EliminarAhorro(int espacioId, AhorroDTO cuenta)
 		{
-			Cuenta ahorro = new Ahorro
-			{
-				Id = cuenta.Id,
-				Nombre = cuenta.Nombre,
-				Monto = cuenta.Monto,
-				FechaCreacion = cuenta.FechaCreacion,
-			};
 			string mensaje = "";
 			try
 			{
+				Cuenta ahorro = new Ahorro
+				{
+					Id = cuenta.Id,
+					Nombre = cuenta.Nombre,
+					Monto = cuenta.Monto,
+					FechaCreacion = cuenta.FechaCreacion,
+				};
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, ahorro);
 			}
 			catch (DomainEspacioException e)
@@ -77,18 +79,18 @@ namespace Controlador
 
 		public string EliminarCredito(int espacioId, CreditoDTO cuenta)
 		{
-			Cuenta credito = new Credito
-			{
-				Id = cuenta.Id,
-				BancoEmisor = cuenta.BancoEmisor,
-				NumeroTarjeta = cuenta.NumeroTarjeta,
-				FechaCreacion = cuenta.FechaCreacion,
-				FechaCierre = cuenta.FechaCierre,
-				CreditoDisponible = cuenta.CreditoDisponible,
-			};
 			string mensaje = "";
 			try
 			{
+				Cuenta credito = new Credito
+				{
+					Id = cuenta.Id,
+					BancoEmisor = cuenta.BancoEmisor,
+					NumeroTarjeta = cuenta.NumeroTarjeta,
+					FechaCreacion = cuenta.FechaCreacion,
+					FechaCierre = cuenta.FechaCierre,
+					CreditoDisponible = cuenta.CreditoDisponible,
+				};
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, credito);
 			}
 			catch (DomainEspacioException e)
@@ -142,8 +144,9 @@ namespace Controlador
 			return mensaje;
 		}
 
-		private TipoCambiario ConversorMonedaDTO(TipoCambiarioDTO moneda) { 
-			TipoCambiario conversion = TipoCambiario.PesosUruguayos;
+		private TipoCambiario ConversorMonedaDTO(TipoCambiarioDTO moneda)
+		{
+			TipoCambiario conversion;
 			if (moneda == TipoCambiarioDTO.Dolar)
 			{
 				conversion = TipoCambiario.Dolar;
@@ -152,10 +155,33 @@ namespace Controlador
 			{
 				conversion = TipoCambiario.Euro;
 			}
+			else
+			{
+				conversion = TipoCambiario.PesosUruguayos;
+			}
 			return conversion;
 		}
 
-		public string CrearAhorro(int espacioId, AhorroDTO ahorro) {
+		private TipoCambiarioDTO ConversorMoneda(TipoCambiario moneda)
+		{
+			TipoCambiarioDTO conversion;
+			if (moneda == TipoCambiario.Dolar)
+			{
+				conversion = TipoCambiarioDTO.Dolar;
+			}
+			else if (moneda == TipoCambiario.Euro)
+			{
+				conversion = TipoCambiarioDTO.Euro;
+			}
+			else
+			{
+				conversion = TipoCambiarioDTO.PesosUruguayos;
+			}
+			return conversion;
+		}
+
+		public string CrearAhorro(int espacioId, AhorroDTO ahorro)
+		{
 			string mensaje = "";
 			try
 			{

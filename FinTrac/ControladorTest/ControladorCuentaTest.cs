@@ -65,6 +65,7 @@ namespace ControladorTest
 				Nombre = "AhorroTest1",
 				Monto = 100,
 				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos
 			};
 			espacio.Cuentas.Add(ahorro);
 			Ahorro ahorro2 = new Ahorro
@@ -72,6 +73,7 @@ namespace ControladorTest
 				Nombre = "AhorroTest2",
 				Monto = 100,
 				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Dolar
 			};
 			espacio.Cuentas.Add(ahorro2);
 			Credito credito = new Credito()
@@ -83,17 +85,28 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito);
+			Ahorro ahorro3 = new Ahorro
+			{
+				Nombre = "AhorroTest3",
+				Monto = 1050,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Euro
+			};
+			espacio.Cuentas.Add(ahorro3);
 			_espacioLogic.AddEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
 
 			List<AhorroDTO> ahorros = controladorTest.AhorrosDeEspacio(espacio.Id);
-			Assert.AreEqual(2, ahorros.Count);
+			Assert.AreEqual(3, ahorros.Count);
 			Assert.AreEqual(ahorro.Nombre, ahorros[0].Nombre);
 			Assert.AreEqual(ahorro.Monto, ahorros[0].Monto);
 			Assert.AreEqual(ahorro.FechaCreacion, ahorros[0].FechaCreacion);
 			Assert.AreEqual(ahorro2.Nombre, ahorros[1].Nombre);
 			Assert.AreEqual(ahorro2.Monto, ahorros[1].Monto);
 			Assert.AreEqual(ahorro2.FechaCreacion, ahorros[1].FechaCreacion);
+			Assert.AreEqual(ahorro3.Nombre, ahorros[2].Nombre);
+			Assert.AreEqual(ahorro3.Monto, ahorros[2].Monto);
+			Assert.AreEqual(ahorro3.FechaCreacion, ahorros[2].FechaCreacion);
 		}
 
 		[TestMethod]
@@ -127,6 +140,7 @@ namespace ControladorTest
 				Nombre = "AhorroTest2",
 				Monto = 100,
 				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Dolar
 			};
 			espacio.Cuentas.Add(ahorro2);
 			Credito credito1 = new Credito()
@@ -136,18 +150,34 @@ namespace ControladorTest
 				CreditoDisponible = 100,
 				FechaCierre = new DateTime(2025, 4, 20),
 				FechaCreacion = new DateTime(2010, 4, 20),
+				Moneda = TipoCambiario.PesosUruguayos
 			};
 			espacio.Cuentas.Add(credito1);
+			Credito credito2 = new Credito()
+			{
+				NumeroTarjeta = "1255",
+				BancoEmisor = "Credito2Test",
+				CreditoDisponible = 1070,
+				FechaCierre = new DateTime(2025, 4, 20),
+				FechaCreacion = new DateTime(2010, 4, 20),
+				Moneda = TipoCambiario.Euro
+			};
+			espacio.Cuentas.Add(credito2);
 			_espacioLogic.AddEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
 
 			List<CreditoDTO> creditos = controladorTest.CreditosDeEspacio(espacio.Id);
-			Assert.AreEqual(1, creditos.Count);
+			Assert.AreEqual(2, creditos.Count);
 			Assert.AreEqual(credito1.BancoEmisor, creditos[0].BancoEmisor);
 			Assert.AreEqual(credito1.NumeroTarjeta, creditos[0].NumeroTarjeta);
 			Assert.AreEqual(credito1.FechaCreacion, creditos[0].FechaCreacion);
 			Assert.AreEqual(credito1.FechaCierre, creditos[0].FechaCierre);
 			Assert.AreEqual(credito1.CreditoDisponible, creditos[0].CreditoDisponible);
+			Assert.AreEqual(credito2.BancoEmisor, creditos[1].BancoEmisor);
+			Assert.AreEqual(credito2.NumeroTarjeta, creditos[1].NumeroTarjeta);
+			Assert.AreEqual(credito2.FechaCreacion, creditos[1].FechaCreacion);
+			Assert.AreEqual(credito2.FechaCierre, creditos[1].FechaCierre);
+			Assert.AreEqual(credito2.CreditoDisponible, creditos[1].CreditoDisponible);
 		}
 
 		[TestMethod]
@@ -724,7 +754,7 @@ namespace ControladorTest
 				NumeroTarjeta = "1234",
 				CreditoDisponible = 100,
 				FechaCreacion = DateTime.Now,
-				FechaCierre = new DateTime(2026,4,5),
+				FechaCierre = new DateTime(2026, 4, 5),
 			};
 
 			_espacioLogic.AddEspacio(espacio);

@@ -18,7 +18,6 @@
 			<td><label for="moneda">Moneda:</label></td>
 			<td>
 				<select @onchange="SeleccionarMoneda" class="text-600">
-					<option value="">Seleccione una Opcion</option>
 					@foreach (var moneda in monedas)
 					{
 						<option value="@moneda">@moneda</option>
@@ -65,5 +64,9 @@
 				Moneda = tipoMonedaSeleccionado
 			};
 		ErrorMsg = controlador.CrearAhorro(Persistencia.Id, ahorro);
+		if (ErrorMsg == "")
+		{
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+		}
 	}
 }

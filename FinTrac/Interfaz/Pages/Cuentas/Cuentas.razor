@@ -239,7 +239,12 @@
 				FechaCierre = cuenta.FechaCierre
 			};
 		ErrorMsgBancoTarjeta = controlador.ModificarCredito(Persistencia.Id, credito);
-		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		if (ErrorMsgBancoTarjeta.Equals(""))
+		{
+			mostrarModificar = false;
+			creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		}
+
 	}
 
 	private void ModificarCuentaFecha(CreditoDTO cuenta)
@@ -254,8 +259,12 @@
 				NumeroTarjeta = cuenta.NumeroTarjeta,
 				FechaCierre = inputFechaCierre
 			};
-		ErrorMsgFecha = controlador.ModificarCredito(Persistencia.Id, credito);
-		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		ErrorMsgFecha = controlador.ModificarCredito(Persistencia.Id, credito);	
+		if (ErrorMsgFecha.Equals(""))
+		{
+			mostrarModificar = false;
+			creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		}
 	}
 
 	private void ModificarCuentaAhorro(AhorroDTO cuenta)
@@ -269,7 +278,11 @@
 				Moneda = cuenta.Moneda
 			};
 		ErrorMsg = controlador.ModificarAhorro(Persistencia.Id, ahorro);
-		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
+		if(ErrorMsg.Equals(""))
+		{
+			mostrarModificar = false;
+			ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
+		};
 	}
 
 	private void EliminarCuentaAhorro(AhorroDTO cuenta)

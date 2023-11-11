@@ -32,7 +32,6 @@
 			<td><label for="moneda">Moneda:</label></td>
 			<td>
 				<select @onchange="SeleccionarMoneda" class="text-600">
-					<option value="">Seleccione una Opcion</option>
 					@foreach (var moneda in monedas)
 					{
 						<option value="@moneda">@moneda</option>
@@ -80,14 +79,18 @@
 	{
 
 		CreditoDTO credito = new CreditoDTO()
-		{
-			BancoEmisor = BancoEmisor,
-			NumeroTarjeta = NumeroTarjeta,
-			CreditoDisponible = CreditoDisponible,
-			FechaCierre = FechaCierre,
-			Moneda = tipoMonedaSeleccionado
-		};
+			{
+				BancoEmisor = BancoEmisor,
+				NumeroTarjeta = NumeroTarjeta,
+				CreditoDisponible = CreditoDisponible,
+				FechaCierre = FechaCierre,
+				Moneda = tipoMonedaSeleccionado
+			};
 
 		ErrorMsg = controlador.CrearCredito(Persistencia.Id, credito);
+		if (ErrorMsg == "")
+		{
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
+		};
 	}
 }
