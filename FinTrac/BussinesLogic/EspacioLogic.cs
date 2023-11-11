@@ -92,10 +92,17 @@ namespace BussinesLogic
 		public void EliminarUsuarioDeEspacio(int idEspacio, Usuario usuario)
 		{
 			Espacio espacio = FindEspacio(idEspacio);
-			if (espacio.PerteneceCorreo(usuario.Correo) /*&& !usuario.Equals(espacio.Admin)*/)
+			if (espacio.PerteneceCorreo(usuario.Correo))
 			{
 				espacio.UsuariosInvitados.Remove(usuario);
 			}
+			UpdateEspacio(espacio);
+		}
+
+		public void EliminarCuentaDeEspacio(int idEspacio, Cuenta cuenta)
+		{
+			Espacio espacio = FindEspacio(idEspacio);
+			espacio.BorrarCuenta(cuenta);
 			UpdateEspacio(espacio);
 		}
 	}
