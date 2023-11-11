@@ -63,8 +63,31 @@ namespace Controlador
 				FechaCreacion = cuenta.FechaCreacion,
 			};
 			string mensaje = "";
-
+			try
+			{
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, ahorro);
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			return mensaje;
+		}
+
+		public string EliminarCredito(int espacioId, CreditoDTO cuenta)
+		{
+			Cuenta credito = new Credito
+			{
+				Id = cuenta.Id,
+				BancoEmisor = cuenta.BancoEmisor,
+				NumeroTarjeta = cuenta.NumeroTarjeta,
+				FechaCreacion = cuenta.FechaCreacion,
+				FechaCierre = cuenta.FechaCierre,
+				CreditoDisponible = cuenta.CreditoDisponible,
+			};
+			string mensaje = "";
+
+				_espacioLogic.EliminarCuentaDeEspacio(espacioId, credito);
 
 			return mensaje;
 		}
