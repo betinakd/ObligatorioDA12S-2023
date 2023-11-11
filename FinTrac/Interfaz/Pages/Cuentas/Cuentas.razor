@@ -133,14 +133,14 @@
 						@cuentaCredito.FechaCierre
 					</td>
 					<td class="px-6 py-4">
-						@* 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+@* 												<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
 					@onclick="() => MostrarModificarCuenta(cuentaCredito)">
 					Modificar
-					</button>
-					<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
-					@onclick="() => EliminarCuenta(cuentaCredito)">
-					Eliminar
 					</button> *@
+					<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
+					@onclick="() => EliminarCuentaCredito(cuentaCredito)">
+					Eliminar
+					</button>
 					</td>
 				</tr>
 				<tr>
@@ -296,6 +296,7 @@
 
 	private void EliminarCuentaCredito(CreditoDTO cuenta)
 	{
-
+		ErrorMsg = controlador.EliminarCredito(Persistencia.Id, cuenta);
+		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 	}
 }
