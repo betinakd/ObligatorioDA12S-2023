@@ -8,5 +8,11 @@ namespace Controlador
 {
 	public class ControladorCategorias
 	{
+		private EspacioLogic _categoriaLogic;
+
+		public ControladorCategorias(EspacioLogic categoriaLogic)
+		{
+			_categoriaLogic = categoriaLogic;
+		}
 	}
 }
