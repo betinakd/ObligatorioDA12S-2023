@@ -174,5 +174,28 @@ namespace Controlador
 			}
 			return mensaje;
 		}
+
+		public string CrearCredito(int espacioId, CreditoDTO credito)
+		{
+			string mensaje = "";
+			try
+			{
+				Cuenta creditoDTO = new Credito
+				{
+					BancoEmisor = credito.BancoEmisor,
+					NumeroTarjeta = credito.NumeroTarjeta,
+					FechaCierre = credito.FechaCierre,
+					CreditoDisponible = credito.CreditoDisponible,
+					FechaCreacion = credito.FechaCreacion,
+					Moneda = ConversorMonedaDTO(credito.Moneda),
+				};
+				_espacioLogic.CrearCuenta(espacioId, creditoDTO);
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			return mensaje;
+		}
 	}
 }
