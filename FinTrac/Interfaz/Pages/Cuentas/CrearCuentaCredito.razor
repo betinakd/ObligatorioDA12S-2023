@@ -61,46 +61,33 @@
 	private string NumeroTarjeta { get; set; } = "";
 	private double CreditoDisponible { get; set; } = 0;
 	private DateTime FechaCierre { get; set; } = DateTime.Now;
-	private Domain.TipoCambiario tipoMonedaSeleccionado;
-	private List<Domain.TipoCambiario> monedas;
+	private TipoCambiarioDTO tipoMonedaSeleccionado;
+	private List<TipoCambiarioDTO> monedas;
+	private ControladorCuenta controlador;
 
 	protected override void OnInitialized()
 	{
-		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
+		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
+		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
 	}
 
 	private void SeleccionarMoneda(ChangeEventArgs e)
 	{
-		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
+		tipoMonedaSeleccionado = (TipoCambiarioDTO)Enum.Parse(typeof(TipoCambiarioDTO), e.Value.ToString());
 	}
 
 	private void CrearCuenta()
 	{
-		try
+
+		CreditoDTO credito = new CreditoDTO()
 		{
-			Credito nuevaCuentaCredito = new Credito
-				{
-					BancoEmisor = BancoEmisor,
-					NumeroTarjeta = NumeroTarjeta,
-					CreditoDisponible = CreditoDisponible,
-					Moneda = tipoMonedaSeleccionado,
-					FechaCierre = FechaCierre
-				};
-			try
-			{
-				Espacio espacio = EspacioLogic.FindEspacio(Id);
-				espacio.AgregarCuenta(nuevaCuentaCredito);
-				EspacioLogic.UpdateEspacio(espacio);
-				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsg = ex.Message;
-			}
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+			BancoEmisor = BancoEmisor,
+			NumeroTarjeta = NumeroTarjeta,
+			CreditoDisponible = CreditoDisponible,
+			FechaCierre = FechaCierre,
+			Moneda = tipoMonedaSeleccionado
+		};
+
+		ErrorMsg = controlador.CrearCredito(Persistencia.Id, credito);
 	}
 }

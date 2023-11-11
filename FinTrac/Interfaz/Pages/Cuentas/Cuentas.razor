@@ -57,10 +57,10 @@
 						@cuentaAhorro.Moneda
 					</td>
 					<td class="px-6 py-4">
-						@* 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-					@onclick="() =>	MostrarModificarCuenta(cuentaAhorro)">
-					Modificar
-					</button> *@
+						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+						@onclick="() =>	MostrarModificarCuenta(cuentaAhorro)">
+							Modificar
+						</button>
 						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
 						@onclick="() => EliminarCuentaAhorro(cuentaAhorro)">
 							Eliminar
@@ -68,15 +68,15 @@
 					</td>
 				</tr>
 				<tr>
-					@* 					@if (mostrarModificar && cuentaClickeada.Equals(cuentaAhorro))
-				{
-				<p style="color:red">@ErrorMsg</p>
-				<input type="text" @bind="inputAhorro" class="border rounded-md px-2 py-1" />
-				<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-				@onclick="() =>	ModificarCuentaAhorro(cuentaAhorro)">
-				Modificar
-				</button>
-				} *@
+					@if (mostrarModificar && cuentaClickeada.Equals(cuentaAhorro))
+					{
+						<p style="color:red">@ErrorMsg</p>
+						<input type="text" @bind="inputAhorro" class="border rounded-md px-2 py-1" />
+						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+						@onclick="() =>	ModificarCuentaAhorro(cuentaAhorro)">
+							Modificar
+						</button>
+					}
 				</tr>
 			}
 		</tbody>
@@ -133,49 +133,49 @@
 						@cuentaCredito.FechaCierre
 					</td>
 					<td class="px-6 py-4">
-@* 												<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-					@onclick="() => MostrarModificarCuenta(cuentaCredito)">
-					Modificar
-					</button> *@
-					<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
-					@onclick="() => EliminarCuentaCredito(cuentaCredito)">
-					Eliminar
-					</button>
+						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+						@onclick="() => MostrarModificarCuenta(cuentaCredito)">
+							Modificar
+						</button>
+						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
+						@onclick="() => EliminarCuentaCredito(cuentaCredito)">
+							Eliminar
+						</button>
 					</td>
 				</tr>
 				<tr>
-					@* 					@if (mostrarModificar && cuentaClickeada.Equals(cuentaCredito))
-				{
-				<div class="mt-4">
-				<h3 class="text-lg font-medium mb-2">Modificar Cuenta de Crédito</h3>
-				<div class="flex flex-col space-y-2">
-				<div>
-				<label class="text-gray-600">Nombre del Banco</label>
-				<input type="text" @bind="inputNombreBanco" class="border rounded-md px-2 py-1" />
-				</div>
-				<div>
-				<label class="text-gray-600">Número de Tarjeta</label>
-				<input type="text" @bind="inputNumTarjeta" class="border rounded-md px-2 py-1" />
-				</div>
-				<p style="color:red">@ErrorMsgBancoTarjeta</p>
-				<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
-				@onclick="() => ModificarCuentaBancoTarjeta(cuentaClickeada)">
-				Guardar Cambios (Banco y Tarjeta)
-				</button>
-				</div>
-				</div>
-				<div class="mt-4">
-				<div>
-				<label class="text-gray-600">Fecha de Cierre</label>
-				<input type="date" @bind="inputFechaCierre" class="border rounded-md px-2 py-1" />
-				</div>
-				<p style="color:red">@ErrorMsgFecha</p>
-				<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
-				@onclick="() => ModificarCuentaFecha(cuentaClickeada)">
-				Guardar Cambios (Fecha de Cierre)
-				</button>
-				</div>
-				} *@
+					@if (mostrarModificar && cuentaClickeada.Equals(cuentaCredito))
+					{
+						<div class="mt-4">
+							<h3 class="text-lg font-medium mb-2">Modificar Cuenta de Crédito</h3>
+							<div class="flex flex-col space-y-2">
+								<div>
+									<label class="text-gray-600">Nombre del Banco</label>
+									<input type="text" @bind="inputNombreBanco" class="border rounded-md px-2 py-1" />
+								</div>
+								<div>
+									<label class="text-gray-600">Número de Tarjeta</label>
+									<input type="text" @bind="inputNumTarjeta" class="border rounded-md px-2 py-1" />
+								</div>
+								<p style="color:red">@ErrorMsgBancoTarjeta</p>
+								<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
+								@onclick="() => ModificarCuentaBancoTarjeta(cuentaCredito)">
+									Guardar Cambios (Banco y Tarjeta)
+								</button>
+							</div>
+						</div>
+						<div class="mt-4">
+							<div>
+								<label class="text-gray-600">Fecha de Cierre</label>
+								<input type="date" @bind="inputFechaCierre" class="border rounded-md px-2 py-1" />
+							</div>
+							<p style="color:red">@ErrorMsgFecha</p>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
+							@onclick="() => ModificarCuentaFecha(cuentaCredito)">
+								Guardar Cambios (Fecha de Cierre)
+							</button>
+						</div>
+					}
 				</tr>
 			}
 		</tbody>
@@ -190,9 +190,9 @@
 	private string ErrorMsg { get; set; }
 	private string ErrorMsgFecha { get; set; }
 	private string ErrorMsgBancoTarjeta { get; set; }
-	private Cuenta cuentaClickeada { get; set; }
+	private CuentaDTO cuentaClickeada { get; set; }
 	private bool mostrarModificar { get; set; } = false;
-	private string inputAhorro { get; set; } = "e";
+	private string inputAhorro { get; set; } = "";
 	private string inputNumTarjeta { get; set; } = "";
 	private string inputNombreBanco { get; set; } = "";
 	private DateTime inputFechaCierre { get; set; } = DateTime.Today;
@@ -219,73 +219,57 @@
 		inputFechaCierre = DateTime.Today;
 	}
 
-	private void MostrarModificarCuenta(Cuenta cuenta)
+	private void MostrarModificarCuenta(CuentaDTO cuenta)
 	{
 		mostrarModificar = !mostrarModificar;
 		cuentaClickeada = cuenta;
 		LimpiarImputs();
 	}
 
-	private void ModificarCuentaBancoTarjeta(Cuenta cuenta)
+	private void ModificarCuentaBancoTarjeta(CreditoDTO cuenta)
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-
-		if (cuenta is Credito)
-		{
-			try
+		CreditoDTO credito = new CreditoDTO()
 			{
-				var credito = cuenta as Credito;
-				Credito modificacion = new Credito()
-					{
-						NumeroTarjeta = inputNumTarjeta,
-						BancoEmisor = inputNombreBanco,
-						FechaCierre = credito.FechaCierre
-					};
-				espacio.ModificarCuenta(modificacion);
-				LimpiarImputs();
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsgBancoTarjeta = ex.Message;
-			}
-		}
+				Id = cuenta.Id,
+				BancoEmisor = inputNombreBanco,
+				CreditoDisponible = cuenta.CreditoDisponible,
+				FechaCreacion = cuenta.FechaCreacion,
+				Moneda = cuenta.Moneda,
+				NumeroTarjeta = inputNumTarjeta,
+				FechaCierre = cuenta.FechaCierre
+			};
+		ErrorMsgBancoTarjeta = controlador.ModificarCredito(Persistencia.Id, credito);
+		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 	}
 
-	private void ModificarCuentaFecha(Cuenta cuenta)
+	private void ModificarCuentaFecha(CreditoDTO cuenta)
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-
-		if (cuenta is Credito)
-		{
-			try
+		CreditoDTO credito = new CreditoDTO()
 			{
-				var credito = cuenta as Credito;
-				credito.FechaCierre = inputFechaCierre;
-				LimpiarImputs();
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsgFecha = ex.Message;
-			}
-		}
+				Id = cuenta.Id,
+				BancoEmisor = cuenta.BancoEmisor,
+				CreditoDisponible = cuenta.CreditoDisponible,
+				FechaCreacion = cuenta.FechaCreacion,
+				Moneda = cuenta.Moneda,
+				NumeroTarjeta = cuenta.NumeroTarjeta,
+				FechaCierre = inputFechaCierre
+			};
+		ErrorMsgFecha = controlador.ModificarCredito(Persistencia.Id, credito);
+		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 	}
 
-	private void ModificarCuentaAhorro(Cuenta cuenta)
+	private void ModificarCuentaAhorro(AhorroDTO cuenta)
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		if (cuenta is Ahorro)
-		{
-			try
+		AhorroDTO ahorro = new AhorroDTO()
 			{
-				Ahorro modificacion = new Ahorro() { Nombre = inputAhorro };
-				espacio.ModificarCuenta(modificacion);
-				LimpiarImputs();
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsg = ex.Message;
-			}
-		}
+				Id = cuenta.Id,
+				Nombre = inputAhorro,
+				Monto = cuenta.Monto,
+				FechaCreacion = cuenta.FechaCreacion,
+				Moneda = cuenta.Moneda
+			};
+		ErrorMsg = controlador.ModificarAhorro(Persistencia.Id, ahorro);
+		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
 	}
 
 	private void EliminarCuentaAhorro(AhorroDTO cuenta)

@@ -191,10 +191,6 @@ namespace Domain
 
 		public void ModificarCuenta(Cuenta modificacion)
 		{
-			if (Cuentas.Contains(modificacion))
-			{
-				throw new DomainEspacioException("No se puede Modificar, hay cuentas ya registradas con ese nombre");
-			}
 			Cuenta modificada = Cuentas.Find(c => c.Id == modificacion.Id);
 			modificada.Modificar(modificacion);
 		}

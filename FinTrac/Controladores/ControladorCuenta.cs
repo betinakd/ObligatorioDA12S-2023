@@ -100,16 +100,16 @@ namespace Controlador
 
 		public string ModificarAhorro(int espacioId, AhorroDTO ahorroModificado)
 		{
-			Cuenta cuenta = new Ahorro
-			{
-				Id = ahorroModificado.Id,
-				Nombre = ahorroModificado.Nombre,
-				Monto = ahorroModificado.Monto,
-				FechaCreacion = ahorroModificado.FechaCreacion,
-			};
 			string mensaje = "";
 			try
 			{
+				Ahorro cuenta = new Ahorro
+				{
+					Id = ahorroModificado.Id,
+					Nombre = ahorroModificado.Nombre,
+					Monto = ahorroModificado.Monto,
+					FechaCreacion = ahorroModificado.FechaCreacion,
+				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
 			}
 			catch (DomainEspacioException e)
@@ -121,18 +121,18 @@ namespace Controlador
 
 		public string ModificarCredito(int espacioId, CreditoDTO ahorroModificado)
 		{
-			Cuenta cuenta = new Credito
-			{
-				Id = ahorroModificado.Id,
-				NumeroTarjeta = ahorroModificado.NumeroTarjeta,
-				BancoEmisor = ahorroModificado.BancoEmisor,
-				FechaCreacion = ahorroModificado.FechaCreacion,
-				FechaCierre = ahorroModificado.FechaCierre,
-				CreditoDisponible = ahorroModificado.CreditoDisponible,
-			};
 			string mensaje = "";
 			try
 			{
+				Cuenta cuenta = new Credito
+				{
+					Id = ahorroModificado.Id,
+					NumeroTarjeta = ahorroModificado.NumeroTarjeta,
+					BancoEmisor = ahorroModificado.BancoEmisor,
+					FechaCreacion = ahorroModificado.FechaCreacion,
+					FechaCierre = ahorroModificado.FechaCierre,
+					CreditoDisponible = ahorroModificado.CreditoDisponible,
+				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
 			}
 			catch (DomainEspacioException e)
