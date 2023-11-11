@@ -2,6 +2,7 @@
 using Domain;
 using Excepcion;
 using BussinesLogic;
+using DTO.EnumsDTO;
 
 namespace Controlador
 {
@@ -133,6 +134,39 @@ namespace Controlador
 			try
 			{
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			return mensaje;
+		}
+
+		private TipoCambiario ConversorMonedaDTO(TipoCambiarioDTO moneda) { 
+			TipoCambiario conversion = TipoCambiario.PesosUruguayos;
+			if (moneda == TipoCambiarioDTO.Dolar)
+			{
+				conversion = TipoCambiario.Dolar;
+			}
+			else if (moneda == TipoCambiarioDTO.Euro)
+			{
+				conversion = TipoCambiario.Euro;
+			}
+			return conversion;
+		}
+
+		public string CrearAhorro(int espacioId, AhorroDTO ahorro) {
+			string mensaje = "";
+			try
+			{
+				Cuenta ahorroDTO = new Ahorro
+				{
+					Nombre = ahorro.Nombre,
+					Monto = ahorro.Monto,
+					FechaCreacion = ahorro.FechaCreacion,
+					Moneda = ConversorMonedaDTO(ahorro.Moneda),
+				};
+				_espacioLogic.CrearCuenta(espacioId, ahorroDTO);
 			}
 			catch (DomainEspacioException e)
 			{
