@@ -9,10 +9,13 @@ namespace Controlador
 	{
 		private UsuarioLogic _usuarioLogic;
 		private EspacioLogic _espacioLogic;
-		public ControladorCuenta(UsuarioLogic usuarioLogic,EspacioLogic espacioLogic)
+		public ControladorCuenta(UsuarioLogic usuarioLogic, EspacioLogic espacioLogic)
 		{
 			_usuarioLogic = usuarioLogic;
 			_espacioLogic = espacioLogic;
 		}
+
 	}
+
+
 }
