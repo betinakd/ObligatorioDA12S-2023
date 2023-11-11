@@ -77,6 +77,23 @@ namespace Controlador
 			return msjError;
 		}
 
+		public string EliminarCategoria(int Id, CategoriaDTO categoriaDTO)
+		{
+			string errorMsj = "";
+			Espacio espacio = _categoriaLogic.FindEspacio(Id);
+			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
+			try
+			{
+				espacio.BorrarCategoria(categoria);
+				_categoriaLogic.UpdateEspacio(espacio);
+			}
+			catch (DomainEspacioException e)
+			{
+				errorMsj = e.Message;
+			}
+			return errorMsj;
+		}
+
 		private TipoCategoriaDTO Cambiar_TipoCategoriaDTO(TipoCategoria tipoCategoria)
 		{
 			if (tipoCategoria.Equals(TipoCategoria.Costo))
