@@ -337,5 +337,70 @@ namespace BussinesLogicTest
 			espacioLogic.EliminarCuentaDeEspacio(espacio.Id, ahorro);
 			Assert.IsFalse(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
 		}
+
+		[TestMethod]
+		public void EspacioLogic_Modifica_Cuenta_De_Un_Espacio()
+		{
+			Usuario admin = new Usuario
+			{
+				IdEspacioPrincipal = 1,
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "address2",
+				Correo = "test@gmail.com",
+				Contrasena = "123456789Csss"
+			};
+			Espacio espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Test",
+				Admin = admin
+			};
+			Cuenta ahorro = new Ahorro()
+			{
+				Id = 1,
+				Nombre = "AhorroTest",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+			};
+			Cuenta ahorroModificada = new Ahorro()
+			{
+				Id = 1,
+				Nombre = "Modificada",
+				Monto = 100000,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Dolar,
+			};
+			Cuenta credito = new Credito()
+			{
+				Id = 2,
+				BancoEmisor = "CreditoTest",
+				CreditoDisponible = 100,
+				FechaCreacion = DateTime.Now,
+				NumeroTarjeta = "1534",
+				FechaCierre = new DateTime(2026, 1, 1),
+				Moneda = TipoCambiario.PesosUruguayos,
+			};
+			Cuenta creditoModificada = new Credito()
+			{
+				Id = 2,
+				BancoEmisor = "ModificoTest",
+				CreditoDisponible = 16600,
+				FechaCreacion = DateTime.Now,
+				NumeroTarjeta = "1234",
+				FechaCierre = new DateTime(2025, 1, 1),
+				Moneda = TipoCambiario.PesosUruguayos,
+			};
+
+			espacio.AgregarCuenta(ahorro);
+			espacio.AgregarCuenta(credito);
+
+			espacioLogic.AddEspacio(espacio);
+			espacioLogic.ModificarCuentaDeEspacio(espacio.Id, ahorroModificada);
+			espacioLogic.ModificarCuentaDeEspacio(espacio.Id, creditoModificada);
+			Assert.IsTrue(ahorro.Equals(ahorroModificada));
+			Assert.IsTrue(credito.Equals(creditoModificada));
+		}
 	}
 }
