@@ -70,6 +70,10 @@ namespace Controlador
 				categoria.Nombre = nuevoNombre;
 				_categoriaLogic.UpdateEspacio(espacio);
 			}
+			else
+			{
+				msjError = "Ya hay categorias con ese nombre.";
+			}
 			return msjError;
 		}
 
