@@ -107,9 +107,14 @@ namespace Controlador
 				FechaCreacion = ahorroModificado.FechaCreacion,
 			};
 			string mensaje = "";
-
+			try
+			{
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
-
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
 			return mensaje;
 		}
 	}
