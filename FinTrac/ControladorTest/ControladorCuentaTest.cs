@@ -36,7 +36,8 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorCuenta_Inicializa_Correctamente()
 		{
-			
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			Assert.IsNotNull(controladorTest);
 		}
 	}
 }
