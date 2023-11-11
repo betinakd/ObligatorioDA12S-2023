@@ -27,6 +27,5 @@ namespace Controlador
 			}
 			return categoriasDTO;
 		}
-
 	}
 }

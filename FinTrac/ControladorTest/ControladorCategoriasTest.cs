@@ -74,5 +74,39 @@ namespace ControladorTest
 			List<CategoriaDTO> categorias = controladorTest.CategoriasDeEspacio(1);
 			Assert.AreEqual(0, categorias.Count);
 		}
+
+		[TestMethod]
+		public void ControladorCategorias_CategoriasDeEspacio_TieneCategoria()
+		{
+			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Id = 1,
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			Categoria categoria = new Categoria()
+			{
+				Id = 1,
+				Nombre = "Categoria1",
+				Tipo = TipoCategoria.Ingreso,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			espacio.AgregarCategoria(categoria);
+			Categoria categoria2 = new Categoria()
+			{
+				Id = 2,
+				Nombre = "Categoria2",
+				Tipo = TipoCategoria.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			espacio.AgregarCategoria(categoria2);
+			_espacioLogic.AddEspacio(espacio);
+			List<CategoriaDTO> categorias = controladorTest.CategoriasDeEspacio(1);
+			Assert.AreEqual(2, categorias.Count);
+			Assert.AreEqual(1, categorias[0].Id);
+		}
 	}
 }
