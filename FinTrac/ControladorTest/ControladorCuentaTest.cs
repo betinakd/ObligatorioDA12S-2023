@@ -328,5 +328,72 @@ namespace ControladorTest
 			Assert.IsFalse(espacio.Cuentas.Contains(credito1));
 			Assert.AreEqual("", mensaje);
 		}
+
+		[TestMethod]
+		public void ControladorCuenta_EliminarCredito_Retorna_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+			};
+			espacio.Cuentas.Add(ahorro);
+			Ahorro ahorro2 = new Ahorro
+			{
+				Nombre = "AhorroTest2",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+			};
+			CreditoDTO creditoDTO = new CreditoDTO
+			{
+				NumeroTarjeta = "1234",
+				BancoEmisor = "CreditoTest",
+				CreditoDisponible = 100,
+				FechaCierre = new DateTime(2025, 4, 20),
+				FechaCreacion = new DateTime(2010, 4, 20),
+			};
+
+			espacio.Cuentas.Add(ahorro2);
+			Credito credito1 = new Credito()
+			{
+				NumeroTarjeta = "1234",
+				BancoEmisor = "CreditoTest",
+				CreditoDisponible = 100,
+				FechaCierre = new DateTime(2025, 4, 20),
+				FechaCreacion = new DateTime(2010, 4, 20),
+			};
+			espacio.Cuentas.Add(credito1);
+			Transaccion transaccion = new Transaccion()
+			{
+				CuentaMonetaria = credito1,
+				Id = 1,
+				Monto = 100,
+				Titulo = "Test",
+			};
+			espacio.Transacciones.Add(transaccion);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.EliminarCredito(espacio.Id, creditoDTO);
+			Assert.AreEqual(3, espacio.Cuentas.Count);
+			Assert.IsTrue(espacio.Cuentas.Contains(credito1));
+			Assert.AreEqual("No se puede borrar una categoría que tiene transacciones asociadas", mensaje);
+		}
 	}
 }
