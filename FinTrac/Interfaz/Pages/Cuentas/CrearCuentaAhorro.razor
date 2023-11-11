@@ -41,44 +41,29 @@
 	private string ErrorMsg { get; set; }
 	private string Nombre { get; set; } = "";
 	private double Monto { get; set; } = 0;
-	private Domain.TipoCambiario tipoMonedaSeleccionado;
-	private List<Domain.TipoCambiario> monedas;
+	private TipoCambiarioDTO tipoMonedaSeleccionado;
+	private List<TipoCambiarioDTO> monedas;
+	private ControladorCuenta controlador;
 
 	protected override void OnInitialized()
 	{
-		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
+		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
+		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
 	}
 
 	private void SeleccionarMoneda(ChangeEventArgs e)
 	{
-		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
+		tipoMonedaSeleccionado = (TipoCambiarioDTO)Enum.Parse(typeof(TipoCambiarioDTO), e.Value.ToString());
 	}
 
 	private void CrearCuenta()
 	{
-		try
-		{
-			Ahorro nuevaCuentaAhorro = new Ahorro
-				{
-					Moneda = tipoMonedaSeleccionado,
-					Nombre = Nombre,
-					Monto = Monto
-				};
-			try
+		AhorroDTO ahorro = new AhorroDTO()
 			{
-				Espacio espacio = EspacioLogic.FindEspacio(Id);
-				espacio.AgregarCuenta(nuevaCuentaAhorro);
-				EspacioLogic.UpdateEspacio(espacio);
-				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Cuentas");
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsg = ex.Message;
-			}
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+				Nombre = Nombre,
+				Monto = Monto,
+				Moneda = tipoMonedaSeleccionado
+			};
+		ErrorMsg = controlador.CrearAhorro(Persistencia.Id, ahorro);
 	}
 }
