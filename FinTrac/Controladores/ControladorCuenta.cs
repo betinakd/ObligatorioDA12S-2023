@@ -15,6 +15,23 @@ namespace Controlador
 			_espacioLogic = espacioLogic;
 		}
 
+		public List<AhorroDTO> AhorrosDeEspacio(int espacioId)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			List<AhorroDTO> ahorros = new List<AhorroDTO>();
+
+			ahorros = espacio.Cuentas
+				.OfType<Ahorro>()
+				.Select(ahorro => new AhorroDTO
+				{
+					Id = ahorro.Id,
+					Nombre = ahorro.Nombre,
+					Monto = ahorro.Monto,
+					FechaCreacion = ahorro.FechaCreacion,
+				})
+				.ToList();
+			return ahorros;
+		}
 	}
 
 
