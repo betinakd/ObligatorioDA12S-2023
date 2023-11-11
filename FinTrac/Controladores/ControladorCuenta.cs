@@ -53,7 +53,7 @@ namespace Controlador
 			return creditos;
 		}
 
-		public string EliminarAhorro(int espacioId, AhorroDTO cuenta) 
+		public string EliminarAhorro(int espacioId, AhorroDTO cuenta)
 		{
 			Cuenta ahorro = new Ahorro
 			{
@@ -86,9 +86,14 @@ namespace Controlador
 				CreditoDisponible = cuenta.CreditoDisponible,
 			};
 			string mensaje = "";
-
+			try
+			{
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, credito);
-
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
 			return mensaje;
 		}
 	}
