@@ -14,5 +14,13 @@ namespace Controlador
 		{
 			_objetivoLogic = objetivoLogic;
 		}
+
+		public List<ObjetivoDTO> ObjetivosDeEspacio(int id)
+		{
+			Espacio espacio = _objetivoLogic.FindEspacio(id);
+			List<Objetivo> objetivos = espacio.Objetivos;
+			List<ObjetivoDTO> objetivosDTO = new List<ObjetivoDTO>();
+			return objetivosDTO;
+		}
 	}
 }
