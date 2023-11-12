@@ -60,5 +60,19 @@ namespace ControladorTest
 			ControladorObjetivos controladorTest = new ControladorObjetivos(_espacioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
+
+		[TestMethod]
+		public void ControladorObjetivos_ObjetivosDeEspacio()
+		{
+			ControladorObjetivos controladorTest = new ControladorObjetivos(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			List<ObjetivoDTO> categorias = controladorTest.ObjetivosDeEspacio(espacio.Id);
+			Assert.AreEqual(0, categorias.Count);
+		}
 	}
 }
