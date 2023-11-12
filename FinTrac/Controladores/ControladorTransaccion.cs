@@ -73,7 +73,8 @@ namespace Controlador
 		public string CrearTransaccionIngreso(int espacioId, TransaccionDTO transC)
 		{
 			string mensaje = "";
-
+			try
+			{
 				Cuenta cuenta = DarCuentaSegunSusDato(espacioId, transC.CuentaMonetaria);
 				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transC.CategoriaTransaccion);
 				Transaccion transaccion = new TransaccionIngreso()
@@ -83,10 +84,13 @@ namespace Controlador
 					CuentaMonetaria = cuenta,
 					Moneda = cuenta.Moneda,
 					CategoriaTransaccion = categoria,
-				};
-				transaccion.CuentaMonetaria.IngresoMonetario(transaccion.Monto);
-				_espacioLogic.CrearTransaccion(espacioId, transaccion);
-
+				};				
+				_espacioLogic.CrearTransaccion(espacioId, transaccion);				
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
 			return mensaje;
 		}
 
