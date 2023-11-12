@@ -1,4 +1,7 @@
 ﻿@page "/home/{Id:int}/{Correo}/ReporteF"
+@using MudBlazor 
+@inject NavigationManager navManager
+
 
 <PageTitle>FinTrac Reportes</PageTitle>
 <TituloRosado Titulo="New Reporte" Subtitulo=""></TituloRosado>
@@ -6,7 +9,7 @@
 	<div style="flex-grow: 1; padding-bottom:15px" class="flex flex-col space-y-2">
 		<label for="mesSelector" class="text-sm font-medium text-gray-500">Selecciona un mes:</label>
 		<select id="mesSelector" name="mes" @bind=mesElegido>
-			<option value="1" selected>Enero</option>
+			<option value="1">Enero</option>
 			<option value="2">Febrero</option>
 			<option value="3">Marzo</option>
 			<option value="4">Abril</option>
@@ -16,7 +19,7 @@
 			<option value="8">Agosto</option>
 			<option value="9">Septiembre</option>
 			<option value="10">Octubre</option>
-			<option value="11" >Noviembre</option>
+			<option value="11">Noviembre</option>
 			<option value="12">Diciembre</option>
 		</select>
 	</div>
@@ -31,6 +34,16 @@
 			</div>
 		} else
 		{
+			<div style="display: flex; width: 100%; position: relative; left: 20%">
+				<MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="500px"></MudChart>
+				<MudText Typo="Typo.h6">Grafico de ingresos y egresos por dia.</MudText>
+			</div>
+			<div>
+				@(ingresos[10])
+			</div>
+			<div>
+				@(egresos[10])
+			</div>
 			<table class="min-w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
 					<tr>
@@ -72,8 +85,17 @@
 	public string ErrorMsg { get; set; }
 	public Espacio espacio { get; set; }
 	public List<IngresoEgreso> reporteIngresosEgresos { get; set; }
+	public static string[] dias { get; set; }
+	public static double[] egresos { get; set; }
+	public static double[] ingresos { get; set; }
 	public Reporte reporte = new Reporte();
-	public bool clickDado = false;
+	public List<ChartSeries> Series = new List<ChartSeries>()
+	{
+		new ChartSeries() { Name = "Series 1", Data = egresos },
+		new ChartSeries() { Name = "Series 2", Data = ingresos },
+	};
+	public string[] XAxisLabels = dias;
+	public int Index = -1;
 	public string mesElegido
 	{
 		get;
@@ -90,15 +112,40 @@
 
 	public void generarReporte()
 	{
-		clickDado = !clickDado;
 		reporteIngresosEgresos = reporte.ReporteIngresosEgresos(mesEnInt);
+		generarDatos();
+	}
+
+	public void generarDatos()
+	{
+
+		dias = new string[reporteIngresosEgresos.Count];
+		for (int i = 1; i <= dias.Length; i++)
+		{
+			dias[i - 1] = i.ToString();
+		}
+		egresos = new double[reporteIngresosEgresos.Count];
+		int index = 0;
+		foreach (IngresoEgreso ie in reporteIngresosEgresos)
+		{
+			egresos[index] = ie.Egresos;
+			index++;
+		}
+		int index2 = 0;
+		ingresos = new double[reporteIngresosEgresos.Count];
+		foreach (IngresoEgreso ie in reporteIngresosEgresos)
+		{
+			ingresos[index2] = ie.Ingresos;
+			index2++;
+		}
 	}
 
 	protected override void OnInitialized()
 	{
-		mesElegido = "1";
+		mesElegido = "11";
 		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 		reporte.MiEspacio = espacio;
-		reporteIngresosEgresos = null;
+		reporteIngresosEgresos = reporte.ReporteIngresosEgresos(mesEnInt);
+		generarDatos();
 	}
 }

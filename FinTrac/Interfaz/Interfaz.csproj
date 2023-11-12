@@ -31,4 +31,8 @@
     <_ContentIncludedByDefault Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="6.11.0" />
+  </ItemGroup>
+
 </Project>
