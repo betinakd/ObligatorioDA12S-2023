@@ -158,8 +158,8 @@ namespace DTOTest
 			};
 			TransaccionDTO transaccion = new TransaccionDTO()
 			{
-				CategoriaTransaccion = categoria,
-				CuentaMonetaria = ahorro,
+				CategoriaTransaccion = "Costo",
+				CuentaMonetaria = "Pesos Santander",
 				FechaTransaccion = DateTime.Now,
 				Id = 1,
 				Monto = 1000,
