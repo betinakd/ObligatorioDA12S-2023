@@ -39,7 +39,8 @@ namespace Controlador
 		{
 			string msjError = "";
 			Espacio espacio = _objetivoLogic.FindEspacio(id);
-			
+			try
+			{
 				Objetivo nuevoObjetivo = new Objetivo()
 				{
 					Titulo = objetivoDTO.Titulo,
@@ -49,8 +50,11 @@ namespace Controlador
 				};
 				espacio.AgregarObjetivo(nuevoObjetivo);
 				_objetivoLogic.UpdateEspacio(espacio);
-			
-			
+			}
+			catch (DomainEspacioException e)
+			{
+				msjError = e.Message;
+			}
 			return msjError;
 		}
 
