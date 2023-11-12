@@ -8,5 +8,11 @@ namespace Controlador
 {
 	public class ControladorObjetivos
 	{
+		private EspacioLogic _objetivoLogic;
+
+		public ControladorObjetivos(EspacioLogic objetivoLogic)
+		{
+			_objetivoLogic = objetivoLogic;
+		}
 	}
 }
