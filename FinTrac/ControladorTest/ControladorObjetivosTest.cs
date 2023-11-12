@@ -156,5 +156,20 @@ namespace ControladorTest
 			string msjError = controladorTest.CrearObjetivo(1, objetivoDTO);
 			Assert.AreEqual("", msjError);
 		}
+
+		[TestMethod]
+		public void ControladorObjetivos_CrearObjetivo_Error()
+		{
+			ControladorObjetivos controladorTest = new ControladorObjetivos(_espacioLogic);
+			ObjetivoDTO objetivoDTO = new ObjetivoDTO()
+			{
+				Titulo = "",
+				MontoMaximo = 1000,
+				Categorias = new List<CategoriaDTO>(),
+				Token = "Token"
+			};
+			string msjError = controladorTest.CrearObjetivo(1, objetivoDTO);
+			Assert.AreEqual("El titulo es requerido", msjError);
+		}
 	}
 }
