@@ -72,5 +72,10 @@ namespace Domain
 		{
 			throw new DomainEspacioException("No implementado");
 		}
+
+		public virtual string Tipo()
+		{
+			throw new DomainEspacioException("No implementado");
+		}
 	}
 }
