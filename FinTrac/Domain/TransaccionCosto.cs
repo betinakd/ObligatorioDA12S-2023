@@ -28,6 +28,11 @@ namespace Domain
 			return clon;
 		}
 
+		public override void EjecutarTransaccion()
+		{
+			CuentaMonetaria.EgresoMonetario(Monto);	
+		}
+
 		public override string Tipo()
 		{
 			return "Costo";
