@@ -160,5 +160,77 @@ namespace ControladorTest
 
 			Assert.AreEqual(3, transacciones.Count);
 		}
+
+		[TestMethod]
+		public void ControladorTransacciones_Tiene_DatosCuenta()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Euro,
+				Id = 1,
+			};
+			espacio.Cuentas.Add(ahorro);
+			Ahorro ahorro2 = new Ahorro
+			{
+				Nombre = "AhorroTest2",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Dolar,
+				Id = 2,
+			};
+			Ahorro ahorro3 = new Ahorro
+			{
+				Nombre = "AhorroTest3",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Id = 3,
+			};
+			espacio.Cuentas.Add(ahorro3);
+			Transaccion transaccion = new TransaccionCosto()
+			{
+				CuentaMonetaria = ahorro2,
+				Id = 1,
+				Monto = 100,
+				FechaTransaccion = DateTime.Now,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Test",
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Test",
+					Id = 1,
+					EstadoActivo = true,
+					FechaCreacion = DateTime.Now,
+					Tipo = TipoCategoria.Costo,
+				},
+			};
+			espacio.Cuentas.Add(ahorro2);
+			espacio.Transacciones.Add(transaccion);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+
+			List<string> transacciones = controladorTransaccion.DatosCuentasEspacio(1);
+
+			Assert.AreEqual(3, transacciones.Count);
+		}
 	}
 }
