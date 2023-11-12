@@ -40,6 +40,19 @@ namespace Controlador
 			return conversionDatos;
 		}
 
+		public List<string> DatosCuentasEspacio(int idEspacio) 
+		{ 
+			List<string> datosCuentas = new List<string>();
+			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			List<Cuenta> cuentas = espacio.Cuentas;
+			foreach (var c in cuentas)
+			{
+				string cuenta = c.ToString();
+				datosCuentas.Add(cuenta);
+			}
+			return datosCuentas;
+		}
+
 		private TipoCambiarioDTO ConversorMoneda(TipoCambiario moneda)
 		{
 			TipoCambiarioDTO conversion;
