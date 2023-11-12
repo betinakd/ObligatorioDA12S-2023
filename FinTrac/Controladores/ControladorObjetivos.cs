@@ -58,6 +58,32 @@ namespace Controlador
 			return msjError;
 		}
 
+		public string ModificarObjetivo(int id, ObjetivoDTO objetivoDTO)
+		{
+			string msjError = "";
+			Espacio espacio = _objetivoLogic.FindEspacio(id);
+			Objetivo objetivo = Cambiar_A_Objetivo(id, objetivoDTO.Id);
+			objetivo.Titulo = objetivoDTO.Titulo;
+			objetivo.MontoMaximo = objetivoDTO.MontoMaximo;
+			objetivo.Categorias = Cambiar_Categorias(id, objetivoDTO.Categorias);
+			objetivo.Token = objetivoDTO.Token;
+			_objetivoLogic.UpdateEspacio(espacio);
+			return msjError;
+		}
+
+		private Objetivo Cambiar_A_Objetivo(int id, int idObjetivoDTO)
+		{
+			Objetivo objetivoResultado = null;
+			foreach (Objetivo objetivo in _objetivoLogic.FindEspacio(id).Objetivos)
+			{
+				if (objetivo.Id == idObjetivoDTO)
+				{
+					objetivoResultado = objetivo;
+				}
+			}
+			return objetivoResultado;
+		}
+
 		private List<Categoria> Cambiar_Categorias(int id, List<CategoriaDTO> categoriasDTO)
 		{
 			Espacio espacio = _objetivoLogic.FindEspacio(id);
