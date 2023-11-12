@@ -194,7 +194,7 @@ namespace DomainTest
 				{
 					Nombre = "CuentaPrueba",
 					Moneda = TipoCambiario.Dolar,
-					Monto = 100,
+					Saldo = 100,
 				},
 			};
 			categoriaTest.Transacciones = new List<Transaccion> { transaccionTest };

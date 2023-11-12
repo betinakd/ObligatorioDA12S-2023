@@ -17,13 +17,13 @@ namespace DomainTest
 			{
 				Nombre = "Cuenta1",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
 			var cuenta2 = new Credito()
 			{
 				NumeroTarjeta = "1234",
 				BancoEmisor = "BROU",
-				CreditoDisponible = 100,
+				Saldo = 100,
 				Moneda = TipoCambiario.Dolar,
 				FechaCierre = DateTime.Now.AddDays(4),
 			};
@@ -86,7 +86,7 @@ namespace DomainTest
 			{
 				Nombre = "Cuenta1",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
 		}
 

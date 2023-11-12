@@ -249,7 +249,7 @@ namespace DomainTest
 				{
 					Nombre = "Cuenta1",
 					Moneda = TipoCambiario.Dolar,
-					Monto = 100,
+					Saldo = 100,
 				},
 			};
 			transaccion.Tipo();

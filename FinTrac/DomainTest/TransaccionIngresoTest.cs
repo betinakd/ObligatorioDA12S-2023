@@ -18,13 +18,13 @@ namespace DomainTest
 			{
 				Nombre = "Ahorro1",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
 			credito1 = new Credito()
 			{
 				NumeroTarjeta = "4444",
 				Moneda = TipoCambiario.Dolar,
-				CreditoDisponible = 100,
+				Saldo = 100,
 				FechaCierre = DateTime.Today.AddDays(4),
 				BancoEmisor = "Banco1",
 			};
@@ -87,7 +87,7 @@ namespace DomainTest
 			{
 				Nombre = "Cuenta1",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
 		}
 
@@ -109,7 +109,7 @@ namespace DomainTest
 				{
 					Nombre = "Cuenta1",
 					Moneda = TipoCambiario.Dolar,
-					Monto = 100,
+					Saldo = 100,
 				},
 			};
 			string tieneTipo = transIngreso.Tipo();
