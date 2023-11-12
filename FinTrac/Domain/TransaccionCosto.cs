@@ -27,5 +27,10 @@ namespace Domain
 			}
 			return clon;
 		}
+
+		public override string Tipo()
+		{
+			return "Costo";
+		}
 	}
 }
