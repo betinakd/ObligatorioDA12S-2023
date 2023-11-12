@@ -90,5 +90,30 @@ namespace DomainTest
 				Monto = 100,
 			};
 		}
+
+		[TestMethod]
+		public void TransaccionIngreso_Tiene_Tipo() {
+			TransaccionIngreso transIngreso = new TransaccionIngreso()
+			{
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				Titulo = "Transaccion1",
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Ingreso,
+					EstadoActivo = true,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Cuenta1",
+					Moneda = TipoCambiario.Dolar,
+					Monto = 100,
+				},
+			};
+			string tieneTipo = transIngreso.Tipo();
+			Assert.AreEqual("Ingreso", tieneTipo);
+		}
 	}
 }
