@@ -3,6 +3,7 @@ using Domain;
 using Repository;
 using DTO;
 using Controlador;
+using DTO.EnumsDTO;
 
 namespace ControladorTest
 {
@@ -75,7 +76,7 @@ namespace ControladorTest
 			Ahorro ahorro = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.Euro,
 				Id = 1,
@@ -84,7 +85,7 @@ namespace ControladorTest
 			Ahorro ahorro2 = new Ahorro
 			{
 				Nombre = "AhorroTest2",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.Dolar,
 				Id = 2,
@@ -92,7 +93,7 @@ namespace ControladorTest
 			Ahorro ahorro3 = new Ahorro
 			{
 				Nombre = "AhorroTest3",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.PesosUruguayos,
 				Id = 3,
@@ -183,7 +184,7 @@ namespace ControladorTest
 			Ahorro ahorro = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.Euro,
 				Id = 1,
@@ -192,7 +193,7 @@ namespace ControladorTest
 			Ahorro ahorro2 = new Ahorro
 			{
 				Nombre = "AhorroTest2",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.Dolar,
 				Id = 2,
@@ -200,7 +201,7 @@ namespace ControladorTest
 			Ahorro ahorro3 = new Ahorro
 			{
 				Nombre = "AhorroTest3",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.PesosUruguayos,
 				Id = 3,
@@ -231,6 +232,93 @@ namespace ControladorTest
 			List<string> transacciones = controladorTransaccion.DatosCuentasEspacio(1);
 
 			Assert.AreEqual(3, transacciones.Count);
+		}
+
+		[TestMethod]
+		public void ControladorTeansaccion_CreaTransaccion_De_Ingreso()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Euro,
+				Id = 1,
+			};
+
+			espacio.Cuentas.Add(ahorro);
+
+			Ahorro ahorro2 = new Ahorro
+			{
+				Nombre = "AhorroTest2",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.Dolar,
+				Id = 2,
+			};
+			Ahorro ahorro3 = new Ahorro
+			{
+				Nombre = "AhorroTest3",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Id = 3,
+			};
+
+			espacio.Cuentas.Add(ahorro3);
+
+			Categoria categoria = new Categoria()
+			{
+				Nombre = "Test",
+				Id = 1,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			espacio.Categorias.Add(categoria);
+
+			TransaccionDTO transaccion = new TransaccionDTO()
+			{
+				CuentaMonetaria = ahorro2.ToString(),
+				Id = 1,
+				Monto = 100,
+				FechaTransaccion = DateTime.Now,
+				Moneda = TipoCambiarioDTO.Dolar,
+				Titulo = "Test",
+				CategoriaTransaccion = categoria.Nombre,
+			};
+			espacio.Cuentas.Add(ahorro2);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTransaccion.CrearTransaccionIngreso(1, transaccion);
+
+			Espacio resultado = _espacioLogic.FindEspacio(1);
+			List<Transaccion> resultadoTransacciones = resultado.Transacciones;
+			Assert.AreEqual(1, resultadoTransacciones.Count);
+			Assert.AreEqual(100, resultadoTransacciones[0].Monto);
+			Assert.AreEqual(TipoCambiario.Dolar, resultadoTransacciones[0].Moneda);
+			Assert.AreEqual("Test", resultadoTransacciones[0].Titulo);
+			Assert.AreEqual(categoria.Nombre, resultadoTransacciones[0].CategoriaTransaccion.Nombre);
+			Assert.AreEqual(ahorro2, resultadoTransacciones[0].CuentaMonetaria);
+			Assert.AreEqual("Ingreso", resultadoTransacciones[0].ToString);
+			Assert.AreEqual("", mensaje);
 		}
 	}
 }
