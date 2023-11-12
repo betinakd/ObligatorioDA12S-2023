@@ -67,7 +67,10 @@ namespace Domain
 			}
 			return toRet;
 		}
-
+		public virtual void EjecutarTransaccion()
+		{
+			throw new DomainEspacioException("No implementado");
+		}
 		public virtual Transaccion ClonTransaccion()
 		{
 			throw new DomainEspacioException("No implementado");
