@@ -226,5 +226,33 @@ namespace DomainTest
 			Cambio cambio2 = transaccion.EncontrarCambio(espacio);
 			Assert.AreEqual(cambio2.Moneda.ToString(), "Dolar");
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_Tipo_No_Implmenetado()
+		{
+			Transaccion transaccion = new Transaccion()
+			{
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					EstadoActivo = true,
+					FechaCreacion = DateTime.Now,
+					Tipo = TipoCategoria.Costo,
+				},
+				Id = 1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "Transaccion1",
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Cuenta1",
+					Moneda = TipoCambiario.Dolar,
+					Monto = 100,
+				},
+			};
+			transaccion.Tipo();
+		}
 	}
 }
