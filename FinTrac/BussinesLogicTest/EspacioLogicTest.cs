@@ -500,7 +500,7 @@ namespace BussinesLogicTest
 
 			espacio.Categorias.Add(cat);
 
-			Transaccion transaccion = new Transaccion()
+			Transaccion transaccion = new TransaccionCosto()
 			{
 				Id = 1,
 				FechaTransaccion = DateTime.Now,

@@ -254,5 +254,33 @@ namespace DomainTest
 			};
 			transaccion.Tipo();
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_EjecutarTransaccion_No_Implmenetado()
+		{
+			Transaccion transaccion = new Transaccion()
+			{
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					EstadoActivo = true,
+					FechaCreacion = DateTime.Now,
+					Tipo = TipoCategoria.Costo,
+				},
+				Id = 1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "Transaccion1",
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Cuenta1",
+					Moneda = TipoCambiario.Dolar,
+					Saldo = 100,
+				},
+			};
+			transaccion.EjecutarTransaccion();
+		}
 	}
 }
