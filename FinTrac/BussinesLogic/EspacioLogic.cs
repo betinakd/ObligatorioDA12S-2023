@@ -124,6 +124,7 @@ namespace BussinesLogic
 		{
 			Espacio espacio = FindEspacio(idEspacio);
 			espacio.AgregarTransaccion(transaccion);
+			transaccion.EjecutarTransaccion();
 			UpdateEspacio(espacio);
 		}
 	}
