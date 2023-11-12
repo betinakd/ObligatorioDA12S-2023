@@ -3,6 +3,7 @@ using BussinesLogic;
 using Excepcion;
 using Domain;
 using DTO.EnumsDTO;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 namespace Controlador
 {
@@ -51,6 +52,42 @@ namespace Controlador
 				datosCuentas.Add(cuenta);
 			}
 			return datosCuentas;
+		}
+
+		private Cuenta DarCuentaSegunSusDato(int espacioId , string datoCuenta)
+		{ 
+			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			List<Cuenta> cuentas = espacio.Cuentas;
+			Cuenta cuenta = cuentas.Find(c => c.ToString().Equals(datoCuenta));
+			return cuenta;
+		}
+
+		private Categoria DarCategoriaSegunSusDato(int espacioId, string datoCategoria)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			List<Categoria> categorias = espacio.Categorias;
+			Categoria categoria = categorias.Find(c => c.Nombre.Equals(datoCategoria));
+			return categoria;
+		}
+
+		public string CrearTransaccionIngreso(int espacioId, TransaccionDTO transC)
+		{
+			string mensaje = "";
+
+				Cuenta cuenta = DarCuentaSegunSusDato(espacioId, transC.CuentaMonetaria);
+				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transC.CategoriaTransaccion);
+				Transaccion transaccion = new TransaccionIngreso()
+				{
+					Titulo = transC.Titulo,
+					Monto = transC.Monto,
+					CuentaMonetaria = cuenta,
+					Moneda = cuenta.Moneda,
+					CategoriaTransaccion = categoria,
+				};
+				transaccion.CuentaMonetaria.IngresoMonetario(transaccion.Monto);
+				_espacioLogic.CrearTransaccion(espacioId, transaccion);
+
+			return mensaje;
 		}
 
 		private TipoCambiarioDTO ConversorMoneda(TipoCambiario moneda)
