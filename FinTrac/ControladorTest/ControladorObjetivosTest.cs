@@ -109,5 +109,52 @@ namespace ControladorTest
 			Assert.AreEqual(1, objetivos.Count);
 			Assert.AreEqual(1, objetivos[0].Id);
 		}
+
+		[TestMethod]
+		public void ControladorObjetivos_CrearObjetivo()
+		{
+			ControladorObjetivos controladorTest = new ControladorObjetivos(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			CategoriaDTO categoria = new CategoriaDTO()
+			{
+				Id = 1,
+				Nombre = "Categoria1",
+				Tipo = TipoCategoriaDTO.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			ControladorCategorias controladorCategorias = new ControladorCategorias(_espacioLogic);
+			controladorCategorias.CrearCategoria(1, categoria);
+			CategoriaDTO categoriaDTO = new CategoriaDTO()
+			{
+				Id = 1,
+				Nombre = "Categoria1",
+				Tipo = TipoCategoriaDTO.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+
+			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>
+			{
+				categoriaDTO
+			};
+
+			ObjetivoDTO objetivoDTO = new ObjetivoDTO()
+			{
+				Id = 1,
+				Titulo = "Objetivo 1",
+				MontoMaximo = 1000,
+				Categorias = categoriasDTO,
+				Token = "Token"
+			};
+
+			string msjError = controladorTest.CrearObjetivo(1, objetivoDTO);
+			Assert.AreEqual("", msjError);
+		}
 	}
 }
