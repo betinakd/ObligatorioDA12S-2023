@@ -34,7 +34,7 @@ namespace Domain
 			get { return _correo; }
 			set
 			{
-				if (value is null)
+				if (string.IsNullOrEmpty(value))
 				{
 					throw new DomainUsuarioException("El correo electrónico es requerido");
 				}
