@@ -224,5 +224,42 @@ namespace ControladorTest
 			string nombre = controladorTest.NombreAdmin(espacio.Id);
 			Assert.AreEqual("Juan", nombre);
 		}
+
+		[TestMethod]
+		public void ControladorObjetivos_MontoAcumulado()
+		{
+			ControladorObjetivos controladorTest = new ControladorObjetivos(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			CategoriaDTO categoria = new CategoriaDTO()
+			{
+				Id = 1,
+				Nombre = "Categoria1",
+				Tipo = TipoCategoriaDTO.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			ControladorCategorias controladorCategorias = new ControladorCategorias(_espacioLogic);
+			controladorCategorias.CrearCategoria(1, categoria);
+			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>
+			{
+				categoria
+			};
+			ObjetivoDTO objetivoDTO = new ObjetivoDTO()
+			{
+				Id = 1,
+				Titulo = "Objetivo 1",
+				MontoMaximo = 1000,
+				Categorias = categoriasDTO,
+				Token = ""
+			};
+			controladorTest.CrearObjetivo(1, objetivoDTO);
+			List<ObjetivoGasto> objetivoGasto = controladorTest.ObjetivosDeGastos(1, 1);
+			Assert.AreEqual(0, objetivoGasto.Count);
+		}
 	}
 }
