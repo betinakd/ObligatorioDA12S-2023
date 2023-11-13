@@ -16,6 +16,7 @@ namespace ControladorTest
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
+		private Espacio _espacio;
 
 		[TestInitialize]
 		public void TestInitialize()
@@ -36,12 +37,12 @@ namespace ControladorTest
 			};
 			_usuarioLogic.AddUsuario(usuario1);
 
-			Espacio espacio = new Espacio()
+			_espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
 				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AddEspacio(_espacio);
 		}
 
 		[TestCleanup]
@@ -64,6 +65,23 @@ namespace ControladorTest
 			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
 			List<CambioDTO> cambios = controladorTest.CambiosDeEspacio(1);
 			Assert.AreEqual(0, cambios.Count);
+		}
+
+		[TestMethod]
+		public void ControladorCambios_CambiosDeEspacio_TieneCambio()
+		{
+			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				FechaDeCambio = new DateTime(2021, 10, 10),
+				Pesos = 100
+			};
+			_espacio.AgregarCambio(cambio);
+			_espacioLogic.UpdateEspacio(_espacio);
+			List<CambioDTO> cambios = controladorTest.CambiosDeEspacio(1);
+			Assert.AreEqual(1, cambios.Count);
+			Assert.AreEqual(1, cambios[0].Id);
 		}
 	}
 }
