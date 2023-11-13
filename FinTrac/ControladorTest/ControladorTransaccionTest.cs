@@ -536,5 +536,54 @@ namespace ControladorTest
 			Assert.AreEqual(true, categoriasDTO[0].EstadoActivo);
 			Assert.AreEqual(1, categoriasDTO[0].Id);
 		}
+
+		[TestMethod]
+		public void ControladorTransaccion_Da_Lista_De_TransaccionesDTOIngreso_Del_Espacio()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Categoria categoriaCosto = new Categoria()
+			{
+				Nombre = "Test",
+				Id = 1,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			Categoria categoriaIngreso = new Categoria()
+			{
+				Nombre = "Test2",
+				Id = 2,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Ingreso,
+			};
+			espacio.Categorias.Add(categoriaCosto);
+			espacio.Categorias.Add(categoriaIngreso);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+
+			List<CategoriaDTO> categoriasDTO = controladorTransaccion.DarCategoriasIngreso(1);
+
+			Assert.AreEqual(1, categoriasDTO.Count);
+			Assert.AreEqual("Test2", categoriasDTO[0].Nombre);
+			Assert.AreEqual(TipoCategoriaDTO.Ingreso, categoriasDTO[0].Tipo);
+			Assert.AreEqual(true, categoriasDTO[0].EstadoActivo);
+			Assert.AreEqual(2, categoriasDTO[0].Id);
+		}
 	}
 }
