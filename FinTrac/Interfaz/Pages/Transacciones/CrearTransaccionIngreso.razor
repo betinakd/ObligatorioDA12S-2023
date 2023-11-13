@@ -62,17 +62,9 @@
 	private List<Categoria> categorias = new List<Categoria>();
 	private string categoria;
 	private string cuenta;
-	private Domain.TipoCambiario tipoMonedaSeleccionado;
-	private List<Domain.TipoCambiario> monedas;
 	ControladorTransaccion controlador;
 	private List<string> cuentas;
 	private string cuentaSeleccionada;
-
-	private void SeleccionarCuenta(ChangeEventArgs e)
-	{
-		cuentaSeleccionada = e.ToString();
-	}
-
 
 	protected override void OnInitialized()
 	{
@@ -91,7 +83,7 @@
 
 	private void CrearTransaccion()
 	{
-
+		ErrorMsg = "";
 		TransaccionDTO transaccion = new TransaccionDTO()
 			{
 				Titulo = inputTitulo,
@@ -102,5 +94,10 @@
 			};
 
 		 ErrorMsg = controlador.CrearTransaccionIngreso(Persistencia.Id, transaccion);
+
+		 if (ErrorMsg.Equals(""))
+		 {
+			 NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
+		 }
 	}
 }

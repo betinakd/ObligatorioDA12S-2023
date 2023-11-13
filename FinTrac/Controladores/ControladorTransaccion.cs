@@ -136,5 +136,28 @@ namespace Controlador
 			return conversion;
 		}
 
+		public List<CategoriaDTO> DarCategoriasCosto(int espacioId)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			List<Categoria> categorias = espacio.Categorias;
+			List<CategoriaDTO> categoriasCosto = new List<CategoriaDTO>();
+			foreach (var c in categorias)
+			{
+				if (c.Tipo == TipoCategoria.Costo)
+				{
+					CategoriaDTO categoria = new CategoriaDTO()
+					{
+						Id = c.Id,
+						Nombre = c.Nombre,
+						Tipo = TipoCategoriaDTO.Costo,
+						EstadoActivo = c.EstadoActivo,
+						FechaCreacion = c.FechaCreacion,
+					};
+					categoriasCosto.Add(categoria);
+				}
+			}
+			return categoriasCosto;
+		}
+
 	}
 }
