@@ -62,8 +62,15 @@ namespace Controlador
 			string msjError = "";
 			Espacio espacio = _cambioLogic.FindEspacio(id);
 			Cambio cambio = Cambiar_A_Cambio(id, cambioDTO.Id);
-			cambio.Pesos = valor;
-			_cambioLogic.UpdateEspacio(espacio);
+			try
+			{
+				cambio.Pesos = valor;
+				_cambioLogic.UpdateEspacio(espacio);
+			}
+			catch (DomainEspacioException e)
+			{
+				msjError = e.Message;
+			}
 			return msjError;
 		}
 
