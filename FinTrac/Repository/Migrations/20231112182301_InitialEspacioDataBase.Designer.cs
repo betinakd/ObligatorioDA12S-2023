@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    [Migration("20231105175010_InitialEspacioDataBase")]
+    [Migration("20231112182301_InitialEspacioDataBase")]
     partial class InitialEspacioDataBase
     {
         /// <inheritdoc />
@@ -114,6 +114,9 @@ namespace Repository.Migrations
 
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
+
+                    b.Property<double>("Saldo")
+                        .HasColumnType("float");
 
                     b.Property<string>("Tipo_cuenta")
                         .IsRequired()
@@ -284,9 +287,6 @@ namespace Repository.Migrations
                 {
                     b.HasBaseType("Domain.Cuenta");
 
-                    b.Property<double>("Monto")
-                        .HasColumnType("float");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -301,9 +301,6 @@ namespace Repository.Migrations
                     b.Property<string>("BancoEmisor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("CreditoDisponible")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("FechaCierre")
                         .HasColumnType("datetime2");

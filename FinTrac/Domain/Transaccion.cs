@@ -51,8 +51,8 @@ namespace Domain
 			}
 		}
 		public TipoCambiario Moneda { get; set; }
-		public virtual Cuenta CuentaMonetaria { get; set; }
-		public virtual Categoria CategoriaTransaccion { get; set; }
+		public Cuenta CuentaMonetaria { get; set; }
+		public Categoria CategoriaTransaccion { get; set; }
 
 		public Cambio EncontrarCambio(Espacio espacioActual)
 		{
@@ -68,10 +68,6 @@ namespace Domain
 			return toRet;
 		}
 		public virtual void EjecutarTransaccion()
-		{
-			throw new DomainEspacioException("No implementado");
-		}
-		public virtual Transaccion ClonTransaccion()
 		{
 			throw new DomainEspacioException("No implementado");
 		}

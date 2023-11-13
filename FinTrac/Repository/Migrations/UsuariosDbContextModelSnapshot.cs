@@ -112,6 +112,9 @@ namespace Repository.Migrations
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
 
+                    b.Property<double>("Saldo")
+                        .HasColumnType("float");
+
                     b.Property<string>("Tipo_cuenta")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -281,9 +284,6 @@ namespace Repository.Migrations
                 {
                     b.HasBaseType("Domain.Cuenta");
 
-                    b.Property<double>("Monto")
-                        .HasColumnType("float");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -298,9 +298,6 @@ namespace Repository.Migrations
                     b.Property<string>("BancoEmisor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("CreditoDisponible")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("FechaCierre")
                         .HasColumnType("datetime2");

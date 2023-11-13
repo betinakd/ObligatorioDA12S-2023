@@ -242,7 +242,7 @@ namespace DomainTest
 			_miEspacio.AgregarCambio(miCambio);
 			Ahorro cuenta = new Ahorro
 			{
-				Monto = 200,
+				Saldo = 200,
 				Nombre = "cuenta",
 				Moneda = TipoCambiario.Dolar,
 			};
@@ -288,7 +288,7 @@ namespace DomainTest
 			_miEspacio.AgregarCambio(miCambio);
 			Ahorro cuenta = new Ahorro
 			{
-				Monto = 200,
+				Saldo = 200,
 				Nombre = "cuenta",
 				Moneda = TipoCambiario.Dolar,
 			};
@@ -335,7 +335,7 @@ namespace DomainTest
 			_miEspacio.AgregarCambio(miCambio);
 			Ahorro cuenta = new Ahorro
 			{
-				Monto = 1,
+				Saldo = 1,
 				Nombre = "cuenta",
 				Moneda = TipoCambiario.Dolar,
 			};
@@ -382,7 +382,7 @@ namespace DomainTest
 			_miEspacio.AgregarCambio(miCambio);
 			Ahorro cuenta = new Ahorro
 			{
-				Monto = 1,
+				Saldo = 1,
 				Nombre = "cuenta",
 				Moneda = TipoCambiario.Dolar,
 			};
@@ -753,13 +753,13 @@ namespace DomainTest
 			Ahorro ahorro = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				Monto = 1,
+				Saldo = 1,
 				Nombre = "CuentaAhorro",
 			};
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -801,7 +801,7 @@ namespace DomainTest
 			Credito credit2 = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1122",
@@ -809,7 +809,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -851,7 +851,7 @@ namespace DomainTest
 			Credito credit2 = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1122",
@@ -859,7 +859,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -900,7 +900,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -942,7 +942,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -984,7 +984,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -1026,7 +1026,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(+2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1111",
@@ -1405,7 +1405,7 @@ namespace DomainTest
 			Ahorro ahorro = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				Monto = 1,
+				Saldo = 1,
 				Nombre = "Cuenta Ahorro",
 			};
 			_miEspacio.AgregarCuenta(ahorro);
@@ -1572,10 +1572,10 @@ namespace DomainTest
 			Ahorro ahorro = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				Monto = 1,
+				Saldo = 1,
 				Nombre = "Cuenta Ahorro",
 			};
-			double montoInicial = ahorro.Monto;
+			double montoInicial = ahorro.Saldo;
 			_miEspacio.AgregarCuenta(ahorro);
 			Categoria _categoriaCosto = new Categoria
 			{
@@ -1628,7 +1628,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = new DateTime(DateTime.Now.Year, 12, 31),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1660,7 +1660,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = new DateTime(DateTime.Now.Year, 12, 31),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1703,7 +1703,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddMonths(-2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1744,7 +1744,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1795,7 +1795,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1835,7 +1835,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
