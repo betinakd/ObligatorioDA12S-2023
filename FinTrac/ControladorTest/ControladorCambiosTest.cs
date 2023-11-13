@@ -97,5 +97,27 @@ namespace ControladorTest
 			string msjError = controladorTest.CrearCambio(1, cambioDTO);
 			Assert.AreEqual("", msjError);
 		}
+
+		[TestMethod]
+		public void ControladorCambios_CrearCambio_Error()
+		{
+			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
+			CambioDTO cambioDTO = new CambioDTO()
+			{
+				Moneda = TipoCambiarioDTO.Dolar,
+				FechaDeCambio = new DateTime(2021, 10, 10),
+				Pesos = 100
+			};
+			controladorTest.CrearCambio(1, cambioDTO);
+			CambioDTO cambioDTO2 = new CambioDTO()
+			{
+				Moneda = TipoCambiarioDTO.Dolar,
+				FechaDeCambio = new DateTime(2021, 10, 10),
+				Pesos = 100
+			};
+			controladorTest.CrearCambio(1, cambioDTO2);
+			string msjError = controladorTest.CrearCambio(1, cambioDTO);
+			Assert.AreEqual("Ya existe un cambio para la fecha.", msjError);
+		}
 	}
 }
