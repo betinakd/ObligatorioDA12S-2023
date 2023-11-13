@@ -131,5 +131,14 @@ namespace Controlador
 			nombreAdmin = espacio.Admin.Nombre;
 			return nombreAdmin;
 		}
+
+		public List<ObjetivoGasto> ObjetivosDeGastos(int id, int objetivoDTO)
+		{
+			Espacio espacio = _objetivoLogic.FindEspacio(id);
+			Objetivo objetivo = Cambiar_A_Objetivo(id, objetivoDTO);
+			Reporte reporte = new Reporte() { MiEspacio = espacio };
+			List<ObjetivoGasto> objetivosDeGasto = reporte.ReporteObjetivosDeGastos();
+			return objetivosDeGasto;
+		}
 	}
 }
