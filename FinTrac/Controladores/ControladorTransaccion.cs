@@ -84,7 +84,7 @@ namespace Controlador
 					Monto = transC.Monto,
 					CuentaMonetaria = cuenta,
 					Moneda = cuenta.Moneda,
-					
+
 				};
 				_espacioLogic.CrearTransaccion(espacioId, transaccion);
 			}
@@ -186,7 +186,7 @@ namespace Controlador
 		public TransaccionDTO DarTransaccion(int espacioId, int transaccionId)
 		{
 			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
-			List <Transaccion> transacciones = espacio.Transacciones;
+			List<Transaccion> transacciones = espacio.Transacciones;
 			Transaccion transaccion = transacciones.Find(t => t.Id == transaccionId);
 			TransaccionDTO transaccionDTO = new TransaccionDTO()
 			{
@@ -197,9 +197,24 @@ namespace Controlador
 				Moneda = ConversorMoneda(transaccion.Moneda),
 				Monto = transaccion.Monto,
 				Titulo = transaccion.Titulo,
+				Tipo = transaccion.Tipo(),
 			};
 			return transaccionDTO;
 		}
 
+		public string ModificarTransaccion(int espacioId, TransaccionDTO transaccion)
+		{
+			string errorMsj = "";
+
+				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transaccion.CategoriaTransaccion);
+				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+				List<Transaccion> transacciones = espacio.Transacciones;
+				Transaccion tranModificar= transacciones.Find(t => t.Id == transaccion.Id);
+				tranModificar.CategoriaTransaccion = categoria;
+				tranModificar.ModificarMonto(transaccion.Monto);
+				_espacioLogic.UpdateEspacio(espacio);
+
+			return errorMsj;
+		}
 	}
 }
