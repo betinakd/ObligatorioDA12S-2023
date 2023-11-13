@@ -210,5 +210,19 @@ namespace ControladorTest
 			controladorTest.ModificarObjetivo(1, objetivoDTO);
 			Assert.AreEqual("Token", objetivoDTO.Token);
 		}
+
+		[TestMethod]
+		public void ControladorObjetivos_NombreAdmin()
+		{
+			ControladorObjetivos controladorTest = new ControladorObjetivos(_espacioLogic);
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio1",
+				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+			};
+			_espacioLogic.AddEspacio(espacio);
+			string nombre = controladorTest.NombreAdmin(espacio.Id);
+			Assert.AreEqual("Juan", nombre);
+		}
 	}
 }
