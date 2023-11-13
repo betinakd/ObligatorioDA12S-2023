@@ -85,33 +85,21 @@
 				tipo = DTO.EnumsDTO.TipoCategoriaDTO.Costo;
 				break;
 		}
-		try
-		{
-			var nuevaCategoria = new CategoriaDTO()
-				{
-					Nombre = nombreCategoria,
-					Tipo = tipo,
-					EstadoActivo = estadoActivo,
-					FechaCreacion = fechaCreacion
-				};
-			try
+
+		var nuevaCategoria = new CategoriaDTO()
 			{
-				ErrorMsg = controlador.CrearCategoria(Id, nuevaCategoria);
-				if (ErrorMsg == "")
-				{
-					categorias = controlador.CategoriasDeEspacio(Id);
-					string newHref = $"/home/{Id}/{Correo}/Categorias";
-					NavigationManager.NavigateTo(newHref);
-				}
-			}
-			catch (DomainEspacioException e)
-			{
-				ErrorMsg = e.Message;
-			}
-		}
-		catch (DomainEspacioException e)
+				Nombre = nombreCategoria,
+				Tipo = tipo,
+				EstadoActivo = estadoActivo,
+				FechaCreacion = fechaCreacion
+			};
+
+		ErrorMsg = controlador.CrearCategoria(Id, nuevaCategoria);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = e.Message;
+			categorias = controlador.CategoriasDeEspacio(Id);
+			string newHref = $"/home/{Id}/{Correo}/Categorias";
+			NavigationManager.NavigateTo(newHref);
 		}
 	}
 }

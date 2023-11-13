@@ -113,19 +113,12 @@
 
 	private void ModificarValor(CambioDTO cambio)
 	{
-		try
+		ErrorMsg = controlador.ModificarCambio(Id, cambioModificar, inputValor);
+		if (cambioModificar != null && ErrorMsg == "")
 		{
-			ErrorMsg = controlador.ModificarCambio(Id, cambioModificar, inputValor);
-			if (cambioModificar != null && ErrorMsg == "")
-			{
-				cambioModificar.Pesos = inputValor;
-				modificarValor = !modificarValor;
-				LimpiarInputs();
-			}
-		}
-		catch (Exception ex)
-		{
-			ErrorMsg = ex.Message;
+			cambioModificar.Pesos = inputValor;
+			modificarValor = !modificarValor;
+			LimpiarInputs();
 		}
 	}
 }
