@@ -100,7 +100,7 @@ namespace DomainTest
 				Saldo = 100,
 			};
 
-			Transaccion transIngreso = new TransaccionCosto()
+			Transaccion transCosto = new TransaccionCosto()
 			{
 				FechaTransaccion = DateTime.Today,
 				Moneda = TipoCambiario.Dolar,
@@ -115,8 +115,44 @@ namespace DomainTest
 				CuentaMonetaria = cuenta,
 			};
 
-			transIngreso.EjecutarTransaccion();
+			transCosto.EjecutarTransaccion();
 			Assert.AreEqual(0, cuenta.Saldo);
+		}
+
+		[TestMethod]
+		public void Transaccion_Costo_Modifica_Monto_Y_Cambiar_Valor_Cuenta_Correctamente()
+		{
+			Cuenta cuenta = new Ahorro()
+			{
+				Nombre = "Cuenta1",
+				Moneda = TipoCambiario.Dolar,
+				Saldo = 100,
+			};
+
+			Transaccion transCosto = new TransaccionCosto()
+			{
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				Titulo = "Transaccion1",
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Ingreso,
+					EstadoActivo = true,
+				},
+				CuentaMonetaria = cuenta,
+			};
+
+			transCosto.ModificarMonto(200);
+
+			Assert.AreEqual(200, transCosto.Monto);
+			Assert.AreEqual(0, cuenta.Saldo);
+
+			transCosto.ModificarMonto(1);
+
+			Assert.AreEqual(1, transCosto.Monto);
+			Assert.AreEqual(199, cuenta.Saldo);
 		}
 	}
 }
