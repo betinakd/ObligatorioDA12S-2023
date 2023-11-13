@@ -183,5 +183,23 @@ namespace Controlador
 			return categoriasIngreso;
 		}
 
+		public TransaccionDTO DarTransaccion(int espacioId, int transaccionId)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			List <Transaccion> transacciones = espacio.Transacciones;
+			Transaccion transaccion = transacciones.Find(t => t.Id == transaccionId);
+			TransaccionDTO transaccionDTO = new TransaccionDTO()
+			{
+				Id = transaccionId,
+				CategoriaTransaccion = transaccion.CategoriaTransaccion.Nombre,
+				CuentaMonetaria = transaccion.CuentaMonetaria.ToString(),
+				FechaTransaccion = transaccion.FechaTransaccion,
+				Moneda = ConversorMoneda(transaccion.Moneda),
+				Monto = transaccion.Monto,
+				Titulo = transaccion.Titulo,
+			};
+			return transaccionDTO;
+		}
+
 	}
 }
