@@ -19,7 +19,7 @@
 		<div>
 			<label class="text-gray-600">Cuenta Monetaria</label>
 			<select @bind="cuentaSeleccionada">
-
+				<option value="">Seleccione una Opcion</option>
 				@foreach (var cuenta in cuentas)
 				{
 					<option value=@cuenta>@cuenta</option>
@@ -27,11 +27,12 @@
 			</select>
 		</div>
 		<div>
-			<label class="text-gray-600">Categoría de la Transacción</label>
-			<select @bind="categoria" class=" border rounded-md px-2 py-1">
+			<label class="text-gray-600">Seleccioné categoría de ingreso activa:</label>
+			<select @onchange="SeleccionarCategoria" class=" border rounded-md px-2 py-1">
+				<option value="">Seleccione una Opcion</option>
 				@foreach (var categoria in categorias)
 				{
-						<option value="@categoria.Nombre">@categoria.Nombre</option>
+					<option value="@categoria.Nombre">@categoria.Nombre</option>
 				}
 			</select>
 		</div>
@@ -42,9 +43,6 @@
 		</button>
 	</div>
 </div>
-
-
-
 
 @code {
 	[Parameter] public int Id { get; set; }
@@ -65,26 +63,36 @@
 		controlador = new ControladorTransaccion(UsuarioLogic, EspacioLogic);
 		categorias = controlador.DarCategoriasIngreso(Persistencia.Id);
 		cuentas = controlador.DatosCuentasEspacio(Persistencia.Id);
-		cuentaSeleccionada = cuentas.FirstOrDefault();
-		categoria = categorias.FirstOrDefault();
+	}
+
+	private void SeleccionarCategoria(ChangeEventArgs e)
+	{
+		string selectedValue = e.Value.ToString();
+		inputCategoria = "";
+		categoria = categorias.FirstOrDefault(c => c.Nombre == selectedValue);
+		if (categoria != null)
+		{
+			inputCategoria = categoria.Nombre;
+		}
 	}
 
 	private void CrearTransaccion()
 	{
 		ErrorMsg = "";
+
 		TransaccionDTO transaccion = new TransaccionDTO()
 			{
 				Titulo = inputTitulo,
 				Monto = inputMonto,
 				CuentaMonetaria = cuentaSeleccionada,
-				CategoriaTransaccion = categoria.Nombre,
+				CategoriaTransaccion = inputCategoria,
 			};
 
-		 ErrorMsg = controlador.CrearTransaccionIngreso(Persistencia.Id, transaccion);
+		ErrorMsg = controlador.CrearTransaccionIngreso(Persistencia.Id, transaccion);
 
-		 if (ErrorMsg.Equals(""))
-		 {
-			 NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
-		 }
+		if (ErrorMsg.Equals(""))
+		{
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
+		}
 	}
 }

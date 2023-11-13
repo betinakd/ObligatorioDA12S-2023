@@ -76,6 +76,7 @@ namespace Domain
 			{
 				if (value is null)
 					throw new DomainEspacioException("La categoria no puede ser nula");
+				_categoriaTransaccion = value;
 			}
 		}
 

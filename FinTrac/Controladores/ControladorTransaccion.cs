@@ -79,11 +79,12 @@ namespace Controlador
 				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transC.CategoriaTransaccion);
 				Transaccion transaccion = new TransaccionIngreso()
 				{
+					CategoriaTransaccion = categoria,
 					Titulo = transC.Titulo,
 					Monto = transC.Monto,
 					CuentaMonetaria = cuenta,
 					Moneda = cuenta.Moneda,
-					CategoriaTransaccion = categoria,
+					
 				};
 				_espacioLogic.CrearTransaccion(espacioId, transaccion);
 			}
@@ -143,7 +144,7 @@ namespace Controlador
 			List<CategoriaDTO> categoriasCosto = new List<CategoriaDTO>();
 			foreach (var c in categorias)
 			{
-				if (c.Tipo == TipoCategoria.Costo)
+				if (c.Tipo == TipoCategoria.Costo && c.EstadoActivo)
 				{
 					CategoriaDTO categoria = new CategoriaDTO()
 					{
@@ -166,7 +167,7 @@ namespace Controlador
 			List<CategoriaDTO> categoriasIngreso = new List<CategoriaDTO>();
 			foreach (var c in categorias)
 			{
-				if (c.Tipo == TipoCategoria.Ingreso)
+				if (c.Tipo == TipoCategoria.Ingreso && c.EstadoActivo)
 				{
 					CategoriaDTO categoria = new CategoriaDTO()
 					{
