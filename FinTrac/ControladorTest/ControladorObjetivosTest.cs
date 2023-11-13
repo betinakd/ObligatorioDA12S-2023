@@ -4,6 +4,7 @@ using Repository;
 using Controlador;
 using DTO;
 using DTO.EnumsDTO;
+using EspacioReporte;
 
 namespace ControladorTest
 {
@@ -192,18 +193,9 @@ namespace ControladorTest
 			};
 			ControladorCategorias controladorCategorias = new ControladorCategorias(_espacioLogic);
 			controladorCategorias.CrearCategoria(1, categoria);
-			CategoriaDTO categoriaDTO = new CategoriaDTO()
-			{
-				Id = 1,
-				Nombre = "Categoria1",
-				Tipo = TipoCategoriaDTO.Costo,
-				EstadoActivo = true,
-				FechaCreacion = DateTime.Now
-			};
-
 			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>
 			{
-				categoriaDTO
+				categoria
 			};
 			ObjetivoDTO objetivoDTO = new ObjetivoDTO()
 			{

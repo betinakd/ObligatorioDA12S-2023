@@ -3,6 +3,8 @@ using DTO;
 using DTO.EnumsDTO;
 using Domain;
 using Excepcion;
+using EspacioReporte;
+using System;
 
 namespace Controlador
 {
