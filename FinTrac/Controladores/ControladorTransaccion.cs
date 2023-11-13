@@ -41,8 +41,8 @@ namespace Controlador
 			return conversionDatos;
 		}
 
-		public List<string> DatosCuentasEspacio(int idEspacio) 
-		{ 
+		public List<string> DatosCuentasEspacio(int idEspacio)
+		{
 			List<string> datosCuentas = new List<string>();
 			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
 			List<Cuenta> cuentas = espacio.Cuentas;
@@ -54,8 +54,8 @@ namespace Controlador
 			return datosCuentas;
 		}
 
-		private Cuenta DarCuentaSegunSusDato(int espacioId , string datoCuenta)
-		{ 
+		private Cuenta DarCuentaSegunSusDato(int espacioId, string datoCuenta)
+		{
 			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 			List<Cuenta> cuentas = espacio.Cuentas;
 			Cuenta cuenta = cuentas.Find(c => c.ToString().Equals(datoCuenta));
@@ -84,8 +84,32 @@ namespace Controlador
 					CuentaMonetaria = cuenta,
 					Moneda = cuenta.Moneda,
 					CategoriaTransaccion = categoria,
-				};				
-				_espacioLogic.CrearTransaccion(espacioId, transaccion);				
+				};
+				_espacioLogic.CrearTransaccion(espacioId, transaccion);
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			return mensaje;
+		}
+
+		public string CrearTransaccionCosto(int espacioId, TransaccionDTO transC)
+		{
+			string mensaje = "";
+			try
+			{
+				Cuenta cuenta = DarCuentaSegunSusDato(espacioId, transC.CuentaMonetaria);
+				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transC.CategoriaTransaccion);
+				Transaccion transaccion = new TransaccionCosto()
+				{
+					Titulo = transC.Titulo,
+					Monto = transC.Monto,
+					CuentaMonetaria = cuenta,
+					Moneda = cuenta.Moneda,
+					CategoriaTransaccion = categoria,
+				};
+				_espacioLogic.CrearTransaccion(espacioId, transaccion);
 			}
 			catch (DomainEspacioException e)
 			{
