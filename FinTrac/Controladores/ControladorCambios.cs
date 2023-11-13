@@ -34,6 +34,39 @@ namespace Controlador
 			return cambiosDTO;
 		}
 
+		public string CrearCambio(int id, CambioDTO cambioDTO)
+		{
+			string msjError = "";
+			Espacio espacio = _cambioLogic.FindEspacio(id);
+			TipoCambiario tipo = Cambiar_TipoCambiario(cambioDTO.Moneda);
+			Cambio nuevoCambio = new Cambio()
+			{
+				Moneda = tipo,
+				FechaDeCambio = cambioDTO.FechaDeCambio,
+				Pesos = cambioDTO.Pesos
+			};
+			espacio.AgregarCambio(nuevoCambio);
+			_cambioLogic.UpdateEspacio(espacio);
+			
+			return msjError;
+		}
+
+		private TipoCambiario Cambiar_TipoCambiario(TipoCambiarioDTO tipoDTO)
+		{
+			TipoCambiario tipoResulatado = TipoCambiario.Dolar;
+			if (tipoDTO != TipoCambiarioDTO.PesosUruguayos)
+			{
+				foreach (TipoCambiario tipo in Enum.GetValues(typeof(TipoCambiario)))
+				{
+					if (tipo.ToString() == tipoDTO.ToString())
+					{
+						tipoResulatado = tipo;
+					}
+				}
+			}
+			return tipoResulatado;
+		}
+
 		private TipoCambiarioDTO Cambiar_TipoCambiarioDTO(TipoCambiario tipo)
 		{
 			TipoCambiarioDTO tipoResulatado = TipoCambiarioDTO.Dolar;
