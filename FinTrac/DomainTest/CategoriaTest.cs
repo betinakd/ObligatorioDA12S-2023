@@ -51,7 +51,7 @@ namespace DomainTest
 		[TestMethod]
 		public void Categoria_Tiene_Estado_Activo()
 		{
-			categoria.EstadoActivo=true;
+			categoria.EstadoActivo = true;
 			Assert.IsTrue(categoria.EstadoActivo);
 		}
 
@@ -124,5 +124,82 @@ namespace DomainTest
 			};
 			Assert.IsTrue(categoria1.Equals(categoria2));
 		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Id()
+		{
+			Categoria categoriaTest = new Categoria();
+			categoriaTest.Id = 1;
+			Assert.AreEqual(1, categoriaTest.Id);
+		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Espacio()
+		{
+			Categoria categoriaTest = new Categoria();
+			Espacio espacio = new Espacio();
+			categoriaTest.Espacio = espacio;
+			Assert.AreEqual(espacio, categoriaTest.Espacio);
+		}
+
+		[TestMethod]
+		public void Categoria_Tiene_EspacioId()
+		{
+			Categoria categoriaTest = new Categoria();
+			categoriaTest.EspacioId = 1;
+			Assert.AreEqual(1, categoriaTest.EspacioId);
+		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Objetivos()
+		{
+			Categoria categoriaTest = new Categoria()
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				FechaCreacion = new DateTime(2015, 1, 1),
+			};
+			List<Categoria> categorias = new List<Categoria>();
+			categorias.Add(categoriaTest);
+			Objetivo objetivoTest = new Objetivo()
+			{
+				Titulo = "ObjetivoPrueba",
+				MontoMaximo = 500,
+				Categorias = categorias,
+			};
+			List<Objetivo> objetivos = new List<Objetivo>();
+			objetivos.Add(objetivoTest);
+			categoriaTest.Objetivos = objetivos;
+			Assert.AreEqual(1, categoriaTest.Objetivos.Count);
+		}
+
+		[TestMethod]
+		public void Categoria_Tiene_Transacciones()
+		{
+			Categoria categoriaTest = new Categoria()
+			{
+				Nombre = "CategoriaPrueba",
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				FechaCreacion = new DateTime(2015, 1, 1),
+			};
+			TransaccionCosto transaccionTest = new TransaccionCosto()
+			{
+				Titulo = "TransaccionPrueba",
+				Monto = 100,
+				Moneda = TipoCambiario.Dolar,
+				CategoriaTransaccion = categoriaTest,
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "CuentaPrueba",
+					Moneda = TipoCambiario.Dolar,
+					Monto = 100,
+				},
+			};
+			categoriaTest.Transacciones = new List<Transaccion> { transaccionTest };
+			Assert.AreEqual(1, categoriaTest.Transacciones.Count);
+		}
 	}
 }
+

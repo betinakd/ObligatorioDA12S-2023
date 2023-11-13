@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Cuentas"
 
-
 <div style="left: 3%; position: relative; width: 95%">
 	<PageTitle>FinTrac Cuentas</PageTitle>
 	<TituloRosado Titulo="Cuentas del espacio actual." Subtitulo="Cree elimine y modifique las cuentas del espacio."></TituloRosado>
@@ -42,7 +41,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (Ahorro cuentaAhorro in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Ahorro))
+			@foreach (AhorroDTO cuentaAhorro in ahorros)
 			{
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -63,7 +62,7 @@
 							Modificar
 						</button>
 						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
-						@onclick="() => EliminarCuenta(cuentaAhorro)">
+						@onclick="() => EliminarCuentaAhorro(cuentaAhorro)">
 							Eliminar
 						</button>
 					</td>
@@ -112,7 +111,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (Credito cuentaCredito in EspacioLogic.FindEspacio(Persistencia.Id).Cuentas.Where(c => c is Credito))
+			@foreach (CreditoDTO cuentaCredito in creditos)
 			{
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -139,7 +138,7 @@
 							Modificar
 						</button>
 						<button class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2"
-						@onclick="() => EliminarCuenta(cuentaCredito)">
+						@onclick="() => EliminarCuentaCredito(cuentaCredito)">
 							Eliminar
 						</button>
 					</td>
@@ -160,7 +159,7 @@
 								</div>
 								<p style="color:red">@ErrorMsgBancoTarjeta</p>
 								<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
-								@onclick="() => ModificarCuentaBancoTarjeta(cuentaClickeada)">
+								@onclick="() => ModificarCuentaBancoTarjeta(cuentaCredito)">
 									Guardar Cambios (Banco y Tarjeta)
 								</button>
 							</div>
@@ -172,7 +171,7 @@
 							</div>
 							<p style="color:red">@ErrorMsgFecha</p>
 							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 mt-2"
-							@onclick="() => ModificarCuentaFecha(cuentaClickeada)">
+							@onclick="() => ModificarCuentaFecha(cuentaCredito)">
 								Guardar Cambios (Fecha de Cierre)
 							</button>
 						</div>
@@ -184,7 +183,6 @@
 </div>
 <div style="height:500px"></div>
 
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -192,12 +190,22 @@
 	private string ErrorMsg { get; set; }
 	private string ErrorMsgFecha { get; set; }
 	private string ErrorMsgBancoTarjeta { get; set; }
-	private Cuenta cuentaClickeada { get; set; }
+	private CuentaDTO cuentaClickeada { get; set; }
 	private bool mostrarModificar { get; set; } = false;
-	private string inputAhorro { get; set; } = "e";
+	private string inputAhorro { get; set; } = "";
 	private string inputNumTarjeta { get; set; } = "";
 	private string inputNombreBanco { get; set; } = "";
 	private DateTime inputFechaCierre { get; set; } = DateTime.Today;
+	private ControladorCuenta controlador;
+	private List<AhorroDTO> ahorros;
+	private List<CreditoDTO> creditos;
+
+	protected override void OnInitialized()
+	{
+		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
+		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
+		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+	}
 
 	private void LimpiarImputs()
 	{
@@ -211,86 +219,87 @@
 		inputFechaCierre = DateTime.Today;
 	}
 
-	private void MostrarModificarCuenta(Cuenta cuenta)
+	private void MostrarModificarCuenta(CuentaDTO cuenta)
 	{
 		mostrarModificar = !mostrarModificar;
 		cuentaClickeada = cuenta;
 		LimpiarImputs();
 	}
-	private void ModificarCuentaBancoTarjeta(Cuenta cuenta)
-	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 
-		if (cuenta is Credito)
+	private void ModificarCuentaBancoTarjeta(CreditoDTO cuenta)
+	{
+		CreditoDTO credito = new CreditoDTO()
+			{
+				Id = cuenta.Id,
+				BancoEmisor = inputNombreBanco,
+				CreditoDisponible = cuenta.CreditoDisponible,
+				FechaCreacion = cuenta.FechaCreacion,
+				Moneda = cuenta.Moneda,
+				NumeroTarjeta = inputNumTarjeta,
+				FechaCierre = cuenta.FechaCierre
+			};
+		ErrorMsgBancoTarjeta = controlador.ModificarCredito(Persistencia.Id, credito);
+		if (ErrorMsgBancoTarjeta.Equals(""))
 		{
-			try
+			mostrarModificar = false;
+			creditos = controlador.CreditosDeEspacio(Persistencia.Id);
+		}
+
+	}
+
+	private void ModificarCuentaFecha(CreditoDTO cuenta)
+	{
+		CreditoDTO credito = new CreditoDTO()
 			{
-				var credito = cuenta as Credito;
-				Credito modificacion = new Credito()
-					{
-						NumeroTarjeta = inputNumTarjeta,
-						BancoEmisor = inputNombreBanco,
-						FechaCierre = credito.FechaCierre
-					};
-				espacio.ModificarCuenta(modificacion, cuenta);
-				LimpiarImputs();
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsgBancoTarjeta = ex.Message;
-			}
+				Id = cuenta.Id,
+				BancoEmisor = cuenta.BancoEmisor,
+				CreditoDisponible = cuenta.CreditoDisponible,
+				FechaCreacion = cuenta.FechaCreacion,
+				Moneda = cuenta.Moneda,
+				NumeroTarjeta = cuenta.NumeroTarjeta,
+				FechaCierre = inputFechaCierre
+			};
+		ErrorMsgFecha = controlador.ModificarCredito(Persistencia.Id, credito);	
+		if (ErrorMsgFecha.Equals(""))
+		{
+			mostrarModificar = false;
+			creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 		}
 	}
 
-
-	private void ModificarCuentaFecha(Cuenta cuenta)
+	private void ModificarCuentaAhorro(AhorroDTO cuenta)
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-
-		if (cuenta is Credito)
+		AhorroDTO ahorro = new AhorroDTO()
+			{
+				Id = cuenta.Id,
+				Nombre = inputAhorro,
+				Monto = cuenta.Monto,
+				FechaCreacion = cuenta.FechaCreacion,
+				Moneda = cuenta.Moneda
+			};
+		ErrorMsg = controlador.ModificarAhorro(Persistencia.Id, ahorro);
+		if(ErrorMsg.Equals(""))
 		{
-			try
-			{
-				var credito = cuenta as Credito;
-				credito.FechaCierre = inputFechaCierre;
-				LimpiarImputs();
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsgFecha = ex.Message;
-			}
-		}
+			mostrarModificar = false;
+			ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
+		};
 	}
-	private void ModificarCuentaAhorro(Cuenta cuenta)
+
+	private void EliminarCuentaAhorro(AhorroDTO cuenta)
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		if (cuenta is Ahorro)
+		ErrorMsgEliminar = controlador.EliminarAhorro(Persistencia.Id, cuenta);
+		if (ErrorMsgEliminar.Equals(""))
 		{
-			try
-			{
-				Ahorro modificacion = new Ahorro() { Nombre = inputAhorro };
-				espacio.ModificarCuenta(modificacion, cuenta);
-				LimpiarImputs();
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsg = ex.Message;
-			}
+			ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
 		}
 	}
 
-	private void EliminarCuenta(Cuenta cuenta)
+	private void EliminarCuentaCredito(CreditoDTO cuenta)
 	{
-		var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		try
+		ErrorMsgEliminar = controlador.EliminarCredito(Persistencia.Id, cuenta);
+		if (ErrorMsgEliminar.Equals(""))
 		{
-
-			espacio.BorrarCuenta(cuenta);
-			LimpiarImputs();
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsgEliminar = ex.Message;
+			creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 		}
 	}
 }

@@ -2,96 +2,90 @@ using Domain;
 using Repository;
 namespace RepositoryTest
 {
-    [TestClass]
-    public class UsuarioMemoryTest
-    {
-        [TestMethod]
-        public void Agregar_Usuario()
-        {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuu",
-            };
-            var usuario2 = new Usuario
-            {
-                Correo = "Juann2@xxxx.com",
-                Contrasena = "123456Yuuuuu",
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            var usuarioAgregado2 = repository.Add(usuario2);
-            Assert.IsNotNull(usuarioAgregado1);
-            Assert.AreEqual(usuario1, usuarioAgregado1);
-            Assert.IsNotNull(usuarioAgregado2);
-            Assert.AreEqual(usuario2, usuarioAgregado2);   
-        }
+	[TestClass]
+	public class UsuarioMemoryTest
+	{
+		private Usuario _usuario1;
+		private Usuario _usuario2;
+		private UsuarioMemoryRepository _repository;
+		private UsuariosDbContext _context;
+		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
-        [TestMethod]
-        public void Actualizar_Usuario()
-        {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuuuuuu",
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            usuario1.Contrasena = "1234567Yuuuuui";
-            var usuarioAgregado2 = repository.Update(usuario1);
-            Assert.IsNotNull(usuarioAgregado2);
-            Assert.AreEqual("1234567Yuuuuui", usuarioAgregado2.Contrasena);
-        }
+		[TestInitialize]
+		public void TestInitialize()
+		{
+			_context = _contextFactory.CreateDbContext();
+			_repository = new UsuarioMemoryRepository(_context);
 
-        [TestMethod]
-        public void Eliminar_Usuario()
-        {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuuuuuu",
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            repository.Delete(usuario1.Correo);
-            var usuarioAgregado2 = repository.Find(u => u.Correo == usuario1.Correo);
-            Assert.IsNull(usuarioAgregado2);
-        }
+			_usuario1 = new Usuario
+			{
+				Correo = "usuario1@yy.com",
+				Contrasena = "123456789A",
+				Nombre = "Usuario1",
+				Apellido = "1",
+				Direccion = "Dir",
+			};
+			_usuario2 = new Usuario
+			{
+				Correo = "usuario2@yy.com",
+				Contrasena = "123456789B",
+				Nombre = "Usuario2",
+				Apellido = "2",
+				Direccion = "Direccion",
+			};
+		}
 
-        [TestMethod]
-        public void Buscar_Usuario()
-        {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuuuuuuuuu",
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            var usuarioAgregado2 = repository.Find(u => u.Correo == usuario1.Correo);
-            Assert.IsNotNull(usuarioAgregado2);
-            Assert.AreEqual(usuario1, usuarioAgregado2);
-        }
+		[TestCleanup]
+		public void TestCleanup()
+		{
+			_context.Database.EnsureDeleted();
+		}
 
-        [TestMethod]
-        public void Buscar_Todos_Usuarios()
-        {
-            var usuario1 = new Usuario
-            {
-                Correo = "Juan@xxxx.com",
-                Contrasena = "123456Yuuuuuuuu",
-            };
-            var usuario2 = new Usuario
-            {
-                Correo = "Jose@xxxxx.com",
-                Contrasena = "1234567Yuuuuuu",
-            };
-            var repository = new UsuarioMemoryRepository();
-            var usuarioAgregado1 = repository.Add(usuario1);
-            var usuarioAgregado2 = repository.Add(usuario2);
-            var usuarios = repository.FindAll();
-            Assert.IsNotNull(usuarios);
-            Assert.AreEqual(2, usuarios.Count);
-        }
-    }
+		[TestMethod]
+		public void Agregar_Usuario()
+		{
+			_repository.Add(_usuario1);
+			var usuarioInDb = _context.Usuarios.First();
+			Assert.AreEqual(_usuario1, usuarioInDb);
+		}
+
+		[TestMethod]
+		public void Actualizar_Usuario()
+		{
+			_repository.Add(_usuario1);
+			_usuario1.Contrasena = "1234567Yuuuuui";
+			_repository.Update(_usuario1);
+			var usuarioInDb = _context.Usuarios.First();
+			Assert.AreEqual("1234567Yuuuuui", usuarioInDb.Contrasena);
+		}
+
+		[TestMethod]
+		public void Eliminar_Usuario()
+		{
+			_repository.Add(_usuario1);
+			_repository.Delete(_usuario1.Correo);
+			var usuarioInDb = _context.Usuarios.FirstOrDefault(u => u.Correo == _usuario1.Correo);
+			Assert.IsNull(usuarioInDb);
+		}
+
+		[TestMethod]
+		public void Buscar_Usuario()
+		{
+			_repository.Add(_usuario1);
+			var usuarioInDb = _repository.Find(u => u.Correo == _usuario1.Correo);
+			Assert.IsNotNull(usuarioInDb);
+			Assert.AreEqual(_usuario1, usuarioInDb);
+		}
+
+		[TestMethod]
+		public void Buscar_Todos_Usuarios()
+		{
+			_context.Usuarios.Add(_usuario1);
+			_context.Usuarios.Add(_usuario2);
+			_context.SaveChanges();
+			var usuarios = _repository.FindAll();
+			Assert.IsNotNull(usuarios);
+			Assert.AreEqual(2, usuarios.Count);
+		}
+	}
 }

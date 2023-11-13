@@ -1,43 +1,75 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
     public class EspacioMemoryRepository : IRepository<Espacio>
     {
-        private readonly List<Espacio> _espacios = new List<Espacio>();
-        public Espacio Add(Espacio oneElement)
+		private readonly UsuariosDbContext _context;
+
+		public EspacioMemoryRepository(UsuariosDbContext context)
+		{
+			_context = context;
+		}
+
+		public Espacio Add(Espacio oneElement)
         {
-            _espacios.Add(oneElement);
-            return oneElement;
+			_context.Espacios.Add(oneElement);
+			_context.SaveChanges();
+			return oneElement;
         }
 
         public Espacio? Find(Func<Espacio, bool> filter)
         {
-            return _espacios.FirstOrDefault(filter);
-        }
+			return _context.Espacios
+				.Include(e => e.Admin)
+				.Include(e => e.Cambios)
+				.Include(e => e.UsuariosInvitados)
+				.Include(e => e.Cuentas)
+				.Include(e => e.Categorias)
+				.Include(e => e.Objetivos)
+					.ThenInclude(o => o.Categorias)
+				.Include(e => e.Transacciones)
+					.ThenInclude(t => t.CuentaMonetaria)
+				.Include(e => e.Transacciones)
+					.ThenInclude(t => t.CategoriaTransaccion)
+				.FirstOrDefault(filter);
+		}
 
-        public IList<Espacio> FindAll()
-        {
-            return _espacios;
-        }
+		public IList<Espacio> FindAll()
+		 {
+			var espacios = _context.Espacios
+				.Include(e => e.Admin)
+				.Include(e => e.Cambios)
+				.Include(e => e.UsuariosInvitados)
+				.Include(e => e.Cuentas)
+				.Include(e => e.Categorias)
+				.Include(e => e.Cambios)
+				.Include(e => e.Objetivos)
+					.ThenInclude(o => o.Categorias)
+				.Include(e => e.Transacciones)
+					.ThenInclude(t => t.CuentaMonetaria)
+				.Include(e => e.Transacciones)
+					.ThenInclude(t => t.CategoriaTransaccion)
+				.ToList();
+			return espacios;
+		}
 
-        public Espacio? Update(Espacio updateEntity)
-        {
-            var espacio = Find(u => u.Admin == updateEntity.Admin);
-            if (espacio != null)
-            {               
-                espacio.Admin = updateEntity.Admin;
-            }
-            return espacio;
-        }
+		public Espacio? Update(Espacio updateEntity)
+		 {
+			_context.Entry(updateEntity).State = EntityState.Modified;
+			_context.SaveChanges();
+			return updateEntity;
+		}
 
-        public void Delete(string id)
+		public void Delete(string id)
         {
-            var espacio = Find(u => u.Admin.Correo == id);
-            if (espacio != null)
-            {
-                _espacios.Remove(espacio);
-            }
-        }
+			var espacio = _context.Espacios.FirstOrDefault(e => e.Admin.Correo == id);
+			if (espacio != null)
+			{
+				_context.Espacios.Remove(espacio);
+				_context.SaveChanges();
+			}
+		}
     }
 }

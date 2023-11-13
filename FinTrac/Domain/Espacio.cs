@@ -9,8 +9,8 @@ namespace Domain
 		{
 		}
 
-		private static int _contadorId = 1;
 		public int Id { get; set; }
+		public int AdminId { get; set; }
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Categoria> _categorias = new List<Categoria>();
@@ -82,6 +82,7 @@ namespace Domain
 				_usuariosInvitados = value;
 			}
 		}
+
 		public Usuario Admin
 		{
 			get
@@ -109,12 +110,14 @@ namespace Domain
 				throw new DomainEspacioException("La cuenta ya esta agregada");
 			_cuentas.Add(cuenta);
 		}
+
 		public void AgregarCategoria(Categoria categoria)
 		{
 			if (Categorias.Contains(categoria))
 				throw new DomainEspacioException("No se pueden agregar dos categorías con el mismo nombre.");
 			_categorias.Add(categoria);
 		}
+
 		public void AgregarTransaccion(Transaccion transaccion)
 		{
 			Cambio cambioHoy = new Cambio();
@@ -153,12 +156,13 @@ namespace Domain
 				Categorias.Remove(categoria);
 			}
 		}
+
 		public void BorrarCuenta(Cuenta cuenta)
 		{
 			if (Cuentas.Contains(cuenta))
 			{
 				if (TransaccionesContieneCuenta(cuenta))
-					throw new DomainEspacioException("No se puede borrar una categoría que tiene transacciones asociadas");
+					throw new DomainEspacioException("No se puede borrar una cuenta que tiene transacciones asociadas");
 				Cuentas.Remove(cuenta);
 			}
 		}
@@ -184,24 +188,16 @@ namespace Domain
 		{
 			return (Transacciones.Any(t => t.CategoriaTransaccion.Equals(categoria)));
 		}
-		public static void AumentarContadorId()
-		{
-			_contadorId++;
-		}
 
-		public void AsignarId()
-		{			
-            Id = _contadorId;
-            AumentarContadorId();
-        }
-
-		public void ModificarCuenta(Cuenta modificacion, Cuenta modificada)
+		public void ModificarCuenta(Cuenta modificacion)
 		{
-			if (Cuentas.Contains(modificacion))
+			if (Cuentas.Contains(modificacion)) 
 			{
 				throw new DomainEspacioException("No se puede Modificar, hay cuentas ya registradas con ese nombre");
 			}
+			Cuenta modificada = Cuentas.Find(c => c.Id == modificacion.Id);
 			modificada.Modificar(modificacion);
 		}
+
     }
 }

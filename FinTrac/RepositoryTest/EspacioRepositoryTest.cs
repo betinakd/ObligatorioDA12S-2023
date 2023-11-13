@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain;
+﻿using Domain;
 using Repository;
 
 namespace RepositoryTest
@@ -18,81 +13,60 @@ namespace RepositoryTest
         private List<Cuenta> _cuentas;
         private List<Usuario> _usuariosInvitados;
         private Usuario _admin;
-        private Espacio _espacio;
-        private EspacioMemoryRepository _repository;
+		private UsuariosDbContext _context;
+		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
-        [TestInitialize]
+		[TestInitialize]
         public void TestInitialize()
         {
-            _cambios = new List<Cambio>();
-            _objetivos = new List<Objetivo>();
-            _transacciones = new List<Transaccion>();
-            _categorias = new List<Categoria>();
-            _cuentas = new List<Cuenta>();
-            _usuariosInvitados = new List<Usuario>();
+			_context = _contextFactory.CreateDbContext();
+			
             _admin = new Usuario
             {
                 Correo = "usuarioadmin@yy.com",
                 Contrasena = "123456789A",
+                Nombre = "Usuario",
+                Apellido = "Admin",
+                Direccion = "Dir",
             };
-            Cambio cambio1 = new Cambio
-            {
-                FechaDeCambio = DateTime.Now,
-                Pesos = 100,
-                Moneda = TipoCambiario.Dolar,
-            };
-            _cambios.Add(cambio1);
+            
+            _context.Usuarios.Add(_admin);
+            _context.SaveChanges();
 
-            Transaccion transaccion1 = new Transaccion
-            {
-
-            };
-            _transacciones.Add(transaccion1);
-            Categoria categoria1 = new Categoria
-            {
-                Nombre = "Comida",
-            };
-            _categorias.Add(categoria1);
-            Cuenta cuenta1 = new Cuenta
-            {
-                Moneda = TipoCambiario.Dolar,
-            };
-            _cuentas.Add(cuenta1);
-            Usuario usuarioInvitado1 = new Usuario
-            {
-                Correo = "usuario2@yy.com",
-                Contrasena = "123456789B",
-            };
-            _usuariosInvitados.Add(usuarioInvitado1);
-			Objetivo objetivo1 = new Objetivo
-			{
-				Categorias = _categorias,
-				MontoMaximo = 1000,
-				Titulo = "Objetivo1",
-			};
-			_objetivos.Add(objetivo1);
 		}
-    
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+			_context.Database.EnsureDeleted();
+		}
+
         [TestMethod]
         public void Agregar_Espacio() 
         {
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
-            var repository = new EspacioMemoryRepository();
+			espacio1.Nombre = "Espacio1";
+			var repository = new EspacioMemoryRepository(_context);
             var espacioAgregado1 = repository.Add(espacio1);
+            var espacioInDb = _context.Espacios.First();
+            Assert.AreEqual(espacio1, espacioInDb);
             Assert.IsNotNull(espacioAgregado1);
             Assert.AreEqual(espacio1, espacioAgregado1);
         }
-
+        
         [TestMethod]
         public void Buscar_Espacio()
         {
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
-            var repository = new EspacioMemoryRepository();
+			espacio1.Nombre = "Espacio1";
+			var repository = new EspacioMemoryRepository(_context);
             var espacioAgregado1 = repository.Add(espacio1);
             var espacioAgregado2 = repository.Find(e => e.Admin == _admin);
-            Assert.IsNotNull(espacioAgregado2);
+			var espacioInDb = _context.Espacios.First();
+            Assert.AreEqual(espacio1, espacioInDb);
+			Assert.IsNotNull(espacioAgregado2);
             Assert.AreEqual(espacio1, espacioAgregado2);
         }
 
@@ -101,13 +75,24 @@ namespace RepositoryTest
         {
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
+            espacio1.Nombre = "Espacio1";
             var espacio2 = new Espacio();
             espacio2.Admin = _admin;
-            var repository = new EspacioMemoryRepository();
-            var espacioAgregado1 = repository.Add(espacio1);
-            var espacioAgregado2 = repository.Add(espacio2);
+            espacio2.Nombre = "Espacio2";
+            var repository = new EspacioMemoryRepository(_context);
+            repository.Add(espacio1);
+            repository.Add(espacio2);
             var espacios = repository.FindAll();
-            Assert.IsNotNull(espacios);
+			var espacioInDb1 = _context.Espacios.First();
+            var espacioInDb2 = _context.Espacios.Last();
+			Assert.IsNotNull(espacio1);
+			Assert.AreEqual(espacio1, espacioInDb1);
+			Assert.IsNotNull(espacio2);
+			Assert.AreEqual(espacio2, espacioInDb2);
+			Assert.AreEqual(espacio1, espacioInDb1);
+            Assert.IsNotNull(espacio2);
+            Assert.AreEqual(espacio2, espacioInDb2);
+			Assert.IsNotNull(espacios);
             Assert.AreEqual(2, espacios.Count);
         }
 
@@ -116,16 +101,15 @@ namespace RepositoryTest
         {
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
-            var repository = new EspacioMemoryRepository();
-            var espacioAgregado1 = repository.Add(espacio1);
-            espacio1.Admin = new Usuario
-            {
-                Correo = "usuario2@yy.com",
-                Contrasena = "123456789B",
-            };
+            espacio1.Nombre = "Espacio1";
+            var repository = new EspacioMemoryRepository(_context);        
+            repository.Add(espacio1);
+            espacio1.Nombre = "Espacio2";
             var espacioAgregado2 = repository.Update(espacio1);
+            var espacioInDb = _context.Espacios.First();
+            Assert.AreEqual(espacio1.Nombre, espacioInDb.Nombre);
             Assert.IsNotNull(espacioAgregado2);
-            Assert.AreEqual(espacio1, espacioAgregado2);
+            Assert.AreEqual("Espacio2", espacioAgregado2.Nombre);
         }
 
         [TestMethod]
@@ -133,11 +117,14 @@ namespace RepositoryTest
         {
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
-            var repository = new EspacioMemoryRepository();
+            espacio1.Nombre = "Espacio1";
+            var repository = new EspacioMemoryRepository(_context);
             var espacioAgregado1 = repository.Add(espacio1);
-            repository.Delete(espacio1.Admin.Correo);
+            repository.Delete(espacioAgregado1.Admin.Correo);
             var espacioAgregado2 = repository.Find(e => e.Admin == _admin);
+            var espacioInDb = _context.Espacios.FirstOrDefault(e => e.Admin == _admin);
+            Assert.IsNull(espacioInDb);
             Assert.IsNull(espacioAgregado2);
-        }
+        } 
     }
 }

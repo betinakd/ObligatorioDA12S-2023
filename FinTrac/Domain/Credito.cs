@@ -2,8 +2,14 @@
 
 namespace Domain
 {
+	public enum TipoCuenta
+	{
+		EsAhorro,
+		EsCredito
+	}
 	public class Credito : Cuenta
 	{
+		private TipoCuenta _tipoCuenta = TipoCuenta.EsCredito;
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
 		private double _creditoDisponible;
@@ -96,6 +102,11 @@ namespace Domain
 			BancoEmisor = credito.BancoEmisor;
 			NumeroTarjeta = credito.NumeroTarjeta;
 			FechaCierre = credito.FechaCierre;
+		}
+
+		public override TipoCuenta TipoDeCuenta()
+		{
+			return _tipoCuenta;
 		}
 
 		public override string ToString()

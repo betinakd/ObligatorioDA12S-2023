@@ -1,4 +1,5 @@
-﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionIngreso"
+﻿
+@page "/home/{Id:int}/{Correo}/CrearTransaccionIngreso"
 <PageTitle>FinTrac Transacción</PageTitle>
 <TituloRosado Titulo="Crear Transacción de Ingreso" Subtitulo="Cree sus transacciones de ingreso."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -55,8 +56,6 @@
 	</div>
 </div>
 
-
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -87,7 +86,6 @@
 		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
 	}
 
-
 	private void SeleccionarCuenta(ChangeEventArgs e)
 	{
 		string selectedValue = e.Value.ToString();
@@ -104,7 +102,6 @@
 	{
 		try
 		{
-
 			TransaccionIngreso transaccion = new TransaccionIngreso()
 				{
 					Titulo = inputTitulo,
@@ -114,7 +111,7 @@
 					CategoriaTransaccion = categoria,
 				};
 			espacio.AgregarTransaccion(transaccion);
-			transaccion.AsignarIdTransaccion();
+
 			if (cuenta is Ahorro)
 			{
 				Ahorro ahorro = (Ahorro)cuenta;
@@ -125,6 +122,7 @@
 				Credito credito = (Credito)cuenta;
 				credito.IngresoMonetario(inputMonto);
 			}
+			EspacioLogic.UpdateEspacio(espacio);
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}

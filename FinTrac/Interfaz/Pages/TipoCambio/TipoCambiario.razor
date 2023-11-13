@@ -69,8 +69,6 @@
 	</table>
 </div>
 
-
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -95,7 +93,6 @@
 
 	private void ModificarValor(Cambio cambio)
 	{
-
 		try
 		{
 			if (cambioModificar != null)
@@ -108,6 +105,6 @@
 		catch (Exception ex)
 		{
 			ErrorMsg = ex.Message;
-		}		
+		}
 	}
 }

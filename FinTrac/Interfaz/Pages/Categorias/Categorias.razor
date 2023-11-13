@@ -1,4 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Categorias"
+@using DTO;
 
 <PageTitle>FinTrac Categorias</PageTitle>
 <TituloRosado Titulo="Categorias del espacio" Subtitulo="Cree y elimine categorías en el espacio."></TituloRosado>
@@ -33,7 +34,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var categoria in EspacioLogic.FindEspacio(Persistencia.Id).Categorias)
+
+			@foreach (var categoria in categorias)
 			{
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@categoria.Nombre</td>
@@ -94,9 +96,17 @@
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; }
 	private bool estadoActivo;
-	private Categoria categoriaSelec { get; set; }
+	private CategoriaDTO categoriaSelec { get; set; }
 	private bool mostrarModificar = false;
+	private ControladorCategorias controlador;
 	string nombreValor { get; set; } = "";
+	private List<CategoriaDTO> categorias = new List<CategoriaDTO>();
+
+	protected override void OnInitialized()
+	{
+		controlador = new ControladorCategorias(EspacioLogic);
+		categorias = controlador.CategoriasDeEspacio(Id);
+	}
 
 	private void LimpiarInputs()
 	{
@@ -105,20 +115,21 @@
 		estadoActivo = true;
 	}
 
-	private void MostrarSeccionModificar(Categoria categoria)
+	private void MostrarSeccionModificar(CategoriaDTO categoriaDTO)
 	{
 		LimpiarInputs();
-		categoriaSelec = categoria;
+		categoriaSelec = categoriaDTO;
 		mostrarModificar = !mostrarModificar;
 	}
 
-	private void EliminarCategoria(Categoria categoria)
+	private void EliminarCategoria(CategoriaDTO categoriaDTO)
 	{
 		LimpiarInputs();
 		mostrarModificar = false;
 		try
 		{
-			EspacioLogic.FindEspacio(Id).BorrarCategoria(categoria);
+			ErrorMsg = controlador.EliminarCategoria(Persistencia.Id, categoriaDTO);
+			categorias = controlador.CategoriasDeEspacio(Id);
 		}
 		catch (DomainEspacioException e)
 		{
@@ -126,22 +137,18 @@
 		}
 	}
 
-	private void ModificarNombre(Categoria categoria)
+	private void ModificarNombre(CategoriaDTO categoriaDTO)
 	{
 		try
 		{
-			Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-			List<Categoria> categorias = espacio.Categorias;
-			if (!categorias.Any(c => c.Nombre == nombreValor))
+			ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO, nombreValor);
+			if (ErrorMsg == "")
 			{
-				categoria.Nombre = nombreValor;
+				categoriaDTO.Nombre = nombreValor;
+				categorias = controlador.CategoriasDeEspacio(Id);
 				mostrarModificar = false;
 				LimpiarInputs();
 			}
-			else
-			{
-				ErrorMsg = "Ya hay categorias con ese nombre.";		
-			}			
 		}
 		catch (DomainEspacioException e)
 		{
@@ -149,11 +156,13 @@
 		}
 	}
 
-	private void ModificarEstado(Categoria categoria)
+	private void ModificarEstado(CategoriaDTO categoriaDTO)
 	{
 		try
 		{
-			categoria.EstadoActivo = estadoActivo;
+			controlador.ModificarEstadoCategoria(Id, categoriaDTO, estadoActivo);
+			categoriaDTO.EstadoActivo = estadoActivo;
+			categorias = controlador.CategoriasDeEspacio(Id);
 			LimpiarInputs();
 			mostrarModificar = false;
 		}

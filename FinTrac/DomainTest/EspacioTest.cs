@@ -460,16 +460,8 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		public void Suma_Uno_A_Contador_Static_Y_Lo_Asigna_A_Id()
-		{
-			espacio1.AsignarId();
-			Assert.AreEqual(espacio1.Id, 1);
-		}
-
-		[TestMethod]
 		public void CategoriaAsociadaObjetivos_Retorna_True_Al_Tener_Objetivo_Asociado()
 		{
-
 			List<Categoria> categorias = new List<Categoria>();
 			espacio1.AgregarCategoria(categoria1);
 			categorias.Add(categoria1);
@@ -613,7 +605,7 @@ namespace DomainTest
 			var ahorro1 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };
 			var ahorro2 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };
 			espacio1.AgregarCuenta(ahorro1);
-			espacio1.ModificarCuenta(ahorro2, ahorro1);
+			espacio1.ModificarCuenta(ahorro2);
 		}
 
 		[TestMethod]
@@ -622,8 +614,20 @@ namespace DomainTest
 			var ahorro1 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };
 			var ahorro2 = new Ahorro() { Nombre = "Ahorro2", Moneda = TipoCambiario.Dolar };
 			espacio1.AgregarCuenta(ahorro1);
-			espacio1.ModificarCuenta(ahorro2, ahorro1);
+			espacio1.ModificarCuenta(ahorro2);
 			Assert.AreEqual(ahorro1.Nombre, ahorro2.Nombre);
+		}
+
+		[TestMethod]
+		public void Espacio_Tiene_AdminId()
+		{
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio",
+				Admin = usuario1,
+			};
+			espacio.AdminId = 1;
+			Assert.AreEqual(espacio.AdminId, 1);
 		}
 	}
 }

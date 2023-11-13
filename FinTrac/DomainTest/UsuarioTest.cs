@@ -163,6 +163,79 @@ namespace DomainTest
 			usuario.IdEspacioPrincipal = 1;
 			Assert.AreEqual(usuario.IdEspacioPrincipal, 1);
 		}
+
+		[TestMethod]
+		public void Usuario_Tiene_Id()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = "correo@gmail.com",
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "test"
+			};
+			usuario.Id = 1;
+			Assert.AreEqual(usuario.Id, 1);
+		}
+
+		[TestMethod]
+		public void Usuario_Tiene_Espacios()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = "correo@gmail.com",
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "test"
+			};
+
+			Usuario admin = new Usuario()
+			{
+				Correo = "admin@gmail.com",
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "test"
+			};
+
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "test",
+				Admin = admin
+			};
+
+			List<Espacio> espacios = new List<Espacio>();
+			espacios.Add(espacio);
+			usuario.Espacios = espacios;
+			Assert.AreEqual(usuario.Espacios, espacios);
+			Assert.AreEqual(usuario.Espacios.Count, 1);
+		}
+
+		[TestMethod]
+		public void Usuario_Tiene_EspaciosAdmin()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = "correo@gmail.com",
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "test"
+			};
+
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "test",
+				Admin = usuario
+			};
+			List<Espacio> espacios = new List<Espacio>();
+			espacios.Add(espacio);
+			usuario.EspaciosAdmin = espacios;
+			Assert.AreEqual(usuario.EspaciosAdmin, espacios);
+			Assert.AreEqual(usuario.EspaciosAdmin.Count, 1);
+		}
 	}
 }
 

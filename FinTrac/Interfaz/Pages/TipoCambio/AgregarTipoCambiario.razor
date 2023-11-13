@@ -6,16 +6,15 @@
 
 <form>
 	<table>
-		
 		<tr>
 			<td><label class="text-gray-600">Moneda</label></td>
 			<td>
 				<select @onchange="SeleccionarMoneda" class="text-600">
-				<option value="">Seleccione una Opcion</option>
-				@foreach (var moneda in monedas.Where(m => m != Domain.TipoCambiario.PesosUruguayos))
-				{
-					<option value="@moneda">@moneda</option>
-				}
+					<option value="">Seleccione una Opcion</option>
+					@foreach (var moneda in monedas.Where(m => m != Domain.TipoCambiario.PesosUruguayos))
+					{
+						<option value="@moneda">@moneda</option>
+					}
 				</select>
 			</td>
 		</tr>
@@ -35,7 +34,8 @@
 	</button>
 </form>
 
-@code {
+@code 
+{
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; } = "";
@@ -71,6 +71,7 @@
 			try
 			{
 				espacio.AgregarCambio(cambio);
+				EspacioLogic.UpdateEspacio(espacio);
 				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
 			}
 			catch (DomainEspacioException ex)

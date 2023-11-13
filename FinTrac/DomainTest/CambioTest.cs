@@ -75,7 +75,6 @@ namespace DomainTest
 		[TestMethod]
 		public void Equals_Cambio_Distinta_Fecha_False()
 		{
-			// Tienen la fecha de hoy por defecto
 			var tipoDeCambio1 = new Cambio()
 			{
                 FechaDeCambio = DateTime.Now.Date,
@@ -121,6 +120,31 @@ namespace DomainTest
 			bool resultado = tipoDeCambio1.Equals(tipoDeCambio2);
 
 			Assert.IsFalse(resultado);
+		}
+
+		[TestMethod]
+		public void Cambio_Tiene_Id()
+		{
+			var tipoDeCambio = new Cambio();
+			tipoDeCambio.Id = 1;
+			Assert.AreEqual(1, tipoDeCambio.Id);
+		}
+
+		[TestMethod]
+		public void Cambio_Tiene_Espacio()
+		{
+			var tipoDeCambio = new Cambio();
+			var espacio = new Espacio();
+			tipoDeCambio.Espacio = espacio;
+			Assert.AreEqual(espacio, tipoDeCambio.Espacio);
+		}
+
+		[TestMethod]
+		public void Cambio_Tiene_EspacioId()
+		{
+			var tipoDeCambio = new Cambio();
+			tipoDeCambio.EspacioId = 1;
+			Assert.AreEqual(1, tipoDeCambio.EspacioId);
 		}
 	}
 }

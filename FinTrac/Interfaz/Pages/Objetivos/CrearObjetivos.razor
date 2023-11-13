@@ -1,4 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearObjetivos"
+@using DTO;
 
 <PageTitle>FinTrac Crear Objetivo</PageTitle>
 <TituloRosado Titulo="Crear Objetivo" Subtitulo="Cree un objetivo rellenando los datos y seleccione una o varias categorias usando Ctrl+Click."></TituloRosado>
@@ -30,7 +31,7 @@
 			@onchange="UpdateCategoriasSeleccionadas" multiple>
 				@foreach (var categoria in categorias)
 				{
-					if (categoria.Tipo.Equals(TipoCategoria.Costo))
+					if (categoria.Tipo.Equals(DTO.EnumsDTO.TipoCategoriaDTO.Costo))
 					{
 						<option value="@categoria.Nombre">@categoria.Nombre</option>
 					}
@@ -53,13 +54,18 @@
 	private string tituloObjetivo;
 	private double montoObjetivo;
 	private List<string> categoriasSeleccionadas = new List<string>();
-	private List<Categoria> categorias;
-	private List<Categoria> categorias2 = new List<Categoria>();
+	private List<CategoriaDTO> categorias;
+	private List<CategoriaDTO> categorias2 = new List<CategoriaDTO>();
+	private ControladorObjetivos controlador;
+	private ControladorCategorias controladorCategorias;
+	private List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
 
 	protected override void OnInitialized()
 	{
-		// Cargar la lista de categorías desde el espacio
-		categorias = EspacioLogic.FindEspacio(Persistencia.Id).Categorias;
+		controlador = new ControladorObjetivos(EspacioLogic);
+		objetivos = controlador.ObjetivosDeEspacio(Id);
+		controladorCategorias = new ControladorCategorias(EspacioLogic);
+		categorias = controladorCategorias.CategoriasDeEspacio(Id);
 	}
 
 	private void UpdateCategoriasSeleccionadas(ChangeEventArgs e)
@@ -70,33 +76,37 @@
 
 	private void Crear()
 	{
-			categorias2.Clear();
-			// Crear un nuevo objetivo con los valores ingresados
-			foreach (var categoria in categoriasSeleccionadas)
-			{
-				categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
-			}
+		categorias2.Clear();
+		foreach (var categoria in categoriasSeleccionadas)
+		{
+			categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
+		}
 
+		try
+		{
+			ObjetivoDTO nuevoObjetivo = new ObjetivoDTO
+				{
+					Titulo = tituloObjetivo,
+					MontoMaximo = montoObjetivo,
+					Categorias = categorias2
+				};
 			try
 			{
-				Objetivo nuevoObjetivo = new Objetivo
-					{
-
-						Titulo = tituloObjetivo,
-						MontoMaximo = montoObjetivo,
-						Categorias = categorias2
-					};
-				// Agregar el objetivo al espacio actual
-				Espacio espacioActual = EspacioLogic.FindEspacio(Persistencia.Id);
-				espacioActual.AgregarObjetivo(nuevoObjetivo);
-
-				// Redireccionar a la página de Objetivos
-				string newHref = $"/home/{Id}/{Correo}/Objetivos";
-				NavigationManager.NavigateTo(newHref);
+				ErrorMsg = controlador.CrearObjetivo(Id, nuevoObjetivo);
+				if (ErrorMsg == "")
+				{
+					string newHref = $"/home/{Id}/{Correo}/Objetivos";
+					NavigationManager.NavigateTo(newHref);
+				}
 			}
-		catch (DomainEspacioException e)
+			catch (DomainEspacioException e)
 			{
 				ErrorMsg = e.Message;
 			}
+		}
+		catch (DomainEspacioException e)
+		{
+			ErrorMsg = e.Message;
+		}
 	}
 }

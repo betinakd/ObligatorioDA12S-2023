@@ -17,7 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BussinesLogic\BussinesLogic.csproj" />
+    <ProjectReference Include="..\Controladores\Controlador.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Excepcion\Excepcion.csproj" />
     <ProjectReference Include="..\Reporte\EspacioReporte.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
@@ -28,12 +30,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
     <_ContentIncludedByDefault Remove="Pages\Transacciones\CrearTransaccionIngreso.razor" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MudBlazor" Version="6.11.0" />
-    <PackageReference Include="MudBlazor.ThemeManager" Version="1.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Objetivos\CompartirObjetivosDeGastos.razor" />
   </ItemGroup>
 
 </Project>

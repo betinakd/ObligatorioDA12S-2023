@@ -3,7 +3,6 @@
 <TituloRosado Titulo="Modificar Transacción de Costo" Subtitulo="Modifiqué sus transacciones de costo."></TituloRosado>
 <EspacioActual></EspacioActual>
 
-
 <div class="mt-4">
 	<h3 class="text-lg font-medium mb-2">Detalles de la Transacción</h3>
 	<div class="flex flex-col space-y-2">
@@ -63,7 +62,7 @@
 	{
 		espacio = EspacioLogic.FindEspacio(Id);
 		categorias = espacio.Categorias;
-		transaccion = espacio.Transacciones.Find(t => t.IdTransaccion.Equals(IdTrans));
+		transaccion = espacio.Transacciones.Find(t => t.Id.Equals(IdTrans));
 		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
 	}
 
@@ -80,6 +79,7 @@
 			transaccion.Monto = inputMonto;
 			transaccion.Moneda = tipoMonedaSeleccionado;
 			transaccion.CategoriaTransaccion = categoria;
+			EspacioLogic.UpdateEspacio(espacio);
 			NavigationManager.NavigateTo
 			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
 		}

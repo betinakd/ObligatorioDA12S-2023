@@ -1,9 +1,15 @@
 ﻿using Excepcion;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
 	public class Categoria
 	{
+		public int Id { get; set; }
+		public int EspacioId { get; set; }
+		public Espacio Espacio { get; set; }
+		public List<Objetivo> Objetivos { get; set; }
+		public List<Transaccion> Transacciones { get; set; }
 		private string _nombre;
 		DateTime _fechaCreacion = DateTime.Today;
 		public bool EstadoActivo { get; set; }

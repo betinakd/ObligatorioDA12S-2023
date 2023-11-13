@@ -110,5 +110,45 @@ namespace DomainTest
 			var resultado = objetivo.ContieneCategoria(categoria);
 			Assert.IsTrue(resultado);
 		}
+
+		[TestMethod]
+		public void Objetivo_Tiene_Id()
+		{
+			_objetivo.Id = 1;
+			Assert.AreEqual(1, _objetivo.Id);
+		}
+
+		[TestMethod]
+		public void Objetivo_Tiene_EspacioId()
+		{
+			_objetivo.EspacioId = 1;
+			Assert.AreEqual(1, _objetivo.EspacioId);
+		}
+
+		[TestMethod]
+		public void Objetivo_Tiene_Espacio()
+		{
+			var espacio = new Espacio()
+			{
+				Nombre = "Espacio 1",
+				Admin = new Usuario()
+				{
+					Correo = "test@gmail.com",
+					Contrasena = "HOLAhola123",
+					Nombre = "Test",
+					Apellido = "Test",
+					Direccion = "Test"
+				}
+			};
+			_objetivo.Espacio = espacio;
+			Assert.AreEqual(espacio, _objetivo.Espacio);
+		}
+
+		[TestMethod]
+		public void Objetivo_Get_Token() 
+		{
+			_objetivo.Token = "token";
+			Assert.AreEqual("token", _objetivo.Token);
+		}
 	}
 }

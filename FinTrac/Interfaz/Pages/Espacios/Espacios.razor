@@ -1,5 +1,6 @@
 ﻿@page "/home/{Id:int}/{Correo}/Espacios"
 
+
 <PageTitle>FinTrac Espacio</PageTitle>
 
 <TituloRosado Titulo="Espacios" Subtitulo="Un listado de todos los espacios en los que se encuentra." />
@@ -38,7 +39,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var espacio in espacios)
+			@foreach (var espacio in datosEspacio)
 			{
 				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 					<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -67,7 +68,8 @@
 					{
 						<td class="px-1 py-4 text-left">
 							<button @onclick="() =>MostrarInput(espacio)" class="bg-red-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-200 dark:focus:ring-red-800 ml-2">
-								Cambiar Nombre</button>
+								Cambiar Nombre
+							</button>
 						</td>
 					}
 					else
@@ -77,7 +79,7 @@
 					}
 				</tr>
 
-				@if (mostrarInput && espacioClickeado.Equals(espacio))
+				@if (mostrarInput && clickValor.Equals(espacio))
 				{
 					<tr>
 						<p style="color:red">@ErrorMsg</p>
@@ -101,51 +103,42 @@
 	</table>
 </div>
 
-
-
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	private List<Espacio>? espacios { get; set; }
-	private Espacio? espacioClickeado { get; set; }
 	private string? ErrorMsg { get; set; } = "";
 	private bool mostrarInput = false;
 	private string inputNombre = string.Empty;
+	private EspacioDTO clickValor;
+	private ControladorEspacios controlador;
+	private List<EspacioDTO> datosEspacio;
 
 	protected override void OnInitialized()
 	{
-		espacios = EspacioLogic.EspaciosByCorreo(Correo);
+		controlador = new ControladorEspacios(UsuarioLogic, EspacioLogic);
+		datosEspacio = controlador.EspaciosDeUsuario(Correo);
 	}
 
-	public void ClickCambiarDeEspacio(Espacio espacio)
+	public void ClickCambiarDeEspacio(EspacioDTO espacioDTO)
 	{
-		Persistencia.Id = espacio.Id;
+		Persistencia.Id = espacioDTO.Id;
 		NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 	}
 
-	private void MostrarInput(Espacio espacio)
+	private void MostrarInput(EspacioDTO espacio)
 	{
-		espacioClickeado = espacio;
+		clickValor = espacio;
 		mostrarInput = !mostrarInput;
-		inputNombre = "";
+		inputNombre = espacio.Nombre;
 		ErrorMsg = "";
-
 	}
 
-	private void CambiarNombre(Espacio espacio)
+	private void CambiarNombre(EspacioDTO espacio)
 	{
-		try
-		{
-			espacio.Nombre = inputNombre;
+			controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
+			datosEspacio = controlador.EspaciosDeUsuario(Correo);
 			ErrorMsg = "";
-			inputNombre = "";
 			mostrarInput = false;
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
-		}
 	}
 
 	private void CambiarNombreCerrar()
@@ -153,6 +146,5 @@
 		mostrarInput = false;
 		inputNombre = "";
 		ErrorMsg = "";
-
 	}
 }

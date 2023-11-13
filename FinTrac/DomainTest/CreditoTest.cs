@@ -345,5 +345,19 @@ namespace DomainTest
 			Credito cuentaCredito = new Credito();
 			cuentaCredito.FechaCierre = new System.DateTime(2019, 1, 1);
 		}
+
+		[TestMethod]
+		public void CuentaCredito_Tiene_TipoCuenta()
+		{
+			var cuenta = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				BancoEmisor = "CuentaCreditoPrueba",
+				CreditoDisponible = 100.01,
+				NumeroTarjeta = "1234",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsCredito);
+		}
 	}
 }
