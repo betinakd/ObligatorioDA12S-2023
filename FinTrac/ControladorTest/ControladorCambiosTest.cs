@@ -136,5 +136,22 @@ namespace ControladorTest
 			string msjError = controladorTest.ModificarCambio(1, cambioDTO, valor);
 			Assert.AreEqual("", msjError);
 		}
+
+		[TestMethod]
+		public void ControladorCambios_ModificarCambio_Error()
+		{
+			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
+			CambioDTO cambioDTO = new CambioDTO()
+			{
+				Id = 1,
+				Moneda = TipoCambiarioDTO.Dolar,
+				FechaDeCambio = new DateTime(2021, 10, 10),
+				Pesos = 100
+			};
+			controladorTest.CrearCambio(1, cambioDTO);
+			double valor = 0;
+			string msjError = controladorTest.ModificarCambio(1, cambioDTO, valor);
+			Assert.AreEqual("El monto en pesos uruguayos debe ser mayor a 0", msjError);
+		}
 	}
 }
