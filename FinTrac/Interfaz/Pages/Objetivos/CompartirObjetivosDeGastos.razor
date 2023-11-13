@@ -1,4 +1,5 @@
 ﻿@page "/{objetivoId:int}/{MontoMaximo:double}/{Id:int}/objetivo/{Token}"
+@using DTO;
 @layout CompartirObjetivoDeGastosLayout
 <PageTitle>FinTrac Objetivos</PageTitle>
 <TituloRosado Titulo="Objetivo de gasto"></TituloRosado>
@@ -13,7 +14,7 @@
 			<div class=" px-4 pt-4 mb-5">
 				<div class="flex flex-col pb-10">
 					<h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-						El objetivo de @espacio.Admin.Nombre
+						El objetivo de @nombreAdmin
 					</h5>
 					<p class="text-sm text-gray-500 dark:text-gray-400">
 						Categoria: @foreach (var categoria in objetivo.Categorias)
@@ -35,27 +36,10 @@
 
 					<p class="text-sm text-gray-500 dark:text-gray-400">
 						Gastado actualmente: $
-						@foreach (var objetivoGasto in objetivosDeGasto)
-						{
-							if (objetivoGasto.Objetivo.Id.Equals(objetivoId))
-							{
-								@if (objetivoGasto.MontoAcumulado != null)
-								{
-									montoAcumulado = objetivoGasto.MontoAcumulado;
-									<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
-										rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
-										@objetivoGasto.MontoAcumulado
-									</span>
-								}
-							}
-						}
-						@if (montoAcumulado == 0)
-						{
-							<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
-								rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
-								0
-							</span>
-						}
+						<span class="bg-pink-100 text-pink-800 text-xs font-medium mr-2 px-2.5 py-0.5
+							rounded dark:bg-gray-700 dark:text-pink-400 border border-pink-400">
+							@montoAcumulado
+						</span>
 					</p>
 				</div>
 			</div>
@@ -75,17 +59,28 @@
 	[Parameter] public string Token { get; set; }
 	[Parameter] public double MontoMaximo { get; set; }
 	[Parameter] public int objetivoId { get; set; }
-	public List<ObjetivoGasto>? objetivosDeGasto { get; set; }
-	private Objetivo objetivo;
-	private Espacio espacio;
-	private double montoAcumulado;
+	private ObjetivoDTO objetivo;
+	private double montoAcumulado = 0;
+	private ControladorObjetivos controlador;
+	private List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
+	private string nombreAdmin;
 
 	protected override void OnInitialized()
 	{
-		var espacios = EspacioLogic.FindAllEspacios();
-		espacio = espacios.FirstOrDefault(e => e.Id == Id);
-		objetivo = espacio.Objetivos.FirstOrDefault(o => o.Id == objetivoId);
-		Reporte reporte = new Reporte() { MiEspacio = espacio };
-		objetivosDeGasto = reporte.ReporteObjetivosDeGastos();
+		controlador = new ControladorObjetivos(EspacioLogic);
+		objetivos = controlador.ObjetivosDeEspacio(Id);
+		objetivo = objetivos.FirstOrDefault(o => o.Id == objetivoId);
+		var objetivosDeGasto = controlador.ObjetivosDeGastos(Id, objetivoId);
+		foreach (var objetivoGasto in objetivosDeGasto)
+		{
+			if (objetivoGasto.Objetivo.Id == objetivo.Id)
+			{
+				if (objetivoGasto.MontoAcumulado != null)
+				{
+					montoAcumulado = objetivoGasto.MontoAcumulado;
+				}
+			}
+		}
+		nombreAdmin = controlador.NombreAdmin(Id);
 	}
 }
