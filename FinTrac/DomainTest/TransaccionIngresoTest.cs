@@ -123,5 +123,41 @@ namespace DomainTest
 			transIngreso.EjecutarTransaccion();
 			Assert.AreEqual(200, cuenta.Saldo);
 		}
+
+		[TestMethod]
+		public void TransaccionIngreso_ModificaMonto()
+		{
+			Cuenta cuenta = new Ahorro()
+			{
+				Nombre = "Cuenta1",
+				Moneda = TipoCambiario.Dolar,
+				Saldo = 100,
+			};
+
+			Transaccion transIngreso = new TransaccionIngreso()
+			{
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				Titulo = "Transaccion1",
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Ingreso,
+					EstadoActivo = true,
+				},
+				CuentaMonetaria = cuenta,
+			};
+
+			transIngreso.ModificarMonto(200);
+
+			Assert.AreEqual(200, transIngreso.Monto);
+			Assert.AreEqual(200, cuenta.Saldo);
+
+			transIngreso.ModificarMonto(1);
+
+			Assert.AreEqual(1, transIngreso.Monto);
+			Assert.AreEqual(1, cuenta.Saldo);
+		}
 	}
 }
