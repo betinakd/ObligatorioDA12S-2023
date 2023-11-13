@@ -32,8 +32,7 @@ namespace Repository
 			modelBuilder.Entity<Espacio>()
 				.HasMany(e => e.Categorias)
 				.WithOne(o => o.Espacio)
-				.HasForeignKey(o => o.EspacioId)
-				.OnDelete(DeleteBehavior.Restrict);
+				.HasForeignKey(o => o.EspacioId);
 
 			modelBuilder.Entity<Espacio>()
 				.HasMany(e => e.Cuentas)

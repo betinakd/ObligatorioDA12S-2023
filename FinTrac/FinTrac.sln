@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controlador", "Controladore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControladorTest", "ControladorTest\ControladorTest.csproj", "{3CCA554B-9F6B-4321-852B-A33150F44E52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{257477CD-2E31-45D0-9C05-D31F5D375032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{257477CD-2E31-45D0-9C05-D31F5D375032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOTest", "DTOTest\DTOTest.csproj", "{22DF9590-33FF-4406-AA78-539F324FFC78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOTest", "DTOTest\DTOTest.csproj", "{22DF9590-33FF-4406-AA78-539F324FFC78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
