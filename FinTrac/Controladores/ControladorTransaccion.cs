@@ -210,7 +210,7 @@ namespace Controlador
 				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transaccion.CategoriaTransaccion);
 				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 				List<Transaccion> transacciones = espacio.Transacciones;
-				Transaccion tranModificar= transacciones.Find(t => t.Id == transaccion.Id);
+				Transaccion tranModificar = transacciones.Find(t => t.Id == transaccion.Id);
 				tranModificar.CategoriaTransaccion = categoria;
 				tranModificar.ModificarMonto(transaccion.Monto);
 				_espacioLogic.UpdateEspacio(espacio);
@@ -220,6 +220,20 @@ namespace Controlador
 				errorMsj = e.Message;
 			}
 			return errorMsj;
+		}
+
+		public string ClonarTransaccion(int espacioId, TransaccionDTO transaccion)
+		{
+			string ErrorMsg = "";
+			if (transaccion.Tipo.Equals("Costo"))
+			{
+				ErrorMsg = CrearTransaccionCosto(espacioId, transaccion);
+			}
+			else
+			{
+				ErrorMsg = CrearTransaccionIngreso(espacioId, transaccion);
+			}
+			return ErrorMsg;
 		}
 	}
 }

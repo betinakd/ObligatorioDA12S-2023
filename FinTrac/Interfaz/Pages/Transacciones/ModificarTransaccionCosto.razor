@@ -1,10 +1,17 @@
 ﻿@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionCosto"
+
 <PageTitle>FinTrac Transacción</PageTitle>
 <TituloRosado Titulo="Modificar Transacción de Costo" Subtitulo="Modifiqué sus transacciones de costo."></TituloRosado>
 <EspacioActual></EspacioActual>
 
 <div class="mt-4">
-	<h3 class="text-lg font-medium mb-2">Detalles de la Transacción</h3>
+	<P>Datos Transacción seleccionada:</P>
+	<p>Id : @transaccion.Id</p>
+	<p>Titulo : @transaccion.Titulo</p>
+	<p>Monto : @transaccion.Monto</p>
+    <p>Categoria : @transaccion.CategoriaTransaccion</p>
+	<p>Cuenta : @transaccion.CuentaMonetaria</p>
+	<h3 class="text-lg font-medium mb-2">Modifiqué los datos:</h3>
 	<div class="flex flex-col space-y-2">
 		<div>
 			<label class="text-gray-600">Monto</label>
@@ -12,8 +19,8 @@
 		</div>
 		<div>
 			<label class="text-gray-600">Categoría de la Transacción</label>
-			<select @onchange="SeleccionarCategoria" class=" border rounded-md px-2 py-1">
-				<option value="">Seleccione una Opcion</option>
+			<select @bind="inputCategoria" class=" border rounded-md px-2 py-1">
+				<option value="">Seleccione una categoría</option>
 				@foreach (var categoria in categorias)
 				{
 					<option value="@categoria.Nombre">@categoria.Nombre</option>
@@ -29,53 +36,38 @@
 </div>
 
 @code {
+
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	[Parameter] public int IdTrans { get; set; }
 	private string ErrorMsg { get; set; } = "";
 	private double inputMonto { get; set; } = 0;
 	private string inputCategoria { get; set; }
-	private Espacio espacio = new Espacio();
-	private List<Categoria> categorias = new List<Categoria>();
-	private Categoria categoria;
-	private Transaccion transaccion;
-	private Domain.TipoCambiario tipoMonedaSeleccionado;
-	private List<Domain.TipoCambiario> monedas;
+	private List<CategoriaDTO> categorias;
+	private CategoriaDTO categoria;
+	private TransaccionDTO transaccion;
+	private ControladorTransaccion controlador;
 
-
-	private void SeleccionarMoneda(ChangeEventArgs e)
-	{
-		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
-	}
 
 	protected override void OnInitialized()
 	{
-		espacio = EspacioLogic.FindEspacio(Id);
-		categorias = espacio.Categorias;
-		transaccion = espacio.Transacciones.Find(t => t.Id.Equals(IdTrans));
-		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
+		controlador = new ControladorTransaccion(UsuarioLogic,EspacioLogic);
+		categorias = controlador.DarCategoriasCosto(Persistencia.Id);
+		transaccion = controlador.DarTransaccion(Persistencia.Id, IdTrans);
+		inputMonto=transaccion.Monto;
 	}
 
-	private void SeleccionarCategoria(ChangeEventArgs e)
-	{
-		string selectedValue = e.Value.ToString();
-		categoria = categorias.FirstOrDefault(c => c.Nombre == selectedValue);
-	}
 
 	private void ModificarTransaccion()
 	{
-		try
+		// ErrorMsg = inputCategoria;
+		TransaccionDTO modificacion = new TransaccionDTO()
 		{
-			transaccion.Monto = inputMonto;
-			transaccion.Moneda = tipoMonedaSeleccionado;
-			transaccion.CategoriaTransaccion = categoria;
-			EspacioLogic.UpdateEspacio(espacio);
-			NavigationManager.NavigateTo
-			($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+			Id = IdTrans,
+			CategoriaTransaccion = inputCategoria,
+			Monto = inputMonto,
+		};
+		ErrorMsg=controlador.ModificarTransaccion(Persistencia.Id, modificacion);
+		// ErrorMsg = modificacion.CategoriaTransaccion;
 	}
 }

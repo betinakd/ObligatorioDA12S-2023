@@ -18,6 +18,7 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 
 <h4 style="left: 3%; position: relative" class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Transacciones de costos:</h4>
 
+<p style="color:green">@ExitoMsgC</p>
 <div style="width: 95%; left: 3%" class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table">
 		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -70,14 +71,14 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 							@transaccion.CategoriaTransaccion
 						</td>
 						<td class="px-6 py-4">
-							@* 						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarTransaccionCosto
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarTransaccionCosto
 					(transaccion)">
-					Modificar
-					</button>
-					<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-					@onclick="() => ClonarTransaccionCosto(transaccion)">
-					Clonar
-					</button> *@
+								Modificar
+							</button>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => ClonarTransaccionCosto(transaccion)">
+								Clonar
+							</button>
 						</td>
 					</tr>
 				}
@@ -90,7 +91,7 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 <br>
 <h4 style="left: 3%; position: relative" class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Transacciones de ingresos:</h4>
 
-
+<p style="color:green">@ExitoMsgI</p>
 <div style="width: 95%; left: 3%" class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table">
 		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -142,6 +143,16 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 						<td class="px-6 py-4">
 							@transaccion.CategoriaTransaccion
 						</td>
+						<td class="px-6 py-4">
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarTransaccionCosto
+					(transaccion)">
+								Modificar
+							</button>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => ClonarTransaccionCosto(transaccion)">
+								Clonar
+							</button>
+						</td>
 					</tr>
 				}
 			}
@@ -151,11 +162,12 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 <p style="color:red">@ErrorMsg</p>
 <div style="height:500px"></div>
 
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; }
+	private string ExitoMsgI { get; set; }
+	private string ExitoMsgC { get; set; }
 	private ControladorTransaccion controlador;
 	private List<TransaccionDTO> datosTransaccion;
 
@@ -167,30 +179,14 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 
 	private void ClonarTransaccionIngreso(TransaccionDTO transaccion)
 	{
-		// Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		// try
-		// {
-		// 	var clon = transaccion.ClonTransaccion();
-		// 	espacio.Transacciones.Add(clon);
-		// }
-		// catch (DomainEspacioException ex)
-		// {
-		// 	ErrorMsg = ex.Message;
-		// }
+		ExitoMsgI = controlador.ClonarTransaccion(Persistencia.Id, transaccion);
+		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
 	}
 
 	private void ClonarTransaccionCosto(TransaccionDTO transaccion)
 	{
-		// Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		// try
-		// {
-		// 	var clon = transaccion.ClonTransaccion();
-		// 	espacio.Transacciones.Add(clon);
-		// }
-		// catch (DomainEspacioException ex)
-		// {
-		// 	ErrorMsg = ex.Message;
-		// }
+		ExitoMsgC = controlador.ClonarTransaccion(Persistencia.Id, transaccion);
+		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
 	}
 
 	private void ModificarTransaccionIngreso(TransaccionDTO transaccion)
