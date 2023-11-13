@@ -527,7 +527,7 @@ namespace ControladorTest
 			espacio.Categorias.Add(categoriaIngreso);
 			_espacioLogic.AddEspacio(espacio);
 			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
-			
+
 			List<CategoriaDTO> categoriasDTO = controladorTransaccion.DarCategoriasCosto(1);
 
 			Assert.AreEqual(1, categoriasDTO.Count);
@@ -584,6 +584,71 @@ namespace ControladorTest
 			Assert.AreEqual(TipoCategoriaDTO.Ingreso, categoriasDTO[0].Tipo);
 			Assert.AreEqual(true, categoriasDTO[0].EstadoActivo);
 			Assert.AreEqual(2, categoriasDTO[0].Id);
+		}
+
+		[TestMethod]
+		public void Dar_IdEspacio_IdTransaccion_Retorna_TransaccionDTO()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Id = 1,
+			};
+
+			espacio.Cuentas.Add(ahorro);
+
+			Categoria categoria = new Categoria()
+			{
+				Nombre = "Test",
+				Id = 1,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			espacio.Categorias.Add(categoria);
+
+			Transaccion transaccion = new TransaccionCosto()
+			{
+				CuentaMonetaria = ahorro,
+				Id = 1,
+				Monto = 100,
+				FechaTransaccion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Test",
+				CategoriaTransaccion = categoria,
+			};
+
+			espacio.Transacciones.Add(transaccion);
+
+			_espacioLogic.AddEspacio(espacio);
+
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			TransaccionDTO transaccionDTO = controladorTransaccion.DarTransaccion(1, 1);
+			Assert.IsNotNull(transaccionDTO);
+			Assert.AreEqual(1, transaccionDTO.Id);
+			Assert.AreEqual("Test", transaccionDTO.Titulo);
+			Assert.AreEqual(100, transaccionDTO.Monto);
+			Assert.AreEqual(TipoCambiarioDTO.PesosUruguayos, transaccionDTO.Moneda);
 		}
 	}
 }
