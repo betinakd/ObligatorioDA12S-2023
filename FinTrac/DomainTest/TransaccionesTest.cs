@@ -283,5 +283,13 @@ namespace DomainTest
 			Transaccion transaccion = new Transaccion();
 			transaccion.CuentaMonetaria = null;
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_Tiene_Categoria_Nula_Excepcion()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.CategoriaTransaccion = null;
+		}
 	}
 }
