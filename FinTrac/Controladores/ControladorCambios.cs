@@ -8,5 +8,11 @@ namespace Controlador
 {
 	public class ControladorCambios
 	{
+		private EspacioLogic _cambioLogic;
+
+		public ControladorCambios(EspacioLogic cambioLogic)
+		{
+			_cambioLogic = cambioLogic;
+		}
 	}
 }
