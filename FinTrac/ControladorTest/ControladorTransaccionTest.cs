@@ -235,7 +235,7 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
-		public void ControladorTeansaccion_CreaTransaccion_De_Ingreso()
+		public void ControladorTransaccion_CreaTransaccion_De_Ingreso()
 		{
 			Usuario usuario = new Usuario
 			{
@@ -303,7 +303,7 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
-		public void ControladorTeansaccion_Lanza_Mensaje_Excepcion_Al_CreaTransaccion_De_Ingreso()
+		public void ControladorTransaccion_Lanza_Mensaje_Excepcion_Al_CreaTransaccion_De_Ingreso()
 		{
 			Usuario usuario = new Usuario
 			{
@@ -362,7 +362,7 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
-		public void ControladorTeansaccion_CreaTransaccion_De_Costo()
+		public void ControladorTransaccion_CreaTransaccion_De_Costo()
 		{
 			Usuario usuario = new Usuario
 			{
@@ -430,7 +430,7 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
-		public void ControladorTeansaccion_Lanza_Mensaje_Excepcion_Al_CreaTransaccion_De_Costo()
+		public void ControladorTransaccion_Lanza_Mensaje_Excepcion_Al_CreaTransaccion_De_Costo()
 		{
 			Usuario usuario = new Usuario
 			{
@@ -488,5 +488,53 @@ namespace ControladorTest
 			Assert.AreEqual("No hay cotización cambiaria de Dolar para la fecha de hoy", mensaje);
 		}
 
+		[TestMethod]
+		public void ControladorTransaccion_Da_Lista_De_TransaccionesDTOCosto_Del_Espacio()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Categoria categoriaCosto = new Categoria()
+			{
+				Nombre = "Test",
+				Id = 1,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			Categoria categoriaIngreso = new Categoria()
+			{
+				Nombre = "Test2",
+				Id = 2,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Ingreso,
+			};
+			espacio.Categorias.Add(categoriaCosto);
+			espacio.Categorias.Add(categoriaIngreso);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			
+			List<CategoriaDTO> categoriasDTO = controladorTransaccion.DarCategoriasCosto(1);
+
+			Assert.AreEqual(1, categoriasDTO.Count);
+			Assert.AreEqual("Test", categoriasDTO[0].Nombre);
+			Assert.AreEqual(TipoCategoriaDTO.Costo, categoriasDTO[0].Tipo);
+			Assert.AreEqual(true, categoriasDTO[0].EstadoActivo);
+			Assert.AreEqual(1, categoriasDTO[0].Id);
+		}
 	}
 }
