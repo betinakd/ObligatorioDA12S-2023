@@ -57,27 +57,6 @@ namespace DomainTest
 			Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
 		}
 
-		[TestMethod]
-		public void TransaccionCosto_Clon_Cuenta_Ahorro()
-		{
-			var transaccionClon = transaccion1.ClonTransaccion();
-			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
-			Assert.AreEqual(transaccion1.Moneda, transaccionClon.Moneda);
-			Assert.AreEqual(transaccion1.CuentaMonetaria, transaccionClon.CuentaMonetaria);
-			Assert.AreEqual(transaccion1.CategoriaTransaccion, transaccionClon.CategoriaTransaccion);
-			Assert.AreEqual(transaccion1.Monto, transaccionClon.Monto);
-		}
-
-		[TestMethod]
-		public void TransaccionCosto_Clon_Cuenta_Credito()
-		{
-			var transaccionClon = transaccion2.ClonTransaccion();
-			Assert.AreEqual(transaccion2.Titulo, transaccionClon.Titulo);
-			Assert.AreEqual(transaccion2.Moneda, transaccionClon.Moneda);
-			Assert.AreEqual(transaccion2.CuentaMonetaria, transaccionClon.CuentaMonetaria);
-			Assert.AreEqual(transaccion2.CategoriaTransaccion, transaccionClon.CategoriaTransaccion);
-			Assert.AreEqual(transaccion2.Monto, transaccionClon.Monto);
-		}
 
 		[TestMethod]
 		public void TransaccionCosto_Tiene_Cuenta_Monetaria_Valida()

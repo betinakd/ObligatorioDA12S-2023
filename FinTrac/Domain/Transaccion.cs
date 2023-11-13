@@ -51,7 +51,20 @@ namespace Domain
 			}
 		}
 		public TipoCambiario Moneda { get; set; }
-		public Cuenta CuentaMonetaria { get; set; }
+		private Cuenta _cuentaMonetaria;
+		public Cuenta CuentaMonetaria {
+
+			get
+			{
+				return _cuentaMonetaria;
+			}
+			set
+			{
+				if(value is null)
+					throw new DomainEspacioException("La cuenta monetaria no puede ser nula");
+				_cuentaMonetaria = value;
+			}
+		}
 		public Categoria CategoriaTransaccion { get; set; }
 
 		public Cambio EncontrarCambio(Espacio espacioActual)
