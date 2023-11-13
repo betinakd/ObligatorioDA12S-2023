@@ -358,7 +358,7 @@ namespace ControladorTest
 			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
 			string mensaje = controladorTransaccion.CrearTransaccionIngreso(1, transaccion);
 
-			Assert.AreEqual("No hay cotización cambiaria de dolar para la fecha de hoy", mensaje);
+			Assert.AreEqual("No hay cotización cambiaria de Dolar para la fecha de hoy", mensaje);
 		}
 
 		[TestMethod]
@@ -485,7 +485,7 @@ namespace ControladorTest
 			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
 			string mensaje = controladorTransaccion.CrearTransaccionCosto(1, transaccion);
 
-			Assert.AreEqual("No hay cotización cambiaria de dolar para la fecha de hoy", mensaje);
+			Assert.AreEqual("No hay cotización cambiaria de Dolar para la fecha de hoy", mensaje);
 		}
 
 	}
