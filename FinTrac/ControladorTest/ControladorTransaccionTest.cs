@@ -736,5 +736,91 @@ namespace ControladorTest
 			Assert.AreEqual(transaccion.CategoriaTransaccion,categoria2);
 			Assert.AreEqual(transModificada.Monto,transaccion.Monto);
 		}
+
+		[TestMethod]
+		public void ControladorTransaccion_No_Modifica_Monto_Y_Categoria_Da_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Id = 1,
+			};
+
+			espacio.Cuentas.Add(ahorro);
+
+			Categoria categoria = new Categoria()
+			{
+				Nombre = "Test",
+				Id = 1,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			espacio.Categorias.Add(categoria);
+
+			Categoria categoria2 = new Categoria()
+			{
+				Nombre = "TestCat2",
+				Id = 2,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Tipo = TipoCategoria.Costo,
+			};
+
+			espacio.Categorias.Add(categoria2);
+
+			Transaccion transaccion = new TransaccionCosto()
+			{
+				CuentaMonetaria = ahorro,
+				Id = 1,
+				Monto = 100,
+				FechaTransaccion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Test",
+				CategoriaTransaccion = categoria,
+			};
+
+			TransaccionDTO transModificada = new TransaccionDTO()
+			{
+				CuentaMonetaria = ahorro.ToString(),
+				Id = 1,
+				Monto = 200,
+				FechaTransaccion = DateTime.Now,
+				Moneda = TipoCambiarioDTO.PesosUruguayos,
+				Titulo = "Test",
+				CategoriaTransaccion = "",
+			};
+			espacio.Transacciones.Add(transaccion);
+
+			_espacioLogic.AddEspacio(espacio);
+
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+
+			string mensaje = controladorTransaccion.ModificarTransaccion(1, transModificada);
+
+			Assert.AreEqual("La categoria no puede ser nula", mensaje);
+			Assert.AreEqual(transaccion.CategoriaTransaccion, categoria);
+			Assert.AreEqual(transaccion.Monto, 100);
+		}
 	}
 }
