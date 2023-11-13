@@ -291,5 +291,13 @@ namespace DomainTest
 			Transaccion transaccion = new Transaccion();
 			transaccion.CategoriaTransaccion = null;
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_ModificarMonto_Excepcion()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.ModificarMonto(10.11);
+		}
 	}
 }
