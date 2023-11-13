@@ -32,25 +32,10 @@
 			<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
 				<h1 style="padding-left:6px">Seleccione un mes y de click.</h1>
 			</div>
-			<div>
-				@(reporteIngresosEgresos == null)
-			</div>
 		} else
 		{
 			<div style="display: flex; width: 100%; position: relative; left: 20%">
 				<MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@dias" Width="100%" Height="500px"></MudChart>
-			</div>
-			<div>
-				@(ingresos.Length)
-			</div>
-			<div>
-				@(egresos[11])
-			</div>
-			<div>
-				@(dias.Length)
-			</div>
-			<div>
-				@(reporteIngresosEgresos == null)
 			</div>
 			<table class="min-w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
