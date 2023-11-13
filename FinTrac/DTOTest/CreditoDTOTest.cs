@@ -25,8 +25,8 @@ namespace DTOTest
 		public void CreditoDTO_Tiene_CreditoDisponible()
 		{
 			var creditoDTO = new CreditoDTO();
-			creditoDTO.CreditoDisponible = 1000;
-			Assert.AreEqual(1000, creditoDTO.CreditoDisponible);
+			creditoDTO.Saldo = 1000;
+			Assert.AreEqual(1000, creditoDTO.Saldo);
 		}
 
 		[TestMethod]
