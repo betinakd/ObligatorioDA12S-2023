@@ -10,6 +10,13 @@ namespace Domain
 			CuentaMonetaria.IngresoMonetario(Monto);
 		}
 
+		public override void ModificarMonto(double nuevoMonto)
+		{
+			double diferencia = nuevoMonto - Monto;
+			CuentaMonetaria.IngresoMonetario(diferencia);
+			Monto = nuevoMonto;
+		}
+
 		public override string Tipo()
 		{
 			return "Ingreso";
