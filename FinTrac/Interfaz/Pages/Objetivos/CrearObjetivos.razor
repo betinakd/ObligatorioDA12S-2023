@@ -82,31 +82,18 @@
 			categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
 		}
 
-		try
-		{
-			ObjetivoDTO nuevoObjetivo = new ObjetivoDTO
-				{
-					Titulo = tituloObjetivo,
-					MontoMaximo = montoObjetivo,
-					Categorias = categorias2
-				};
-			try
+		ObjetivoDTO nuevoObjetivo = new ObjetivoDTO
 			{
-				ErrorMsg = controlador.CrearObjetivo(Id, nuevoObjetivo);
-				if (ErrorMsg == "")
-				{
-					string newHref = $"/home/{Id}/{Correo}/Objetivos";
-					NavigationManager.NavigateTo(newHref);
-				}
-			}
-			catch (DomainEspacioException e)
-			{
-				ErrorMsg = e.Message;
-			}
-		}
-		catch (DomainEspacioException e)
+				Titulo = tituloObjetivo,
+				MontoMaximo = montoObjetivo,
+				Categorias = categorias2
+			};
+
+		ErrorMsg = controlador.CrearObjetivo(Id, nuevoObjetivo);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = e.Message;
+			string newHref = $"/home/{Id}/{Correo}/Objetivos";
+			NavigationManager.NavigateTo(newHref);
 		}
 	}
 }

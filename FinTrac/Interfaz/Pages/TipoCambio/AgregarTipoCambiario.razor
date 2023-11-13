@@ -70,31 +70,18 @@
 
 	private void AgregarCambio()
 	{
-		try
-		{
-			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-			CambioDTO cambio = new CambioDTO()
-				{
-					Moneda = tipoMonedaSeleccionado,
-					Pesos = Pesos,
-					FechaDeCambio = FechaDeCambio.Date
-				};
-			try
+		var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+		CambioDTO cambio = new CambioDTO()
 			{
-				ErrorMsg = controlador.CrearCambio(Id, cambio);
-				if (ErrorMsg == "")
-				{
-					NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
-				}
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsg = ex.Message;
-			}
-		}
-		catch (DomainEspacioException ex)
+				Moneda = tipoMonedaSeleccionado,
+				Pesos = Pesos,
+				FechaDeCambio = FechaDeCambio.Date
+			};
+
+		ErrorMsg = controlador.CrearCambio(Id, cambio);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = ex.Message;
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
 		}
 	}
 }
