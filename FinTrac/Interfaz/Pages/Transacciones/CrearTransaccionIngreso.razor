@@ -28,14 +28,10 @@
 		</div>
 		<div>
 			<label class="text-gray-600">Categoría de la Transacción</label>
-			<select @onchange="SeleccionarCategoria" class=" border rounded-md px-2 py-1">
-				<option value="">Seleccione una Opcion</option>
+			<select @bind="categoria" class=" border rounded-md px-2 py-1">
 				@foreach (var categoria in categorias)
 				{
-					if (categoria.Tipo.Equals(TipoCategoria.Ingreso))
-					{
 						<option value="@categoria.Nombre">@categoria.Nombre</option>
-					}
 				}
 			</select>
 		</div>
@@ -58,10 +54,8 @@
 	private double inputMonto { get; set; } = 0;
 	private string inputCuenta { get; set; }
 	private string inputCategoria { get; set; }
-	private Espacio espacio = new Espacio();
-	private List<Categoria> categorias = new List<Categoria>();
-	private string categoria;
-	private string cuenta;
+	private List<CategoriaDTO> categorias;
+	private CategoriaDTO categoria;
 	ControladorTransaccion controlador;
 	private List<string> cuentas;
 	private string cuentaSeleccionada;
@@ -69,16 +63,10 @@
 	protected override void OnInitialized()
 	{
 		controlador = new ControladorTransaccion(UsuarioLogic, EspacioLogic);
-		espacio = EspacioLogic.FindEspacio(Id);
+		categorias = controlador.DarCategoriasIngreso(Persistencia.Id);
 		cuentas = controlador.DatosCuentasEspacio(Persistencia.Id);
 		cuentaSeleccionada = cuentas.FirstOrDefault();
-		categorias = espacio.Categorias;
-	}
-
-	private void SeleccionarCategoria(ChangeEventArgs e)
-	{
-		string selectedValue = e.Value.ToString();
-		categoria = selectedValue;
+		categoria = categorias.FirstOrDefault();
 	}
 
 	private void CrearTransaccion()
@@ -89,8 +77,7 @@
 				Titulo = inputTitulo,
 				Monto = inputMonto,
 				CuentaMonetaria = cuentaSeleccionada,
-				CategoriaTransaccion = categoria,
-
+				CategoriaTransaccion = categoria.Nombre,
 			};
 
 		 ErrorMsg = controlador.CrearTransaccionIngreso(Persistencia.Id, transaccion);
