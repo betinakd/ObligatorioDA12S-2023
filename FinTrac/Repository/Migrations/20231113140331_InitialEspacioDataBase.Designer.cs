@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(UsuariosDbContext))]
-    [Migration("20231111032413_InitialEspacioDataBase")]
+    [Migration("20231113140331_InitialEspacioDataBase")]
     partial class InitialEspacioDataBase
     {
         /// <inheritdoc />
@@ -360,7 +360,7 @@ namespace Repository.Migrations
                     b.HasOne("Domain.Espacio", "Espacio")
                         .WithMany("Categorias")
                         .HasForeignKey("EspacioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Espacio");

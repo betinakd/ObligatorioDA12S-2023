@@ -91,7 +91,7 @@ namespace Repository.Migrations
                         column: x => x.EspacioId,
                         principalTable: "Espacios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

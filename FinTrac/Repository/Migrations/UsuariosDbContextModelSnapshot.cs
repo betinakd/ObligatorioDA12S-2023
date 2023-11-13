@@ -357,7 +357,7 @@ namespace Repository.Migrations
                     b.HasOne("Domain.Espacio", "Espacio")
                         .WithMany("Categorias")
                         .HasForeignKey("EspacioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Espacio");
