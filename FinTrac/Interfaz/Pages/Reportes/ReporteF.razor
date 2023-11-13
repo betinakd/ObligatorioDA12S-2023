@@ -27,22 +27,30 @@
 </div>
 <div class="mt-4">
 	<div class="flex flex-col space-y-2">
-		@if (reporteIngresosEgresos == null)
+		@if (!clickDado)
 		{
 			<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
-				<h1 style="padding-left:6px">No hay transacciones que permitan esta operacion.</h1>
+				<h1 style="padding-left:6px">Seleccione un mes y de click.</h1>
+			</div>
+			<div>
+				@(reporteIngresosEgresos == null)
 			</div>
 		} else
 		{
 			<div style="display: flex; width: 100%; position: relative; left: 20%">
-				<MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@XAxisLabels" Width="100%" Height="500px"></MudChart>
-				<MudText Typo="Typo.h6">Grafico de ingresos y egresos por dia.</MudText>
+				<MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@dias" Width="100%" Height="500px"></MudChart>
 			</div>
 			<div>
-				@(ingresos[10])
+				@(ingresos.Length)
 			</div>
 			<div>
-				@(egresos[10])
+				@(egresos[11])
+			</div>
+			<div>
+				@(dias.Length)
+			</div>
+			<div>
+				@(reporteIngresosEgresos == null)
 			</div>
 			<table class="min-w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
@@ -84,18 +92,75 @@
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
 	public Espacio espacio { get; set; }
-	public List<IngresoEgreso> reporteIngresosEgresos { get; set; }
-	public static string[] dias { get; set; }
-	public static double[] egresos { get; set; }
-	public static double[] ingresos { get; set; }
-	public Reporte reporte = new Reporte();
-	public List<ChartSeries> Series = new List<ChartSeries>()
+	public static List<IngresoEgreso> reporteIngresosEgresos { get; set; }
+	public string[] dias { get; set; }
+
+	public static double[] egresos
 	{
-		new ChartSeries() { Name = "Series 1", Data = egresos },
-		new ChartSeries() { Name = "Series 2", Data = ingresos },
-	};
-	public string[] XAxisLabels = dias;
-	public int Index = -1;
+		get
+		{
+			if (reporteIngresosEgresos == null)
+			{
+				double[] egresosTotales = new double[1];
+				egresosTotales[0] = 8;
+				return egresosTotales;
+			} else
+			{
+				double[] egresosTotales = new double[reporteIngresosEgresos.Count];
+				int index = 0;
+				foreach (IngresoEgreso ie in reporteIngresosEgresos)
+				{
+					egresosTotales[index] = ie.Egresos;
+					index++;
+				}
+				return egresosTotales;
+			}
+		}
+	}
+	public static double[] ingresos
+	{
+		get
+		{
+			if (reporteIngresosEgresos == null)
+			{
+				double[] ingresosTotales = new double[1];
+				ingresosTotales[0] = 3;
+				return ingresosTotales;
+			}
+			else
+			{
+				double[] ingresosTotales = new double[reporteIngresosEgresos.Count];
+				int index = 0;
+				foreach (IngresoEgreso ie in reporteIngresosEgresos)
+				{
+					ingresosTotales[index] = ie.Ingresos;
+					index++;
+				}
+				return ingresosTotales;
+			}
+		}
+	}
+
+
+	public List<ChartSeries> Series
+	{
+		get
+		{
+			List<ChartSeries> SeriesTotal = new List<ChartSeries>()
+			{
+				new ChartSeries() { Name = "Egresos", Data = egresos },
+				new ChartSeries() { Name = "Ingresos", Data = ingresos },
+			};
+			return SeriesTotal;
+		}
+	}
+
+	public Reporte reporte = new Reporte();
+
+	public bool clickDado { get; set; }
+
+
+	public int Index = 1;
 	public string mesElegido
 	{
 		get;
@@ -112,40 +177,23 @@
 
 	public void generarReporte()
 	{
+		clickDado = true;
 		reporteIngresosEgresos = reporte.ReporteIngresosEgresos(mesEnInt);
-		generarDatos();
-	}
-
-	public void generarDatos()
-	{
-
 		dias = new string[reporteIngresosEgresos.Count];
-		for (int i = 1; i <= dias.Length; i++)
-		{
-			dias[i - 1] = i.ToString();
-		}
-		egresos = new double[reporteIngresosEgresos.Count];
 		int index = 0;
 		foreach (IngresoEgreso ie in reporteIngresosEgresos)
 		{
-			egresos[index] = ie.Egresos;
+			dias[index] = (index + 1).ToString();
 			index++;
-		}
-		int index2 = 0;
-		ingresos = new double[reporteIngresosEgresos.Count];
-		foreach (IngresoEgreso ie in reporteIngresosEgresos)
-		{
-			ingresos[index2] = ie.Ingresos;
-			index2++;
 		}
 	}
 
 	protected override void OnInitialized()
 	{
+		clickDado = false;
 		mesElegido = "11";
 		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
 		reporte.MiEspacio = espacio;
 		reporteIngresosEgresos = reporte.ReporteIngresosEgresos(mesEnInt);
-		generarDatos();
 	}
 }
