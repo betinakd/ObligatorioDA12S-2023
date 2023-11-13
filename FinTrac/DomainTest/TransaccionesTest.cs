@@ -110,13 +110,6 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Transaccion_Clon()
-		{
-			transaccion1.ClonTransaccion();
-		}
-
-		[TestMethod]
 		public void EncontrarCambio_Otra_Fecha()
 		{
 			Espacio espacio = new Espacio();
@@ -281,6 +274,14 @@ namespace DomainTest
 				},
 			};
 			transaccion.EjecutarTransaccion();
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_Tiene_Cuenta_Nula_Excepcion()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.CuentaMonetaria = null;
 		}
 	}
 }
