@@ -18,7 +18,6 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 
 <h4 style="left: 3%; position: relative" class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Transacciones de costos:</h4>
 
-<p style="color:green">@ExitoMsgC</p>
 <div style="width: 95%; left: 3%" class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table">
 		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -91,7 +90,6 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 <br>
 <h4 style="left: 3%; position: relative" class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Transacciones de ingresos:</h4>
 
-<p style="color:green">@ExitoMsgI</p>
 <div style="width: 95%; left: 3%" class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table">
 		<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -166,8 +164,6 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; }
-	private string ExitoMsgI { get; set; }
-	private string ExitoMsgC { get; set; }
 	private ControladorTransaccion controlador;
 	private List<TransaccionDTO> datosTransaccion;
 
@@ -179,13 +175,13 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 
 	private void ClonarTransaccionIngreso(TransaccionDTO transaccion)
 	{
-		ExitoMsgI = controlador.ClonarTransaccion(Persistencia.Id, transaccion);
+		controlador.CrearTransaccionIngreso(Persistencia.Id, transaccion);
 		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
 	}
 
 	private void ClonarTransaccionCosto(TransaccionDTO transaccion)
 	{
-		ExitoMsgC = controlador.ClonarTransaccion(Persistencia.Id, transaccion);
+		controlador.CrearTransaccionCosto(Persistencia.Id, transaccion);
 		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
 	}
 

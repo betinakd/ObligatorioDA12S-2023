@@ -733,8 +733,8 @@ namespace ControladorTest
 			string mensaje = controladorTransaccion.ModificarTransaccion(1, transModificada);
 
 			Assert.AreEqual("", mensaje);
-			Assert.AreEqual(transaccion.CategoriaTransaccion,categoria2);
-			Assert.AreEqual(transModificada.Monto,transaccion.Monto);
+			Assert.AreEqual(transaccion.CategoriaTransaccion, categoria2);
+			Assert.AreEqual(transModificada.Monto, transaccion.Monto);
 		}
 
 		[TestMethod]

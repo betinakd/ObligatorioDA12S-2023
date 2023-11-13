@@ -48,7 +48,6 @@
 	private TransaccionDTO transaccion;
 	private ControladorTransaccion controlador;
 
-
 	protected override void OnInitialized()
 	{
 		controlador = new ControladorTransaccion(UsuarioLogic,EspacioLogic);
@@ -60,14 +59,16 @@
 
 	private void ModificarTransaccion()
 	{
-		// ErrorMsg = inputCategoria;
 		TransaccionDTO modificacion = new TransaccionDTO()
 		{
 			Id = IdTrans,
 			CategoriaTransaccion = inputCategoria,
 			Monto = inputMonto,
 		};
-		ErrorMsg=controlador.ModificarTransaccion(Persistencia.Id, modificacion);
-		// ErrorMsg = modificacion.CategoriaTransaccion;
+		ErrorMsg = controlador.ModificarTransaccion(Persistencia.Id, modificacion);
+		if (ErrorMsg.Equals(""))
+		{
+			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
+		}
 	}
 }

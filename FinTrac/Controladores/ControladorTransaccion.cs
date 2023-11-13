@@ -221,19 +221,5 @@ namespace Controlador
 			}
 			return errorMsj;
 		}
-
-		public string ClonarTransaccion(int espacioId, TransaccionDTO transaccion)
-		{
-			string ErrorMsg = "";
-			if (transaccion.Tipo.Equals("Costo"))
-			{
-				ErrorMsg = CrearTransaccionCosto(espacioId, transaccion);
-			}
-			else
-			{
-				ErrorMsg = CrearTransaccionIngreso(espacioId, transaccion);
-			}
-			return ErrorMsg;
-		}
 	}
 }
