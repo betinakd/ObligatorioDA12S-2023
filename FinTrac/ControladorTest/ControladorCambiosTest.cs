@@ -83,5 +83,19 @@ namespace ControladorTest
 			Assert.AreEqual(1, cambios.Count);
 			Assert.AreEqual(1, cambios[0].Id);
 		}
+
+		[TestMethod]
+		public void ControladorCambios_CrearCambio()
+		{
+			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
+			CambioDTO cambioDTO = new CambioDTO()
+			{
+				Moneda = TipoCambiarioDTO.Dolar,
+				FechaDeCambio = new DateTime(2021, 10, 10),
+				Pesos = 100
+			};
+			string msjError = controladorTest.CrearCambio(1, cambioDTO);
+			Assert.AreEqual("", msjError);
+		}
 	}
 }
