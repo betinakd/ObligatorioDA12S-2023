@@ -123,5 +123,13 @@ namespace Controlador
 		{
 			return TipoCategoriaDTO.Costo;
 		}
+
+		public string NombreAdmin(int Id)
+		{
+			string nombreAdmin = "";
+			Espacio espacio = _objetivoLogic.FindEspacio(Id);
+			nombreAdmin = espacio.Admin.Nombre;
+			return nombreAdmin;
+		}
 	}
 }
