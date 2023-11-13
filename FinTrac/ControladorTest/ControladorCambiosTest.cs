@@ -57,5 +57,13 @@ namespace ControladorTest
 			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
+
+		[TestMethod]
+		public void ControladorCambios_CambiosDeEspacio()
+		{
+			ControladorCambios controladorTest = new ControladorCambios(_espacioLogic);
+			List<CambioDTO> cambios = controladorTest.CambiosDeEspacio(1);
+			Assert.AreEqual(0, cambios.Count);
+		}
 	}
 }
