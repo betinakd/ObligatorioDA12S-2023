@@ -57,6 +57,31 @@ namespace Controlador
 			return msjError;
 		}
 
+		public string ModificarCambio(int id, CambioDTO cambioDTO, double valor)
+		{
+			string msjError = "";
+			Espacio espacio = _cambioLogic.FindEspacio(id);
+			Cambio cambio = Cambiar_A_Cambio(id, cambioDTO.Id);
+			cambio.Pesos = valor;
+			_cambioLogic.UpdateEspacio(espacio);
+			return msjError;
+		}
+
+		private Cambio Cambiar_A_Cambio(int idEspacio, int idCambio)
+		{
+			Cambio cambioResultado = null;
+			Espacio espacio = _cambioLogic.FindEspacio(idEspacio);
+			List<Cambio> cambios = espacio.Cambios;
+			foreach (Cambio cambio in cambios)
+			{
+				if (cambio.Id == idCambio)
+				{
+					cambioResultado = cambio;
+				}
+			}
+			return cambioResultado;
+		}
+
 		private TipoCambiario Cambiar_TipoCambiario(TipoCambiarioDTO tipoDTO)
 		{
 			TipoCambiario tipoResulatado = TipoCambiario.Dolar;
