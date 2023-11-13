@@ -205,7 +205,8 @@ namespace Controlador
 		public string ModificarTransaccion(int espacioId, TransaccionDTO transaccion)
 		{
 			string errorMsj = "";
-
+			try
+			{
 				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transaccion.CategoriaTransaccion);
 				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 				List<Transaccion> transacciones = espacio.Transacciones;
@@ -213,7 +214,11 @@ namespace Controlador
 				tranModificar.CategoriaTransaccion = categoria;
 				tranModificar.ModificarMonto(transaccion.Monto);
 				_espacioLogic.UpdateEspacio(espacio);
-
+			}
+			catch (DomainEspacioException e)
+			{
+				errorMsj = e.Message;
+			}
 			return errorMsj;
 		}
 	}
