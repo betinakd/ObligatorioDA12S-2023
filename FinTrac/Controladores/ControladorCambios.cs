@@ -39,15 +39,21 @@ namespace Controlador
 			string msjError = "";
 			Espacio espacio = _cambioLogic.FindEspacio(id);
 			TipoCambiario tipo = Cambiar_TipoCambiario(cambioDTO.Moneda);
-			Cambio nuevoCambio = new Cambio()
+			try
 			{
-				Moneda = tipo,
-				FechaDeCambio = cambioDTO.FechaDeCambio,
-				Pesos = cambioDTO.Pesos
-			};
-			espacio.AgregarCambio(nuevoCambio);
-			_cambioLogic.UpdateEspacio(espacio);
-			
+				Cambio nuevoCambio = new Cambio()
+				{
+					Moneda = tipo,
+					FechaDeCambio = cambioDTO.FechaDeCambio,
+					Pesos = cambioDTO.Pesos
+				};
+				espacio.AgregarCambio(nuevoCambio);
+				_cambioLogic.UpdateEspacio(espacio);
+			}
+			catch (DomainEspacioException e)
+			{
+				msjError = e.Message;
+			}
 			return msjError;
 		}
 
