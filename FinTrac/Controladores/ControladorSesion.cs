@@ -34,7 +34,8 @@ namespace Controlador
 		public UsuarioDTO DarUsuarioLogeado(string correo, string contrasena)
 		{
 			UsuarioDTO usuarioDTO = new UsuarioDTO();
-
+			try
+			{
 				Usuario usuario = _usuarioLogic.UsuarioByCorreoContrasena(correo, contrasena);
 				usuarioDTO.Nombre = usuario.Nombre;
 				usuarioDTO.Correo = usuario.Correo;
@@ -42,7 +43,10 @@ namespace Controlador
 				usuarioDTO.Direccion = usuario.Direccion;
 				usuarioDTO.Contrasena = usuario.Contrasena;
 				usuarioDTO.IdEspacioPrincipal = usuario.IdEspacioPrincipal;
-
+			}
+			catch (BussinesLogicUsuarioException ex)
+			{
+			}
 			return usuarioDTO;
 		}
 	}
