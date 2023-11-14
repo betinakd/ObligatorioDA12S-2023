@@ -1,16 +1,20 @@
 ﻿using Excepcion;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
 	public class Transaccion
 	{
 		private string _titulo;
+		private DateTime _fechaCreacion = DateTime.Now;
+		private double _monto;
+		private Cuenta _cuentaMonetaria;
+		private Categoria _categoriaTransaccion;
 		public int Id { get; set; }
 		public int CategoriaId { get; set; }
 		public int CuentaId { get; set; }
 		public int EspacioId { get; set; }
 		public Espacio Espacio { get; set; }
+		public TipoCambiario Moneda { get; set; }
 		public string Titulo
 		{
 			get
@@ -24,7 +28,6 @@ namespace Domain
 				_titulo = value;
 			}
 		}
-		private DateTime _fechaCreacion = DateTime.Now;
 		public DateTime FechaTransaccion
 		{
 			get
@@ -36,7 +39,6 @@ namespace Domain
 				_fechaCreacion = value;
 			}
 		}
-		private double _monto;
 		public double Monto
 		{
 			get
@@ -50,8 +52,6 @@ namespace Domain
 				_monto = value;
 			}
 		}
-		public TipoCambiario Moneda { get; set; }
-		private Cuenta _cuentaMonetaria;
 		public Cuenta CuentaMonetaria
 		{
 			get
@@ -65,7 +65,6 @@ namespace Domain
 				_cuentaMonetaria = value;
 			}
 		}
-		private Categoria _categoriaTransaccion;
 		public Categoria CategoriaTransaccion
 		{
 			get
