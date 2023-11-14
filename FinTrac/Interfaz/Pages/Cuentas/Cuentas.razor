@@ -246,7 +246,7 @@
 		}
 
 	}
-
+	
 	private void ModificarCuentaFecha(CreditoDTO cuenta)
 	{
 		CreditoDTO credito = new CreditoDTO()
@@ -259,7 +259,7 @@
 				NumeroTarjeta = cuenta.NumeroTarjeta,
 				FechaCierre = inputFechaCierre
 			};
-		ErrorMsgFecha = controlador.ModificarCredito(Persistencia.Id, credito);	
+		ErrorMsgFecha = controlador.ModificarCreditoFechaCierre(Persistencia.Id, credito);
 		if (ErrorMsgFecha.Equals(""))
 		{
 			mostrarModificar = false;

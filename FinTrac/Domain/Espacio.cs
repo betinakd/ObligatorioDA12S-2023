@@ -198,6 +198,5 @@ namespace Domain
 			Cuenta modificada = Cuentas.Find(c => c.Id == modificacion.Id);
 			modificada.Modificar(modificacion);
 		}
-
     }
 }
