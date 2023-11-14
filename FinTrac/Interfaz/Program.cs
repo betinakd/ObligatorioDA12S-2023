@@ -29,6 +29,8 @@ builder.Services.AddScoped<ControladorHome>();
 builder.Services.AddScoped<ControladorObjetivos>();
 builder.Services.AddScoped<ControladorCategorias>();
 builder.Services.AddScoped<ControladorCambios>();
+builder.Services.AddScoped<ControladorSesion>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

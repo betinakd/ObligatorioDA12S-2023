@@ -29,7 +29,7 @@ namespace BussinesLogic
 		{
 			Usuario usuario = _repository.Find(u => u.Correo == correo);
 
-			if (usuario != null && usuario.Contrasena == contrasena)
+			if (usuario != null && usuario.Contrasena.Equals(contrasena))
 			{
 				return usuario;
 			}
