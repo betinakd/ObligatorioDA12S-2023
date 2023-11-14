@@ -1,6 +1,6 @@
 ﻿@page "/"
 @layout LoginLayout
-@inject ControladorSesion controlador;
+@inject ControladorSesion controladorSesion;
 <PageTitle>FinTrac Ingreso de Usuario</PageTitle>
 
 <TituloFintec TituloVerde="FinTrac" />
@@ -51,22 +51,15 @@
 	public string ErrorMsg { get; set; } = "";
 	private UsuarioDTO usuarioLogeado;
 
-	public void LimpiarInputs()
-	{
-		Correo = "";
-		Password = "";
-	}
-
 	public void ClickLogin()
 	{
-		ErrorMsg = controlador.ValidarInicioSesion(Correo, Password);
-		// if (ErrorMsg.Equals(""))
-		// {
-		// 	usuarioLogeado = controlador.DarUsuarioLogeado(Correo, Password);
-		// 	Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
-		// 	Persistencia.Correo = usuarioLogeado.Correo;
-		// 	NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
-		// }
-		// LimpiarInputs();
+		ErrorMsg = controladorSesion.ValidarInicioSesion(Correo, Password);
+		if (ErrorMsg.Equals(""))
+		{
+			usuarioLogeado = controladorSesion.DarUsuarioLogeado(Correo, Password);
+			Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
+			Persistencia.Correo = usuarioLogeado.Correo;
+			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
+		}
 	}
 }
