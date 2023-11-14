@@ -516,5 +516,39 @@ namespace BussinesLogicTest
 
 			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Transacciones.Contains(transaccion));
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(BusinessLogicEspacioException))]
+		public void EspacioLogic_Lanza_Excepcion_Al_Crear_Cuenta_Saldo_Menor_Cero()
+		{
+			Usuario admin = new Usuario
+			{
+				IdEspacioPrincipal = 1,
+				Nombre = "test",
+				Apellido = "test",
+				Direccion = "address2",
+				Correo = "test@gmail.com",
+				Contrasena = "123456789Csss"
+			};
+			Espacio espacio = new Espacio
+			{
+				Id = 1,
+				Nombre = "Test",
+				Admin = admin
+			};
+			Cuenta credito = new Credito()
+			{
+				Id = 2,
+				BancoEmisor = "CreditoTest",
+				Saldo = -100,
+				FechaCreacion = DateTime.Now,
+				NumeroTarjeta = "1534",
+				FechaCierre = new DateTime(2026, 1, 1),
+				Moneda = TipoCambiario.Dolar,
+			};
+			
+			espacioLogic.AddEspacio(espacio);
+			espacioLogic.CrearCuenta(espacio.Id, credito);
+		}
 	}
 }
