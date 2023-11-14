@@ -151,5 +151,30 @@ namespace ControladorTest
 			UsuarioDTO resultado = controladorTest.DarUsuarioLogeado("pedro@gmail.com", "AAAAaaaHd");
 			Assert.AreEqual(null, resultado.Nombre);
 		}
+
+		public void ControladorSesion_Da_EspacioDTO_Actual_Con_Espacio_Id()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			_espacioLogic.AddEspacio(espacio);
+			ControladorSesion controladorTest = new ControladorSesion(_usuarioLogic, _espacioLogic);
+			EspacioDTO resultado = controladorTest.EspacioActual(1);
+			Assert.AreEqual("Espacio", resultado.Nombre);
+			Assert.AreEqual(1, resultado.Id);
+			Assert.AreEqual(usuario.Correo, resultado.Admin.Correo);
+		}
 	}
 }
