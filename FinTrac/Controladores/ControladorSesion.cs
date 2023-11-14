@@ -31,6 +31,19 @@ namespace Controlador
 			return errorMsj;
 		}
 
+		public UsuarioDTO DarUsuarioLogeado(string correo, string contrasena)
+		{
+			UsuarioDTO usuarioDTO = new UsuarioDTO();
 
+				Usuario usuario = _usuarioLogic.UsuarioByCorreoContrasena(correo, contrasena);
+				usuarioDTO.Nombre = usuario.Nombre;
+				usuarioDTO.Correo = usuario.Correo;
+				usuarioDTO.Apellido = usuario.Apellido;
+				usuarioDTO.Direccion = usuario.Direccion;
+				usuarioDTO.Contrasena = usuario.Contrasena;
+				usuarioDTO.IdEspacioPrincipal = usuario.IdEspacioPrincipal;
+
+			return usuarioDTO;
+		}
 	}
 }
