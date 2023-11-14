@@ -49,5 +49,25 @@ namespace Controlador
 			}
 			return usuarioDTO;
 		}
+
+		public EspacioDTO EspacioActual(int idEspacio)
+		{
+			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			UsuarioDTO adminDTO = new UsuarioDTO()
+			{
+				Nombre = espacio.Admin.Nombre,
+				Apellido = espacio.Admin.Apellido,
+				Correo = espacio.Admin.Correo,
+				Direccion = espacio.Admin.Direccion,
+				Contrasena = espacio.Admin.Contrasena
+			};
+			EspacioDTO espacioDTO = new EspacioDTO()
+			{
+				Id = espacio.Id,
+				Nombre = espacio.Nombre,
+				Admin = adminDTO
+			};
+			return espacioDTO;
+		}
 	}
 }
