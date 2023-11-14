@@ -221,8 +221,8 @@ namespace ControladorTest
 				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
 			};
 			_espacioLogic.AddEspacio(espacio);
-			string nombre = controladorTest.NombreAdmin(espacio.Id);
-			Assert.AreEqual("Juan", nombre);
+			string nombre = controladorTest.EspacioActual(espacio.Id);
+			Assert.AreEqual("Espacio1", nombre);
 		}
 
 		[TestMethod]
