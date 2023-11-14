@@ -1,10 +1,8 @@
 ﻿@page "/{objetivoId:int}/{MontoMaximo:double}/{Id:int}/objetivo/{Token}"
 @using DTO;
-@layout CompartirObjetivoDeGastosLayout
+@layout LoginLayout
 <PageTitle>FinTrac Objetivos</PageTitle>
 <TituloRosado Titulo="Objetivo de gasto"></TituloRosado>
-<EspacioActual></EspacioActual>
-
 
 @if (objetivo != null)
 {
@@ -47,9 +45,16 @@
 	}
 	else
 	{
-		<h1>Error al compartir objetivo de gasto</h1>
 		<br />
-		<h3>Lo sentimos, el token utilizado no está disponible.</h3>
+		<div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+			<svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+			</svg>
+			<div>
+				<strong>Error al compartir objetivo de gasto</strong>
+				<p>Lo sentimos, el token utilizado no está disponible</p>
+			</div>
+		</div>
 	}
 }
 
@@ -81,6 +86,6 @@
 				}
 			}
 		}
-		nombreAdmin = controlador.NombreAdmin(Id);
+		nombreAdmin = controlador.EspacioActual(Id);
 	}
 }
