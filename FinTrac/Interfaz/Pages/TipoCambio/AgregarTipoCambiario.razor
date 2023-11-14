@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/AgregarTipoCambiario"
-@using DTO;
+@inject ControladorCambios controlador;
 
 <PageTitle>FinTrac Agregar Tipo Cambiario</PageTitle>
 <TituloRosado Titulo="Agregar Tipo Cambiario"
@@ -13,7 +13,6 @@
 			<td><label class="text-gray-600">Moneda</label></td>
 			<td>
 				<select @onchange="SeleccionarMoneda" class="text-600">
-					<option value="">Seleccione una Opcion</option>
 					@foreach (var moneda in monedas.Where(m => m != TipoCambiarioDTO.PesosUruguayos))
 					{
 						<option value="@moneda">@moneda</option>
@@ -54,11 +53,9 @@
 	private List<TipoCambiarioDTO> monedas;
 	private CambioDTO nuevoCambio = new CambioDTO();
 	private List<CambioDTO> cambios = new List<CambioDTO>();
-	private ControladorCambios controlador;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCambios(EspacioLogic);
 		cambios = controlador.CambiosDeEspacio(Persistencia.Id);
 		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
 	}

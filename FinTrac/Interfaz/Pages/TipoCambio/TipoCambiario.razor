@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/TipoCambiario"
-@using DTO;
+@inject ControladorCambios controlador;
 
 <PageTitle>FinTrac Tipo Cambiario</PageTitle>
 <TituloRosado Titulo="Tipo Cambiario del espacio."
@@ -89,12 +89,10 @@
 	private double inputValor { get; set; }
 	private bool modificarValor { get; set; } = false;
 	private CambioDTO cambioModificar;
-	private ControladorCambios controlador;
 	private List<CambioDTO> cambios;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCambios(EspacioLogic);
 		cambios = controlador.CambiosDeEspacio(Persistencia.Id);
 	}
 

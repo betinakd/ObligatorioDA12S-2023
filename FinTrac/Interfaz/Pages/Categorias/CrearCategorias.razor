@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCategorias"
-@using DTO;
+@inject ControladorCategorias controlador;
 
 <PageTitle>FinTrac Crear Categorias</PageTitle>
 <TituloRosado Titulo="Cree una categoría." Subtitulo="Cree la categoría para el espacio seleccionado."></TituloRosado>
@@ -54,13 +54,11 @@
 	private string nombreCategoria;
 	private bool estadoActivo;
 	private DateTime fechaCreacion = DateTime.Today;
-	private ControladorCategorias controlador;
 	private DTO.EnumsDTO.TipoCategoriaDTO tipo;
 	private List<CategoriaDTO> categorias = new List<CategoriaDTO>();
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCategorias(EspacioLogic);
 		categorias = controlador.CategoriasDeEspacio(Id);
 	}
 

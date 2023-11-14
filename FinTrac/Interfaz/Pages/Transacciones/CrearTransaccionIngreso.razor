@@ -1,4 +1,6 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionIngreso"
+@inject ControladorTransaccion controlador;
+
 <PageTitle>FinTrac Transacción</PageTitle>
 <TituloRosado Titulo="Crear Transacción de Ingreso" Subtitulo="Cree sus transacciones de ingreso."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -54,13 +56,11 @@
 	private string inputCategoria { get; set; }
 	private List<CategoriaDTO> categorias;
 	private CategoriaDTO categoria;
-	ControladorTransaccion controlador;
 	private List<string> cuentas;
 	private string cuentaSeleccionada;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorTransaccion(EspacioLogic);
 		categorias = controlador.DarCategoriasIngreso(Persistencia.Id);
 		cuentas = controlador.DatosCuentasEspacio(Persistencia.Id);
 	}

@@ -1,5 +1,5 @@
 ﻿@page "/{objetivoId:int}/{MontoMaximo:double}/{Id:int}/objetivo/{Token}"
-@using DTO;
+@inject ControladorObjetivos controlador;
 @layout LoginLayout
 <PageTitle>FinTrac Objetivos</PageTitle>
 <TituloRosado Titulo="Objetivo de gasto"></TituloRosado>
@@ -66,13 +66,11 @@
 	[Parameter] public int objetivoId { get; set; }
 	private ObjetivoDTO objetivo;
 	private double montoAcumulado = 0;
-	private ControladorObjetivos controlador;
 	private List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
 	private string nombreAdmin;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorObjetivos(EspacioLogic);
 		objetivos = controlador.ObjetivosDeEspacio(Id);
 		objetivo = objetivos.FirstOrDefault(o => o.Id == objetivoId);
 		var objetivosDeGasto = controlador.ObjetivosDeGastos(Id, objetivoId);

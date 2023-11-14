@@ -1,4 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/{idTrans:int}/ModificarTransaccionIngreso"
+@inject ControladorTransaccion controlador;
 
 <PageTitle>FinTrac Transacción</PageTitle>
 <TituloRosado Titulo="Modificar Transacción de Ingreso" Subtitulo="Modifiqué sus transacciones de ingreso."></TituloRosado>
@@ -45,11 +46,9 @@
 	private List<CategoriaDTO> categorias;
 	private CategoriaDTO categoria;
 	private TransaccionDTO transaccion;
-	private ControladorTransaccion controlador;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorTransaccion(EspacioLogic);
 		categorias = controlador.DarCategoriasIngreso(Persistencia.Id);
 		transaccion = controlador.DarTransaccion(Persistencia.Id, IdTrans);
 		inputMonto=transaccion.Monto;

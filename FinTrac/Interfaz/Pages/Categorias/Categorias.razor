@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Categorias"
-@using DTO;
+@inject ControladorCategorias controlador;
 
 <PageTitle>FinTrac Categorias</PageTitle>
 <TituloRosado Titulo="Categorias del espacio" Subtitulo="Cree y elimine categorías en el espacio."></TituloRosado>
@@ -98,13 +98,11 @@
 	private bool estadoActivo;
 	private CategoriaDTO categoriaSelec { get; set; }
 	private bool mostrarModificar = false;
-	private ControladorCategorias controlador;
 	string nombreValor { get; set; } = "";
 	private List<CategoriaDTO> categorias = new List<CategoriaDTO>();
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCategorias(EspacioLogic);
 		categorias = controlador.CategoriasDeEspacio(Id);
 	}
 

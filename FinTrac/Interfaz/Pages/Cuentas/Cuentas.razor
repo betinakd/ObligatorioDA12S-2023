@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Cuentas"
-
+@inject ControladorCuenta controlador;
 <div style="left: 3%; position: relative; width: 95%">
 	<PageTitle>FinTrac Cuentas</PageTitle>
 	<TituloRosado Titulo="Cuentas del espacio actual." Subtitulo="Cree elimine y modifique las cuentas del espacio."></TituloRosado>
@@ -196,13 +196,11 @@
 	private string inputNumTarjeta { get; set; } = "";
 	private string inputNombreBanco { get; set; } = "";
 	private DateTime inputFechaCierre { get; set; } = DateTime.Today;
-	private ControladorCuenta controlador;
 	private List<AhorroDTO> ahorros;
 	private List<CreditoDTO> creditos;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCuenta(EspacioLogic);
 		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
 		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 	}

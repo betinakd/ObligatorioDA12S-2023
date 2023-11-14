@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCuentaCredito"
-
+@inject ControladorCuenta controlador;
 <PageTitle>FinTrac Crear Cuenta de Crédito</PageTitle>
 <TituloRosado Titulo="Crear Cuenta de Crédito"
 			  Subtitulo="Creé la cuenta de crédito que deseé recuerde que el numero de tarjeta son 4 dígitos y monto debe ser mayor a 0."></TituloRosado>
@@ -62,12 +62,10 @@
 	private DateTime FechaCierre { get; set; } = DateTime.Now;
 	private TipoCambiarioDTO tipoMonedaSeleccionado;
 	private List<TipoCambiarioDTO> monedas;
-	private ControladorCuenta controlador;
 
 	protected override void OnInitialized()
 	{
 		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
-		controlador = new ControladorCuenta(EspacioLogic);
 	}
 
 	private void SeleccionarMoneda(ChangeEventArgs e)
