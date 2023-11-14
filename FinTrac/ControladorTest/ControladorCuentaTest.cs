@@ -911,5 +911,48 @@ namespace ControladorTest
 			Assert.AreEqual(creditoDTO.FechaCierre, credito.FechaCierre);
 			Assert.AreEqual("", mensaje);
 		}
+
+		[TestMethod]
+		public void ControladorCuenta_Modificar_FechaCierr_Lanza_Mensaje_De_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Credito credito = new Credito()
+			{
+				Id = 3,
+				BancoEmisor = "test",
+				NumeroTarjeta = "1234",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				FechaCierre = new DateTime(2026, 4, 5),
+			};
+			CreditoDTO creditoDTO = new CreditoDTO()
+			{
+				Id = 3,
+				BancoEmisor = "test",
+				NumeroTarjeta = "1234",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				FechaCierre = new DateTime(2001, 4, 5),
+			};
+			espacio.Cuentas.Add(credito);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
+			string mensaje = controladorTest.ModificarCreditoFechaCierre(espacio.Id, creditoDTO);
+			Assert.AreEqual("La fecha de cierre no puede ser menor a la fecha actual", mensaje);
+		}
 	}
 }
