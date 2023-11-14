@@ -65,5 +65,10 @@ namespace Domain
 		{
 			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
 		}
+
+		public virtual void ModificarFecha(DateTime fecha)
+		{
+			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+		}
 	}
 }
