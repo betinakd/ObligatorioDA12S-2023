@@ -5,13 +5,13 @@ namespace Domain
 {
     public class Objetivo
     {
+        private string _titulo;
+        private double _montoMaximo;
+		private string? _token;
+        private List<Categoria> _categorias = new List<Categoria>();
         public int Id { get; set; }
 		public int EspacioId { get; set; }
         public Espacio Espacio { get; set; }
-		private string _titulo;
-        private double _montoMaximo;
-		private string? _token;
-		private List<Categoria> _categorias = new List<Categoria>();
         public string Titulo 
         {
             get
