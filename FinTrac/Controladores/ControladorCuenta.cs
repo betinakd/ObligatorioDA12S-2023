@@ -137,12 +137,17 @@ namespace Controlador
 		public string ModificarCreditoFechaCierre(int espacioId, CreditoDTO ahorroModificado)
 		{
 			string mensaje = "";
-
+			try
+			{
 				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 				Cuenta cuenta = espacio.Cuentas.Find(cuenta => cuenta.Id == ahorroModificado.Id);
 				cuenta.ModificarFecha(ahorroModificado.FechaCierre);
 				_espacioLogic.UpdateEspacio(espacio);
-
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
 			return mensaje;
 		}
 
