@@ -127,5 +127,29 @@ namespace ControladorTest
 			Assert.AreEqual("Av test", resultado.Direccion);
 			Assert.AreEqual("TestTest12", resultado.Contrasena);
 		}
+
+		[TestMethod]
+		public void ControladorSesion_No_Da_Usuario_No_Existente_Logeado_Por_Correo_Contrasena()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			_espacioLogic.AddEspacio(espacio);
+			ControladorSesion controladorTest = new ControladorSesion(_usuarioLogic, _espacioLogic);
+			UsuarioDTO resultado = controladorTest.DarUsuarioLogeado("pedro@gmail.com", "AAAAaaaHd");
+			Assert.AreEqual(null, resultado.Nombre);
+		}
 	}
 }
