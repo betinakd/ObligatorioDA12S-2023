@@ -81,5 +81,13 @@ namespace DTOTest
 			transaccionDTO.CategoriaTransaccion = "Costo";
 			Assert.IsNotNull(transaccionDTO.CategoriaTransaccion);
 		}
+
+		[TestMethod]
+		public void TransaccionDTO_Tiene_Tipo()
+		{
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			transaccionDTO.Tipo = "Ingreso";
+			Assert.AreEqual("Ingreso", transaccionDTO.Tipo);
+		}
 	}
 }
