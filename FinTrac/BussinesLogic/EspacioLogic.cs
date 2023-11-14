@@ -115,8 +115,9 @@ namespace BussinesLogic
 
 		public void CrearCuenta(int idEspacio, Cuenta cuenta)
 		{
-			if (cuenta.Saldo <= 0) { 
-				throw new DomainEspacioException("El saldo de la cuenta debe ser mayor a 0");
+			if (cuenta.Saldo <= 0)
+			{
+				throw new BusinessLogicEspacioException("El saldo de la cuenta debe ser mayor a 0");
 			}
 			Espacio espacio = FindEspacio(idEspacio);
 			espacio.AgregarCuenta(cuenta);
