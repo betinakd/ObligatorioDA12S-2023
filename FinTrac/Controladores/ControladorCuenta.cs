@@ -217,6 +217,10 @@ namespace Controlador
 			{
 				mensaje = e.Message;
 			}
+			catch(BusinessLogicEspacioException e)
+			{
+				mensaje = e.Message;
+			}
 			return mensaje;
 		}
 	}
