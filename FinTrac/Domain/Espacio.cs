@@ -9,8 +9,7 @@ namespace Domain
 		{
 		}
 
-		public int Id { get; set; }
-		public int AdminId { get; set; }
+		private string _nombre;
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Categoria> _categorias = new List<Categoria>();
@@ -18,7 +17,8 @@ namespace Domain
 		private List<Transaccion> _transacciones = new List<Transaccion>();
 		private List<Objetivo> _objetivos = new List<Objetivo>();
 		private List<Cambio> _cambios = new List<Cambio>();
-		private string _nombre;
+		public int Id { get; set; }
+		public int AdminId { get; set; }
 		public string Nombre
 		{
 			get
@@ -82,7 +82,6 @@ namespace Domain
 				_usuariosInvitados = value;
 			}
 		}
-
 		public Usuario Admin
 		{
 			get

@@ -110,7 +110,7 @@ namespace ControladorTest
 		{
 			var usuario = new UsuarioDTO()
 			{
-				Correo = "",
+				Correo = "hola",
 				Nombre = "test",
 				Apellido = "Perez",
 				Contrasena = "123456789Aaa",
@@ -167,7 +167,7 @@ namespace ControladorTest
 		{
 			var usuario = new UsuarioDTO()
 			{
-				Correo = "",
+				Correo = "hola",
 				Nombre = "test",
 				Apellido = "Perez",
 				Contrasena = "123456789Aaa",

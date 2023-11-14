@@ -216,7 +216,7 @@ namespace ControladorTest
 				FechaCreacion = DateTime.Now
 			};
 			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2, "Categoria1");
-			Assert.AreEqual("Ya hay categorias con ese nombre.", msjError);
+			Assert.AreEqual("Ya existe una categoría con ese nombre", msjError);
 		}
 
 		[TestMethod]
