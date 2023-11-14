@@ -348,5 +348,22 @@ namespace DomainTest
 			};
 			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsCredito);
 		}
+
+		[TestMethod]
+		public void Credito_Modifica_FechaCierre()
+		{
+			var cuenta = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				BancoEmisor = "CuentaCreditoPrueba",
+				Saldo = 100.01,
+				NumeroTarjeta = "1234",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			cuenta.ModificarFecha(new System.DateTime(2026, 1, 1, 0, 0, 0));
+
+			Assert.AreEqual(cuenta.FechaCierre, new System.DateTime(2026, 1, 1, 0, 0, 0));
+		}
 	}
 }
