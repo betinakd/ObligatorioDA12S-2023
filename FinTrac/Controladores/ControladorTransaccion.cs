@@ -9,13 +9,11 @@ namespace Controlador
 {
 	public class ControladorTransaccion
 	{
-		private UsuarioLogic _usuarioLogic;
 		private EspacioLogic _espacioLogic;
 
-		public ControladorTransaccion(UsuarioLogic usuarioLogic, EspacioLogic espacioLogic)
+		public ControladorTransaccion(EspacioLogic espacioLogic)
 		{
 			_espacioLogic = espacioLogic;
-			_usuarioLogic = usuarioLogic;
 		}
 
 		public List<TransaccionDTO> TransaccionesDatos(int espacioId)
@@ -54,7 +52,7 @@ namespace Controlador
 			return datosCuentas;
 		}
 
-		private Cuenta DarCuentaSegunSusDato(int espacioId, string datoCuenta)
+		private Cuenta DarCuentaSegunSusDatos(int espacioId, string datoCuenta)
 		{
 			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 			List<Cuenta> cuentas = espacio.Cuentas;
@@ -62,7 +60,7 @@ namespace Controlador
 			return cuenta;
 		}
 
-		private Categoria DarCategoriaSegunSusDato(int espacioId, string datoCategoria)
+		private Categoria DarCategoriaSegunSusDatos(int espacioId, string datoCategoria)
 		{
 			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 			List<Categoria> categorias = espacio.Categorias;
@@ -75,8 +73,8 @@ namespace Controlador
 			string mensaje = "";
 			try
 			{
-				Cuenta cuenta = DarCuentaSegunSusDato(espacioId, transC.CuentaMonetaria);
-				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transC.CategoriaTransaccion);
+				Cuenta cuenta = DarCuentaSegunSusDatos(espacioId, transC.CuentaMonetaria);
+				Categoria categoria = DarCategoriaSegunSusDatos(espacioId, transC.CategoriaTransaccion);
 				Transaccion transaccion = new TransaccionIngreso()
 				{
 					CategoriaTransaccion = categoria,
@@ -100,8 +98,8 @@ namespace Controlador
 			string mensaje = "";
 			try
 			{
-				Cuenta cuenta = DarCuentaSegunSusDato(espacioId, transC.CuentaMonetaria);
-				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transC.CategoriaTransaccion);
+				Cuenta cuenta = DarCuentaSegunSusDatos(espacioId, transC.CuentaMonetaria);
+				Categoria categoria = DarCategoriaSegunSusDatos(espacioId, transC.CategoriaTransaccion);
 				Transaccion transaccion = new TransaccionCosto()
 				{
 					Titulo = transC.Titulo,
@@ -207,7 +205,7 @@ namespace Controlador
 			string errorMsj = "";
 			try
 			{
-				Categoria categoria = DarCategoriaSegunSusDato(espacioId, transaccion.CategoriaTransaccion);
+				Categoria categoria = DarCategoriaSegunSusDatos(espacioId, transaccion.CategoriaTransaccion);
 				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
 				List<Transaccion> transacciones = espacio.Transacciones;
 				Transaccion tranModificar = transacciones.Find(t => t.Id == transaccion.Id);

@@ -8,16 +8,16 @@ namespace Controlador
 {
 	public class ControladorCambios
 	{
-		private EspacioLogic _cambioLogic;
+		private EspacioLogic _espacioLogic;
 
-		public ControladorCambios(EspacioLogic cambioLogic)
+		public ControladorCambios(EspacioLogic espacioLogic)
 		{
-			_cambioLogic = cambioLogic;
+			_espacioLogic = espacioLogic;
 		}
 
 		public List<CambioDTO> CambiosDeEspacio(int id)
 		{
-			Espacio espacio = _cambioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.FindEspacio(id);
 			List<Cambio> cambios = espacio.Cambios;
 			List<CambioDTO> cambiosDTO = new List<CambioDTO>();
 			foreach (Cambio cambio in cambios)
@@ -37,7 +37,7 @@ namespace Controlador
 		public string CrearCambio(int id, CambioDTO cambioDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _cambioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.FindEspacio(id);
 			TipoCambiario tipo = Cambiar_TipoCambiario(cambioDTO.Moneda);
 			try
 			{
@@ -48,7 +48,7 @@ namespace Controlador
 					Pesos = cambioDTO.Pesos
 				};
 				espacio.AgregarCambio(nuevoCambio);
-				_cambioLogic.UpdateEspacio(espacio);
+				_espacioLogic.UpdateEspacio(espacio);
 			}
 			catch (DomainEspacioException e)
 			{
@@ -60,12 +60,12 @@ namespace Controlador
 		public string ModificarCambio(int id, CambioDTO cambioDTO, double valor)
 		{
 			string msjError = "";
-			Espacio espacio = _cambioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.FindEspacio(id);
 			Cambio cambio = Cambiar_A_Cambio(id, cambioDTO.Id);
 			try
 			{
 				cambio.Pesos = valor;
-				_cambioLogic.UpdateEspacio(espacio);
+				_espacioLogic.UpdateEspacio(espacio);
 			}
 			catch (DomainEspacioException e)
 			{
@@ -77,7 +77,7 @@ namespace Controlador
 		private Cambio Cambiar_A_Cambio(int idEspacio, int idCambio)
 		{
 			Cambio cambioResultado = null;
-			Espacio espacio = _cambioLogic.FindEspacio(idEspacio);
+			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
 			List<Cambio> cambios = espacio.Cambios;
 			foreach (Cambio cambio in cambios)
 			{
