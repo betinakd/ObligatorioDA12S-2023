@@ -13,10 +13,11 @@ namespace Domain
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
 		private DateTime _fechaCierre;
-		public DateTime FechaCierre {
-			get 
+		public DateTime FechaCierre
+		{
+			get
 			{
-				return _fechaCierre;	
+				return _fechaCierre;
 			}
 			set
 			{
@@ -42,8 +43,7 @@ namespace Domain
 				_bancoEmisor = value;
 			}
 		}
-
-	public string NumeroTarjeta
+		public string NumeroTarjeta
 		{
 			get
 			{
@@ -51,17 +51,18 @@ namespace Domain
 			}
 			set
 			{
-				if(!CaracterEsNumero(value))
+				const int LARGONUMEROTARJETA= 4;
+				if (!CaracterEsNumero(value))
 				{
 					throw new DomainEspacioException("El número de tarjeta debe ser numérico");
 				}
-				if (value.Length < 4)
+				if (value.Length < LARGONUMEROTARJETA)
 				{
 					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
 				}
-				if (value.Length > 4)
+				if (value.Length > LARGONUMEROTARJETA)
 				{
-					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
+					throw new DomainEspacioException("El número de tarjeta no puede tener mas de 4 caracteres");
 				}
 				_numeroTarjeta = value;
 			}
@@ -89,6 +90,7 @@ namespace Domain
 			string baseString = base.ToString();
 			return $"{baseString}{Saldo} - {NumeroTarjeta} - {BancoEmisor}";
 		}
+
 		public override bool Equals(object? obj)
 		{
 			if (obj == null || GetType() != obj.GetType())
@@ -103,8 +105,5 @@ namespace Domain
 		{
 			return int.TryParse(palabra, out int numero);
 		}
-
-
 	}
-
 }
