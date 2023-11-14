@@ -2,6 +2,7 @@
 using Domain;
 using Repository;
 using Controlador;
+using DTO;
 
 namespace ControladorTest
 {
@@ -98,6 +99,33 @@ namespace ControladorTest
 			ControladorSesion controladorTest = new ControladorSesion(_usuarioLogic, _espacioLogic);
 			string mensaje = controladorTest.ValidarInicioSesion("pedro@gmail.com", "AAAAaaaHd");
 			Assert.AreEqual("El usuario o la contraseña no son válidos.", mensaje);
+		}
+
+		public void ControladorSesion_Da_UsuarioDTO_Logeado_Por_Correo_Contrasena()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			_espacioLogic.AddEspacio(espacio);
+			ControladorSesion controladorTest = new ControladorSesion(_usuarioLogic, _espacioLogic);
+			UsuarioDTO resultado = controladorTest.DarUsuarioLogeado("test@gmail.com", "TestTest12");
+			Assert.AreEqual("Usuario", resultado.Nombre);
+			Assert.AreEqual("Test", resultado.Apellido);
+			Assert.AreEqual("test@gmail.com", resultado.Correo);
+			Assert.AreEqual("Av test", resultado.Direccion);
+			Assert.AreEqual("TestTest12", resultado.Contrasena);
 		}
 	}
 }
