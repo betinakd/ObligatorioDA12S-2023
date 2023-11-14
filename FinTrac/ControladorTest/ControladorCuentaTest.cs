@@ -799,5 +799,38 @@ namespace ControladorTest
 			Assert.AreEqual("El banco emisor no puede ser vacío", mensaje);
 		}
 
+		[TestMethod]
+		public void ControladorCuenta_No_Crea_CuentaAhorro_Saldo_Menor_Igual_Cero_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			AhorroDTO ahorroDTO = new AhorroDTO()
+			{
+				Id = 3,
+				Nombre = "cuenta",
+				Saldo = -100,
+				Moneda = DTO.EnumsDTO.TipoCambiarioDTO.Dolar,
+				FechaCreacion = DateTime.Now,
+			};
+
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
+			Assert.AreEqual(0, espacio.Cuentas.Count);
+			Assert.AreEqual("El saldo de la cuenta debe ser mayor a 0", mensaje);
+		}
 	}
 }
