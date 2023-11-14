@@ -134,6 +134,18 @@ namespace Controlador
 			return mensaje;
 		}
 
+		public string ModificarCreditoFechaCierre(int espacioId, CreditoDTO ahorroModificado)
+		{
+			string mensaje = "";
+
+				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+				Cuenta cuenta = espacio.Cuentas.Find(cuenta => cuenta.Id == ahorroModificado.Id);
+				cuenta.ModificarFecha(ahorroModificado.FechaCierre);
+				_espacioLogic.UpdateEspacio(espacio);
+
+			return mensaje;
+		}
+
 		private TipoCambiario ConversorMonedaDTO(TipoCambiarioDTO moneda)
 		{
 			TipoCambiario conversion;
