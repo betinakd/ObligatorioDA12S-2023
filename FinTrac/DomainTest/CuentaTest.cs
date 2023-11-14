@@ -149,5 +149,17 @@ namespace DomainTest
 			};
 			cuentaTest.TipoDeCuenta();
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Cuenta_Tiene_ModificarFecha_NoImplementado()
+		{
+			Cuenta cuentaTest = new Cuenta()
+			{
+				FechaCreacion = new DateTime(2015, 1, 1),
+				Moneda = TipoCambiario.Dolar,
+			};
+			cuentaTest.ModificarFecha(new DateTime(2050, 1, 1));
+		}
 	}
 }
