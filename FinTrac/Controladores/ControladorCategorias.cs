@@ -89,8 +89,15 @@ namespace Controlador
 			string errorMsj = "";
 			Espacio espacio = _categoriaLogic.FindEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
-			espacio.BorrarCategoria(categoria);
-			_categoriaLogic.UpdateEspacio(espacio);
+			try
+			{
+				espacio.BorrarCategoria(categoria);
+				_categoriaLogic.UpdateEspacio(espacio);
+			}
+			catch (DomainEspacioException e)
+			{
+				errorMsj = e.Message;
+			}
 			return errorMsj;
 		}
 
