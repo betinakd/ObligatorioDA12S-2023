@@ -13,10 +13,11 @@ namespace Domain
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
 		private DateTime _fechaCierre;
-		public DateTime FechaCierre {
-			get 
+		public DateTime FechaCierre
+		{
+			get
 			{
-				return _fechaCierre;	
+				return _fechaCierre;
 			}
 			set
 			{
@@ -43,7 +44,7 @@ namespace Domain
 			}
 		}
 
-	public string NumeroTarjeta
+		public string NumeroTarjeta
 		{
 			get
 			{
@@ -51,7 +52,7 @@ namespace Domain
 			}
 			set
 			{
-				if(!CaracterEsNumero(value))
+				if (!CaracterEsNumero(value))
 				{
 					throw new DomainEspacioException("El número de tarjeta debe ser numérico");
 				}
@@ -74,9 +75,14 @@ namespace Domain
 		public override void Modificar(Cuenta cuenta)
 		{
 			Credito credito = (Credito)cuenta;
+			FechaCierre = credito.FechaCierre;
 			BancoEmisor = credito.BancoEmisor;
 			NumeroTarjeta = credito.NumeroTarjeta;
-			FechaCierre = credito.FechaCierre;
+		}
+
+		public override void ModificarFecha(DateTime fecha)
+		{
+			FechaCierre = fecha;
 		}
 
 		public override TipoCuenta TipoDeCuenta()
