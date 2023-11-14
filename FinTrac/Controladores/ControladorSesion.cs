@@ -20,9 +20,14 @@ namespace Controlador
 		public string ValidarInicioSesion(string correo, string contrasena)
 		{
 			string errorMsj = "";
-
+			try
+			{
 				_usuarioLogic.UsuarioByCorreoContrasena(correo, contrasena);
-
+			}
+			catch (BussinesLogicUsuarioException ex)
+			{
+				errorMsj = ex.Message;
+			}
 			return errorMsj;
 		}
 
