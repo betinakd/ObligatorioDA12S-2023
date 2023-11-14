@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Repository;
 using Domain;
 using BussinesLogic;
-using Microsoft.AspNetCore.Hosting;
+using Controlador;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,15 @@ builder.Services.AddScoped<UsuarioLogic>();
 builder.Services.AddScoped<IRepository<Espacio>, EspacioMemoryRepository>();
 builder.Services.AddScoped<EspacioLogic>();
 builder.Services.AddSingleton<Persistencia>();
-
+builder.Services.AddScoped<ControladorRegistro>();
+builder.Services.AddScoped<ControladorUsuarios>();
+builder.Services.AddScoped<ControladorEspacios>();
+builder.Services.AddScoped<ControladorCuenta>();
+builder.Services.AddScoped<ControladorTransaccion>();
+builder.Services.AddScoped<ControladorHome>();
+builder.Services.AddScoped<ControladorObjetivos>();
+builder.Services.AddScoped<ControladorCategorias>();
+builder.Services.AddScoped<ControladorCambios>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
