@@ -4,28 +4,22 @@ namespace Domain
 {
 	public class TransaccionCosto : Transaccion
 	{
-		public override Transaccion ClonTransaccion()
+
+		public override void EjecutarTransaccion()
 		{
-			var clon = new TransaccionCosto()
-			{
-				Monto = this.Monto,
-				Titulo = this.Titulo,
-				Moneda = this.Moneda,
-				CategoriaTransaccion = this.CategoriaTransaccion,
-				CuentaMonetaria = this.CuentaMonetaria,
-				FechaTransaccion = DateTime.Today,
-			};
-			if (CuentaMonetaria is Ahorro)
-			{
-				Ahorro ahorro = (Ahorro)CuentaMonetaria;
-				ahorro.EgresoMonetario(this.Monto);
-			}
-			if (CuentaMonetaria is Credito)
-			{
-				Credito credito = (Credito)CuentaMonetaria;
-				credito.EgresoMonetario(this.Monto);
-			}
-			return clon;
+			CuentaMonetaria.EgresoMonetario(Monto);	
+		}
+
+		public override void ModificarMonto(double nuevoMonto)
+		{
+			double diferencia = nuevoMonto - Monto;
+			CuentaMonetaria.EgresoMonetario(diferencia);
+			Monto = nuevoMonto;
+		}
+
+		public override string Tipo()
+		{
+			return "Costo";
 		}
 	}
 }

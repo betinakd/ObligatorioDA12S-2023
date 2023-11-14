@@ -27,7 +27,7 @@ namespace Controlador
 				{
 					Id = ahorro.Id,
 					Nombre = ahorro.Nombre,
-					Monto = ahorro.Monto,
+					Saldo = ahorro.Saldo,
 					FechaCreacion = ahorro.FechaCreacion,
 					Moneda = ConversorMoneda(ahorro.Moneda),
 				})
@@ -49,7 +49,7 @@ namespace Controlador
 					NumeroTarjeta = credito.NumeroTarjeta,
 					FechaCreacion = credito.FechaCreacion,
 					FechaCierre = credito.FechaCierre,
-					CreditoDisponible = credito.CreditoDisponible,
+					Saldo = credito.Saldo,
 					Moneda = ConversorMoneda(credito.Moneda),
 				})
 				.ToList();
@@ -120,7 +120,7 @@ namespace Controlador
 			string mensaje = "";
 			try
 			{
-				Cuenta cuenta = new Credito
+				Credito cuenta = new Credito
 				{
 					Id = ahorroModificado.Id,
 					NumeroTarjeta = ahorroModificado.NumeroTarjeta,
@@ -180,7 +180,7 @@ namespace Controlador
 				Cuenta ahorroDTO = new Ahorro
 				{
 					Nombre = ahorro.Nombre,
-					Monto = ahorro.Monto,
+					Saldo = ahorro.Saldo,
 					FechaCreacion = ahorro.FechaCreacion,
 					Moneda = ConversorMonedaDTO(ahorro.Moneda),
 				};
@@ -203,7 +203,7 @@ namespace Controlador
 					BancoEmisor = credito.BancoEmisor,
 					NumeroTarjeta = credito.NumeroTarjeta,
 					FechaCierre = credito.FechaCierre,
-					CreditoDisponible = credito.CreditoDisponible,
+					Saldo = credito.Saldo,
 					FechaCreacion = credito.FechaCreacion,
 					Moneda = ConversorMonedaDTO(credito.Moneda),
 				};

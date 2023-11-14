@@ -119,5 +119,13 @@ namespace BussinesLogic
 			espacio.AgregarCuenta(cuenta);
 			UpdateEspacio(espacio);
 		}
+
+		public void CrearTransaccion(int idEspacio, Transaccion transaccion)
+		{
+			Espacio espacio = FindEspacio(idEspacio);
+			espacio.AgregarTransaccion(transaccion);
+			transaccion.EjecutarTransaccion();
+			UpdateEspacio(espacio);
+		}
 	}
 }

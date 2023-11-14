@@ -17,13 +17,13 @@ namespace DomainTest
 			{
 				Nombre = "Cuenta1",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
 			var cuenta2 = new Credito()
 			{
 				NumeroTarjeta = "1234",
 				BancoEmisor = "BROU",
-				CreditoDisponible = 100,
+				Saldo = 100,
 				Moneda = TipoCambiario.Dolar,
 				FechaCierre = DateTime.Now.AddDays(4),
 			};
@@ -57,27 +57,6 @@ namespace DomainTest
 			Assert.AreEqual(categoria, transaccion.CategoriaTransaccion);
 		}
 
-		[TestMethod]
-		public void TransaccionCosto_Clon_Cuenta_Ahorro()
-		{
-			var transaccionClon = transaccion1.ClonTransaccion();
-			Assert.AreEqual(transaccion1.Titulo, transaccionClon.Titulo);
-			Assert.AreEqual(transaccion1.Moneda, transaccionClon.Moneda);
-			Assert.AreEqual(transaccion1.CuentaMonetaria, transaccionClon.CuentaMonetaria);
-			Assert.AreEqual(transaccion1.CategoriaTransaccion, transaccionClon.CategoriaTransaccion);
-			Assert.AreEqual(transaccion1.Monto, transaccionClon.Monto);
-		}
-
-		[TestMethod]
-		public void TransaccionCosto_Clon_Cuenta_Credito()
-		{
-			var transaccionClon = transaccion2.ClonTransaccion();
-			Assert.AreEqual(transaccion2.Titulo, transaccionClon.Titulo);
-			Assert.AreEqual(transaccion2.Moneda, transaccionClon.Moneda);
-			Assert.AreEqual(transaccion2.CuentaMonetaria, transaccionClon.CuentaMonetaria);
-			Assert.AreEqual(transaccion2.CategoriaTransaccion, transaccionClon.CategoriaTransaccion);
-			Assert.AreEqual(transaccion2.Monto, transaccionClon.Monto);
-		}
 
 		[TestMethod]
 		public void TransaccionCosto_Tiene_Cuenta_Monetaria_Valida()
@@ -86,8 +65,94 @@ namespace DomainTest
 			{
 				Nombre = "Cuenta1",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
+		}
+
+		[TestMethod]
+		public void TransaccionCosto_Tiene_Tipo()
+		{
+			TransaccionCosto transaccion = new TransaccionCosto()
+			{
+				CuentaMonetaria = cuenta1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Costo,
+					EstadoActivo = true,
+				},
+				Monto = 100,
+				Titulo = "Transaccion1",
+			};
+			string tipo = transaccion.Tipo();
+			Assert.AreEqual("Costo", tipo);
+		}
+
+		[TestMethod]
+		public void TransaccionCosto_EjecutaTransaccion()
+		{
+			Cuenta cuenta = new Ahorro()
+			{
+				Nombre = "Cuenta1",
+				Moneda = TipoCambiario.Dolar,
+				Saldo = 100,
+			};
+
+			Transaccion transCosto = new TransaccionCosto()
+			{
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				Titulo = "Transaccion1",
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Ingreso,
+					EstadoActivo = true,
+				},
+				CuentaMonetaria = cuenta,
+			};
+
+			transCosto.EjecutarTransaccion();
+			Assert.AreEqual(0, cuenta.Saldo);
+		}
+
+		[TestMethod]
+		public void Transaccion_Costo_Modifica_Monto_Y_Cambiar_Valor_Cuenta_Correctamente()
+		{
+			Cuenta cuenta = new Ahorro()
+			{
+				Nombre = "Cuenta1",
+				Moneda = TipoCambiario.Dolar,
+				Saldo = 100,
+			};
+
+			Transaccion transCosto = new TransaccionCosto()
+			{
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 100,
+				Titulo = "Transaccion1",
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Ingreso,
+					EstadoActivo = true,
+				},
+				CuentaMonetaria = cuenta,
+			};
+
+			transCosto.ModificarMonto(200);
+
+			Assert.AreEqual(200, transCosto.Monto);
+			Assert.AreEqual(0, cuenta.Saldo);
+
+			transCosto.ModificarMonto(1);
+
+			Assert.AreEqual(1, transCosto.Monto);
+			Assert.AreEqual(199, cuenta.Saldo);
 		}
 	}
 }

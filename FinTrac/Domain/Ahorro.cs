@@ -6,7 +6,6 @@ namespace Domain
 	{
 		private TipoCuenta _tipoCuenta = TipoCuenta.EsAhorro;
 		private string _nombre;
-		private double _monto;
 		public string Nombre
 		{
 			get
@@ -22,33 +21,11 @@ namespace Domain
 				_nombre = value;
 			}
 		}
-		public double Monto
-		{
-			get
-			{
-				return _monto;
-			}
-			set
-			{
-				if (value <= 0)
-				{
-					throw new DomainEspacioException("El monto inicial de la cuenta no puede ser menor a cer.");
-				}
-				_monto = value;
-			}
-		}
 		public Ahorro()
 		{
 		}
 
-		public virtual void IngresoMonetario(double monto)
-		{
-			_monto += monto;
-		}
-		public virtual void EgresoMonetario(double monto)
-		{
-			_monto -= monto;
-		}
+
 		public override void Modificar(Cuenta cuenta)
 		{
 			Ahorro ahorro = (Ahorro)cuenta;
@@ -61,7 +38,7 @@ namespace Domain
 
 		public override string ToString()
 		{
-			return $"{base.ToString()}{Nombre} - {Monto}";
+			return $"{base.ToString()}{Nombre} - {Saldo}";
 		}
 
 		public override bool Equals(object? obj)

@@ -48,7 +48,7 @@
 						@cuentaAhorro.Nombre
 					</td>
 					<td class="px-6 py-4">
-						@cuentaAhorro.Monto
+						@cuentaAhorro.Saldo
 					</td>
 					<td class="px-6 py-4">
 						@cuentaAhorro.FechaCreacion
@@ -121,7 +121,7 @@
 						@cuentaCredito.NumeroTarjeta
 					</td>
 					<td class="px-6 py-4">
-						@cuentaCredito.CreditoDisponible
+						@cuentaCredito.Saldo
 					</td>
 					<td class="px-6 py-4">
 						@cuentaCredito.Moneda
@@ -232,7 +232,7 @@
 			{
 				Id = cuenta.Id,
 				BancoEmisor = inputNombreBanco,
-				CreditoDisponible = cuenta.CreditoDisponible,
+				Saldo = cuenta.Saldo,
 				FechaCreacion = cuenta.FechaCreacion,
 				Moneda = cuenta.Moneda,
 				NumeroTarjeta = inputNumTarjeta,
@@ -253,7 +253,7 @@
 			{
 				Id = cuenta.Id,
 				BancoEmisor = cuenta.BancoEmisor,
-				CreditoDisponible = cuenta.CreditoDisponible,
+				Saldo = cuenta.Saldo,
 				FechaCreacion = cuenta.FechaCreacion,
 				Moneda = cuenta.Moneda,
 				NumeroTarjeta = cuenta.NumeroTarjeta,
@@ -273,7 +273,7 @@
 			{
 				Id = cuenta.Id,
 				Nombre = inputAhorro,
-				Monto = cuenta.Monto,
+				Saldo = cuenta.Saldo,
 				FechaCreacion = cuenta.FechaCreacion,
 				Moneda = cuenta.Moneda
 			};

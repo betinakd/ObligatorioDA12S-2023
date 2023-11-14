@@ -36,5 +36,13 @@ namespace DTOTest
 			cuentaDTO.Id = 1;
 			Assert.AreEqual(cuentaDTO.Id, 1);
 		}
+
+		[TestMethod]
+		public void CuentaDTO_Tiene_Saldo()
+		{ 
+			CuentaDTO cuentaDTO = new CuentaDTO();
+			cuentaDTO.Saldo = 1000;
+			Assert.AreEqual(cuentaDTO.Saldo, 1000);
+		}
 	}
 }

@@ -124,7 +124,7 @@ namespace Domain
 			TipoCambiario moneda = transaccion.Moneda;
 			cambioHoy.Moneda = moneda;
 			if (!_cambios.Contains(cambioHoy) && transaccion.Moneda != TipoCambiario.PesosUruguayos)
-				throw new DomainEspacioException("No hay cotización cambiaria de dolar para la fecha de hoy");
+				throw new DomainEspacioException($"No hay cotización cambiaria de {moneda} para la fecha de hoy");
 			_transacciones.Add(transaccion);
 		}
 

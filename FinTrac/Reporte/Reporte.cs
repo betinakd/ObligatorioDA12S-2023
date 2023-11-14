@@ -245,11 +245,11 @@ namespace EspacioReporte
         {
 			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
 			{
-				return account.Monto + SumatoriaCostos(account, cambioUtilizado) - SumatoriaIngresos(account, cambioUtilizado);
+				return account.Saldo + SumatoriaCostos(account, cambioUtilizado) - SumatoriaIngresos(account, cambioUtilizado);
 			}
 			else
 			{
-				return (account.Monto * cambioUtilizado.Pesos) + SumatoriaCostos(account, cambioUtilizado) - SumatoriaIngresos(account, cambioUtilizado);
+				return (account.Saldo * cambioUtilizado.Pesos) + SumatoriaCostos(account, cambioUtilizado) - SumatoriaIngresos(account, cambioUtilizado);
 			}
 			
         }

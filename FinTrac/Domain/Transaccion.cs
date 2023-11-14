@@ -51,8 +51,34 @@ namespace Domain
 			}
 		}
 		public TipoCambiario Moneda { get; set; }
-		public virtual Cuenta CuentaMonetaria { get; set; }
-		public virtual Categoria CategoriaTransaccion { get; set; }
+		private Cuenta _cuentaMonetaria;
+		public Cuenta CuentaMonetaria
+		{
+			get
+			{
+				return _cuentaMonetaria;
+			}
+			set
+			{
+				if (value is null)
+					throw new DomainEspacioException("La cuenta monetaria no puede ser nula");
+				_cuentaMonetaria = value;
+			}
+		}
+		private Categoria _categoriaTransaccion;
+		public Categoria CategoriaTransaccion
+		{
+			get
+			{
+				return _categoriaTransaccion;
+			}
+			set
+			{
+				if (value is null)
+					throw new DomainEspacioException("La categoria no puede ser nula");
+				_categoriaTransaccion = value;
+			}
+		}
 
 		public Cambio EncontrarCambio(Espacio espacioActual)
 		{
@@ -67,8 +93,17 @@ namespace Domain
 			}
 			return toRet;
 		}
+		public virtual void EjecutarTransaccion()
+		{
+			throw new DomainEspacioException("No implementado");
+		}
 
-		public virtual Transaccion ClonTransaccion()
+		public virtual void ModificarMonto(double nuevoMonto)
+		{
+			throw new DomainEspacioException("No implementado");
+		}
+
+		public virtual string Tipo()
 		{
 			throw new DomainEspacioException("No implementado");
 		}

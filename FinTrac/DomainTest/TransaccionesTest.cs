@@ -110,13 +110,6 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Transaccion_Clon()
-		{
-			transaccion1.ClonTransaccion();
-		}
-
-		[TestMethod]
 		public void EncontrarCambio_Otra_Fecha()
 		{
 			Espacio espacio = new Espacio();
@@ -225,6 +218,86 @@ namespace DomainTest
 			};
 			Cambio cambio2 = transaccion.EncontrarCambio(espacio);
 			Assert.AreEqual(cambio2.Moneda.ToString(), "Dolar");
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_Tipo_No_Implmenetado()
+		{
+			Transaccion transaccion = new Transaccion()
+			{
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					EstadoActivo = true,
+					FechaCreacion = DateTime.Now,
+					Tipo = TipoCategoria.Costo,
+				},
+				Id = 1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "Transaccion1",
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Cuenta1",
+					Moneda = TipoCambiario.Dolar,
+					Saldo = 100,
+				},
+			};
+			transaccion.Tipo();
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_EjecutarTransaccion_No_Implmenetado()
+		{
+			Transaccion transaccion = new Transaccion()
+			{
+				CategoriaTransaccion = new Categoria()
+				{
+					Nombre = "Categoria1",
+					EstadoActivo = true,
+					FechaCreacion = DateTime.Now,
+					Tipo = TipoCategoria.Costo,
+				},
+				Id = 1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				Titulo = "Transaccion1",
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Cuenta1",
+					Moneda = TipoCambiario.Dolar,
+					Saldo = 100,
+				},
+			};
+			transaccion.EjecutarTransaccion();
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_Tiene_Cuenta_Nula_Excepcion()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.CuentaMonetaria = null;
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_Tiene_Categoria_Nula_Excepcion()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.CategoriaTransaccion = null;
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainEspacioException))]
+		public void Transaccion_ModificarMonto_Excepcion()
+		{
+			Transaccion transaccion = new Transaccion();
+			transaccion.ModificarMonto(10.11);
 		}
 	}
 }

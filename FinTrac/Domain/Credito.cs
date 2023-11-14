@@ -12,7 +12,6 @@ namespace Domain
 		private TipoCuenta _tipoCuenta = TipoCuenta.EsCredito;
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
-		private double _creditoDisponible;
 		private DateTime _fechaCierre;
 		public DateTime FechaCierre {
 			get 
@@ -44,15 +43,6 @@ namespace Domain
 			}
 		}
 
-		public override void IngresoMonetario(double monto)
-		{
-			_creditoDisponible += monto;
-		}
-		public override void EgresoMonetario(double monto)
-		{
-			_creditoDisponible -= monto;
-		}
-
 	public string NumeroTarjeta
 		{
 			get
@@ -76,21 +66,6 @@ namespace Domain
 				_numeroTarjeta = value;
 			}
 		}
-		public double CreditoDisponible
-		{
-			get
-			{
-				return _creditoDisponible;
-			}
-			set
-			{
-				if (value <= 0)
-				{
-					throw new DomainEspacioException("El crédito inicial disponible no puede ser menor a cero.");
-				}
-				_creditoDisponible = value;
-			}
-		}
 
 		public Credito()
 		{
@@ -112,7 +87,7 @@ namespace Domain
 		public override string ToString()
 		{
 			string baseString = base.ToString();
-			return $"{baseString}{CreditoDisponible} - {NumeroTarjeta} - {BancoEmisor}";
+			return $"{baseString}{Saldo} - {NumeroTarjeta} - {BancoEmisor}";
 		}
 		public override bool Equals(object? obj)
 		{

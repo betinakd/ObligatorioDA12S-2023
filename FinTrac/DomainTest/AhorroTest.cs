@@ -40,24 +40,17 @@ namespace DomainTest
 		public void Cuenta_Tiene_Monto_Decimal()
 		{
 			double monto = 100.01;
-			cuentaAhorro.Monto = monto;
-			Assert.AreEqual(monto, cuentaAhorro.Monto);
+			cuentaAhorro.Saldo = monto;
+			Assert.AreEqual(monto, cuentaAhorro.Saldo);
 		}
 
-		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
-		public void Excepcion_CuentaAhorro_Monto_Negativo()
-		{
-			double monto = -100.01;
-			cuentaAhorro.Monto = monto;
-		}
 
 		[TestMethod]
 		public void CuentaAhorro_Tiene_ToString()
 		{
 			Ahorro cuentaAhorro = new Ahorro();
 			cuentaAhorro.Nombre = "CuentaAhorroPrueba";
-			cuentaAhorro.Monto = 100.01;
+			cuentaAhorro.Saldo = 100.01;
 			Cuenta cuenta = cuentaAhorro;
 			Assert.AreEqual(cuenta.ToString(), cuentaAhorro.ToString());
 		}
@@ -69,7 +62,7 @@ namespace DomainTest
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 
 			Object objeto = null;
@@ -87,14 +80,14 @@ namespace DomainTest
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 
 			var credito2 = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 
 			Assert.IsTrue(credito.Equals(credito2));
@@ -106,10 +99,10 @@ namespace DomainTest
 			Ahorro cuenta = new Ahorro()
 			{
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01
+				Saldo = 100.01
 			};
 			cuenta.EgresoMonetario(100.01);
-			Assert.AreEqual(cuenta.Monto, 0);
+			Assert.AreEqual(cuenta.Saldo, 0);
 		}
 		[TestMethod]
 		public void Ingreso_Monetario_Valido()
@@ -117,10 +110,10 @@ namespace DomainTest
 			Ahorro cuenta = new Ahorro()
 			{
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01
+				Saldo = 100.01
 			};
 			cuenta.IngresoMonetario(100.01);
-			Assert.AreEqual(cuenta.Monto, 200.02);
+			Assert.AreEqual(cuenta.Saldo, 200.02);
 		}
 
 	[TestMethod]
@@ -130,14 +123,14 @@ namespace DomainTest
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 
 			var credito2 = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba2",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 
 			Assert.IsFalse(credito.Equals(credito2));
@@ -150,13 +143,13 @@ namespace DomainTest
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 			var modificacion = new Ahorro
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba2",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 			cuenta.Modificar(modificacion);
 			Assert.AreEqual(cuenta.Nombre, modificacion.Nombre);
@@ -169,7 +162,7 @@ namespace DomainTest
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				Nombre = "CuentaAhorroPrueba",
-				Monto = 100.01,
+				Saldo = 100.01,
 			};
 			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsAhorro);
 		}
