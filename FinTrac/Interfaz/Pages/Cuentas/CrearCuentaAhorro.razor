@@ -47,7 +47,7 @@
 	protected override void OnInitialized()
 	{
 		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
-		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
+		controlador = new ControladorCuenta(EspacioLogic);
 	}
 
 	private void SeleccionarMoneda(ChangeEventArgs e)

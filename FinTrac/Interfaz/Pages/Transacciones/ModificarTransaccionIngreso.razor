@@ -49,7 +49,7 @@
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorTransaccion(UsuarioLogic,EspacioLogic);
+		controlador = new ControladorTransaccion(EspacioLogic);
 		categorias = controlador.DarCategoriasIngreso(Persistencia.Id);
 		transaccion = controlador.DarTransaccion(Persistencia.Id, IdTrans);
 		inputMonto=transaccion.Monto;

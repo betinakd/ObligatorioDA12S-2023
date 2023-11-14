@@ -202,7 +202,7 @@
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
+		controlador = new ControladorCuenta(EspacioLogic);
 		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
 		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 	}

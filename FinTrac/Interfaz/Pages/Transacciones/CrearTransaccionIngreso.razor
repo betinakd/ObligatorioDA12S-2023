@@ -60,7 +60,7 @@
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorTransaccion(UsuarioLogic, EspacioLogic);
+		controlador = new ControladorTransaccion(EspacioLogic);
 		categorias = controlador.DarCategoriasIngreso(Persistencia.Id);
 		cuentas = controlador.DatosCuentasEspacio(Persistencia.Id);
 	}

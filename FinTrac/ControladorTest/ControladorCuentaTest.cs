@@ -37,7 +37,7 @@ namespace ControladorTest
 		[TestMethod]
 		public void ControladorCuenta_Inicializa_Correctamente()
 		{
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
 
@@ -94,7 +94,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(ahorro3);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta( _espacioLogic);
 
 			List<AhorroDTO> ahorros = controladorTest.AhorrosDeEspacio(espacio.Id);
 			Assert.AreEqual(3, ahorros.Count);
@@ -164,7 +164,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito2);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 
 			List<CreditoDTO> creditos = controladorTest.CreditosDeEspacio(espacio.Id);
 			Assert.AreEqual(2, creditos.Count);
@@ -230,7 +230,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito1);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(2, espacio.Cuentas.Count);
 			Assert.IsFalse(espacio.Cuentas.Contains(ahorro2));
@@ -295,7 +295,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito1);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(3, espacio.Cuentas.Count);
 			Assert.IsTrue(espacio.Cuentas.Contains(ahorro2));
@@ -353,7 +353,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito1);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(2, espacio.Cuentas.Count);
 			Assert.IsFalse(espacio.Cuentas.Contains(credito1));
@@ -420,7 +420,7 @@ namespace ControladorTest
 			};
 			espacio.Transacciones.Add(transaccion);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(3, espacio.Cuentas.Count);
 			Assert.IsTrue(espacio.Cuentas.Contains(credito1));
@@ -472,7 +472,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarAhorro(espacio.Id, ahorroModificado);
 
 			Assert.AreEqual(ahorroModificado.Nombre, ahorro.Nombre);
@@ -524,7 +524,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarAhorro(espacio.Id, ahorroModificado);
 
 			Assert.AreEqual(ahorroModificado.Nombre, ahorro.Nombre);
@@ -578,7 +578,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarCredito(espacio.Id, creditoDTO);
 
 			Assert.AreEqual(creditoDTO.NumeroTarjeta, credito.NumeroTarjeta);
@@ -633,7 +633,7 @@ namespace ControladorTest
 			};
 			espacio.Cuentas.Add(credito);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarCredito(espacio.Id, creditoDTO);
 
 			Assert.AreEqual(creditoDTO.NumeroTarjeta, credito.NumeroTarjeta);
@@ -685,7 +685,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
 			string mensaje2 = controladorTest.CrearAhorro(espacio.Id, ahorroDTO2);
 			string mensaje3 = controladorTest.CrearAhorro(espacio.Id, ahorroDTO3);
@@ -723,7 +723,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual("El nombre de la cuenta no puede ser vacío", mensaje);
 		}
@@ -758,7 +758,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(1, espacio.Cuentas.Count);
 			Assert.AreEqual("", mensaje);
@@ -793,7 +793,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
 			Assert.AreEqual("El banco emisor no puede ser vacío", mensaje);
@@ -827,7 +827,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
 			Assert.AreEqual("El saldo de la cuenta debe ser mayor a 0", mensaje);
@@ -862,7 +862,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
 			Assert.AreEqual("El saldo de la cuenta debe ser mayor a 0", mensaje);

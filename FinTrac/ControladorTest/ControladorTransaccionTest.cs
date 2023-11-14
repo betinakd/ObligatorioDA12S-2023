@@ -155,7 +155,7 @@ namespace ControladorTest
 			espacio.Transacciones.Add(transaccion2);
 			espacio.Transacciones.Add(transaccion3);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 
 			List<TransaccionDTO> transacciones = controladorTransaccion.TransaccionesDatos(1);
 
@@ -227,7 +227,7 @@ namespace ControladorTest
 			espacio.Cuentas.Add(ahorro2);
 			espacio.Transacciones.Add(transaccion);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 
 			List<string> transacciones = controladorTransaccion.DatosCuentasEspacio(1);
 
@@ -287,7 +287,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 			string mensaje = controladorTransaccion.CrearTransaccionIngreso(1, transaccion);
 
 			Espacio resultado = _espacioLogic.FindEspacio(1);
@@ -355,7 +355,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 			string mensaje = controladorTransaccion.CrearTransaccionIngreso(1, transaccion);
 
 			Assert.AreEqual("No hay cotización cambiaria de Dolar para la fecha de hoy", mensaje);
@@ -414,7 +414,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 			string mensaje = controladorTransaccion.CrearTransaccionCosto(1, transaccion);
 
 			Espacio resultado = _espacioLogic.FindEspacio(1);
@@ -482,7 +482,7 @@ namespace ControladorTest
 			};
 
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 			string mensaje = controladorTransaccion.CrearTransaccionCosto(1, transaccion);
 
 			Assert.AreEqual("No hay cotización cambiaria de Dolar para la fecha de hoy", mensaje);
@@ -526,7 +526,7 @@ namespace ControladorTest
 			espacio.Categorias.Add(categoriaCosto);
 			espacio.Categorias.Add(categoriaIngreso);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 
 			List<CategoriaDTO> categoriasDTO = controladorTransaccion.DarCategoriasCosto(1);
 
@@ -575,7 +575,7 @@ namespace ControladorTest
 			espacio.Categorias.Add(categoriaCosto);
 			espacio.Categorias.Add(categoriaIngreso);
 			_espacioLogic.AddEspacio(espacio);
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 
 			List<CategoriaDTO> categoriasDTO = controladorTransaccion.DarCategoriasIngreso(1);
 
@@ -642,7 +642,7 @@ namespace ControladorTest
 
 			_espacioLogic.AddEspacio(espacio);
 
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 			TransaccionDTO transaccionDTO = controladorTransaccion.DarTransaccion(1, 1);
 			Assert.IsNotNull(transaccionDTO);
 			Assert.AreEqual(1, transaccionDTO.Id);
@@ -728,7 +728,7 @@ namespace ControladorTest
 
 			_espacioLogic.AddEspacio(espacio);
 
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 
 			string mensaje = controladorTransaccion.ModificarTransaccion(1, transModificada);
 
@@ -814,7 +814,7 @@ namespace ControladorTest
 
 			_espacioLogic.AddEspacio(espacio);
 
-			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_usuarioLogic, _espacioLogic);
+			ControladorTransaccion controladorTransaccion = new ControladorTransaccion(_espacioLogic);
 
 			string mensaje = controladorTransaccion.ModificarTransaccion(1, transModificada);
 
