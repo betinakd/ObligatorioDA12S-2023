@@ -800,7 +800,7 @@ namespace ControladorTest
 		}
 
 		[TestMethod]
-		public void ControladorCuenta_No_Crea_CuentaAhorro_Saldo_Menor_Igual_Cero_Mensaje_Excepcion()
+		public void ControladorCuenta_No_Crea_Cuenta_Ahorro_Saldo_Menor_Igual_Cero_Mensaje_Excepcion()
 		{
 			Usuario usuario = new Usuario
 			{
@@ -829,6 +829,41 @@ namespace ControladorTest
 			_espacioLogic.AddEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
+			Assert.AreEqual(0, espacio.Cuentas.Count);
+			Assert.AreEqual("El saldo de la cuenta debe ser mayor a 0", mensaje);
+		}
+
+		[TestMethod]
+		public void ControladorCuenta_No_Crea_Cuenta_Credito_Saldo_Menor_Igual_Cero_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			CreditoDTO creditoDTO = new CreditoDTO()
+			{
+				Id = 3,
+				BancoEmisor = "test",
+				NumeroTarjeta = "1234",
+				Saldo = -100,
+				FechaCreacion = DateTime.Now,
+				FechaCierre = new DateTime(2026, 4, 5),
+			};
+
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCuenta controladorTest = new ControladorCuenta(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
 			Assert.AreEqual("El saldo de la cuenta debe ser mayor a 0", mensaje);
 		}
