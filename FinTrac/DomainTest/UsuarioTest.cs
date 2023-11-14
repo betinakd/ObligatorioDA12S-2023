@@ -243,12 +243,13 @@ namespace DomainTest
 		{
 			Usuario usuario = new Usuario()
 			{
-				Correo = "correo@gmail.com",
+				Correo = null,
 				Contrasena = "HOLAhola123",
 				Nombre = "test",
 				Apellido = "test",
 
-			}
+			};
+		}
 	}
 }
 
