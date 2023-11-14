@@ -75,5 +75,29 @@ namespace ControladorTest
 			string mensaje = controladorTest.ValidarInicioSesion(usuario.Correo, usuario.Contrasena);
 			Assert.AreEqual("", mensaje);
 		}
+
+		[TestMethod]
+		public void ControladorSesion_No_Valida_Usuario_Por_Correo_Contrasena_Mensaje_Excepcion()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			_espacioLogic.AddEspacio(espacio);
+			ControladorSesion controladorTest = new ControladorSesion(_usuarioLogic, _espacioLogic);
+			string mensaje = controladorTest.ValidarInicioSesion("pedro@gmail.com", "AAAAaaaHd");
+			Assert.AreEqual("El usuario o la contraseña no son válidos.", mensaje);
+		}
 	}
 }
