@@ -19,7 +19,7 @@ namespace DTOTest
 			};
 			CategoriaGastoDTO categoriaGasto = new CategoriaGastoDTO();
 			categoriaGasto.Categoria = categoria;
-			Assert.IsFalse(categoriaGasto.Categoria.Equals(categoria));
+			Assert.IsTrue(categoriaGasto.Categoria.Equals(categoria));
 		}
 	}
 }
