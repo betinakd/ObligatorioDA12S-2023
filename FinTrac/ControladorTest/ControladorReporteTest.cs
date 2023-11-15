@@ -814,7 +814,7 @@ namespace ControladorTest
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			double valorTotal = controladorReporte.BalanceDeCuentas(1, ahorroEnDTO);
 			Console.WriteLine(valorTotal);
-			Assert.IsTrue(valorTotal != ahorro1.Monto);
+			Assert.IsTrue(valorTotal == ahorro1.Monto);
 		}
 	}
 }
