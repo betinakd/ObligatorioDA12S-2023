@@ -38,7 +38,7 @@ namespace DTOTest
 			CategoriaGastoDTO categoriaGasto = new CategoriaGastoDTO();
 			double porc = 10;
 			categoriaGasto.Porcentaje = porc;
-			Assert.IsFalse(categoriaGasto.Porcentaje == porc);
+			Assert.IsTrue(categoriaGasto.Porcentaje == porc);
 		}
 	}
 }
