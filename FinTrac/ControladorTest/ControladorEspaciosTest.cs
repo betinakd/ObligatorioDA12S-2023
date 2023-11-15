@@ -97,7 +97,7 @@ namespace ControladorTest
 			};
 			_espacioLogic.AddEspacio(espacioCreado);
 			string mensaje = controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
-			Assert.AreEqual("Espacio Espacio Modificado Modificado con éxito.", mensaje);
+			Assert.AreEqual("Espacio Modificado con éxito.", mensaje);
 			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
 		}
 
