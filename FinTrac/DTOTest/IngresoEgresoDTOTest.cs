@@ -1,5 +1,5 @@
 ﻿using DTO;
-using DTO.EnumsDTO;
+
 namespace DTOTest
 {
 	[TestClass]
@@ -20,6 +20,15 @@ namespace DTOTest
 			double ingresos = 1000;
 			ingresoEgreso.Ingresos = ingresos;
 			Assert.AreEqual(ingresos, ingresoEgreso.Ingresos);
+		}
+
+		[TestMethod]
+		public void IngresoEgresoDTO_Tiene_Egresos()
+		{
+			IngresoEgresoDTO ingresoEgreso = new IngresoEgresoDTO();
+			double egresos = 1000;
+			ingresoEgreso.Ingresos = egresos;
+			Assert.AreNotEqual(egresos, ingresoEgreso.Ingresos);
 		}
 	}
 }
