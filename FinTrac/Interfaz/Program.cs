@@ -25,6 +25,21 @@ builder.Services.AddScoped<IRepository<Espacio>, EspacioMemoryRepository>();
 builder.Services.AddScoped<EspacioLogic>();
 builder.Services.AddSingleton<Persistencia>();
 builder.Services.AddMudServices();
+builder.Services.AddScoped<ControladorRegistro>();
+builder.Services.AddScoped<ControladorUsuarios>();
+builder.Services.AddScoped<ControladorEspacios>();
+builder.Services.AddScoped<ControladorCuenta>();
+builder.Services.AddScoped<ControladorTransaccion>();
+builder.Services.AddScoped<ControladorHome>();
+builder.Services.AddScoped<ControladorObjetivos>();
+builder.Services.AddScoped<ControladorCategorias>();
+builder.Services.AddScoped<ControladorCambios>();
+builder.Services.AddScoped<ControladorSesion>();
+
+builder.Services.AddDbContext<FintracDbContext>
+	(options => options.UseSqlServer
+	(builder.Configuration.GetConnectionString("FintracsDbConection"),
+		providerOptions => providerOptions.EnableRetryOnFailure()));
 
 
 var app = builder.Build();
