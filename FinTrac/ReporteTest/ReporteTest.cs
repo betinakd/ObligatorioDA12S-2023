@@ -1889,7 +1889,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1926,7 +1926,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -1967,7 +1967,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "1234",
@@ -2008,7 +2008,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.Euro,
 				NumeroTarjeta = "1234",
@@ -2062,7 +2062,7 @@ namespace DomainTest
 			Credito credit = new Credito
 			{
 				BancoEmisor = "Santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Now.AddDays(+5),
 				Moneda = TipoCambiario.Euro,
 				NumeroTarjeta = "1234",

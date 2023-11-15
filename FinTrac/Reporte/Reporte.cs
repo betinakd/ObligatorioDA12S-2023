@@ -259,17 +259,17 @@ namespace EspacioReporte
 		{
 			if (account.Moneda.Equals(TipoCambiario.PesosUruguayos))
 			{
-				return account.Monto + SumatoriaCostos(account) - SumatoriaIngresos(account);
+				return account.Saldo + SumatoriaCostos(account) - SumatoriaIngresos(account);
 			}
 			else
 			{
 				if (cambioUtilizado.Pesos == 0)
 				{
-					return (account.Monto) + SumatoriaCostos(account) - SumatoriaIngresos(account);
+					return (account.Saldo) + SumatoriaCostos(account) - SumatoriaIngresos(account);
 				}
 				else
 				{
-					return (account.Monto * cambioUtilizado.Pesos) + SumatoriaCostos(account) - SumatoriaIngresos(account);
+					return (account.Saldo * cambioUtilizado.Pesos) + SumatoriaCostos(account) - SumatoriaIngresos(account);
 				}
 			}
 

@@ -18,7 +18,7 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repositorioUsuario;
 		private UsuarioLogic _usuarioLogic;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
@@ -69,7 +69,7 @@ namespace ControladorTest
 			Ahorro ahorro = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.PesosUruguayos
 			};
@@ -132,7 +132,7 @@ namespace ControladorTest
 			Ahorro ahorro1 = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.PesosUruguayos
 			};
@@ -169,7 +169,7 @@ namespace ControladorTest
 			{
 				FechaCreacion = ahorro1.FechaCreacion,
 				Moneda = TipoCambiarioDTO.PesosUruguayos,
-				Monto = ahorro1.Monto,
+				Saldo = ahorro1.Saldo,
 				Nombre = ahorro1.Nombre,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
@@ -198,7 +198,7 @@ namespace ControladorTest
 			Ahorro ahorro1 = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.Dolar
 			};
@@ -242,7 +242,7 @@ namespace ControladorTest
 			{
 				FechaCreacion = ahorro1.FechaCreacion,
 				Moneda = TipoCambiarioDTO.Dolar,
-				Monto = ahorro1.Monto,
+				Saldo = ahorro1.Saldo,
 				Nombre = ahorro1.Nombre,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
@@ -271,7 +271,7 @@ namespace ControladorTest
 			Ahorro ahorro1 = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 100,
+				Saldo = 100,
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiario.Euro
 			};
@@ -315,7 +315,7 @@ namespace ControladorTest
 			{
 				FechaCreacion = ahorro1.FechaCreacion,
 				Moneda = TipoCambiarioDTO.Euro,
-				Monto = ahorro1.Monto,
+				Saldo = ahorro1.Saldo,
 				Nombre = ahorro1.Nombre,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
@@ -344,7 +344,7 @@ namespace ControladorTest
 			Credito credito = new Credito
 			{
 				BancoEmisor = "santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Today.AddMonths(2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "5555",
@@ -384,7 +384,7 @@ namespace ControladorTest
 				FechaCierre = credito.FechaCierre,
 				Moneda = TipoCambiarioDTO.PesosUruguayos,
 				NumeroTarjeta = credito.NumeroTarjeta,
-				CreditoDisponible = credito.CreditoDisponible,
+				Saldo = credito.Saldo,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteDeGastos(1, categoriaDTO, DateTime.Today.AddMonths(-2), DateTime.Today.AddMonths(2), creditoDTO);
@@ -412,7 +412,7 @@ namespace ControladorTest
 			Credito credito = new Credito
 			{
 				BancoEmisor = "santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Today.AddMonths(2),
 				Moneda = TipoCambiario.Euro,
 				NumeroTarjeta = "5555",
@@ -459,7 +459,7 @@ namespace ControladorTest
 				FechaCierre = credito.FechaCierre,
 				Moneda = TipoCambiarioDTO.Euro,
 				NumeroTarjeta = credito.NumeroTarjeta,
-				CreditoDisponible = credito.CreditoDisponible,
+				Saldo = credito.Saldo,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteDeGastos(1, categoriaDTO, DateTime.Today.AddMonths(-2), DateTime.Today.AddMonths(2), creditoDTO);
@@ -487,7 +487,7 @@ namespace ControladorTest
 			Credito credito = new Credito
 			{
 				BancoEmisor = "santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Today.AddMonths(2),
 				Moneda = TipoCambiario.Dolar,
 				NumeroTarjeta = "5555",
@@ -534,7 +534,7 @@ namespace ControladorTest
 				FechaCierre = credito.FechaCierre,
 				Moneda = TipoCambiarioDTO.Dolar,
 				NumeroTarjeta = credito.NumeroTarjeta,
-				CreditoDisponible = credito.CreditoDisponible,
+				Saldo = credito.Saldo,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteDeGastos(1, categoriaDTO, DateTime.Today.AddMonths(-2), DateTime.Today.AddMonths(2), creditoDTO);
@@ -562,7 +562,7 @@ namespace ControladorTest
 			Credito credito = new Credito
 			{
 				BancoEmisor = "santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Today.AddMonths(2),
 				Moneda = TipoCambiario.Dolar,
 				NumeroTarjeta = "5555",
@@ -609,7 +609,7 @@ namespace ControladorTest
 				FechaCierre = credito.FechaCierre,
 				Moneda = TipoCambiarioDTO.Dolar,
 				NumeroTarjeta = credito.NumeroTarjeta,
-				CreditoDisponible = credito.CreditoDisponible,
+				Saldo = credito.Saldo,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
@@ -637,7 +637,7 @@ namespace ControladorTest
 			Credito credito = new Credito
 			{
 				BancoEmisor = "santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Today.AddMonths(2),
 				Moneda = TipoCambiario.Euro,
 				NumeroTarjeta = "5555",
@@ -684,7 +684,7 @@ namespace ControladorTest
 				FechaCierre = credito.FechaCierre,
 				Moneda = TipoCambiarioDTO.Euro,
 				NumeroTarjeta = credito.NumeroTarjeta,
-				CreditoDisponible = credito.CreditoDisponible,
+				Saldo = credito.Saldo,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
@@ -712,7 +712,7 @@ namespace ControladorTest
 			Credito credito = new Credito
 			{
 				BancoEmisor = "santander",
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				FechaCierre = DateTime.Today.AddMonths(2),
 				Moneda = TipoCambiario.PesosUruguayos,
 				NumeroTarjeta = "5555",
@@ -752,7 +752,7 @@ namespace ControladorTest
 				FechaCierre = credito.FechaCierre,
 				Moneda = TipoCambiarioDTO.PesosUruguayos,
 				NumeroTarjeta = credito.NumeroTarjeta,
-				CreditoDisponible = credito.CreditoDisponible,
+				Saldo = credito.Saldo,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
@@ -780,7 +780,7 @@ namespace ControladorTest
 			Ahorro ahorro1 = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 200,
+				Saldo = 200,
 				FechaCreacion = DateTime.Today,
 				Moneda = TipoCambiario.PesosUruguayos
 			};
@@ -807,13 +807,13 @@ namespace ControladorTest
 			AhorroDTO ahorroEnDTO = new AhorroDTO()
 			{
 				Moneda = TipoCambiarioDTO.PesosUruguayos,
-				Monto = ahorro1.Monto,
+				Saldo = ahorro1.Saldo,
 				Nombre = ahorro1.Nombre,
 				FechaCreacion = ahorro1.FechaCreacion,
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			double valorTotal = controladorReporte.BalanceDeCuentas(1, ahorroEnDTO);
-			Assert.IsTrue(valorTotal == ahorro1.Monto);
+			Assert.IsTrue(valorTotal == ahorro1.Saldo);
 		}
 
 		[TestMethod]
@@ -837,7 +837,7 @@ namespace ControladorTest
 			Ahorro ahorro1 = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 200,
+				Saldo = 200,
 				FechaCreacion = DateTime.Today,
 				Moneda = TipoCambiario.PesosUruguayos
 			};
@@ -888,7 +888,7 @@ namespace ControladorTest
 			Ahorro ahorro1 = new Ahorro
 			{
 				Nombre = "AhorroTest1",
-				Monto = 200,
+				Saldo = 200,
 				FechaCreacion = DateTime.Today,
 				Moneda = TipoCambiario.PesosUruguayos
 			};

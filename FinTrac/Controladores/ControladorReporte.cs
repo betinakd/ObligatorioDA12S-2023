@@ -65,68 +65,88 @@ namespace Controlador
 				Cuenta CuentaTransaccion;
 				if (transaccion.CuentaMonetaria is Credito)
 				{
-					CuentaTransaccion = (Credito)transaccion.CuentaMonetaria;
+					Credito CuentaAuxiliar = (Credito)transaccion.CuentaMonetaria;
+					if (transaccion.Moneda.Equals(TipoCambiario.Dolar))
+					{
+						transaccionDTO = new TransaccionDTO()
+						{
+							CategoriaTransaccion = "Costo",
+							CuentaMonetaria = CuentaAuxiliar.BancoEmisor,
+							FechaTransaccion = transaccion.FechaTransaccion,
+							Id = transaccion.Id,
+							Moneda = TipoCambiarioDTO.Dolar,
+							Monto = transaccion.Monto,
+							Titulo = transaccion.Titulo,
+						};
+					}
+					else if (transaccion.Moneda.Equals(TipoCambiario.Euro))
+					{
+						transaccionDTO = new TransaccionDTO()
+						{
+							CategoriaTransaccion = "Costo",
+							CuentaMonetaria = CuentaAuxiliar.BancoEmisor,
+							FechaTransaccion = transaccion.FechaTransaccion,
+							Id = transaccion.Id,
+							Moneda = TipoCambiarioDTO.Euro,
+							Monto = transaccion.Monto,
+							Titulo = transaccion.Titulo,
+						};
+					}
+					else
+					{
+						transaccionDTO = new TransaccionDTO()
+						{
+							CategoriaTransaccion = "Costo",
+							CuentaMonetaria = CuentaAuxiliar.BancoEmisor,
+							FechaTransaccion = transaccion.FechaTransaccion,
+							Id = transaccion.Id,
+							Moneda = TipoCambiarioDTO.PesosUruguayos,
+							Monto = transaccion.Monto,
+							Titulo = transaccion.Titulo,
+						};
+					}
 				} else
 				{
-					CuentaTransaccion = (Ahorro)transaccion.CuentaMonetaria;
-				}
-				if (transaccion.Moneda.Equals(TipoCambiario.Dolar))
-				{
-					transaccionDTO = new TransaccionDTO()
+					Ahorro CuentaAuxiliar = (Ahorro)transaccion.CuentaMonetaria;
+					if (transaccion.Moneda.Equals(TipoCambiario.Dolar))
 					{
-						CategoriaTransaccion = new CategoriaDTO()
+						transaccionDTO = new TransaccionDTO()
 						{
-							EstadoActivo = transaccion.CategoriaTransaccion.EstadoActivo,
-							FechaCreacion = transaccion.CategoriaTransaccion.FechaCreacion,
-							Id = transaccion.CategoriaTransaccion.Id,
-							Nombre = transaccion.CategoriaTransaccion.Nombre,
-							Tipo = TipoCategoriaDTO.Costo,
-						},
-						CuentaMonetaria = _cuentaFiltro,
-						FechaTransaccion = transaccion.FechaTransaccion,
-						Id = transaccion.Id,
-						Moneda = TipoCambiarioDTO.Dolar,
-						Monto = transaccion.Monto,
-						Titulo = transaccion.Titulo,
-					};
-				} else if (transaccion.Moneda.Equals(TipoCambiario.Euro))
-				{
-					transaccionDTO = new TransaccionDTO()
+							CategoriaTransaccion = "Costo",
+							CuentaMonetaria = CuentaAuxiliar.Nombre,
+							FechaTransaccion = transaccion.FechaTransaccion,
+							Id = transaccion.Id,
+							Moneda = TipoCambiarioDTO.Dolar,
+							Monto = transaccion.Monto,
+							Titulo = transaccion.Titulo,
+						};
+					}
+					else if (transaccion.Moneda.Equals(TipoCambiario.Euro))
 					{
-						CategoriaTransaccion = new CategoriaDTO()
+						transaccionDTO = new TransaccionDTO()
 						{
-							EstadoActivo = transaccion.CategoriaTransaccion.EstadoActivo,
-							FechaCreacion = transaccion.CategoriaTransaccion.FechaCreacion,
-							Id = transaccion.CategoriaTransaccion.Id,
-							Nombre = transaccion.CategoriaTransaccion.Nombre,
-							Tipo = TipoCategoriaDTO.Costo,
-						},
-						CuentaMonetaria = _cuentaFiltro,
-						FechaTransaccion = transaccion.FechaTransaccion,
-						Id = transaccion.Id,
-						Moneda = TipoCambiarioDTO.Euro,
-						Monto = transaccion.Monto,
-						Titulo = transaccion.Titulo,
-					};
-				} else
-				{
-					transaccionDTO = new TransaccionDTO()
+							CategoriaTransaccion = "Costo",
+							CuentaMonetaria = CuentaAuxiliar.Nombre,
+							FechaTransaccion = transaccion.FechaTransaccion,
+							Id = transaccion.Id,
+							Moneda = TipoCambiarioDTO.Euro,
+							Monto = transaccion.Monto,
+							Titulo = transaccion.Titulo,
+						};
+					}
+					else
 					{
-						CategoriaTransaccion = new CategoriaDTO()
+						transaccionDTO = new TransaccionDTO()
 						{
-							EstadoActivo = transaccion.CategoriaTransaccion.EstadoActivo,
-							FechaCreacion = transaccion.CategoriaTransaccion.FechaCreacion,
-							Id = transaccion.CategoriaTransaccion.Id,
-							Nombre = transaccion.CategoriaTransaccion.Nombre,
-							Tipo = TipoCategoriaDTO.Costo,
-						},
-						CuentaMonetaria = _cuentaFiltro,
-						FechaTransaccion = transaccion.FechaTransaccion,
-						Id = transaccion.Id,
-						Moneda = TipoCambiarioDTO.PesosUruguayos,
-						Monto = transaccion.Monto,
-						Titulo = transaccion.Titulo,
-					};
+							CategoriaTransaccion = "Costo",
+							CuentaMonetaria = CuentaAuxiliar.Nombre,
+							FechaTransaccion = transaccion.FechaTransaccion,
+							Id = transaccion.Id,
+							Moneda = TipoCambiarioDTO.PesosUruguayos,
+							Monto = transaccion.Monto,
+							Titulo = transaccion.Titulo,
+						};
+					}
 				}
 				transaccionDTOs.Add(transaccionDTO);
 			}
@@ -147,24 +167,7 @@ namespace Controlador
 				{
 					transaccionDTO = new TransaccionDTO()
 					{
-						CategoriaTransaccion = new CategoriaDTO()
-						{
-							EstadoActivo = transaccion.CategoriaTransaccion.EstadoActivo,
-							FechaCreacion = transaccion.CategoriaTransaccion.FechaCreacion,
-							Id = transaccion.CategoriaTransaccion.Id,
-							Nombre = transaccion.CategoriaTransaccion.Nombre,
-							Tipo = TipoCategoriaDTO.Costo,
-						},
-						CuentaMonetaria = new CreditoDTO()
-						{
-							BancoEmisor = CuentaTransaccion.BancoEmisor,
-							CreditoDisponible = CuentaTransaccion.CreditoDisponible,
-							FechaCierre = CuentaTransaccion.FechaCierre,
-							FechaCreacion = CuentaTransaccion.FechaCreacion,
-							Id = CuentaTransaccion.Id,
-							Moneda = TipoCambiarioDTO.Dolar,
-							NumeroTarjeta = CuentaTransaccion.NumeroTarjeta,
-						},
+						CuentaMonetaria = CuentaTransaccion.BancoEmisor,
 						FechaTransaccion = transaccion.FechaTransaccion,
 						Id = transaccion.Id,
 						Moneda = TipoCambiarioDTO.Dolar,
@@ -176,24 +179,8 @@ namespace Controlador
 				{
 					transaccionDTO = new TransaccionDTO()
 					{
-						CategoriaTransaccion = new CategoriaDTO()
-						{
-							EstadoActivo = transaccion.CategoriaTransaccion.EstadoActivo,
-							FechaCreacion = transaccion.CategoriaTransaccion.FechaCreacion,
-							Id = transaccion.CategoriaTransaccion.Id,
-							Nombre = transaccion.CategoriaTransaccion.Nombre,
-							Tipo = TipoCategoriaDTO.Costo,
-						},
-						CuentaMonetaria = new CreditoDTO()
-						{
-							BancoEmisor = CuentaTransaccion.BancoEmisor,
-							CreditoDisponible = CuentaTransaccion.CreditoDisponible,
-							FechaCierre = CuentaTransaccion.FechaCierre,
-							FechaCreacion = CuentaTransaccion.FechaCreacion,
-							Id = CuentaTransaccion.Id,
-							Moneda = TipoCambiarioDTO.Euro,
-							NumeroTarjeta = CuentaTransaccion.NumeroTarjeta,
-						},
+						CategoriaTransaccion = "Costo",
+						CuentaMonetaria = CuentaTransaccion.BancoEmisor,
 						FechaTransaccion = transaccion.FechaTransaccion,
 						Id = transaccion.Id,
 						Moneda = TipoCambiarioDTO.Euro,
@@ -205,24 +192,8 @@ namespace Controlador
 				{
 					transaccionDTO = new TransaccionDTO()
 					{
-						CategoriaTransaccion = new CategoriaDTO()
-						{
-							EstadoActivo = transaccion.CategoriaTransaccion.EstadoActivo,
-							FechaCreacion = transaccion.CategoriaTransaccion.FechaCreacion,
-							Id = transaccion.CategoriaTransaccion.Id,
-							Nombre = transaccion.CategoriaTransaccion.Nombre,
-							Tipo = TipoCategoriaDTO.Costo,
-						},
-						CuentaMonetaria = new CreditoDTO()
-						{
-							BancoEmisor = CuentaTransaccion.BancoEmisor,
-							CreditoDisponible = CuentaTransaccion.CreditoDisponible,
-							FechaCierre = CuentaTransaccion.FechaCierre,
-							FechaCreacion = CuentaTransaccion.FechaCreacion,
-							Id = CuentaTransaccion.Id,
-							Moneda = TipoCambiarioDTO.PesosUruguayos,
-							NumeroTarjeta = CuentaTransaccion.NumeroTarjeta,
-						},
+						CategoriaTransaccion = "Costo",
+						CuentaMonetaria = CuentaTransaccion.BancoEmisor,
 						FechaTransaccion = transaccion.FechaTransaccion,
 						Id = transaccion.Id,
 						Moneda = TipoCambiarioDTO.PesosUruguayos,
@@ -273,7 +244,7 @@ namespace Controlador
 				{
 					FechaCreacion = account.FechaCreacion,
 					Moneda = TipoCambiario.Euro,
-					Monto = account.Monto,
+					Saldo = account.Saldo,
 					Nombre = account.Nombre,
 				};
 			}
@@ -283,7 +254,7 @@ namespace Controlador
 				{
 					FechaCreacion = account.FechaCreacion,
 					Moneda = TipoCambiario.Dolar,
-					Monto = account.Monto,
+					Saldo = account.Saldo,
 					Nombre = account.Nombre,
 				};
 			}
@@ -293,7 +264,7 @@ namespace Controlador
 				{
 					FechaCreacion = account.FechaCreacion,
 					Moneda = TipoCambiario.PesosUruguayos,
-					Monto = account.Monto,
+					Saldo = account.Saldo,
 					Nombre = account.Nombre,
 				};
 			}
@@ -309,7 +280,7 @@ namespace Controlador
 				{
 					NumeroTarjeta = credit.NumeroTarjeta,
 					BancoEmisor = credit.BancoEmisor,
-					CreditoDisponible = credit.CreditoDisponible,
+					Saldo = credit.Saldo,
 					FechaCierre = credit.FechaCierre,
 					Moneda = TipoCambiario.Euro,
 				};
@@ -320,7 +291,7 @@ namespace Controlador
 				{
 					NumeroTarjeta = credit.NumeroTarjeta,
 					BancoEmisor = credit.BancoEmisor,
-					CreditoDisponible = credit.CreditoDisponible,
+					Saldo = credit.Saldo,
 					FechaCierre = credit.FechaCierre,
 					Moneda = TipoCambiario.Dolar,
 				};
@@ -331,7 +302,7 @@ namespace Controlador
 				{
 					NumeroTarjeta = credit.NumeroTarjeta,
 					BancoEmisor = credit.BancoEmisor,
-					CreditoDisponible = credit.CreditoDisponible,
+					Saldo = credit.Saldo,
 					FechaCierre = credit.FechaCierre,
 					Moneda = TipoCambiario.PesosUruguayos,
 				};
