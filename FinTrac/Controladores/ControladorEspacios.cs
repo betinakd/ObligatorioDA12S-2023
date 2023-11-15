@@ -23,7 +23,7 @@ namespace Controlador
 			try
 			{
 				_espacioLogic.CrearEspacio(nombre, admin);
-				errorMsj = "Espacio " + nombre + " Modificado con éxito.";
+				errorMsj = "Espacio " + nombre + " creado con éxito.";
 			}
 			catch (DomainEspacioException ex)
 			{
@@ -38,7 +38,7 @@ namespace Controlador
 			try
 			{
 				_espacioLogic.ModificarNombreEspacio(espacioId, nuevoNombre);
-				errorMsj = "Espacio " + nuevoNombre + " Modificado con éxito.";
+				errorMsj = "Espacio Modificado con éxito.";
 			}
 			catch (DomainEspacioException e)
 			{

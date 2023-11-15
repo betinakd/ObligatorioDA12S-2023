@@ -10,8 +10,8 @@ using Repository;
 
 namespace Repository.Migrations
 {
-    [DbContext(typeof(UsuariosDbContext))]
-    partial class UsuariosDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FintracDbContext))]
+    partial class FintracDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

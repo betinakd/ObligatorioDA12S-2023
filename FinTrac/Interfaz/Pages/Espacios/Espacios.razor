@@ -133,10 +133,12 @@
 
 	private void CambiarNombre(EspacioDTO espacio)
 	{
-		controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
-		datosEspacio = controlador.EspaciosDeUsuario(Correo);
-		ErrorMsg = "";
-		mostrarInput = false;
+		ErrorMsg = controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
+		if (ErrorMsg.Equals("Espacio Modificado con éxito."))
+		{
+			datosEspacio = controlador.EspaciosDeUsuario(Correo);
+			mostrarInput = false;
+		}	
 	}
 
 	private void CambiarNombreCerrar()

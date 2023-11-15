@@ -12,7 +12,7 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repositorioUsuario;
 		private UsuarioLogic _usuarioLogic;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
@@ -97,7 +97,7 @@ namespace ControladorTest
 			};
 			_espacioLogic.AddEspacio(espacioCreado);
 			string mensaje = controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
-			Assert.AreEqual("Espacio Espacio Modificado Modificado con éxito.", mensaje);
+			Assert.AreEqual("Espacio Modificado con éxito.", mensaje);
 			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
 		}
 

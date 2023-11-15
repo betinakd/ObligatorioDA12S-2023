@@ -12,7 +12,7 @@ namespace BussinesLogicTest
 		private UsuarioLogic _usuarioLogic;
 		private Usuario _usuario1;
 		private Usuario _usuario2;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]
