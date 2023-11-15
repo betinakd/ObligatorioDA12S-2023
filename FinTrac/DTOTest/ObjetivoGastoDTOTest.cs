@@ -47,7 +47,7 @@ namespace DTOTest
 			ObjetivoGastoDTO objetivoGasto = new ObjetivoGastoDTO();
 			double montoAcumulado = 1000;
 			objetivoGasto.MontoAcumulado = montoAcumulado;
-			Assert.IsFalse(montoAcumulado == objetivoGasto.MontoAcumulado);
+			Assert.IsTrue(montoAcumulado == objetivoGasto.MontoAcumulado);
 		}
 	}
 }
