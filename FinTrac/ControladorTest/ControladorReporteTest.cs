@@ -27,7 +27,7 @@ namespace ControladorTest
 		public void ControladorReporte_Se_Crea()
 		{
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
-			Assert.IsNull(controladorReporte);
+			Assert.IsNotNull(controladorReporte);
 		}
 
 
