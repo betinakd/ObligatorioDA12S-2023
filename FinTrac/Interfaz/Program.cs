@@ -35,6 +35,7 @@ builder.Services.AddScoped<ControladorObjetivos>();
 builder.Services.AddScoped<ControladorCategorias>();
 builder.Services.AddScoped<ControladorCambios>();
 builder.Services.AddScoped<ControladorSesion>();
+builder.Services.AddScoped<ControladorReporte>();
 
 builder.Services.AddDbContext<FintracDbContext>
 	(options => options.UseSqlServer
