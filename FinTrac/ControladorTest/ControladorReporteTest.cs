@@ -861,17 +861,62 @@ namespace ControladorTest
 			};
 			espacio.AgregarTransaccion(transaccion);
 			_espacioLogic.AddEspacio(espacio);
-			AhorroDTO ahorroEnDTO = new AhorroDTO()
-			{
-				Moneda = TipoCambiarioDTO.PesosUruguayos,
-				Monto = ahorro1.Monto,
-				Nombre = ahorro1.Nombre,
-				FechaCreacion = ahorro1.FechaCreacion,
-			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			int mes = DateTime.Today.Month;
 			List<IngresoEgresoDTO> reporte = controladorReporte.ReporteIngresosEgresos(1, mes);
 			Assert.IsTrue(reporte.Count == 30);
+		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_Genera_Valor_Transaccion_Bien()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Ahorro ahorro1 = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Monto = 200,
+				FechaCreacion = DateTime.Today,
+				Moneda = TipoCambiario.PesosUruguayos
+			};
+			espacio.AgregarCuenta(ahorro1);
+			Categoria categoria = new Categoria()
+			{
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Today,
+				Nombre = "categoria Gasto prueba",
+				Tipo = TipoCategoria.Ingreso,
+			};
+			espacio.AgregarCategoria(categoria);
+			Transaccion transaccion = new Transaccion()
+			{
+				CuentaMonetaria = ahorro1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = ahorro1.Moneda,
+				Monto = 100,
+				Titulo = "Transaccion de prueba",
+				CategoriaTransaccion = categoria,
+			};
+			espacio.AgregarTransaccion(transaccion);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
+			int mes = DateTime.Today.Month;
+			DateTime fechaHoy = DateTime.Today;
+			List<IngresoEgresoDTO> reporte = controladorReporte.ReporteIngresosEgresos(1, mes);
+			Assert.IsTrue(reporte.ToArray()[fechaHoy.Day - 1].Ingresos != transaccion.Monto);
 		}
 	}
 }
