@@ -1,36 +1,40 @@
 ﻿using BussinesLogic;
-using Domain;
 using DTO;
 using Excepcion;
+using Domain;
 
 namespace Controlador
 {
 	public class ControladorHome
 	{
 		private UsuarioLogic _usuarioLogic;
-		public UsuarioDTO Usuario { get; set; }
 
-		public ControladorHome(UsuarioLogic usuarioLogic, string correo)
+		public ControladorHome(UsuarioLogic usuarioLogic)
 		{
 			_usuarioLogic = usuarioLogic;
-			Usuario usuario = usuarioLogic.FindUsuario(correo);
-			Usuario = new UsuarioDTO()
+		}
+
+		public UsuarioDTO DarUsuarioDTO(string correo) 
+		{
+			Usuario usuario = _usuarioLogic.FindUsuario(correo);
+
+			UsuarioDTO usuarioDTO = new UsuarioDTO
 			{
+				Nombre = usuario.Nombre,
 				Correo = usuario.Correo,
 				Apellido = usuario.Apellido,
-				Nombre = usuario.Nombre,
 				Direccion = usuario.Direccion,
 				Contrasena = usuario.Contrasena
 			};
+			return usuarioDTO;
 		}
 
-		public string ModificarNombre(string nombre)
+		public string ModificarNombre(string nombre, string correo)
 		{
 			string errorMsj = "Su nombre ha sido modificado correctamente.";
 			try
 			{
-				_usuarioLogic.ModificarNombre(Usuario.Correo, nombre);
-				Usuario.Nombre = nombre;
+				_usuarioLogic.ModificarNombre(correo, nombre);
 			}
 			catch (DomainUsuarioException ex)
 			{
@@ -39,13 +43,12 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public string ModificarApellido(string apellido)
+		public string ModificarApellido(string apellido, string correo)
 		{
 			string errorMsj = "Su apellido ha sido modificado correctamente.";
 			try
 			{
-				_usuarioLogic.ModificarApellido(Usuario.Correo, apellido);
-				Usuario.Apellido = apellido;
+				_usuarioLogic.ModificarApellido(correo, apellido);
 			}
 			catch (DomainUsuarioException ex)
 			{
@@ -55,13 +58,12 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public string ModificarContrasena(string contrasena)
+		public string ModificarContrasena(string contrasena, string correo)
 		{
 			string errorMsj = "Su contraseña ha sido modificado correctamente.";
 			try
 			{
-				_usuarioLogic.ModificarContrasena(Usuario.Correo, contrasena);
-				Usuario.Contrasena = contrasena;
+				_usuarioLogic.ModificarContrasena(correo, contrasena);
 			}
 			catch (DomainUsuarioException ex)
 			{
@@ -70,12 +72,11 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public string ModificarDireccion(string direccion)
+		public string ModificarDireccion(string direccion, string correo)
 		{
 			string errorMsj = "Su dirección ha sido modificado correctamente.";
 
-			_usuarioLogic.ModificarDireccion(Usuario.Correo, direccion);
-			Usuario.Direccion = direccion;
+			_usuarioLogic.ModificarDireccion(correo, direccion);
 
 			return errorMsj;
 		}

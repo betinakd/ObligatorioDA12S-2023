@@ -236,6 +236,20 @@ namespace DomainTest
 			Assert.AreEqual(usuario.EspaciosAdmin, espacios);
 			Assert.AreEqual(usuario.EspaciosAdmin.Count, 1);
 		}
+
+		[TestMethod]
+		[ExpectedException(typeof(DomainUsuarioException))]
+		public void Excepcion_Al_Asignar_Correo_Null()
+		{
+			Usuario usuario = new Usuario()
+			{
+				Correo = null,
+				Contrasena = "HOLAhola123",
+				Nombre = "test",
+				Apellido = "test",
+
+			};
+		}
 	}
 }
 

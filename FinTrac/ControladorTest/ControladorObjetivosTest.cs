@@ -13,7 +13,7 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repositorioUsuario;
 		private UsuarioLogic _usuarioLogic;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
@@ -221,8 +221,8 @@ namespace ControladorTest
 				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
 			};
 			_espacioLogic.AddEspacio(espacio);
-			string nombre = controladorTest.NombreAdmin(espacio.Id);
-			Assert.AreEqual("Juan", nombre);
+			string nombre = controladorTest.EspacioActual(espacio.Id);
+			Assert.AreEqual("Espacio1", nombre);
 		}
 
 		[TestMethod]
@@ -258,8 +258,8 @@ namespace ControladorTest
 				Token = ""
 			};
 			controladorTest.CrearObjetivo(1, objetivoDTO);
-			List<ObjetivoGasto> objetivoGasto = controladorTest.ObjetivosDeGastos(1, 1);
-			Assert.AreEqual(0, objetivoGasto.Count);
+			double monto = controladorTest.ObjetivosDeGastos(1, objetivoDTO.Id);
+			Assert.AreEqual(0, monto);
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCuentaAhorro"
-
+@inject ControladorCuenta controlador;
 <PageTitle>FinTrac Crear Cuenta Ahorro</PageTitle>
 <TituloRosado Titulo="Crear cuenta de Ahorro" Subtitulo="Cree la cuenta de ahorro para el espacio seleccionado, debe tener saldo inicial mayor a 0 y nombre no vacío"></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -42,12 +42,10 @@
 	private double Monto { get; set; } = 0;
 	private TipoCambiarioDTO tipoMonedaSeleccionado;
 	private List<TipoCambiarioDTO> monedas;
-	private ControladorCuenta controlador;
 
 	protected override void OnInitialized()
 	{
 		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
-		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
 	}
 
 	private void SeleccionarMoneda(ChangeEventArgs e)
@@ -60,7 +58,7 @@
 		AhorroDTO ahorro = new AhorroDTO()
 			{
 				Nombre = Nombre,
-				Monto = Monto,
+				Saldo = Monto,
 				Moneda = tipoMonedaSeleccionado
 			};
 		ErrorMsg = controlador.CrearAhorro(Persistencia.Id, ahorro);

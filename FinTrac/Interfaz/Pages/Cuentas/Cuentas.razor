@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Cuentas"
-
+@inject ControladorCuenta controlador;
 <div style="left: 3%; position: relative; width: 95%">
 	<PageTitle>FinTrac Cuentas</PageTitle>
 	<TituloRosado Titulo="Cuentas del espacio actual." Subtitulo="Cree elimine y modifique las cuentas del espacio."></TituloRosado>
@@ -48,7 +48,7 @@
 						@cuentaAhorro.Nombre
 					</td>
 					<td class="px-6 py-4">
-						@cuentaAhorro.Monto
+						@cuentaAhorro.Saldo
 					</td>
 					<td class="px-6 py-4">
 						@cuentaAhorro.FechaCreacion
@@ -121,7 +121,7 @@
 						@cuentaCredito.NumeroTarjeta
 					</td>
 					<td class="px-6 py-4">
-						@cuentaCredito.CreditoDisponible
+						@cuentaCredito.Saldo
 					</td>
 					<td class="px-6 py-4">
 						@cuentaCredito.Moneda
@@ -196,13 +196,11 @@
 	private string inputNumTarjeta { get; set; } = "";
 	private string inputNombreBanco { get; set; } = "";
 	private DateTime inputFechaCierre { get; set; } = DateTime.Today;
-	private ControladorCuenta controlador;
 	private List<AhorroDTO> ahorros;
 	private List<CreditoDTO> creditos;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCuenta(UsuarioLogic, EspacioLogic);
 		ahorros = controlador.AhorrosDeEspacio(Persistencia.Id);
 		creditos = controlador.CreditosDeEspacio(Persistencia.Id);
 	}
@@ -232,7 +230,7 @@
 			{
 				Id = cuenta.Id,
 				BancoEmisor = inputNombreBanco,
-				CreditoDisponible = cuenta.CreditoDisponible,
+				Saldo = cuenta.Saldo,
 				FechaCreacion = cuenta.FechaCreacion,
 				Moneda = cuenta.Moneda,
 				NumeroTarjeta = inputNumTarjeta,
@@ -246,20 +244,20 @@
 		}
 
 	}
-
+	
 	private void ModificarCuentaFecha(CreditoDTO cuenta)
 	{
 		CreditoDTO credito = new CreditoDTO()
 			{
 				Id = cuenta.Id,
 				BancoEmisor = cuenta.BancoEmisor,
-				CreditoDisponible = cuenta.CreditoDisponible,
+				Saldo = cuenta.Saldo,
 				FechaCreacion = cuenta.FechaCreacion,
 				Moneda = cuenta.Moneda,
 				NumeroTarjeta = cuenta.NumeroTarjeta,
 				FechaCierre = inputFechaCierre
 			};
-		ErrorMsgFecha = controlador.ModificarCredito(Persistencia.Id, credito);	
+		ErrorMsgFecha = controlador.ModificarCreditoFechaCierre(Persistencia.Id, credito);
 		if (ErrorMsgFecha.Equals(""))
 		{
 			mostrarModificar = false;
@@ -273,7 +271,7 @@
 			{
 				Id = cuenta.Id,
 				Nombre = inputAhorro,
-				Monto = cuenta.Monto,
+				Saldo = cuenta.Saldo,
 				FechaCreacion = cuenta.FechaCreacion,
 				Moneda = cuenta.Moneda
 			};

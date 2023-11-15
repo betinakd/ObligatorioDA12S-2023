@@ -65,14 +65,21 @@ namespace Controlador
 			Espacio espacio = _categoriaLogic.FindEspacio(id);
 			Categoria categoria = Cambiar_A_Categoria(id, categoriaDTO.Id);
 			List<Categoria> categorias = espacio.Categorias;
-			if (!categorias.Any(c => c.Nombre == nuevoNombre))
+			try
 			{
-				categoria.Nombre = nuevoNombre;
-				_categoriaLogic.UpdateEspacio(espacio);
+				if (!categorias.Any(c => c.Nombre == nuevoNombre))
+				{
+					categoria.Nombre = nuevoNombre;
+					_categoriaLogic.UpdateEspacio(espacio);
+				}
+				else
+				{
+					throw new DomainEspacioException("Ya existe una categoría con ese nombre");
+				}
 			}
-			else
+			catch (DomainEspacioException e)
 			{
-				msjError = "Ya hay categorias con ese nombre.";
+				msjError = e.Message;
 			}
 			return msjError;
 		}
@@ -82,8 +89,15 @@ namespace Controlador
 			string errorMsj = "";
 			Espacio espacio = _categoriaLogic.FindEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
-			espacio.BorrarCategoria(categoria);
-			_categoriaLogic.UpdateEspacio(espacio);
+			try
+			{
+				espacio.BorrarCategoria(categoria);
+				_categoriaLogic.UpdateEspacio(espacio);
+			}
+			catch (DomainEspacioException e)
+			{
+				errorMsj = e.Message;
+			}
 			return errorMsj;
 		}
 

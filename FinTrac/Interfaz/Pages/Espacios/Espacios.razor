@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Espacios"
-
+@inject ControladorEspacios controlador;
 
 <PageTitle>FinTrac Espacio</PageTitle>
 
@@ -110,13 +110,11 @@
 	private bool mostrarInput = false;
 	private string inputNombre = string.Empty;
 	private EspacioDTO clickValor;
-	private ControladorEspacios controlador;
 	private List<EspacioDTO> datosEspacio;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorEspacios(UsuarioLogic, EspacioLogic);
-		datosEspacio = controlador.EspaciosDeUsuario(Correo);
+		datosEspacio = controlador.EspaciosDeUsuario(Persistencia.Correo);
 	}
 
 	public void ClickCambiarDeEspacio(EspacioDTO espacioDTO)
@@ -135,10 +133,12 @@
 
 	private void CambiarNombre(EspacioDTO espacio)
 	{
-			controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
+		ErrorMsg = controlador.ModificarNombreEspacio(espacio.Id, inputNombre);
+		if (ErrorMsg.Equals("Espacio Modificado con éxito."))
+		{
 			datosEspacio = controlador.EspaciosDeUsuario(Correo);
-			ErrorMsg = "";
 			mostrarInput = false;
+		}	
 	}
 
 	private void CambiarNombreCerrar()

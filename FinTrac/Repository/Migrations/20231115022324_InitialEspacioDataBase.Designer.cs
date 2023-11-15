@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -10,10 +11,12 @@ using Repository;
 
 namespace Repository.Migrations
 {
-    [DbContext(typeof(UsuariosDbContext))]
-    partial class UsuariosDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FintracDbContext))]
+    [Migration("20231115022324_InitialEspacioDataBase")]
+    partial class InitialEspacioDataBase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,6 +114,9 @@ namespace Repository.Migrations
 
                     b.Property<int>("Moneda")
                         .HasColumnType("int");
+
+                    b.Property<double>("Saldo")
+                        .HasColumnType("float");
 
                     b.Property<string>("Tipo_cuenta")
                         .IsRequired()
@@ -281,9 +287,6 @@ namespace Repository.Migrations
                 {
                     b.HasBaseType("Domain.Cuenta");
 
-                    b.Property<double>("Monto")
-                        .HasColumnType("float");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -298,9 +301,6 @@ namespace Repository.Migrations
                     b.Property<string>("BancoEmisor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("CreditoDisponible")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("FechaCierre")
                         .HasColumnType("datetime2");
@@ -357,7 +357,7 @@ namespace Repository.Migrations
                     b.HasOne("Domain.Espacio", "Espacio")
                         .WithMany("Categorias")
                         .HasForeignKey("EspacioId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Espacio");

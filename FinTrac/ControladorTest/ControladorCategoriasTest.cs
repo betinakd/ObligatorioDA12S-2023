@@ -2,7 +2,7 @@
 using Domain;
 using Repository;
 using Controlador;
-using Excepcion;
+using DTO.EnumsDTO;
 using DTO;
 
 namespace ControladorTest
@@ -12,7 +12,7 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repositorioUsuario;
 		private UsuarioLogic _usuarioLogic;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
@@ -216,7 +216,7 @@ namespace ControladorTest
 				FechaCreacion = DateTime.Now
 			};
 			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2, "Categoria1");
-			Assert.AreEqual("Ya hay categorias con ese nombre.", msjError);
+			Assert.AreEqual("Ya existe una categoría con ese nombre", msjError);
 		}
 
 		[TestMethod]
@@ -277,6 +277,55 @@ namespace ControladorTest
 			};
 			controladorTest.ModificarEstadoCategoria(1, categoriaDTO2, false);
 			Assert.AreEqual(espacio.Categorias[0].EstadoActivo, false);
+		}
+
+		[TestMethod]
+		public void Retorna_Mensaje_Excepcoion_Al_Intentar_Borrar_Categoria_Objetivo()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Categoria categoria = new Categoria
+			{
+				Nombre = "Categoria",
+				Tipo = TipoCategoria.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			List<Categoria> categorias = new List<Categoria>();		
+			categorias.Add(categoria);
+			Objetivo objetivo = new Objetivo
+			{
+				MontoMaximo = 1000,
+				Titulo = "Objetivo",
+				Categorias = categorias,
+			};
+			espacio.Categorias.Add(categoria);
+			espacio.Objetivos.Add(objetivo);
+			CategoriaDTO catDTO = new CategoriaDTO
+			{
+				Id = 1,
+				Nombre = "Categoria",
+				Tipo = TipoCategoriaDTO.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			_espacioLogic.AddEspacio(espacio);
+			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
+			string mensaje = controladorTest.EliminarCategoria(1, catDTO);
+			Assert.AreEqual("No se puede borrar una categoría que asociada a algún objetivo.", mensaje);
 		}
 	}
 }

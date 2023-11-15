@@ -40,19 +40,6 @@ namespace DomainTest
 			Assert.IsNotNull(cuenta.FechaCreacion);
 		}
 
-		[TestMethod]
-		[ExpectedException(typeof(NotImplementedException))]
-		public void Excepcion_Recibir_Deposito()
-		{
-			cuenta.IngresoMonetario(100);
-		}
-
-		[TestMethod]
-		[ExpectedException(typeof(NotImplementedException))]
-		public void Excepcion_Realizar_Deposito()
-		{
-			cuenta.EgresoMonetario(100);
-		}
 
 		[TestMethod]
 		public void Cuenta_Tiene_ToString()
@@ -135,7 +122,7 @@ namespace DomainTest
 			{
 				Nombre = "CuentaPrueba",
 				Moneda = TipoCambiario.Dolar,
-				Monto = 100,
+				Saldo = 100,
 			};
 			TransaccionCosto transaccionTest = new TransaccionCosto()
 			{
@@ -161,6 +148,18 @@ namespace DomainTest
 				Moneda = TipoCambiario.Dolar,
 			};
 			cuentaTest.TipoDeCuenta();
+		}
+
+		[TestMethod]
+		[ExpectedException(typeof(NotImplementedException))]
+		public void Cuenta_Tiene_ModificarFecha_NoImplementado()
+		{
+			Cuenta cuentaTest = new Cuenta()
+			{
+				FechaCreacion = new DateTime(2015, 1, 1),
+				Moneda = TipoCambiario.Dolar,
+			};
+			cuentaTest.ModificarFecha(new DateTime(2050, 1, 1));
 		}
 	}
 }

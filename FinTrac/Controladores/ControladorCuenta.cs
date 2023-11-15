@@ -8,11 +8,9 @@ namespace Controlador
 {
 	public class ControladorCuenta
 	{
-		private UsuarioLogic _usuarioLogic;
 		private EspacioLogic _espacioLogic;
-		public ControladorCuenta(UsuarioLogic usuarioLogic, EspacioLogic espacioLogic)
+		public ControladorCuenta(EspacioLogic espacioLogic)
 		{
-			_usuarioLogic = usuarioLogic;
 			_espacioLogic = espacioLogic;
 		}
 
@@ -27,7 +25,7 @@ namespace Controlador
 				{
 					Id = ahorro.Id,
 					Nombre = ahorro.Nombre,
-					Monto = ahorro.Monto,
+					Saldo = ahorro.Saldo,
 					FechaCreacion = ahorro.FechaCreacion,
 					Moneda = ConversorMoneda(ahorro.Moneda),
 				})
@@ -49,7 +47,7 @@ namespace Controlador
 					NumeroTarjeta = credito.NumeroTarjeta,
 					FechaCreacion = credito.FechaCreacion,
 					FechaCierre = credito.FechaCierre,
-					CreditoDisponible = credito.CreditoDisponible,
+					Saldo = credito.Saldo,
 					Moneda = ConversorMoneda(credito.Moneda),
 				})
 				.ToList();
@@ -120,7 +118,7 @@ namespace Controlador
 			string mensaje = "";
 			try
 			{
-				Cuenta cuenta = new Credito
+				Credito cuenta = new Credito
 				{
 					Id = ahorroModificado.Id,
 					NumeroTarjeta = ahorroModificado.NumeroTarjeta,
@@ -128,6 +126,23 @@ namespace Controlador
 					FechaCierre = ahorroModificado.FechaCierre,
 				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
+			}
+			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			return mensaje;
+		}
+
+		public string ModificarCreditoFechaCierre(int espacioId, CreditoDTO ahorroModificado)
+		{
+			string mensaje = "";
+			try
+			{
+				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+				Cuenta cuenta = espacio.Cuentas.Find(cuenta => cuenta.Id == ahorroModificado.Id);
+				cuenta.ModificarFecha(ahorroModificado.FechaCierre);
+				_espacioLogic.UpdateEspacio(espacio);
 			}
 			catch (DomainEspacioException e)
 			{
@@ -180,13 +195,17 @@ namespace Controlador
 				Cuenta ahorroDTO = new Ahorro
 				{
 					Nombre = ahorro.Nombre,
-					Monto = ahorro.Monto,
+					Saldo = ahorro.Saldo,
 					FechaCreacion = ahorro.FechaCreacion,
 					Moneda = ConversorMonedaDTO(ahorro.Moneda),
 				};
 				_espacioLogic.CrearCuenta(espacioId, ahorroDTO);
 			}
 			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			catch (BusinessLogicEspacioException e)
 			{
 				mensaje = e.Message;
 			}
@@ -203,13 +222,17 @@ namespace Controlador
 					BancoEmisor = credito.BancoEmisor,
 					NumeroTarjeta = credito.NumeroTarjeta,
 					FechaCierre = credito.FechaCierre,
-					CreditoDisponible = credito.CreditoDisponible,
+					Saldo = credito.Saldo,
 					FechaCreacion = credito.FechaCreacion,
 					Moneda = ConversorMonedaDTO(credito.Moneda),
 				};
 				_espacioLogic.CrearCuenta(espacioId, creditoDTO);
 			}
 			catch (DomainEspacioException e)
+			{
+				mensaje = e.Message;
+			}
+			catch(BusinessLogicEspacioException e)
 			{
 				mensaje = e.Message;
 			}

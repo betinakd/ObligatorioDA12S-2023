@@ -12,7 +12,7 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repositorioUsuario;
 		private UsuarioLogic _usuarioLogic;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
@@ -26,25 +26,6 @@ namespace ControladorTest
 			_repositorioEspacio = new EspacioMemoryRepository(_context);
 			_espacioLogic = new EspacioLogic(_repositorioEspacio);
 
-			var usuario1 = new Usuario()
-			{
-				Correo = "hola@gmail.com",
-				Nombre = "Juan",
-				Apellido = "Perez",
-				Contrasena = "123456789Aaa",
-				Direccion = "street 56 av rety"
-			};
-
-			var usuario2 = new Usuario()
-			{
-				Correo = "holaSoy2@gmail.com",
-				Nombre = "Alberto",
-				Apellido = "Rodriguez",
-				Contrasena = "123tttt9Aaa",
-				Direccion = "street 67 av white"
-			};
-			_usuarioLogic.AddUsuario(usuario1);
-			_usuarioLogic.AddUsuario(usuario2);
 		}
 
 		[TestCleanup]
@@ -116,7 +97,7 @@ namespace ControladorTest
 			};
 			_espacioLogic.AddEspacio(espacioCreado);
 			string mensaje = controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
-			Assert.AreEqual("Espacio Espacio Modificado Modificado con éxito.", mensaje);
+			Assert.AreEqual("Espacio Modificado con éxito.", mensaje);
 			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
 		}
 

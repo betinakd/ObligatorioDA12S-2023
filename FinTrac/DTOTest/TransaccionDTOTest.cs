@@ -53,7 +53,7 @@ namespace DTOTest
 				FechaCreacion = DateTime.Now,
 				Moneda = TipoCambiarioDTO.Dolar,
 			};
-			transaccionDTO.CuentaMonetaria = cuentaDTO;
+			transaccionDTO.CuentaMonetaria = "Cuenta Santander";
 			Assert.IsNotNull(transaccionDTO.CuentaMonetaria);
 		}
 
@@ -78,8 +78,16 @@ namespace DTOTest
 				FechaCreacion = DateTime.Now,
 				Tipo = TipoCategoriaDTO.Ingreso,
 			};
-			transaccionDTO.CategoriaTransaccion = categoriaDTO;
+			transaccionDTO.CategoriaTransaccion = "Costo";
 			Assert.IsNotNull(transaccionDTO.CategoriaTransaccion);
+		}
+
+		[TestMethod]
+		public void TransaccionDTO_Tiene_Tipo()
+		{
+			TransaccionDTO transaccionDTO = new TransaccionDTO();
+			transaccionDTO.Tipo = "Ingreso";
+			Assert.AreEqual("Ingreso", transaccionDTO.Tipo);
 		}
 	}
 }

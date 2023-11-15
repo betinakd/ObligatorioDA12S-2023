@@ -1,6 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Objetivos"
-@using DTO;
-
+@inject ControladorObjetivos controlador;
 <PageTitle>FinTrac Objetivos</PageTitle>
 <TituloRosado Titulo="Objetivos del espacio" Subtitulo="Cree sus objetivos aquí."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -66,12 +65,10 @@
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
-	private ControladorObjetivos controlador;
 	private List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorObjetivos(EspacioLogic);
 		objetivos = controlador.ObjetivosDeEspacio(Id);
 	}
 

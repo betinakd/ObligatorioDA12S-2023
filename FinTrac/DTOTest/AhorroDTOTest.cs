@@ -9,8 +9,8 @@ namespace DTOTest
 		public void AhorroDTO_Tiene_Monto()
 		{
 			AhorroDTO ahorroDTO = new AhorroDTO();
-			ahorroDTO.Monto = 1000;
-			Assert.AreEqual(1000, ahorroDTO.Monto);
+			ahorroDTO.Saldo = 1000;
+			Assert.AreEqual(1000, ahorroDTO.Saldo);
 		}
 
 		[TestMethod]

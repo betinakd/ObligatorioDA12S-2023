@@ -13,7 +13,7 @@ namespace RepositoryTest
         private List<Cuenta> _cuentas;
         private List<Usuario> _usuariosInvitados;
         private Usuario _admin;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]

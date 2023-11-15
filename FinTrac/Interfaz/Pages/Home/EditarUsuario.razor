@@ -1,6 +1,6 @@
 ﻿@page "/home/{Id:int}/{Correo}/EditarUsuario"
 @using Controlador;
-
+@inject ControladorHome controlador;
 <PageTitle>Editar Usuario</PageTitle>
 <TituloRosado Titulo="Editar Usuario" Subtitulo="Configure sus datos personales."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -47,16 +47,15 @@
 	private string msgErrorDireccion = "";
 	private string msgBoton = "Mostrar Contraseña";
 	private UsuarioDTO usuarioActual;
-	private ControladorHome controlador;
+
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorHome(UsuarioLogic, Persistencia.Correo);
-		usuarioActual = controlador.Usuario;
-		CargarImputs(controlador);
+		usuarioActual = controlador.DarUsuarioDTO(Persistencia.Correo);
+		CargarImputs();
 	}
 
-	private void CargarImputs(ControladorHome controlador)
+	private void CargarImputs()
 	{
 		nombreInput = usuarioActual.Nombre;
 		apellidoInput = usuarioActual.Apellido;
@@ -66,10 +65,10 @@
 
 	private void ClickModificar()
 	{
-		msgErrorNombre = controlador.ModificarNombre(nombreInput);
-		msgErrorContrasena = controlador.ModificarContrasena(passwordInput);
-		msgErrorApellido = controlador.ModificarApellido(apellidoInput);
-		msgErrorDireccion = controlador.ModificarDireccion(direccionInput);
+		msgErrorNombre = controlador.ModificarNombre(nombreInput, Persistencia.Correo);
+		msgErrorContrasena = controlador.ModificarContrasena(passwordInput, Persistencia.Correo);
+		msgErrorApellido = controlador.ModificarApellido(apellidoInput, Persistencia.Correo);
+		msgErrorDireccion = controlador.ModificarDireccion(direccionInput, Persistencia.Correo);
 	}
 
 	private void ClickMostrarContrasena()

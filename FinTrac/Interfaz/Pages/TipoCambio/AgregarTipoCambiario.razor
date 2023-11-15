@@ -1,7 +1,10 @@
 ﻿@page "/home/{Id:int}/{Correo}/AgregarTipoCambiario"
+@inject ControladorCambios controlador;
 
 <PageTitle>FinTrac Agregar Tipo Cambiario</PageTitle>
-<TituloRosado Titulo="Agregar Tipo Cambiario" Subtitulo="Agregué un tipo cambiario para el espacio recuerde que no se puede repetir la fecha del mismo."></TituloRosado>
+<TituloRosado Titulo="Agregar Tipo Cambiario"
+			  Subtitulo="Agregué un tipo cambiario para el espacio recuerde que no se puede
+				repetir la fecha del mismo."></TituloRosado>
 <EspacioActual></EspacioActual>
 
 <form>
@@ -10,8 +13,7 @@
 			<td><label class="text-gray-600">Moneda</label></td>
 			<td>
 				<select @onchange="SeleccionarMoneda" class="text-600">
-					<option value="">Seleccione una Opcion</option>
-					@foreach (var moneda in monedas.Where(m => m != Domain.TipoCambiario.PesosUruguayos))
+					@foreach (var moneda in monedas.Where(m => m != TipoCambiarioDTO.PesosUruguayos))
 					{
 						<option value="@moneda">@moneda</option>
 					}
@@ -20,7 +22,10 @@
 		</tr>
 		<tr>
 			<td><label for="valorPesos">Valor en Pesos Uruguayos:</label></td>
-			<td><input type="number" class="form-control" id="valorPesos" placeholder="Pesos Uruguayos" @bind="Pesos"></td>
+			<td>
+				<input type="number" class="form-control" id="valorPesos" placeholder="Pesos Uruguayos"
+				@bind="Pesos">
+			</td>
 		</tr>
 		<tr>
 			<td><label for="fecha">Fecha:</label></td>
@@ -28,13 +33,15 @@
 		</tr>
 	</table>
 	<p style="color:red">@ErrorMsg</p>
-	<button type="button" class="mb-5 mt-4 text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
+	<button type="button" class="mb-5 mt-4 text-white bg-gradient-to-br from-pink-500 to-orange-400
+		hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800
+		font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2"
 	@onclick="AgregarCambio">
 		Agregar Tipo Cambiario
 	</button>
 </form>
 
-@code 
+@code
 {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -42,46 +49,36 @@
 	private string Moneda { get; set; } = "";
 	private double Pesos { get; set; } = 0;
 	private DateTime FechaDeCambio { get; set; } = DateTime.Now;
-	private Domain.TipoCambiario tipoMonedaSeleccionado;
-	private List<Domain.TipoCambiario> monedas;
-
-	private Cambio nuevoCambio = new Cambio();
+	private TipoCambiarioDTO tipoMonedaSeleccionado;
+	private List<TipoCambiarioDTO> monedas;
+	private CambioDTO nuevoCambio = new CambioDTO();
+	private List<CambioDTO> cambios = new List<CambioDTO>();
 
 	protected override void OnInitialized()
 	{
-		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
+		cambios = controlador.CambiosDeEspacio(Persistencia.Id);
+		monedas = Enum.GetValues(typeof(TipoCambiarioDTO)).Cast<TipoCambiarioDTO>().ToList();
 	}
 
 	private void SeleccionarMoneda(ChangeEventArgs e)
 	{
-		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
+		tipoMonedaSeleccionado = (TipoCambiarioDTO)Enum.Parse(typeof(TipoCambiarioDTO), e.Value.ToString());
 	}
 
 	private void AgregarCambio()
 	{
-		try
-		{
-			var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-			Cambio cambio = new Cambio()
-				{
-					Moneda = tipoMonedaSeleccionado,
-					Pesos = Pesos,
-					FechaDeCambio = FechaDeCambio.Date
-				};
-			try
+		var espacio = EspacioLogic.FindEspacio(Persistencia.Id);
+		CambioDTO cambio = new CambioDTO()
 			{
-				espacio.AgregarCambio(cambio);
-				EspacioLogic.UpdateEspacio(espacio);
-				NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
-			}
-			catch (DomainEspacioException ex)
-			{
-				ErrorMsg = ex.Message;
-			}
-		}
-		catch (DomainEspacioException ex)
+				Moneda = tipoMonedaSeleccionado,
+				Pesos = Pesos,
+				FechaDeCambio = FechaDeCambio.Date
+			};
+
+		ErrorMsg = controlador.CrearCambio(Id, cambio);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = ex.Message;
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/TipoCambiario");
 		}
 	}
 }

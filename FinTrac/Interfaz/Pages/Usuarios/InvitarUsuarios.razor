@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/InvitarUsuarios"
-@using Controlador;
+@inject ControladorUsuarios controlador
 <PageTitle>FinTrac Usuarios</PageTitle>
 <TituloRosado Titulo="Invitar Usuarios de FinTrac" Subtitulo="Si es administrador puede eliminar y invitar usuarios."></TituloRosado>
 <EspacioActual></EspacioActual>
@@ -49,13 +49,12 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	private ControladorUsuarios controlador;
+
 	private UsuarioDTO admin;
 	private List<UsuarioDTO> usuariosNoPresentes;
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorUsuarios(UsuarioLogic, EspacioLogic);
 		admin = controlador.DatosAdminEspacio(Persistencia.Id);
 		usuariosNoPresentes = controlador.DatosUsuariosNoPresentesEspacio(Persistencia.Id);
 	}

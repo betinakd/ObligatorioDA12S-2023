@@ -12,12 +12,12 @@ namespace Domain
 		private TipoCuenta _tipoCuenta = TipoCuenta.EsCredito;
 		private string _bancoEmisor;
 		private string _numeroTarjeta;
-		private double _creditoDisponible;
 		private DateTime _fechaCierre;
-		public DateTime FechaCierre {
-			get 
+		public DateTime FechaCierre
+		{
+			get
 			{
-				return _fechaCierre;	
+				return _fechaCierre;
 			}
 			set
 			{
@@ -44,16 +44,7 @@ namespace Domain
 			}
 		}
 
-		public override void IngresoMonetario(double monto)
-		{
-			_creditoDisponible += monto;
-		}
-		public override void EgresoMonetario(double monto)
-		{
-			_creditoDisponible -= monto;
-		}
-
-	public string NumeroTarjeta
+		public string NumeroTarjeta
 		{
 			get
 			{
@@ -61,34 +52,21 @@ namespace Domain
 			}
 			set
 			{
-				if(!CaracterEsNumero(value))
+				const int LARGONUMEROTARJETA= 4;
+
+				if (!CaracterEsNumero(value))
 				{
 					throw new DomainEspacioException("El número de tarjeta debe ser numérico");
 				}
-				if (value.Length < 4)
+				if (value.Length < LARGONUMEROTARJETA)
 				{
 					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
 				}
-				if (value.Length > 4)
+				if (value.Length > LARGONUMEROTARJETA)
 				{
-					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
+					throw new DomainEspacioException("El número de tarjeta no puede tener mas de 4 caracteres");
 				}
 				_numeroTarjeta = value;
-			}
-		}
-		public double CreditoDisponible
-		{
-			get
-			{
-				return _creditoDisponible;
-			}
-			set
-			{
-				if (value <= 0)
-				{
-					throw new DomainEspacioException("El crédito inicial disponible no puede ser menor a cero.");
-				}
-				_creditoDisponible = value;
 			}
 		}
 
@@ -99,9 +77,14 @@ namespace Domain
 		public override void Modificar(Cuenta cuenta)
 		{
 			Credito credito = (Credito)cuenta;
+			FechaCierre = credito.FechaCierre;
 			BancoEmisor = credito.BancoEmisor;
 			NumeroTarjeta = credito.NumeroTarjeta;
-			FechaCierre = credito.FechaCierre;
+		}
+
+		public override void ModificarFecha(DateTime fecha)
+		{
+			FechaCierre = fecha;
 		}
 
 		public override TipoCuenta TipoDeCuenta()
@@ -112,8 +95,9 @@ namespace Domain
 		public override string ToString()
 		{
 			string baseString = base.ToString();
-			return $"{baseString}{CreditoDisponible} - {NumeroTarjeta} - {BancoEmisor}";
+			return $"{baseString}{Saldo} - {NumeroTarjeta} - {BancoEmisor}";
 		}
+
 		public override bool Equals(object? obj)
 		{
 			if (obj == null || GetType() != obj.GetType())
@@ -128,8 +112,5 @@ namespace Domain
 		{
 			return int.TryParse(palabra, out int numero);
 		}
-
-
 	}
-
 }

@@ -3,12 +3,12 @@ using Domain;
 
 namespace Repository
 {
-	public class UsuariosDbContext : DbContext
+	public class FintracDbContext : DbContext
 	{
 		public DbSet<Usuario> Usuarios { get; set; }
 		public DbSet<Espacio> Espacios { get; set; }
 
-		public UsuariosDbContext(DbContextOptions<UsuariosDbContext> options) : base(options)
+		public FintracDbContext(DbContextOptions<FintracDbContext> options) : base(options)
 		{
 			if (!Database.IsInMemory())
 			{

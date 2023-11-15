@@ -1,16 +1,20 @@
 ﻿using Excepcion;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
 	public class Transaccion
 	{
 		private string _titulo;
+		private DateTime _fechaCreacion = DateTime.Now;
+		private double _monto;
+		private Cuenta _cuentaMonetaria;
+		private Categoria _categoriaTransaccion;
 		public int Id { get; set; }
 		public int CategoriaId { get; set; }
 		public int CuentaId { get; set; }
 		public int EspacioId { get; set; }
 		public Espacio Espacio { get; set; }
+		public TipoCambiario Moneda { get; set; }
 		public string Titulo
 		{
 			get
@@ -24,7 +28,6 @@ namespace Domain
 				_titulo = value;
 			}
 		}
-		private DateTime _fechaCreacion = DateTime.Now;
 		public DateTime FechaTransaccion
 		{
 			get
@@ -36,7 +39,6 @@ namespace Domain
 				_fechaCreacion = value;
 			}
 		}
-		private double _monto;
 		public double Monto
 		{
 			get
@@ -50,9 +52,32 @@ namespace Domain
 				_monto = value;
 			}
 		}
-		public TipoCambiario Moneda { get; set; }
-		public virtual Cuenta CuentaMonetaria { get; set; }
-		public virtual Categoria CategoriaTransaccion { get; set; }
+		public Cuenta CuentaMonetaria
+		{
+			get
+			{
+				return _cuentaMonetaria;
+			}
+			set
+			{
+				if (value is null)
+					throw new DomainEspacioException("La cuenta monetaria no puede ser nula");
+				_cuentaMonetaria = value;
+			}
+		}
+		public Categoria CategoriaTransaccion
+		{
+			get
+			{
+				return _categoriaTransaccion;
+			}
+			set
+			{
+				if (value is null)
+					throw new DomainEspacioException("La categoria no puede ser nula");
+				_categoriaTransaccion = value;
+			}
+		}
 
 		public Cambio EncontrarCambio(Espacio espacioActual)
 		{
@@ -67,8 +92,17 @@ namespace Domain
 			}
 			return toRet;
 		}
+		public virtual void EjecutarTransaccion()
+		{
+			throw new DomainEspacioException("No implementado");
+		}
 
-		public virtual Transaccion ClonTransaccion()
+		public virtual void ModificarMonto(double nuevoMonto)
+		{
+			throw new DomainEspacioException("No implementado");
+		}
+
+		public virtual string Tipo()
 		{
 			throw new DomainEspacioException("No implementado");
 		}

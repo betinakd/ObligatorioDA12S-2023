@@ -130,7 +130,7 @@ namespace DTOTest
 			{
 				FechaCreacion = DateTime.Now,
 				Nombre = "AhorroTest",
-				Monto = 1000,
+				Saldo = 1000,
 				Moneda = TipoCambiarioDTO.Dolar,
 			};
 			cuentas.Add(ahorro);
@@ -146,7 +146,7 @@ namespace DTOTest
 			{
 				FechaCreacion = DateTime.Now,
 				Nombre = "AhorroTest",
-				Monto = 1000,
+				Saldo = 1000,
 				Moneda = TipoCambiarioDTO.Dolar,
 			};
 			CategoriaDTO categoria = new CategoriaDTO()
@@ -158,8 +158,8 @@ namespace DTOTest
 			};
 			TransaccionDTO transaccion = new TransaccionDTO()
 			{
-				CategoriaTransaccion = categoria,
-				CuentaMonetaria = ahorro,
+				CategoriaTransaccion = "Costo",
+				CuentaMonetaria = "Pesos Santander",
 				FechaTransaccion = DateTime.Now,
 				Id = 1,
 				Monto = 1000,

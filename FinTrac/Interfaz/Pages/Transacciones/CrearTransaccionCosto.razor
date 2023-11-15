@@ -1,8 +1,9 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearTransaccionCosto"
+@inject ControladorTransaccion controlador;
+
 <PageTitle>FinTrac Transacción</PageTitle>
 <TituloRosado Titulo="Crear Transacción de Costo" Subtitulo="Cree sus transacciones de costo."></TituloRosado>
 <EspacioActual></EspacioActual>
-
 
 <div class="mt-4">
 	<h3 class="text-lg font-medium mb-2">Detalles de la Transacción</h3>
@@ -16,35 +17,24 @@
 			<input type="number" step="0.01" @bind="inputMonto" class="border rounded-md px-2 py-1" />
 		</div>
 		<div>
-			<label class="text-gray-600">Moneda</label>
-			<select @onchange="SeleccionarMoneda" class="border rounded-md px-2 py-1">
-				<option value="">Seleccione una Opcion</option>
-				@foreach (var moneda in monedas)
-				{
-					<option value="@moneda">@moneda</option>
-				}
-			</select>
 		</div>
 		<div>
 			<label class="text-gray-600">Cuenta Monetaria</label>
-			<select @onchange="SeleccionarCuenta" class="border rounded-md px-2 py-1">
+			<select @bind="cuentaSeleccionada">
 				<option value="">Seleccione una Opcion</option>
-				@foreach (Cuenta cuenta in cuentas)
+				@foreach (var cuenta in cuentas)
 				{
-					<option value="@cuenta">@cuenta.ToString()</option>
+					<option value=@cuenta>@cuenta</option>
 				}
 			</select>
 		</div>
 		<div>
-			<label class="text-gray-600">Categoría de la Transacción</label>
+			<label class="text-gray-600">Categorías Costo de la Transacción</label>
 			<select @onchange="SeleccionarCategoria" class=" border rounded-md px-2 py-1">
 				<option value="">Seleccione una Opcion</option>
 				@foreach (var categoria in categorias)
 				{
-					if (categoria.Tipo.Equals(TipoCategoria.Costo))
-					{
-						<option value="@categoria.Nombre">@categoria.Nombre</option>
-					}
+					<option value="@categoria.Nombre">@categoria.Nombre</option>
 				}
 			</select>
 		</div>
@@ -56,10 +46,6 @@
 	</div>
 </div>
 
-
-
-
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
@@ -68,71 +54,45 @@
 	private double inputMonto { get; set; } = 0;
 	private string inputCuenta { get; set; }
 	private string inputCategoria { get; set; }
-	private Espacio espacio = new Espacio();
-	private List<Cuenta> cuentas = new List<Cuenta>();
-	private List<Categoria> categorias = new List<Categoria>();
-	private Categoria categoria;
-	private Cuenta cuenta;
-	private Domain.TipoCambiario tipoMonedaSeleccionado;
-	private List<Domain.TipoCambiario> monedas;
-
+	private List<CategoriaDTO> categorias;
+	private CategoriaDTO categoria;
+	private List<string> cuentas;
+	private string cuentaSeleccionada;
 
 	protected override void OnInitialized()
 	{
-		espacio = EspacioLogic.FindEspacio(Id);
-		cuentas = espacio.Cuentas;
-		categorias = espacio.Categorias;
-		monedas = Enum.GetValues(typeof(Domain.TipoCambiario)).Cast<Domain.TipoCambiario>().ToList();
-	}
-
-	private void SeleccionarMoneda(ChangeEventArgs e)
-	{
-		tipoMonedaSeleccionado = (Domain.TipoCambiario)Enum.Parse(typeof(Domain.TipoCambiario), e.Value.ToString());
-	}
-
-	private void SeleccionarCuenta(ChangeEventArgs e)
-	{
-		string selectedValue = e.Value.ToString();
-		cuenta = cuentas.FirstOrDefault(c => c.ToString().Equals(selectedValue));
+		categorias = controlador.DarCategoriasCosto(Persistencia.Id);
+		cuentas = controlador.DatosCuentasEspacio(Persistencia.Id);
 	}
 
 	private void SeleccionarCategoria(ChangeEventArgs e)
 	{
 		string selectedValue = e.Value.ToString();
+		inputCategoria = "";
 		categoria = categorias.FirstOrDefault(c => c.Nombre == selectedValue);
+		if (categoria != null)
+		{
+			inputCategoria = categoria.Nombre;
+		}
 	}
 
 	private void CrearTransaccion()
 	{
-		try
-		{
-			TransaccionCosto transaccion = new TransaccionCosto()
-				{
-					Titulo = inputTitulo,
-					Monto = inputMonto,
-					Moneda = tipoMonedaSeleccionado,
-					CuentaMonetaria = cuenta,
-					CategoriaTransaccion = categoria,
-				};
-			espacio.AgregarTransaccion(transaccion);
+		ErrorMsg = "";
 
-			if (cuenta is Ahorro)
+		TransaccionDTO transaccion = new TransaccionDTO()
 			{
-				Ahorro ahorro = (Ahorro)cuenta;
-				ahorro.EgresoMonetario(inputMonto);
-			}
-			if (cuenta is Credito)
-			{
-				Credito credito = (Credito)cuenta;
-				credito.EgresoMonetario(inputMonto);
-			}
+				Titulo = inputTitulo,
+				Monto = inputMonto,
+				CuentaMonetaria = cuentaSeleccionada,
+				CategoriaTransaccion = inputCategoria,
+			};
 
-			EspacioLogic.UpdateEspacio(espacio);
-			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}/Transacciones");
-		}
-		catch (DomainEspacioException ex)
+		ErrorMsg = controlador.CrearTransaccionCosto(Persistencia.Id, transaccion);
+
+		if (ErrorMsg.Equals(""))
 		{
-			ErrorMsg = ex.Message;
+			NavigationManager.NavigateTo($"/home/{Id}/{Correo}/Transacciones");
 		}
 	}
 }

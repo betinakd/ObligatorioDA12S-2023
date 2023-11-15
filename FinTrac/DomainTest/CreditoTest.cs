@@ -71,19 +71,8 @@ namespace DomainTest
 		public void Credito_Tiene_CreditoDisponible()
 		{
 			Credito cuentaCredito = new Credito();
-			cuentaCredito.CreditoDisponible = 1000;
-			Assert.AreEqual(1000, cuentaCredito.CreditoDisponible);
-		}
-
-		[TestMethod]
-		public void Excepcion_CreditoDisponible_Negativo()
-		{
-			Credito cuentaCredito = new Credito();
-
-			Assert.ThrowsException<DomainEspacioException>(() =>
-			{
-				cuentaCredito.CreditoDisponible = -1.1;
-			});
+			cuentaCredito.Saldo = 1000;
+			Assert.AreEqual(1000, cuentaCredito.Saldo);
 		}
 
 		[TestMethod]
@@ -107,7 +96,7 @@ namespace DomainTest
 			var credito = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -125,7 +114,7 @@ namespace DomainTest
 			var credito = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -146,7 +135,7 @@ namespace DomainTest
 			var credito1 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -155,7 +144,7 @@ namespace DomainTest
 			var credito2 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -171,7 +160,7 @@ namespace DomainTest
 			var credito1 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -180,7 +169,7 @@ namespace DomainTest
 			var credito2 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBancoEmisor",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -195,7 +184,7 @@ namespace DomainTest
 			var credito1 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1236",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -204,7 +193,7 @@ namespace DomainTest
 			var credito2 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -220,7 +209,7 @@ namespace DomainTest
 			var credito1 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -229,7 +218,7 @@ namespace DomainTest
 			var credito2 = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -292,17 +281,17 @@ namespace DomainTest
 		public void Credito_Tiene_IngresoMonetario()
 		{
 			Credito cuentaCredito = new Credito();
-			cuentaCredito.CreditoDisponible = 5;
+			cuentaCredito.Saldo = 5;
 			cuentaCredito.IngresoMonetario(100);
-			Assert.AreEqual(105, cuentaCredito.CreditoDisponible);
+			Assert.AreEqual(105, cuentaCredito.Saldo);
 		}
 		[TestMethod]
 		public void Credito_Tiene_EgresoMonetario()
 		{
 			Credito cuentaCredito = new Credito();
-			cuentaCredito.CreditoDisponible = 1000;
+			cuentaCredito.Saldo = 1000;
 			cuentaCredito.EgresoMonetario(100);
-			Assert.AreEqual(900, cuentaCredito.CreditoDisponible);
+			Assert.AreEqual(900, cuentaCredito.Saldo);
 		}
 
 		[TestMethod]
@@ -319,7 +308,7 @@ namespace DomainTest
 			var credito = new Credito
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
-				CreditoDisponible = 1000,
+				Saldo = 1000,
 				NumeroTarjeta = "1234",
 				BancoEmisor = "MiBanco",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
@@ -328,7 +317,7 @@ namespace DomainTest
 			var credito2 = new Credito
 			{
 				Moneda = TipoCambiario.Dolar,
-				CreditoDisponible = 2000,
+				Saldo = 2000,
 				NumeroTarjeta = "4321",
 				BancoEmisor = "MiBancoEmisor",
 				FechaCierre = new System.DateTime(2026, 1, 1, 0, 0, 0)
@@ -353,11 +342,28 @@ namespace DomainTest
 			{
 				Moneda = TipoCambiario.PesosUruguayos,
 				BancoEmisor = "CuentaCreditoPrueba",
-				CreditoDisponible = 100.01,
+				Saldo = 100.01,
 				NumeroTarjeta = "1234",
 				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
 			};
 			Assert.AreEqual(cuenta.TipoDeCuenta(), TipoCuenta.EsCredito);
+		}
+
+		[TestMethod]
+		public void Credito_Modifica_FechaCierre()
+		{
+			var cuenta = new Credito
+			{
+				Moneda = TipoCambiario.PesosUruguayos,
+				BancoEmisor = "CuentaCreditoPrueba",
+				Saldo = 100.01,
+				NumeroTarjeta = "1234",
+				FechaCierre = new System.DateTime(2025, 1, 1, 0, 0, 0)
+			};
+
+			cuenta.ModificarFecha(new System.DateTime(2026, 1, 1, 0, 0, 0));
+
+			Assert.AreEqual(cuenta.FechaCierre, new System.DateTime(2026, 1, 1, 0, 0, 0));
 		}
 	}
 }

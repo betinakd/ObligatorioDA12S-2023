@@ -1,5 +1,6 @@
 ﻿@page "/registro"
 @layout RegistroLayout
+@inject ControladorRegistro controlador
 @using Controlador;
 <PageTitle>FinTrac Registro de Usuario</PageTitle>
 
@@ -47,13 +48,7 @@
 	public string Nombre { get; set; } = "";
 	public string Apellido { get; set; } = "";
 	public string Direccion { get; set; } = "";
-	private ControladorRegistro controlador;
 	private int idEspacioPrincipal;
-
-	protected override void OnInitialized()
-	{
-		controlador = new ControladorRegistro(UsuarioLogic, EspacioLogic);
-	}
 
 	public void ClickRegistro()
 	{

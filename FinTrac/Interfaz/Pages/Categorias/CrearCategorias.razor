@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearCategorias"
-@using DTO;
+@inject ControladorCategorias controlador;
 
 <PageTitle>FinTrac Crear Categorias</PageTitle>
 <TituloRosado Titulo="Cree una categoría." Subtitulo="Cree la categoría para el espacio seleccionado."></TituloRosado>
@@ -54,13 +54,11 @@
 	private string nombreCategoria;
 	private bool estadoActivo;
 	private DateTime fechaCreacion = DateTime.Today;
-	private ControladorCategorias controlador;
 	private DTO.EnumsDTO.TipoCategoriaDTO tipo;
 	private List<CategoriaDTO> categorias = new List<CategoriaDTO>();
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCategorias(EspacioLogic);
 		categorias = controlador.CategoriasDeEspacio(Id);
 	}
 
@@ -85,33 +83,21 @@
 				tipo = DTO.EnumsDTO.TipoCategoriaDTO.Costo;
 				break;
 		}
-		try
-		{
-			var nuevaCategoria = new CategoriaDTO()
-				{
-					Nombre = nombreCategoria,
-					Tipo = tipo,
-					EstadoActivo = estadoActivo,
-					FechaCreacion = fechaCreacion
-				};
-			try
+
+		var nuevaCategoria = new CategoriaDTO()
 			{
-				ErrorMsg = controlador.CrearCategoria(Id, nuevaCategoria);
-				if (ErrorMsg == "")
-				{
-					categorias = controlador.CategoriasDeEspacio(Id);
-					string newHref = $"/home/{Id}/{Correo}/Categorias";
-					NavigationManager.NavigateTo(newHref);
-				}
-			}
-			catch (DomainEspacioException e)
-			{
-				ErrorMsg = e.Message;
-			}
-		}
-		catch (DomainEspacioException e)
+				Nombre = nombreCategoria,
+				Tipo = tipo,
+				EstadoActivo = estadoActivo,
+				FechaCreacion = fechaCreacion
+			};
+
+		ErrorMsg = controlador.CrearCategoria(Id, nuevaCategoria);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = e.Message;
+			categorias = controlador.CategoriasDeEspacio(Id);
+			string newHref = $"/home/{Id}/{Correo}/Categorias";
+			NavigationManager.NavigateTo(newHref);
 		}
 	}
 }

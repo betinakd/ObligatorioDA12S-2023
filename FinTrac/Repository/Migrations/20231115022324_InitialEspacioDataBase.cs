@@ -91,7 +91,7 @@ namespace Repository.Migrations
                         column: x => x.EspacioId,
                         principalTable: "Espacios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,15 +101,14 @@ namespace Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EspacioId = table.Column<int>(type: "int", nullable: false),
+                    Saldo = table.Column<double>(type: "float", nullable: false),
                     Moneda = table.Column<int>(type: "int", nullable: false),
                     FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Tipo_cuenta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Monto = table.Column<double>(type: "float", nullable: true),
                     FechaCierre = table.Column<DateTime>(type: "datetime2", nullable: true),
                     BancoEmisor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumeroTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreditoDisponible = table.Column<double>(type: "float", nullable: true)
+                    NumeroTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,10 +176,10 @@ namespace Repository.Migrations
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
                     CuentaId = table.Column<int>(type: "int", nullable: false),
                     EspacioId = table.Column<int>(type: "int", nullable: false),
+                    Moneda = table.Column<int>(type: "int", nullable: false),
                     Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaTransaccion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Monto = table.Column<double>(type: "float", nullable: false),
-                    Moneda = table.Column<int>(type: "int", nullable: false),
                     Tipo_Transaccion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

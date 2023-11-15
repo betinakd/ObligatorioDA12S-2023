@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/Categorias"
-@using DTO;
+@inject ControladorCategorias controlador;
 
 <PageTitle>FinTrac Categorias</PageTitle>
 <TituloRosado Titulo="Categorias del espacio" Subtitulo="Cree y elimine categorías en el espacio."></TituloRosado>
@@ -98,13 +98,11 @@
 	private bool estadoActivo;
 	private CategoriaDTO categoriaSelec { get; set; }
 	private bool mostrarModificar = false;
-	private ControladorCategorias controlador;
 	string nombreValor { get; set; } = "";
 	private List<CategoriaDTO> categorias = new List<CategoriaDTO>();
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorCategorias(EspacioLogic);
 		categorias = controlador.CategoriasDeEspacio(Id);
 	}
 
@@ -126,49 +124,28 @@
 	{
 		LimpiarInputs();
 		mostrarModificar = false;
-		try
-		{
-			ErrorMsg = controlador.EliminarCategoria(Persistencia.Id, categoriaDTO);
-			categorias = controlador.CategoriasDeEspacio(Id);
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
-		}
+		ErrorMsg = controlador.EliminarCategoria(Persistencia.Id, categoriaDTO);
+		categorias = controlador.CategoriasDeEspacio(Id);
 	}
 
 	private void ModificarNombre(CategoriaDTO categoriaDTO)
 	{
-		try
+		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO, nombreValor);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO, nombreValor);
-			if (ErrorMsg == "")
-			{
-				categoriaDTO.Nombre = nombreValor;
-				categorias = controlador.CategoriasDeEspacio(Id);
-				mostrarModificar = false;
-				LimpiarInputs();
-			}
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
+			categoriaDTO.Nombre = nombreValor;
+			categorias = controlador.CategoriasDeEspacio(Id);
+			mostrarModificar = false;
+			LimpiarInputs();
 		}
 	}
 
 	private void ModificarEstado(CategoriaDTO categoriaDTO)
 	{
-		try
-		{
-			controlador.ModificarEstadoCategoria(Id, categoriaDTO, estadoActivo);
-			categoriaDTO.EstadoActivo = estadoActivo;
-			categorias = controlador.CategoriasDeEspacio(Id);
-			LimpiarInputs();
-			mostrarModificar = false;
-		}
-		catch (DomainEspacioException e)
-		{
-			ErrorMsg = e.Message;
-		}
+		controlador.ModificarEstadoCategoria(Id, categoriaDTO, estadoActivo);
+		categoriaDTO.EstadoActivo = estadoActivo;
+		categorias = controlador.CategoriasDeEspacio(Id);
+		LimpiarInputs();
+		mostrarModificar = false;
 	}
 }

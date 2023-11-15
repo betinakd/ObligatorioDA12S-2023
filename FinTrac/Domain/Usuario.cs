@@ -1,15 +1,18 @@
 ﻿using Excepcion;
-using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 namespace Domain
 {
 	public class Usuario
 	{
+		private string _contrasena;
+		private string _correo;
+		private string _nombre;
+		private string _apellido;
+
 		public int Id { get; set; }
 		public List<Espacio> Espacios { get; set; }
 		public List<Espacio> EspaciosAdmin { get; set; }
 		public int IdEspacioPrincipal { get; set; }
-		private string _contrasena;
 		public string Direccion { get; set; }
 		public string Contrasena
 		{
@@ -26,13 +29,13 @@ namespace Domain
 				_contrasena = value;
 			}
 		}
-		private string _correo;
 		public string Correo
 		{
 			get { return _correo; }
 			set
 			{
-				if (value is null) { 
+				if (string.IsNullOrEmpty(value))
+				{
 					throw new DomainUsuarioException("El correo electrónico es requerido");
 				}
 				if (Validar_Correo(value))
@@ -45,8 +48,6 @@ namespace Domain
 				}
 			}
 		}
-
-		private string _nombre;
 		public string Nombre
 		{
 			get
@@ -62,8 +63,6 @@ namespace Domain
 				_nombre = value;
 			}
 		}
-
-		private string _apellido;
 		public string Apellido
 		{
 			get
@@ -82,18 +81,21 @@ namespace Domain
 
 		public bool Validar_Contrasena(string contrasena)
 		{
-			if (EsContrasenaMayorATreinta(contrasena))
+			const int CONTRASENAMAXIMO = 30;
+			const int CONTRASENAMINIMO = 10;
+
+			if (contrasena.Length > CONTRASENAMAXIMO)
 			{
 				return false;
 			}
-
 			if (SonTodasMinusculas(contrasena))
 			{
 				return false;
 			}
 
-			return EsContrasenaMayorIgualADiez(contrasena);
+			return contrasena.Length >= CONTRASENAMINIMO;
 		}
+
 		public bool Validar_Correo(string correo)
 		{
 			if (!ContienePuntoCom(correo))
@@ -120,16 +122,6 @@ namespace Domain
 			return contrasena.ToLower() == contrasena;
 		}
 
-		private bool EsContrasenaMayorIgualADiez(string contrasena)
-		{
-			return contrasena.Length >= 10;
-		}
-
-		private bool EsContrasenaMayorATreinta(string contrasena)
-		{
-			return contrasena.Length > 30;
-		}
-
 		public override bool Equals(object? obj)
 		{
 			if (obj == null || GetType() != obj.GetType())
@@ -141,6 +133,4 @@ namespace Domain
 			return Correo == user.Correo;
 		}
 	}
-
-
 }

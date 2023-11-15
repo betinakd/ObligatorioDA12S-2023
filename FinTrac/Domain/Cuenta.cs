@@ -15,6 +15,7 @@ namespace Domain
 	{
 		public int Id { get; set; }
 		public int EspacioId { get; set; }
+		public double Saldo { get; set; }
 		public Espacio Espacio { get; set; }
 		public List<Transaccion> Transacciones { get; set; }
 		public TipoCambiario Moneda { get; set; }
@@ -28,7 +29,7 @@ namespace Domain
 		{
 		}
 
-		public override string ToString()
+		public virtual string ToString()
 		{
 			string moneda = "";
 			if (Moneda == TipoCambiario.PesosUruguayos)
@@ -46,14 +47,13 @@ namespace Domain
 			return moneda;
 		}
 
-		public virtual void IngresoMonetario(double monto)
+		public void IngresoMonetario(double monto)
 		{
-			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+			Saldo += monto;
 		}
-
-		public virtual void EgresoMonetario(double monto)
+		public void EgresoMonetario(double monto)
 		{
-			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+			Saldo -= monto;
 		}
 
 		public virtual void Modificar(Cuenta cuenta)
@@ -62,6 +62,11 @@ namespace Domain
 		}
 
 		public virtual TipoCuenta TipoDeCuenta()
+		{
+			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
+		}
+
+		public virtual void ModificarFecha(DateTime fecha)
 		{
 			throw new NotImplementedException("Esta operación no esta disponible en esta Cuenta");
 		}

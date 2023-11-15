@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager NavigationManager;
-@using Controlador;
+@inject ControladorHome controlador;
 @page "/home/{Id:int}/{Correo}"
 
 <PageTitle>FinTrac Home</PageTitle>
@@ -29,14 +29,12 @@
 	[Parameter]
 	public string Correo { get; set; }
 	private bool mostrarContrasena = false;
-	private ControladorHome controlador;
 	private UsuarioDTO usuarioActual;
 	private string botonNombre = "Mostrar";
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorHome(UsuarioLogic, Persistencia.Correo);
-		usuarioActual = controlador.Usuario;
+		usuarioActual = controlador.DarUsuarioDTO(Persistencia.Correo);
 	}
 
 	private void ClickMostrarContrasena()

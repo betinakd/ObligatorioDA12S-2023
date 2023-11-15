@@ -629,6 +629,85 @@ namespace DomainTest
 			espacio.AdminId = 1;
 			Assert.AreEqual(espacio.AdminId, 1);
 		}
+
+		[TestMethod]
+		public void Espacio_GastosDeObjetivo_Dolar()
+		{
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio",
+				Admin = usuario1,
+			};
+			TransaccionCosto transaccion = new TransaccionCosto()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.Dolar,
+				Monto = 1,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.Dolar,
+				},
+			};
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 16,
+				FechaDeCambio = DateTime.Now,
+			};
+			Objetivo objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = new List<Categoria>() { transaccion.CategoriaTransaccion },
+			};
+			espacio.AgregarCambio(cambio);
+			espacio.AgregarTransaccion(transaccion);
+			espacio.AgregarObjetivo(objetivo);
+			Assert.AreEqual(espacio.GastosDeObjetivo(objetivo), 16);
+		}
+
+		[TestMethod]
+		public void Espacio_GastosDeObjetivo_PesosUru()
+		{
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio",
+				Admin = usuario1,
+			};
+			TransaccionCosto transaccion = new TransaccionCosto()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.PesosUruguayos,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.PesosUruguayos,
+				},
+			};
+			Objetivo objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = new List<Categoria>() { transaccion.CategoriaTransaccion },
+			};
+			espacio.AgregarTransaccion(transaccion);
+			espacio.AgregarObjetivo(objetivo);
+			Assert.AreEqual(espacio.GastosDeObjetivo(objetivo), 100);
+		}
 	}
 }
 

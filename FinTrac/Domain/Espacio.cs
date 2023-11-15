@@ -9,8 +9,7 @@ namespace Domain
 		{
 		}
 
-		public int Id { get; set; }
-		public int AdminId { get; set; }
+		private string _nombre;
 		private Usuario _admin;
 		private List<Cuenta> _cuentas = new List<Cuenta>();
 		private List<Categoria> _categorias = new List<Categoria>();
@@ -18,7 +17,8 @@ namespace Domain
 		private List<Transaccion> _transacciones = new List<Transaccion>();
 		private List<Objetivo> _objetivos = new List<Objetivo>();
 		private List<Cambio> _cambios = new List<Cambio>();
-		private string _nombre;
+		public int Id { get; set; }
+		public int AdminId { get; set; }
 		public string Nombre
 		{
 			get
@@ -82,7 +82,6 @@ namespace Domain
 				_usuariosInvitados = value;
 			}
 		}
-
 		public Usuario Admin
 		{
 			get
@@ -124,7 +123,7 @@ namespace Domain
 			TipoCambiario moneda = transaccion.Moneda;
 			cambioHoy.Moneda = moneda;
 			if (!_cambios.Contains(cambioHoy) && transaccion.Moneda != TipoCambiario.PesosUruguayos)
-				throw new DomainEspacioException("No hay cotización cambiaria de dolar para la fecha de hoy");
+				throw new DomainEspacioException($"No hay cotización cambiaria de {moneda} para la fecha de hoy");
 			_transacciones.Add(transaccion);
 		}
 
@@ -199,5 +198,26 @@ namespace Domain
 			modificada.Modificar(modificacion);
 		}
 
-    }
+		public double GastosDeObjetivo(Objetivo objetivo)
+		{
+			double gastos = 0;
+			foreach (var transaccion in Transacciones)
+			{
+				double cambio = 0;
+				if (objetivo.ContieneCategoria(transaccion.CategoriaTransaccion))
+				{
+					if (transaccion.Moneda != TipoCambiario.PesosUruguayos)
+					{
+						cambio = _cambios.Find(c => c.Moneda == transaccion.Moneda).Pesos;
+						gastos += transaccion.Monto * cambio;
+					}
+					else
+					{
+						gastos += transaccion.Monto;
+					}
+				}
+			}
+			return gastos;
+		}
+	}
 }

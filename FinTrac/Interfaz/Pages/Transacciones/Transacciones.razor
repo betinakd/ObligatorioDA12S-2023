@@ -1,12 +1,12 @@
 ﻿@page "/home/{Id:int}/{Correo}/Transacciones"
-
+@inject ControladorTransaccion controlador;
 <div style="left: 3%; position: relative; width: 95%">
 	<PageTitle>FinTrac Transacciones</PageTitle>
 	<TituloRosado Titulo="Transacciones del espacio" Subtitulo="Listado con las transacciones realizadas en el espacio actual."></TituloRosado>
 	<EspacioActual></EspacioActual>
 </div>
 
-<div style="left: 3%; position: relative; width: 95%"  class="mb-4">
+<div style="left: 3%; position: relative; width: 95%" class="mb-4">
 	<a class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none
 focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
 	   href="/home/@Persistencia.Id/@Persistencia.Correo/CrearTransaccionCosto">Crear Transacción Costo</a>
@@ -46,46 +46,41 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (TransaccionCosto transaccion in (EspacioLogic.FindEspacio(Persistencia.Id).Transacciones.Where
-					(c => c is TransaccionCosto)))
+			@foreach (var transaccion in datosTransaccion)
 			{
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-						@transaccion.Titulo
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.FechaTransaccion
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.Monto
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.Moneda
-					</td>
-					<td class="px-6 py-4">
-						@if (transaccion.CuentaMonetaria is Ahorro cuentaAhorroNombre)
-						{
-							@cuentaAhorroNombre.Nombre
-						}
-						else if (transaccion.CuentaMonetaria is Credito cuentaCreditoBanco)
-						{
-							<text>Banco: @cuentaCreditoBanco.BancoEmisor | Num: @cuentaCreditoBanco.NumeroTarjeta</text>
-						}
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.CategoriaTransaccion.Nombre
-					</td>
-					<td class="px-6 py-4">
-						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarTransaccionCosto
-                        (transaccion)">
-							Modificar
-						</button>
-						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => ClonarTransaccionCosto(transaccion)">
-							Clonar
-						</button>
-					</td>
-				</tr>
+				@if (transaccion.Tipo.Equals("Costo"))
+				{
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+							@transaccion.Titulo
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.FechaTransaccion
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.Monto
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.Moneda
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.CuentaMonetaria
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.CategoriaTransaccion
+						</td>
+						<td class="px-6 py-4">
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarTransaccionCosto
+					(transaccion)">
+								Modificar
+							</button>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => ClonarTransaccionCosto(transaccion)">
+								Clonar
+							</button>
+						</td>
+					</tr>
+				}
 			}
 		</tbody>
 	</table>
@@ -94,7 +89,6 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 <br>
 <br>
 <h4 style="left: 3%; position: relative" class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Transacciones de ingresos:</h4>
-
 
 <div style="width: 95%; left: 3%" class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
 	<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table">
@@ -124,46 +118,41 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (TransaccionIngreso transaccion in (EspacioLogic.FindEspacio(Persistencia.Id).Transacciones.Where
-					(c => c is TransaccionIngreso)))
+			@foreach (var transaccion in datosTransaccion)
 			{
-				<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-					<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-						@transaccion.Titulo
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.FechaTransaccion
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.Monto
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.Moneda
-					</td>
-					<td class="px-6 py-4">
-						@if (transaccion.CuentaMonetaria is Ahorro cuentaAhorroNombre)
-						{
-							@cuentaAhorroNombre.Nombre
-						}
-						else if (transaccion.CuentaMonetaria is Credito cuentaCreditoBanco)
-						{
-							<text>Banco: @cuentaCreditoBanco.BancoEmisor | Num: @cuentaCreditoBanco.NumeroTarjeta</text>
-						}
-					</td>
-					<td class="px-6 py-4">
-						@transaccion.CategoriaTransaccion.Nombre
-					</td>
-					<td class="px-6 py-4">
-						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2" @onclick="() => ModificarTransaccionIngreso
-                        (transaccion)">
-							Modificar
-						</button>
-						<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
-						@onclick="() => ClonarTransaccionIngreso(transaccion)">
-							Clonar
-						</button>
-					</td>
-				</tr>
+				@if (transaccion.Tipo.Equals("Ingreso"))
+				{
+					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+						<td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+							@transaccion.Titulo
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.FechaTransaccion
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.Monto
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.Moneda
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.CuentaMonetaria
+						</td>
+						<td class="px-6 py-4">
+							@transaccion.CategoriaTransaccion
+						</td>
+						<td class="px-6 py-4">
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => ModificarTransaccionIngreso(transaccion)">
+								Modificar
+							</button>
+							<button class="bg-blue-500 text-white text-xs font-medium px-2 py-1 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-800 ml-2"
+							@onclick="() => ClonarTransaccionIngreso(transaccion)">
+								Clonar
+							</button>
+						</td>
+					</tr>
+				}
 			}
 		</tbody>
 	</table>
@@ -171,48 +160,36 @@ focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5
 <p style="color:red">@ErrorMsg</p>
 <div style="height:500px"></div>
 
-
 @code {
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; }
+	private List<TransaccionDTO> datosTransaccion;
 
-
-	private void ClonarTransaccionIngreso(TransaccionIngreso transaccion)
+	protected override void OnInitialized()
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		try
-		{
-			var clon = transaccion.ClonTransaccion();
-			espacio.Transacciones.Add(clon);
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
 	}
 
-	private void ClonarTransaccionCosto(TransaccionCosto transaccion)
+	private void ClonarTransaccionIngreso(TransaccionDTO transaccion)
 	{
-		Espacio espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		try
-		{
-			var clon = transaccion.ClonTransaccion();
-			espacio.Transacciones.Add(clon);
-		}
-		catch (DomainEspacioException ex)
-		{
-			ErrorMsg = ex.Message;
-		}
+		ErrorMsg = controlador.CrearTransaccionIngreso(Persistencia.Id, transaccion);
+		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
 	}
 
-	private void ModificarTransaccionIngreso(Transaccion transaccion)
+	private void ClonarTransaccionCosto(TransaccionDTO transaccion)
+	{
+		ErrorMsg = controlador.CrearTransaccionCosto(Persistencia.Id, transaccion);
+		datosTransaccion = controlador.TransaccionesDatos(Persistencia.Id);
+	}
+
+	private void ModificarTransaccionIngreso(TransaccionDTO transaccion)
 	{
 		NavigationManager.NavigateTo
 		($"/home/{Persistencia.Id}/{Persistencia.Correo}/{transaccion.Id}/ModificarTransaccionIngreso");
 	}
 
-	private void ModificarTransaccionCosto(Transaccion transaccion)
+	private void ModificarTransaccionCosto(TransaccionDTO transaccion)
 	{
 		NavigationManager.NavigateTo
 		($"/home/{Persistencia.Id}/{Persistencia.Correo}/{transaccion.Id}/ModificarTransaccionCosto");

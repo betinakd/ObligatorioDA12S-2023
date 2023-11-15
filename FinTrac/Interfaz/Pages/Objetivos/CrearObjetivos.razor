@@ -1,5 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearObjetivos"
-@using DTO;
+@inject ControladorObjetivos controlador;
 
 <PageTitle>FinTrac Crear Objetivo</PageTitle>
 <TituloRosado Titulo="Crear Objetivo" Subtitulo="Cree un objetivo rellenando los datos y seleccione una o varias categorias usando Ctrl+Click."></TituloRosado>
@@ -56,13 +56,11 @@
 	private List<string> categoriasSeleccionadas = new List<string>();
 	private List<CategoriaDTO> categorias;
 	private List<CategoriaDTO> categorias2 = new List<CategoriaDTO>();
-	private ControladorObjetivos controlador;
 	private ControladorCategorias controladorCategorias;
 	private List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
 
 	protected override void OnInitialized()
 	{
-		controlador = new ControladorObjetivos(EspacioLogic);
 		objetivos = controlador.ObjetivosDeEspacio(Id);
 		controladorCategorias = new ControladorCategorias(EspacioLogic);
 		categorias = controladorCategorias.CategoriasDeEspacio(Id);
@@ -82,31 +80,18 @@
 			categorias2.Add(categorias.FirstOrDefault(c => c.Nombre == categoria));
 		}
 
-		try
-		{
-			ObjetivoDTO nuevoObjetivo = new ObjetivoDTO
-				{
-					Titulo = tituloObjetivo,
-					MontoMaximo = montoObjetivo,
-					Categorias = categorias2
-				};
-			try
+		ObjetivoDTO nuevoObjetivo = new ObjetivoDTO
 			{
-				ErrorMsg = controlador.CrearObjetivo(Id, nuevoObjetivo);
-				if (ErrorMsg == "")
-				{
-					string newHref = $"/home/{Id}/{Correo}/Objetivos";
-					NavigationManager.NavigateTo(newHref);
-				}
-			}
-			catch (DomainEspacioException e)
-			{
-				ErrorMsg = e.Message;
-			}
-		}
-		catch (DomainEspacioException e)
+				Titulo = tituloObjetivo,
+				MontoMaximo = montoObjetivo,
+				Categorias = categorias2
+			};
+
+		ErrorMsg = controlador.CrearObjetivo(Id, nuevoObjetivo);
+		if (ErrorMsg == "")
 		{
-			ErrorMsg = e.Message;
+			string newHref = $"/home/{Id}/{Correo}/Objetivos";
+			NavigationManager.NavigateTo(newHref);
 		}
 	}
 }

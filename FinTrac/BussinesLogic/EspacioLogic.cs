@@ -115,8 +115,20 @@ namespace BussinesLogic
 
 		public void CrearCuenta(int idEspacio, Cuenta cuenta)
 		{
+			if (cuenta.Saldo <= 0)
+			{
+				throw new BusinessLogicEspacioException("El saldo de la cuenta debe ser mayor a 0");
+			}
 			Espacio espacio = FindEspacio(idEspacio);
 			espacio.AgregarCuenta(cuenta);
+			UpdateEspacio(espacio);
+		}
+
+		public void CrearTransaccion(int idEspacio, Transaccion transaccion)
+		{
+			Espacio espacio = FindEspacio(idEspacio);
+			espacio.AgregarTransaccion(transaccion);
+			transaccion.EjecutarTransaccion();
 			UpdateEspacio(espacio);
 		}
 	}

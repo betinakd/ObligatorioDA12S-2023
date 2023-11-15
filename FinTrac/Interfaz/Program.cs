@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Repository;
 using Domain;
 using BussinesLogic;
-using Microsoft.AspNetCore.Hosting;
+using Controlador;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 
@@ -11,9 +11,9 @@ using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<UsuariosDbContext>
+builder.Services.AddDbContext<FintracDbContext>
 	(options => options.UseSqlServer
-	(builder.Configuration.GetConnectionString("UsuariosDbConection"),
+	(builder.Configuration.GetConnectionString("FintracsDbConection"),
 		providerOptions => providerOptions.EnableRetryOnFailure()));
 
 // Add services to the container.

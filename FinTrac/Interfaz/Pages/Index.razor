@@ -43,32 +43,23 @@
 	</div>
 </div>
 
+
 @code {
+
 	public string Correo { get; set; } = "";
 	public string Password { get; set; } = "";
 	public string ErrorMsg { get; set; } = "";
-
-	public void LimpiarInputs()
-	{
-		Correo = "";
-		Password = "";
-	}
+	private UsuarioDTO usuarioLogeado;
 
 	public void ClickLogin()
 	{
-		try
+		ErrorMsg = controladorSesion.ValidarInicioSesion(Correo, Password);
+		if (ErrorMsg.Equals(""))
 		{
-			int id = UsuarioLogic.UsuarioByCorreoContrasena(Correo, Password).IdEspacioPrincipal;
-			string correo = UsuarioLogic.UsuarioByCorreoContrasena(Correo, Password).Correo;
-			NavigationManager.NavigateTo($"/home/{id}/{correo}");
-			Persistencia.Id = id;
-			Persistencia.Correo = correo;
+			usuarioLogeado = controladorSesion.DarUsuarioLogeado(Correo, Password);
+			Persistencia.Id = usuarioLogeado.IdEspacioPrincipal;
+			Persistencia.Correo = usuarioLogeado.Correo;
+			NavigationManager.NavigateTo($"/home/{Persistencia.Id}/{Persistencia.Correo}");
 		}
-		catch (BussinesLogicUsuarioException e)
-		{
-			ErrorMsg = e.Message;
-		}
-
-		LimpiarInputs();
 	}
 }
