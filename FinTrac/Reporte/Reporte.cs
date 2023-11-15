@@ -6,6 +6,16 @@ namespace EspacioReporte
 	{
 		private Espacio _MiEspacio;
 
+		public Reporte()
+		{
+
+		}
+		
+		public Reporte(Espacio espacio) 
+		{
+			MiEspacio = espacio;
+		}
+
 		public Espacio MiEspacio { get { return _MiEspacio; } set { _MiEspacio = value; } }
 
 		public List<ObjetivoGasto> ReporteObjetivosDeGastos()
