@@ -29,7 +29,7 @@ namespace DTOTest
 			};
 			ObjetivoGastoDTO objetivoGasto = new ObjetivoGastoDTO();
 			objetivoGasto.Objetivo = objetivo;
-			Assert.IsFalse(objetivoGasto.Objetivo.Equals(objetivo));
+			Assert.IsTrue(objetivoGasto.Objetivo.Equals(objetivo));
 		}
 	}
 }
