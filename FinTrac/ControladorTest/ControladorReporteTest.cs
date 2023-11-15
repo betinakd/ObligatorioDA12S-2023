@@ -871,7 +871,7 @@ namespace ControladorTest
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			int mes = DateTime.Today.Month;
 			List<IngresoEgresoDTO> reporte = controladorReporte.ReporteIngresosEgresos(1, mes);
-			Assert.IsTrue(reporte.Count != 30);
+			Assert.IsTrue(reporte.Count == 30);
 		}
 	}
 }
