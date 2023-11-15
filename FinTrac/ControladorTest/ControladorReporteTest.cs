@@ -101,7 +101,7 @@ namespace ControladorTest
 			_espacioLogic.AddEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<ObjetivoGastoDTO> reporte = controladorReporte.ReporteObjetivosGastos(1);
-			Assert.IsTrue(reporte.Count != 1);
+			Assert.IsTrue(reporte.Count == 1);
 		}
 	}
 }
