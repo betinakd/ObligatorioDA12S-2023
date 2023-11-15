@@ -12,5 +12,14 @@ namespace DTOTest
 			ingresoEgreso.Fecha = DateTime.Today;
 			Assert.AreEqual(DateTime.Today, ingresoEgreso.Fecha);
 		}
+
+		[TestMethod]
+		public void IngresoEgresoDTO_Tiene_Ingresos()
+		{
+			IngresoEgresoDTO ingresoEgreso = new IngresoEgresoDTO();
+			double ingresos = 1000;
+			ingresoEgreso.Ingresos = ingresos;
+			Assert.AreNotEqual(ingresos, ingresoEgreso.Ingresos);
+		}
 	}
 }
