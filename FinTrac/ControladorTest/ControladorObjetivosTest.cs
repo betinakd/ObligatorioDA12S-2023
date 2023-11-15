@@ -258,8 +258,8 @@ namespace ControladorTest
 				Token = ""
 			};
 			controladorTest.CrearObjetivo(1, objetivoDTO);
-			List<ObjetivoGasto> objetivoGasto = controladorTest.ObjetivosDeGastos(1, 1);
-			Assert.AreEqual(0, objetivoGasto.Count);
+			double monto = controladorTest.ObjetivosDeGastos(1, objetivoDTO.Id);
+			Assert.AreEqual(0, monto);
 		}
 	}
 }
