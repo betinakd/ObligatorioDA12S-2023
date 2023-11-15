@@ -31,5 +31,14 @@ namespace DTOTest
 			categoriaGasto.MontoUsado = monto;
 			Assert.IsTrue(categoriaGasto.MontoUsado == monto);
 		}
+
+		[TestMethod]
+		public void CategoriaGastoDTO_Tiene_Porcentaje()
+		{
+			CategoriaGastoDTO categoriaGasto = new CategoriaGastoDTO();
+			double porc = 10;
+			categoriaGasto.Porcentaje = porc;
+			Assert.IsFalse(categoriaGasto.Porcentaje == porc);
+		}
 	}
 }
