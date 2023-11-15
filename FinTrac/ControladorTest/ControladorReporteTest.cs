@@ -688,7 +688,7 @@ namespace ControladorTest
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
-			Assert.IsTrue(reporte.Count != 1);
+			Assert.IsTrue(reporte.Count == 1);
 		}
 	}
 }
