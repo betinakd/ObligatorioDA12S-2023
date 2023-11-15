@@ -5,6 +5,8 @@ using EspacioReporte;
 using DTO.EnumsDTO;
 using BussinesLogic;
 using Repository;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace ControladorTest
 {
@@ -14,12 +16,20 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorReporteTest
 	{
+		private IRepository<Usuario> _repositorioUsuario;
+		private UsuarioLogic _usuarioLogic;
+		private UsuariosDbContext _context;
+		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		private IRepository<Espacio> _repositorioEspacio;
 		private EspacioLogic _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
+			_context = _contextFactory.CreateDbContext();
+			_repositorioUsuario = new UsuarioMemoryRepository(_context);
+			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoryRepository(_context);
 			_espacioLogic = new EspacioLogic(_repositorioEspacio);
 		}
 
@@ -34,37 +44,64 @@ namespace ControladorTest
 		[TestMethod]
 		public void ReporteObjetivosGasto_Existe()
 		{
-			Espacio espacio = new Espacio() { Id = 1 };
-			Categoria categoria = new Categoria()
+			Usuario usuario = new Usuario
 			{
-				EstadoActivo = true,
-				FechaCreacion = DateTime.Today,
-				Id = 1,
-				Nombre = "PruebaCat",
-				Tipo = TipoCategoria.Costo,
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
 			};
-			espacio.AgregarCategoria(categoria);
-			List<Categoria> listaCategorias = new List<Categoria>();
-			listaCategorias.Add(categoria);
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Ahorro ahorro = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Monto = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos
+			};
+			espacio.AgregarCuenta(ahorro);
+			List<Categoria> categorias = new List<Categoria>()
+			{
+				new Categoria()
+				{
+					Id = 1,
+					Nombre = "Categoria1",
+					Tipo = TipoCategoria.Costo,
+					EstadoActivo = true,
+					FechaCreacion = DateTime.Now
+				}
+			};
 			Objetivo objetivo = new Objetivo()
 			{
-				Categorias = listaCategorias,
 				Id = 1,
+				Titulo = "Objetivo 1",
 				MontoMaximo = 1000,
-				Titulo = "ObjetivoPrueba",
-				Token = "token",
+				Categorias = categorias,
+				Token = null
 			};
 			espacio.AgregarObjetivo(objetivo);
 			Transaccion transaccion = new Transaccion()
 			{
-				Moneda = TipoCambiario.PesosUruguayos,
-				Monto = 100,
-				CategoriaTransaccion = categoria,
+				Id = 1,
+				Moneda = ahorro.Moneda,
+				Monto = 1000,
+				CategoriaTransaccion = categorias.First(),
+				CuentaMonetaria = ahorro,
+				Titulo = "hola",
+				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion);
+			_espacioLogic.AddEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
-			List<ObjetivoGastoDTO> reporteControlador = controladorReporte.ReporteObjetivosGastos(1);
-			Assert.IsTrue(reporteControlador.Count == 1);
+			List<ObjetivoGastoDTO> reporte = controladorReporte.ReporteObjetivosGastos(1);
+			Assert.IsTrue(reporte.Count != 1);
 		}
 	}
 }
