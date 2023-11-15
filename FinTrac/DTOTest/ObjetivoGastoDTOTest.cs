@@ -38,7 +38,7 @@ namespace DTOTest
 			ObjetivoGastoDTO objetivoGasto = new ObjetivoGastoDTO();
 			double montoEsperado = 1000;
 			objetivoGasto.MontoEsperado = montoEsperado;
-			Assert.IsFalse(montoEsperado == objetivoGasto.MontoEsperado);
+			Assert.IsTrue(montoEsperado == objetivoGasto.MontoEsperado);
 		}
 	}
 }
