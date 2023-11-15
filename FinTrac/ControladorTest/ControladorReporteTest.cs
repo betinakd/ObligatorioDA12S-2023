@@ -615,5 +615,80 @@ namespace ControladorTest
 			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
 			Assert.IsTrue(reporte.Count == 1);
 		}
+
+		[TestMethod]
+		public void ReporteGastosTarjeta_Da_1_Elemento_Euro()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Credito credito = new Credito
+			{
+				BancoEmisor = "santander",
+				CreditoDisponible = 1000,
+				FechaCierre = DateTime.Today.AddMonths(2),
+				Moneda = TipoCambiario.Euro,
+				NumeroTarjeta = "5555",
+			};
+			espacio.AgregarCuenta(credito);
+			Cambio cambioEuro = new Cambio()
+			{
+				Moneda = TipoCambiario.Euro,
+				Pesos = 33,
+				FechaDeCambio = DateTime.Today,
+			};
+			espacio.AgregarCambio(cambioEuro);
+			Categoria categoria = new Categoria()
+			{
+				Id = 1,
+				Nombre = "Categoria1",
+				Tipo = TipoCategoria.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			Transaccion transaccion1 = new Transaccion()
+			{
+				Id = 1,
+				Moneda = credito.Moneda,
+				Monto = 1000,
+				CategoriaTransaccion = categoria,
+				CuentaMonetaria = credito,
+				Titulo = "hola",
+				FechaTransaccion = DateTime.Today,
+			};
+			espacio.AgregarTransaccion(transaccion1);
+			_espacioLogic.AddEspacio(espacio);
+			CategoriaDTO categoriaDTO = new CategoriaDTO()
+			{
+				Id = categoria.Id,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now,
+				Nombre = categoria.Nombre,
+				Tipo = TipoCategoriaDTO.Costo,
+			};
+			CreditoDTO creditoDTO = new CreditoDTO()
+			{
+				BancoEmisor = credito.BancoEmisor,
+				FechaCierre = credito.FechaCierre,
+				Moneda = TipoCambiarioDTO.Euro,
+				NumeroTarjeta = credito.NumeroTarjeta,
+				CreditoDisponible = credito.CreditoDisponible,
+			};
+			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
+			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
+			Assert.IsTrue(reporte.Count != 1);
+		}
 	}
 }
