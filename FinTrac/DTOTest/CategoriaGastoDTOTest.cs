@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using Domain;
+using DTO;
 using DTO.EnumsDTO;
 
 namespace DTOTest
@@ -20,6 +21,15 @@ namespace DTOTest
 			CategoriaGastoDTO categoriaGasto = new CategoriaGastoDTO();
 			categoriaGasto.Categoria = categoria;
 			Assert.IsTrue(categoriaGasto.Categoria.Equals(categoria));
+		}
+
+		[TestMethod]
+		public void CategoriaGastoDTO_Tiene_Monto()
+		{
+			CategoriaGastoDTO categoriaGasto = new CategoriaGastoDTO();
+			double monto = 10;
+			categoriaGasto.MontoUsado = monto;
+			Assert.IsFalse(categoriaGasto.MontoUsado == monto);
 		}
 	}
 }
