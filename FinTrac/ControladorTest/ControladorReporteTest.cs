@@ -167,7 +167,7 @@ namespace ControladorTest
 			};
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<TransaccionDTO> reporte = controladorReporte.ReporteDeGastos(1, categoriaDTO, DateTime.Today.AddMonths(-2), DateTime.Today.AddMonths(2), ahorroDTO);
-			Assert.IsTrue(reporte.Count != 1);
+			Assert.IsTrue(reporte.Count == 1);
 		}
 	}
 }
