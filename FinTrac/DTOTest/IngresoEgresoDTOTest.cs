@@ -28,7 +28,7 @@ namespace DTOTest
 			IngresoEgresoDTO ingresoEgreso = new IngresoEgresoDTO();
 			double egresos = 1000;
 			ingresoEgreso.Ingresos = egresos;
-			Assert.AreNotEqual(egresos, ingresoEgreso.Ingresos);
+			Assert.AreEqual(egresos, ingresoEgreso.Ingresos);
 		}
 	}
 }
