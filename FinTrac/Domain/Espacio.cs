@@ -211,6 +211,10 @@ namespace Domain
 						cambio = _cambios.Find(c => c.Moneda == transaccion.Moneda).Pesos;
 						gastos += transaccion.Monto * cambio;
 					}
+					else
+					{
+						gastos += transaccion.Monto;
+					}
 				}
 			}
 			return gastos;
