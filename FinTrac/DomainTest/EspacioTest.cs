@@ -672,6 +672,42 @@ namespace DomainTest
 			espacio.AgregarObjetivo(objetivo);
 			Assert.AreEqual(espacio.GastosDeObjetivo(objetivo), 16);
 		}
+
+		[TestMethod]
+		public void Espacio_GastosDeObjetivo_PesosUru()
+		{
+			Espacio espacio = new Espacio()
+			{
+				Nombre = "Espacio",
+				Admin = usuario1,
+			};
+			TransaccionCosto transaccion = new TransaccionCosto()
+			{
+				Titulo = "Transaccion",
+				Moneda = TipoCambiario.PesosUruguayos,
+				Monto = 100,
+				CategoriaTransaccion = new Categoria()
+				{
+					EstadoActivo = true,
+					Nombre = "Categoria",
+					Tipo = TipoCategoria.Costo,
+				},
+				CuentaMonetaria = new Ahorro()
+				{
+					Nombre = "Ahorro",
+					Moneda = TipoCambiario.PesosUruguayos,
+				},
+			};
+			Objetivo objetivo = new Objetivo()
+			{
+				Titulo = "Objetivo",
+				MontoMaximo = 100,
+				Categorias = new List<Categoria>() { transaccion.CategoriaTransaccion },
+			};
+			espacio.AgregarTransaccion(transaccion);
+			espacio.AgregarObjetivo(objetivo);
+			Assert.AreEqual(espacio.GastosDeObjetivo(objetivo), 100);
+		}
 	}
 }
 
