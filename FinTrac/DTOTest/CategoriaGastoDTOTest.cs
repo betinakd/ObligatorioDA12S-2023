@@ -29,7 +29,7 @@ namespace DTOTest
 			CategoriaGastoDTO categoriaGasto = new CategoriaGastoDTO();
 			double monto = 10;
 			categoriaGasto.MontoUsado = monto;
-			Assert.IsFalse(categoriaGasto.MontoUsado == monto);
+			Assert.IsTrue(categoriaGasto.MontoUsado == monto);
 		}
 	}
 }
