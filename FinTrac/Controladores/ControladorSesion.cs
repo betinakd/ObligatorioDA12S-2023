@@ -46,6 +46,7 @@ namespace Controlador
 			}
 			catch (BussinesLogicUsuarioException ex)
 			{
+				usuarioDTO = null;
 			}
 			return usuarioDTO;
 		}

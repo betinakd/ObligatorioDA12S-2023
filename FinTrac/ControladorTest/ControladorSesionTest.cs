@@ -101,6 +101,7 @@ namespace ControladorTest
 			Assert.AreEqual("El usuario o la contraseña no son válidos.", mensaje);
 		}
 
+		[TestMethod]
 		public void ControladorSesion_Da_UsuarioDTO_Logeado_Por_Correo_Contrasena()
 		{
 			Usuario usuario = new Usuario
@@ -149,9 +150,10 @@ namespace ControladorTest
 			_espacioLogic.AddEspacio(espacio);
 			ControladorSesion controladorTest = new ControladorSesion(_usuarioLogic, _espacioLogic);
 			UsuarioDTO resultado = controladorTest.DarUsuarioLogeado("pedro@gmail.com", "AAAAaaaHd");
-			Assert.AreEqual(null, resultado.Nombre);
+			Assert.AreEqual(null, resultado);
 		}
 
+		[TestMethod]
 		public void ControladorSesion_Da_EspacioDTO_Actual_Con_Espacio_Id()
 		{
 			Usuario usuario = new Usuario
