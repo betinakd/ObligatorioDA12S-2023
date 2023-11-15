@@ -131,12 +131,11 @@ namespace Controlador
 			return nombreEspacio;
 		}
 
-		public List<ObjetivoGasto> ObjetivosDeGastos(int id, int objetivoDTO)
+		public double ObjetivosDeGastos(int id, int objetivoDTO)
 		{
 			Espacio espacio = _espacioLogic.FindEspacio(id);
 			Objetivo objetivo = Cambiar_A_Objetivo(id, objetivoDTO);
-			Reporte reporte = new Reporte() { MiEspacio = espacio };
-			List<ObjetivoGasto> objetivosDeGasto = reporte.ReporteObjetivosDeGastos();
+			double objetivosDeGasto = espacio.GastosDeObjetivo(objetivo);
 			return objetivosDeGasto;
 		}
 	}
