@@ -10,7 +10,7 @@ namespace DTOTest
 		{
 			IngresoEgresoDTO ingresoEgreso = new IngresoEgresoDTO();
 			ingresoEgreso.Fecha = DateTime.Today;
-			Assert.AreNotEqual(DateTime.Today, ingresoEgreso.Fecha);
+			Assert.AreEqual(DateTime.Today, ingresoEgreso.Fecha);
 		}
 	}
 }
