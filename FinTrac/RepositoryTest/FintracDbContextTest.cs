@@ -5,9 +5,9 @@ using Repository;
 namespace RepositoryTest
 {
 	[TestClass]
-	public class UsuariosDbContextTest
+	public class FintracDbContextTest
 	{	
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private UsuarioMemoryRepository _repository;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
@@ -61,12 +61,12 @@ namespace RepositoryTest
 		[TestMethod]
 		public void UsuariosDbContext_No_Esta_En_Memoria()
 		{
-			var options = new DbContextOptionsBuilder<UsuariosDbContext>()
+			var options = new DbContextOptionsBuilder<FintracDbContext>()
 				.UseSqlServer("Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = EspaciosTest;" +
 				" Integrated Security = True; Connect Timeout = 30; Encrypt = False")
 				.Options;
 
-			using (var context = new UsuariosDbContext(options))
+			using (var context = new FintracDbContext(options))
 			{
 				Assert.IsFalse(context.Database.IsInMemory());
 			}

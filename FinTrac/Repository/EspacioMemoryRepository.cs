@@ -5,9 +5,9 @@ namespace Repository
 {
     public class EspacioMemoryRepository : IRepository<Espacio>
     {
-		private readonly UsuariosDbContext _context;
+		private readonly FintracDbContext _context;
 
-		public EspacioMemoryRepository(UsuariosDbContext context)
+		public EspacioMemoryRepository(FintracDbContext context)
 		{
 			_context = context;
 		}

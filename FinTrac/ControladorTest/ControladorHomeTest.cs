@@ -12,7 +12,7 @@ namespace ControladorTest
 	{
 		private IRepository<Usuario> _repository;
 		private UsuarioLogic _usuarioLogic;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]

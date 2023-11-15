@@ -5,9 +5,9 @@ namespace Repository
 {
     public class UsuarioMemoryRepository : IRepository<Usuario>
     {
-		private readonly UsuariosDbContext _dbContext;
+		private readonly FintracDbContext _dbContext;
 
-		public UsuarioMemoryRepository(UsuariosDbContext dbContext)
+		public UsuarioMemoryRepository(FintracDbContext dbContext)
 		{
 			_dbContext = dbContext;
 		}

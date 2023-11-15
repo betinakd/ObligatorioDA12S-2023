@@ -13,7 +13,7 @@ namespace BussinesLogicTest
 		private EspacioLogic espacioLogic;
 		private Espacio espacio1;
 		private Espacio espacio2;
-		private UsuariosDbContext _context;
+		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 		Usuario usuario1;
 
