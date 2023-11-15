@@ -230,28 +230,14 @@ namespace Controlador
 		private Categoria CategoriaDTO_A_Categoria(CategoriaDTO categoria)
 		{
 			Categoria categoriaRetornar;
-			if (categoria.Tipo.Equals(TipoCategoriaDTO.Costo))
+			categoriaRetornar = new Categoria()
 			{
-				categoriaRetornar = new Categoria()
-				{
-					EstadoActivo = categoria.EstadoActivo,
-					FechaCreacion = categoria.FechaCreacion,
-					Id = categoria.Id,
-					Nombre = categoria.Nombre,
-					Tipo = TipoCategoria.Costo,
-				};
-			}
-			else
-			{
-				categoriaRetornar = new Categoria()
-				{
-					EstadoActivo = categoria.EstadoActivo,
-					FechaCreacion = categoria.FechaCreacion,
-					Id = categoria.Id,
-					Nombre = categoria.Nombre,
-					Tipo = TipoCategoria.Ingreso,
-				};
-			}
+				EstadoActivo = categoria.EstadoActivo,
+				FechaCreacion = categoria.FechaCreacion,
+				Id = categoria.Id,
+				Nombre = categoria.Nombre,
+				Tipo = TipoCategoria.Costo,
+			};
 			return categoriaRetornar;
 		}
 
