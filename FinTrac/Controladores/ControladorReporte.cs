@@ -244,6 +244,25 @@ namespace Controlador
 			return balance;
 		}
 
+		public List<IngresoEgresoDTO> ReporteIngresosEgresos(int id, int mes)
+		{
+			Espacio espacio = _reporte.FindEspacio(id);
+			Reporte reporte = new Reporte(espacio);
+			List<IngresoEgreso> reporteIngresoEgreso = reporte.ReporteIngresosEgresos(mes);
+			List<IngresoEgresoDTO> reporteEnDTO = new List<IngresoEgresoDTO>();
+			foreach (IngresoEgreso ingresoEgreso in reporteIngresoEgreso)
+			{
+				IngresoEgresoDTO ingresoEgresoDTO = new IngresoEgresoDTO()
+				{
+					Egresos = ingresoEgreso.Egresos,
+					Ingresos = ingresoEgreso.Ingresos,
+					Fecha = ingresoEgreso.Fecha,
+				};
+				reporteEnDTO.Add(ingresoEgresoDTO);
+			}
+			return reporteEnDTO;
+		}
+
 
 		public Ahorro AhorroDTO_A_Ahorro(AhorroDTO account)
 		{
