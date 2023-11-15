@@ -197,5 +197,23 @@ namespace Domain
 			Cuenta modificada = Cuentas.Find(c => c.Id == modificacion.Id);
 			modificada.Modificar(modificacion);
 		}
-    }
+
+		public double GastosDeObjetivo(Objetivo objetivo)
+		{
+			double gastos = 0;
+			foreach (var transaccion in Transacciones)
+			{
+				double cambio = 0;
+				if (objetivo.ContieneCategoria(transaccion.CategoriaTransaccion))
+				{
+					if (transaccion.Moneda != TipoCambiario.PesosUruguayos)
+					{
+						cambio = _cambios.Find(c => c.Moneda == transaccion.Moneda).Pesos;
+						gastos += transaccion.Monto * cambio;
+					}
+				}
+			}
+			return gastos;
+		}
+	}
 }
