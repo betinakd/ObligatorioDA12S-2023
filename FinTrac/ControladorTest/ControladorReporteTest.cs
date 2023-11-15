@@ -916,7 +916,7 @@ namespace ControladorTest
 			int mes = DateTime.Today.Month;
 			DateTime fechaHoy = DateTime.Today;
 			List<IngresoEgresoDTO> reporte = controladorReporte.ReporteIngresosEgresos(1, mes);
-			Assert.IsTrue(reporte.ToArray()[fechaHoy.Day - 1].Ingresos != transaccion.Monto);
+			Assert.IsTrue(reporte.ToArray()[fechaHoy.Day - 1].Ingresos == transaccion.Monto);
 		}
 	}
 }
