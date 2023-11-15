@@ -758,5 +758,63 @@ namespace ControladorTest
 			List<TransaccionDTO> reporte = controladorReporte.ReporteGastosTarjeta(1, creditoDTO.NumeroTarjeta);
 			Assert.IsTrue(reporte.Count == 1);
 		}
+
+		[TestMethod]
+		public void ReporteBalanceCuentas_Genera_Valor_Bien()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Ahorro ahorro1 = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Monto = 200,
+				FechaCreacion = DateTime.Today,
+				Moneda = TipoCambiario.PesosUruguayos
+			};
+			espacio.AgregarCuenta(ahorro1);
+			Categoria categoria = new Categoria()
+			{
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Today,
+				Nombre = "categoria Gasto prueba",
+				Tipo = TipoCategoria.Ingreso,
+			};
+			espacio.AgregarCategoria(categoria);
+			Transaccion transaccion = new Transaccion()
+			{
+				CuentaMonetaria = ahorro1,
+				FechaTransaccion = DateTime.Today,
+				Moneda = ahorro1.Moneda,
+				Monto = 100,
+				Titulo = "Transaccion de prueba",
+				CategoriaTransaccion = categoria,
+			};
+			espacio.AgregarTransaccion(transaccion);
+			_espacioLogic.AddEspacio(espacio);
+			AhorroDTO ahorroEnDTO = new AhorroDTO()
+			{
+				Moneda = TipoCambiarioDTO.PesosUruguayos,
+				Monto = ahorro1.Monto,
+				Nombre = ahorro1.Nombre,
+				FechaCreacion = ahorro1.FechaCreacion,
+			};
+			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
+			double valorTotal = controladorReporte.BalanceDeCuentas(1, ahorroEnDTO);
+			Console.WriteLine(valorTotal);
+			Assert.IsTrue(valorTotal != ahorro1.Monto);
+		}
 	}
 }

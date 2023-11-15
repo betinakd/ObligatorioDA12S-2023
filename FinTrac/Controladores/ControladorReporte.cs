@@ -235,8 +235,17 @@ namespace Controlador
 			return transaccionesDTO;
 		}
 
+		public double BalanceDeCuentas(int id, AhorroDTO account)
+		{
+			Espacio espacio = _reporte.FindEspacio(id);
+			Reporte reporte = new Reporte(espacio);
+			Ahorro accountNormal = AhorroDTO_A_Ahorro(account);
+			double balance = reporte.BalanceCuentas(accountNormal);
+			return balance;
+		}
 
-		private Ahorro AhorroDTO_A_Ahorro(AhorroDTO account)
+
+		public Ahorro AhorroDTO_A_Ahorro(AhorroDTO account)
 		{
 			Ahorro cuenta;
 			if (account.Moneda.Equals(TipoCambiarioDTO.Euro))
