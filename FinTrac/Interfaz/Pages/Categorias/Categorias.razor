@@ -130,8 +130,15 @@
 
 	private void ModificarNombre(CategoriaDTO categoriaDTO)
 	{
-		categoriaDTO.Nombre = nombreValor;
-		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO);
+		CategoriaDTO nuevoDTO = new CategoriaDTO()
+		{
+			Id = categoriaDTO.Id,
+			Nombre = nombreValor,
+			FechaCreacion = categoriaDTO.FechaCreacion,
+			Tipo = categoriaDTO.Tipo,
+			EstadoActivo = categoriaDTO.EstadoActivo
+		};
+		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, nuevoDTO);
 		if (ErrorMsg == "")
 		{
 			categorias = controlador.CategoriasDeEspacio(Id);

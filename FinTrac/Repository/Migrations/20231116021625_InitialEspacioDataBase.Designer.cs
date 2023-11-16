@@ -12,7 +12,7 @@ using Repository;
 namespace Repository.Migrations
 {
     [DbContext(typeof(FintracDbContext))]
-    [Migration("20231115022324_InitialEspacioDataBase")]
+    [Migration("20231116021625_InitialEspacioDataBase")]
     partial class InitialEspacioDataBase
     {
         /// <inheritdoc />
