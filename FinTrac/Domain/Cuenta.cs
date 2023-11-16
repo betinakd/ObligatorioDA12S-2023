@@ -1,7 +1,7 @@
 ﻿using Excepcion;
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace Dominio
 {
 	public enum TipoCambiario
 	{

@@ -1,8 +1,8 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using Controlador;
-using Domain;
+using Dominio;
 using Excepcion;
-using Repository;
+using Repositorio;
 using DTO;
 
 namespace ControladorTest
@@ -10,21 +10,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorEspaciosTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 
 		}
 
@@ -69,9 +69,9 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(creadorEspacio);
+			_usuarioLogic.AgregarUsuario(creadorEspacio);
 			controladorTest.CrearEspacio("test@gmail.com", "Espacio Test");
-			Espacio espacioCreado = _espacioLogic.FindEspacio(1);
+			Espacio espacioCreado = _espacioLogic.EncontrarEspacio(1);
 			Assert.AreEqual("Espacio Test", espacioCreado.Nombre);
 			Assert.AreEqual(creadorEspacio, espacioCreado.Admin);
 		}
@@ -88,14 +88,14 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(creadorEspacio);
+			_usuarioLogic.AgregarUsuario(creadorEspacio);
 			Espacio espacioCreado = new Espacio()
 			{
 				Id = 1,
 				Nombre = "Espacio Test",
 				Admin = creadorEspacio
 			};
-			_espacioLogic.AddEspacio(espacioCreado);
+			_espacioLogic.AgregarEspacio(espacioCreado);
 			string mensaje = controladorTest.ModificarNombreEspacio(1, "Espacio Modificado");
 			Assert.AreEqual("Espacio Modificado con éxito.", mensaje);
 			Assert.AreEqual("Espacio Modificado", espacioCreado.Nombre);
@@ -113,14 +113,14 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(creadorEspacio);
+			_usuarioLogic.AgregarUsuario(creadorEspacio);
 			Espacio espacioCreado = new Espacio()
 			{
 				Id = 1,
 				Nombre = "test",
 				Admin = creadorEspacio
 			};
-			_espacioLogic.AddEspacio(espacioCreado);
+			_espacioLogic.AgregarEspacio(espacioCreado);
 			string mensaje = controladorTest.ModificarNombreEspacio(1, "");
 			Assert.AreEqual("El espacio debe tener un nombre", mensaje);
 		}
@@ -145,8 +145,8 @@ namespace ControladorTest
 				Contrasena = "123tttt9Aaa",
 				Direccion = "street 67 av white"
 			};
-			_usuarioLogic.AddUsuario(creadorEspacio1);
-			_usuarioLogic.AddUsuario(creadorEspacio2);
+			_usuarioLogic.AgregarUsuario(creadorEspacio1);
+			_usuarioLogic.AgregarUsuario(creadorEspacio2);
 			Espacio espacioCreado1 = new Espacio()
 			{
 				Id = 1,
@@ -160,8 +160,8 @@ namespace ControladorTest
 				Admin = creadorEspacio2
 			};
 			espacioCreado2.InvitarUsuario(creadorEspacio1);
-			_espacioLogic.AddEspacio(espacioCreado1);
-			_espacioLogic.AddEspacio(espacioCreado2);
+			_espacioLogic.AgregarEspacio(espacioCreado1);
+			_espacioLogic.AgregarEspacio(espacioCreado2);
 			List<EspacioDTO> espacios = controladorTest.EspaciosDeUsuario("alberto@gmail.com");
 			Assert.AreEqual("Espacio Test", espacios[0].Nombre);
 			Assert.AreEqual(1, espacios[0].Id);

@@ -1,7 +1,7 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using DTO;
 using DTO.EnumsDTO;
-using Domain;
+using Dominio;
 using Excepcion;
 
 namespace Controlador
@@ -10,7 +10,7 @@ namespace Controlador
 	{
 		private EspacioLogic _espacioLogic;
 
-		public ControladorCategorias(EspacioLogic categoriaLogic)
+		public ControladorCategorias(EspacioLogica categoriaLogic)
 		{
 			_espacioLogic = categoriaLogic;
 		}
@@ -52,7 +52,7 @@ namespace Controlador
 				espacio.AgregarCategoria(nuevaCategoria);
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				msjError = e.Message;
 			}
@@ -74,10 +74,10 @@ namespace Controlador
 				}
 				else
 				{
-					throw new DomainEspacioException("Ya existe una categoría con ese nombre");
+					throw new DominioEspacioExcepcion("Ya existe una categoría con ese nombre");
 				}
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				msjError = e.Message;
 			}
@@ -94,7 +94,7 @@ namespace Controlador
 				espacio.BorrarCategoria(categoria);
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				errorMsj = e.Message;
 			}

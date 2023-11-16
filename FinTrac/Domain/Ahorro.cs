@@ -1,6 +1,6 @@
 ﻿using Excepcion;
 
-namespace Domain
+namespace Dominio
 {
 	public class Ahorro : Cuenta
 	{
@@ -16,7 +16,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainEspacioException("El nombre de la cuenta no puede ser vacío");
+					throw new DominioEspacioExcepcion("El nombre de la cuenta no puede ser vacío");
 				}
 				_nombre = value;
 			}

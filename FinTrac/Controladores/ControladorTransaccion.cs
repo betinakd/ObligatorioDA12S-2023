@@ -1,7 +1,7 @@
 ﻿using DTO;
-using BussinesLogic;
+using LogicaNegocio;
 using Excepcion;
-using Domain;
+using Dominio;
 using DTO.EnumsDTO;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
@@ -9,9 +9,9 @@ namespace Controlador
 {
 	public class ControladorTransaccion
 	{
-		private EspacioLogic _espacioLogic;
+		private EspacioLogica _espacioLogic;
 
-		public ControladorTransaccion(EspacioLogic espacioLogic)
+		public ControladorTransaccion(EspacioLogica espacioLogic)
 		{
 			_espacioLogic = espacioLogic;
 		}
@@ -19,7 +19,7 @@ namespace Controlador
 		public List<TransaccionDTO> TransaccionesDatos(int espacioId)
 		{
 			List<TransaccionDTO> conversionDatos = new List<TransaccionDTO>();
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<Transaccion> transacciones = espacio.Transacciones;
 			foreach (var t in transacciones)
 			{
@@ -42,7 +42,7 @@ namespace Controlador
 		public List<string> DatosCuentasEspacio(int idEspacio)
 		{
 			List<string> datosCuentas = new List<string>();
-			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(idEspacio);
 			List<Cuenta> cuentas = espacio.Cuentas;
 			foreach (var c in cuentas)
 			{
@@ -54,7 +54,7 @@ namespace Controlador
 
 		private Cuenta DarCuentaSegunSusDatos(int espacioId, string datoCuenta)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<Cuenta> cuentas = espacio.Cuentas;
 			Cuenta cuenta = cuentas.Find(c => c.ToString().Equals(datoCuenta));
 			return cuenta;
@@ -62,7 +62,7 @@ namespace Controlador
 
 		private Categoria DarCategoriaSegunSusDatos(int espacioId, string datoCategoria)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<Categoria> categorias = espacio.Categorias;
 			Categoria categoria = categorias.Find(c => c.Nombre.Equals(datoCategoria));
 			return categoria;
@@ -86,7 +86,7 @@ namespace Controlador
 				};
 				_espacioLogic.CrearTransaccion(espacioId, transaccion);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -110,7 +110,7 @@ namespace Controlador
 				};
 				_espacioLogic.CrearTransaccion(espacioId, transaccion);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -137,7 +137,7 @@ namespace Controlador
 
 		public List<CategoriaDTO> DarCategoriasCosto(int espacioId)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<Categoria> categorias = espacio.Categorias;
 			List<CategoriaDTO> categoriasCosto = new List<CategoriaDTO>();
 			foreach (var c in categorias)
@@ -160,7 +160,7 @@ namespace Controlador
 
 		public List<CategoriaDTO> DarCategoriasIngreso(int espacioId)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<Categoria> categorias = espacio.Categorias;
 			List<CategoriaDTO> categoriasIngreso = new List<CategoriaDTO>();
 			foreach (var c in categorias)
@@ -183,7 +183,7 @@ namespace Controlador
 
 		public TransaccionDTO DarTransaccion(int espacioId, int transaccionId)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<Transaccion> transacciones = espacio.Transacciones;
 			Transaccion transaccion = transacciones.Find(t => t.Id == transaccionId);
 			TransaccionDTO transaccionDTO = new TransaccionDTO()
@@ -206,14 +206,14 @@ namespace Controlador
 			try
 			{
 				Categoria categoria = DarCategoriaSegunSusDatos(espacioId, transaccion.CategoriaTransaccion);
-				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+				Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 				List<Transaccion> transacciones = espacio.Transacciones;
 				Transaccion tranModificar = transacciones.Find(t => t.Id == transaccion.Id);
 				tranModificar.CategoriaTransaccion = categoria;
 				tranModificar.ModificarMonto(transaccion.Monto);
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				errorMsj = e.Message;
 			}

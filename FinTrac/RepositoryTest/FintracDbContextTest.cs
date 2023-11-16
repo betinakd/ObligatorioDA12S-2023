@@ -1,21 +1,21 @@
-﻿using Domain;
+﻿using Dominio;
 using Microsoft.EntityFrameworkCore;
-using Repository;
+using Repositorio;
 
-namespace RepositoryTest
+namespace RepositorioTest
 {
 	[TestClass]
 	public class FintracDbContextTest
 	{	
 		private FintracDbContext _context;
-		private UsuarioMemoryRepository _repository;
+		private UsuarioMemoriaRepositorio _repository;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
 		[TestInitialize]
 		public void Setup()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repository = new UsuarioMemoryRepository(_context);
+			_repository = new UsuarioMemoriaRepositorio(_context);
 
 			_context.Usuarios.Add(new Usuario
 			{

@@ -1,8 +1,8 @@
-﻿using Domain;
+﻿using Dominio;
 using EspacioReporte;
 using Excepcion;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class ReporteTest
@@ -1689,7 +1689,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void ReporteGastosTarjeta_CuentaExpirada()
 		{
 			var _reporte = new Reporte();

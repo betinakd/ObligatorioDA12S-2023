@@ -1,8 +1,8 @@
 ﻿using DTO;
 using Controlador;
-using BussinesLogic;
-using Domain;
-using Repository;
+using LogicaNegocio;
+using Dominio;
+using Repositorio;
 using System.Linq;
 
 namespace ControladorTest
@@ -10,21 +10,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorCuentaTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 		}
 
 		[TestCleanup]
@@ -52,7 +52,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -93,7 +93,7 @@ namespace ControladorTest
 				Moneda = TipoCambiario.Euro
 			};
 			espacio.Cuentas.Add(ahorro3);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta( _espacioLogic);
 
 			List<AhorroDTO> ahorros = controladorTest.AhorrosDeEspacio(espacio.Id);
@@ -120,7 +120,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -163,7 +163,7 @@ namespace ControladorTest
 				Moneda = TipoCambiario.Euro
 			};
 			espacio.Cuentas.Add(credito2);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 
 			List<CreditoDTO> creditos = controladorTest.CreditosDeEspacio(espacio.Id);
@@ -191,7 +191,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -229,7 +229,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(2, espacio.Cuentas.Count);
@@ -248,7 +248,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -294,7 +294,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(3, espacio.Cuentas.Count);
@@ -313,7 +313,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -352,7 +352,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(2, espacio.Cuentas.Count);
@@ -371,7 +371,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -419,7 +419,7 @@ namespace ControladorTest
 				Titulo = "Test",
 			};
 			espacio.Transacciones.Add(transaccion);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.EliminarCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(3, espacio.Cuentas.Count);
@@ -438,7 +438,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -471,7 +471,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarAhorro(espacio.Id, ahorroModificado);
 
@@ -490,7 +490,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -523,7 +523,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarAhorro(espacio.Id, ahorroModificado);
 
@@ -542,7 +542,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -577,7 +577,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarCredito(espacio.Id, creditoDTO);
 
@@ -597,7 +597,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -632,7 +632,7 @@ namespace ControladorTest
 				FechaCreacion = new DateTime(2010, 4, 20),
 			};
 			espacio.Cuentas.Add(credito);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarCredito(espacio.Id, creditoDTO);
 
@@ -652,7 +652,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -684,7 +684,7 @@ namespace ControladorTest
 				FechaCreacion = DateTime.Now,
 			};
 
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
 			string mensaje2 = controladorTest.CrearAhorro(espacio.Id, ahorroDTO2);
@@ -706,7 +706,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -722,7 +722,7 @@ namespace ControladorTest
 				FechaCreacion = DateTime.Now,
 			};
 
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual("El nombre de la cuenta no puede ser vacío", mensaje);
@@ -740,7 +740,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -757,7 +757,7 @@ namespace ControladorTest
 				FechaCierre = new DateTime(2026, 4, 5),
 			};
 
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(1, espacio.Cuentas.Count);
@@ -775,7 +775,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -792,7 +792,7 @@ namespace ControladorTest
 				FechaCierre = new DateTime(2026, 4, 5),
 			};
 
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
@@ -810,7 +810,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -826,7 +826,7 @@ namespace ControladorTest
 				FechaCreacion = DateTime.Now,
 			};
 
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearAhorro(espacio.Id, ahorroDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
@@ -844,7 +844,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -861,7 +861,7 @@ namespace ControladorTest
 				FechaCierre = new DateTime(2026, 4, 5),
 			};
 
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.CrearCredito(espacio.Id, creditoDTO);
 			Assert.AreEqual(0, espacio.Cuentas.Count);
@@ -879,7 +879,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -905,7 +905,7 @@ namespace ControladorTest
 				FechaCierre = new DateTime(2056, 4, 5),
 			};
 			espacio.Cuentas.Add(credito);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarCreditoFechaCierre(espacio.Id, creditoDTO);
 			Assert.AreEqual(creditoDTO.FechaCierre, credito.FechaCierre);
@@ -923,7 +923,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -949,7 +949,7 @@ namespace ControladorTest
 				FechaCierre = new DateTime(2001, 4, 5),
 			};
 			espacio.Cuentas.Add(credito);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCuenta controladorTest = new ControladorCuenta(_espacioLogic);
 			string mensaje = controladorTest.ModificarCreditoFechaCierre(espacio.Id, creditoDTO);
 			Assert.AreEqual("La fecha de cierre no puede ser menor a la fecha actual", mensaje);

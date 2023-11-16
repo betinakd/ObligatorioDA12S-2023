@@ -1,7 +1,7 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using Controlador;
-using Domain;
-using Repository;
+using Dominio;
+using Repositorio;
 using DTO;
 
 namespace ControladorTest
@@ -9,21 +9,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorRegistroTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 
 			var usuario1 = new Usuario()
 			{
@@ -42,8 +42,8 @@ namespace ControladorTest
 				Contrasena = "123tttt9Aaa",
 				Direccion = "street 67 av white"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
-			_usuarioLogic.AddUsuario(usuario2);
+			_usuarioLogic.AgregarUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario2);
 		}
 
 		[TestCleanup]
@@ -73,7 +73,7 @@ namespace ControladorTest
 			};
 			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
 			controladorTest.RegistrarUsuario(usuario);
-			Usuario usuarioRegistrado = _usuarioLogic.FindUsuario("test@gmail.com");
+			Usuario usuarioRegistrado = _usuarioLogic.EncontrarUsuario("test@gmail.com");
 			Assert.IsNotNull(usuarioRegistrado);
 		}
 
@@ -95,11 +95,11 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			ControladorRegistro controladorTest = new ControladorRegistro(_usuarioLogic, _espacioLogic);
 			
 			controladorTest.CrearEspacioPrincipal("test@gmail.com");
-			Espacio espacioPrincipal = _espacioLogic.FindEspacio(1);
+			Espacio espacioPrincipal = _espacioLogic.EncontrarEspacio(1);
 
 			Assert.IsNotNull(espacioPrincipal);
 			Assert.AreEqual(espacioPrincipal.Nombre, "Principal test");

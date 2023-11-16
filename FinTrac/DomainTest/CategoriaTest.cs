@@ -1,7 +1,7 @@
-﻿using Domain;
+﻿using Dominio;
 using Excepcion;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class CategoriaTest
@@ -29,14 +29,14 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Categoria_Tiene_Nombre_Nulo()
 		{
 			categoria.Nombre = null;
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Categoria_Tiene_Nombre_Vacio()
 		{
 			categoria.Nombre = "";

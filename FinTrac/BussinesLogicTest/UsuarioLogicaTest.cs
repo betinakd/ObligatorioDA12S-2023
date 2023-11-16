@@ -1,15 +1,15 @@
 ﻿using Excepcion;
-using Domain;
-using Repository;
-using BussinesLogic;
+using Dominio;
+using Repositorio;
+using LogicaNegocio;
 
-namespace BussinesLogicTest
+namespace LogicaNegocioTest
 {
 	[TestClass]
-	public class UsuarioLogicTest
+	public class UsuarioLogicaTest
 	{
-		private IRepository<Usuario> _repository;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repository;
+		private UsuarioLogica _usuarioLogic;
 		private Usuario _usuario1;
 		private Usuario _usuario2;
 		private FintracDbContext _context;
@@ -19,8 +19,8 @@ namespace BussinesLogicTest
 		public void Setup()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repository = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repository);
+			_repository = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repository);
 			_usuario1 = new Usuario()
 			{
 				Correo = "hola@gmail.com",
@@ -59,7 +59,7 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Agregar_Usuario()
 		{
-			_usuarioLogic.AddUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario1);
 			var usuarioAgregado = _repository.Find(u => u.Correo == _usuario1.Correo);
 			bool resultado = _usuario1.Equals(usuarioAgregado);
 			Assert.IsNotNull(usuarioAgregado);
@@ -69,32 +69,32 @@ namespace BussinesLogicTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void Contrasena_invalida_UL()
 		{
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xxxx@yyyy.com";
 			usuario1.Contrasena = "1234567890";
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void Correo_invalido_UL()
 		{
 			Usuario usuario1 = new Usuario();
 			usuario1.Correo = "xxxx@yyyy.co";
 			usuario1.Contrasena = "123456789Aa";
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 		}
 
 		[TestMethod]
 		public void Buscar_Todos_Usuarios()
 		{
 
-			_usuarioLogic.AddUsuario(_usuario1);
-			_usuarioLogic.AddUsuario(_usuario2);
-			var usuarios = _usuarioLogic.FindAllUsuario();
+			_usuarioLogic.AgregarUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			var usuarios = _usuarioLogic.DarUsuarios();
 			Assert.IsNotNull(usuarios);
 			Assert.AreEqual(2, usuarios.Count);
 		}
@@ -102,10 +102,10 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Eliminar_Usuario()
 		{
-			_usuarioLogic.AddUsuario(_usuario1);
-			_usuarioLogic.AddUsuario(_usuario2);
-			_usuarioLogic.DeleteUsuario(_usuario1.Correo);
-			var usuarios = _usuarioLogic.FindAllUsuario();
+			_usuarioLogic.AgregarUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			_usuarioLogic.BorrarUsuario(_usuario1.Correo);
+			var usuarios = _usuarioLogic.DarUsuarios();
 			Assert.IsNotNull(usuarios);
 			Assert.AreEqual(1, usuarios.Count);
 		}
@@ -113,9 +113,9 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Buscar_Usuario()
 		{
-			_usuarioLogic.AddUsuario(_usuario1);
-			_usuarioLogic.AddUsuario(_usuario2);
-			var usuario = _usuarioLogic.FindUsuario(_usuario1.Correo);
+			_usuarioLogic.AgregarUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			var usuario = _usuarioLogic.EncontrarUsuario(_usuario1.Correo);
 			Assert.IsNotNull(usuario);
 			Assert.AreEqual(_usuario1.Correo, usuario.Correo);
 			Assert.AreEqual(_usuario1.Contrasena, usuario.Contrasena);
@@ -124,8 +124,8 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Agregar_Usuario_Valido()
 		{
-			var usuarioAgregado1 = _usuarioLogic.AddUsuario(_usuario1);
-			var usuarioAgregado2 = _usuarioLogic.AddUsuario(_usuario2);
+			var usuarioAgregado1 = _usuarioLogic.AgregarUsuario(_usuario1);
+			var usuarioAgregado2 = _usuarioLogic.AgregarUsuario(_usuario2);
 			Assert.IsNotNull(usuarioAgregado1);
 			Assert.AreEqual(_usuario1, usuarioAgregado1);
 			Assert.IsNotNull(usuarioAgregado2);
@@ -134,7 +134,7 @@ namespace BussinesLogicTest
 
 
 		[TestMethod]
-		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		[ExpectedException(typeof(LogicaNegocioUsuarioExcepcion))]
 		public void Agregar_Usuario_Invalido_Duplicado()
 		{
 			var usuario1 = new Usuario
@@ -153,16 +153,16 @@ namespace BussinesLogicTest
 				Contrasena = "123456aasaU",
 				Correo = "Juan@xxxx.com"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
-			_usuarioLogic.AddUsuario(usuario2);
+			_usuarioLogic.AgregarUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario2);
 		}
 
 		[TestMethod]
 		public void Ingreso_Correo_Contrasena_Valida_Entrega_Usuario()
 		{
-			_usuarioLogic.AddUsuario(_usuario1);
-			_usuarioLogic.AddUsuario(_usuario2);
-			Usuario usuario = _usuarioLogic.UsuarioByCorreoContrasena("hola@gmail.com", "123456789Aaa");
+			_usuarioLogic.AgregarUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			Usuario usuario = _usuarioLogic.UsuarioPorCorreoContrasena("hola@gmail.com", "123456789Aaa");
 			bool resultado = usuario.Equals(_usuario1);
 			bool contrasenaIgual = usuario.Contrasena == _usuario1.Contrasena;
 			Assert.IsTrue(resultado);
@@ -170,39 +170,39 @@ namespace BussinesLogicTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		[ExpectedException(typeof(LogicaNegocioUsuarioExcepcion))]
 		public void Excepcion_Ingreso_Correo_Valido_Contrasena_No_Existente()
 		{
-			_usuarioLogic.AddUsuario(_usuario1);
-			_usuarioLogic.AddUsuario(_usuario2);
-			Usuario usuario = _usuarioLogic.UsuarioByCorreoContrasena("hola@gmail.com", "");
+			_usuarioLogic.AgregarUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			Usuario usuario = _usuarioLogic.UsuarioPorCorreoContrasena("hola@gmail.com", "");
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		[ExpectedException(typeof(LogicaNegocioUsuarioExcepcion))]
 		public void Excepcion_Ingreso_Correo_No_Existente()
 		{
-			_usuarioLogic.AddUsuario(_usuario2);
-			_usuarioLogic.AddUsuario(_usuario2);
-			Usuario resultado = _usuarioLogic.UsuarioByCorreoContrasena("", "");
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			Usuario resultado = _usuarioLogic.UsuarioPorCorreoContrasena("", "");
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		[ExpectedException(typeof(LogicaNegocioUsuarioExcepcion))]
 		public void Excepcion_Ingreso_Correo_Contrasena_Nula()
 		{
-			_usuarioLogic.AddUsuario(_usuario2);
-			_usuarioLogic.AddUsuario(_usuario2);
-			Usuario resultado = _usuarioLogic.UsuarioByCorreoContrasena(null, null);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			Usuario resultado = _usuarioLogic.UsuarioPorCorreoContrasena(null, null);
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(BussinesLogicUsuarioException))]
+		[ExpectedException(typeof(LogicaNegocioUsuarioExcepcion))]
 		public void Excepcion_Ingreso_Correo_No_Existente_4()
 		{
-			_usuarioLogic.AddUsuario(_usuario1);
-			_usuarioLogic.AddUsuario(_usuario2);
-			Usuario resultado = _usuarioLogic.UsuarioByCorreoContrasena("123456789Aaa", null);
+			_usuarioLogic.AgregarUsuario(_usuario1);
+			_usuarioLogic.AgregarUsuario(_usuario2);
+			Usuario resultado = _usuarioLogic.UsuarioPorCorreoContrasena("123456789Aaa", null);
 		}
 
 		[TestMethod]
@@ -216,11 +216,11 @@ namespace BussinesLogicTest
 				Contrasena = "HOLAhola123",
 				Direccion = "Bv España 5566"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 
 			_usuarioLogic.ModificarNombre(usuario.Correo, "Juan");
 
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario(usuario.Correo);
 			Assert.AreEqual("Juan", usuarioModificado.Nombre);
 		}
 
@@ -235,11 +235,11 @@ namespace BussinesLogicTest
 				Contrasena = "HOLAhola123",
 				Direccion = "Bv España 5566"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 
 			_usuarioLogic.ModificarApellido(usuario.Correo, "Perez");
 
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario(usuario.Correo);
 			Assert.AreEqual("Perez", usuarioModificado.Apellido);
 		}
 
@@ -254,11 +254,11 @@ namespace BussinesLogicTest
 				Contrasena = "HOLAhola123",
 				Direccion = "Bv España 5566"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 
 			_usuarioLogic.ModificarContrasena(usuario.Correo, "123456789Aaa");
 
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario(usuario.Correo);
 			Assert.AreEqual("123456789Aaa", usuarioModificado.Contrasena);
 		}
 
@@ -273,11 +273,11 @@ namespace BussinesLogicTest
 				Contrasena = "HOLAhola123",
 				Direccion = "Bv España 5566"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 
 			_usuarioLogic.ModificarDireccion(usuario.Correo, "street 56 av rety");
 
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario(usuario.Correo);
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario(usuario.Correo);
 			Assert.AreEqual("street 56 av rety", usuarioModificado.Direccion);
 		}
 
@@ -294,7 +294,7 @@ namespace BussinesLogicTest
 				IdEspacioPrincipal = 1
 			};
 			_usuarioLogic.CrearUsuario(usuario);
-			Usuario usuarioCreado =_usuarioLogic.FindUsuario("norberto@gmail.com");
+			Usuario usuarioCreado =_usuarioLogic.EncontrarUsuario("norberto@gmail.com");
 			Assert.IsNotNull(usuarioCreado);
 			Assert.AreEqual("norberto@gmail.com", usuarioCreado.Correo);
 		}
@@ -326,9 +326,9 @@ namespace BussinesLogicTest
 				Contrasena = "HOLee4ehola123",
 				Direccion = "Bv España 546"
 			};
-			_usuarioLogic.AddUsuario(usuario);
-			_usuarioLogic.AddUsuario(usuarioTest1);
-			_usuarioLogic.AddUsuario(usuarioTest2);
+			_usuarioLogic.AgregarUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuarioTest1);
+			_usuarioLogic.AgregarUsuario(usuarioTest2);
 			Espacio espacio = new Espacio()
 			{
 				Id = 1,

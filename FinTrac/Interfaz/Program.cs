@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Repository;
-using Domain;
-using BussinesLogic;
+using Repositorio;
+using Dominio;
+using LogicaNegocio;
 using Controlador;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
@@ -19,10 +19,10 @@ builder.Services.AddDbContext<FintracDbContext>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddScoped<IRepository<Usuario>, UsuarioMemoryRepository>();
-builder.Services.AddScoped<UsuarioLogic>();
-builder.Services.AddScoped<IRepository<Espacio>, EspacioMemoryRepository>();
-builder.Services.AddScoped<EspacioLogic>();
+builder.Services.AddScoped<IRepositorio<Usuario>, UsuarioMemoriaRepositorio>();
+builder.Services.AddScoped<UsuarioLogica>();
+builder.Services.AddScoped<IRepositorio<Espacio>, EspacioMemoriaRepositorio>();
+builder.Services.AddScoped<EspacioLogica>();
 builder.Services.AddSingleton<Persistencia>();
 builder.Services.AddMudServices();
 builder.Services.AddScoped<ControladorRegistro>();

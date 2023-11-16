@@ -1,6 +1,6 @@
-using BussinesLogic;
-using Domain;
-using Repository;
+using LogicaNegocio;
+using Dominio;
+using Repositorio;
 using Controlador;
 using DTO;
 using System.ComponentModel;
@@ -10,8 +10,8 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorHomeTest
 	{
-		private IRepository<Usuario> _repository;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repository;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
@@ -19,8 +19,8 @@ namespace ControladorTest
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repository = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repository);
+			_repository = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repository);
 
 
 			var usuario2 = new Usuario()
@@ -32,7 +32,7 @@ namespace ControladorTest
 				Direccion = "street 67 av white"
 			};
 
-			_usuarioLogic.AddUsuario(usuario2);
+			_usuarioLogic.AgregarUsuario(usuario2);
 		}
 
 		[TestCleanup]
@@ -56,7 +56,7 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
@@ -72,7 +72,7 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			Assert.IsNotNull(controladorTest);
 		}
@@ -89,10 +89,10 @@ namespace ControladorTest
 				Direccion = "street 56 av rety"
 			};
 			string mensaje = "";
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			mensaje = controladorTest.ModificarNombre("Juan", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("Juan", usuarioModificado.Nombre);
 			Assert.AreEqual("Su nombre ha sido modificado correctamente.", mensaje);
 		}
@@ -109,10 +109,10 @@ namespace ControladorTest
 				Direccion = "street 56 av rety"
 			};
 			string mensaje = "";
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			mensaje = controladorTest.ModificarNombre("", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("Juan", usuarioModificado.Nombre);
 			Assert.AreEqual("El nombre es requerido", mensaje);
 		}
@@ -128,10 +128,10 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			string mensaje = controladorTest.ModificarApellido("Nuñez", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("Nuñez", usuarioModificado.Apellido);
 			Assert.AreEqual("Su apellido ha sido modificado correctamente.", mensaje);
 		}
@@ -147,10 +147,10 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			string mensaje = controladorTest.ModificarApellido("", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("Perez", usuarioModificado.Apellido);
 			Assert.AreEqual("El apellido es requerido", mensaje);
 		}
@@ -166,10 +166,10 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			string mensaje = controladorTest.ModificarContrasena("HOLAhola123", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("HOLAhola123", usuarioModificado.Contrasena);
 			Assert.AreEqual("Su contraseña ha sido modificado correctamente.", mensaje);
 		}
@@ -185,10 +185,10 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			string mensaje = controladorTest.ModificarContrasena("H", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("123456789Aaa", usuarioModificado.Contrasena);
 			Assert.AreEqual("La contraseña no es válida, debe contener al menos una mayúscula, largo mayor igual a 10 y menor igual a 30", mensaje);
 		}
@@ -204,10 +204,10 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			string mensaje = controladorTest.ModificarDireccion("Av Bvar españa 3456", "hola@gmail.com");
-			Usuario usuarioModificado = _usuarioLogic.FindUsuario("hola@gmail.com");
+			Usuario usuarioModificado = _usuarioLogic.EncontrarUsuario("hola@gmail.com");
 			Assert.AreEqual("Av Bvar españa 3456", usuarioModificado.Direccion);
 			Assert.AreEqual("Su dirección ha sido modificado correctamente.", mensaje);
 		}
@@ -223,7 +223,7 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 			ControladorHome controladorTest = new ControladorHome(_usuarioLogic);
 			UsuarioDTO usuarioDTO = controladorTest.DarUsuarioDTO("hola@gmail.com");
 			Assert.AreEqual("Juan", usuarioDTO.Nombre);

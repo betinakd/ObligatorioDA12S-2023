@@ -1,17 +1,17 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using DTO;
 using Excepcion;
-using Domain;
+using Dominio;
 
 namespace Controlador
 {
 	public class ControladorSesion
 	{
-		EspacioLogic _espacioLogic;
-		UsuarioLogic _usuarioLogic;
+		EspacioLogica _espacioLogic;
+		UsuarioLogica _usuarioLogic;
 
 
-		public ControladorSesion(UsuarioLogic usuarioLogic, EspacioLogic espacioLogic)
+		public ControladorSesion(UsuarioLogica usuarioLogic, EspacioLogica espacioLogic)
 		{
 			_usuarioLogic = usuarioLogic;
 			_espacioLogic = espacioLogic;
@@ -22,9 +22,9 @@ namespace Controlador
 			string errorMsj = "";
 			try
 			{
-				_usuarioLogic.UsuarioByCorreoContrasena(correo, contrasena);
+				_usuarioLogic.UsuarioPorCorreoContrasena(correo, contrasena);
 			}
-			catch (BussinesLogicUsuarioException ex)
+			catch (LogicaNegocioUsuarioExcepcion ex)
 			{
 				errorMsj = ex.Message;
 			}
@@ -36,7 +36,7 @@ namespace Controlador
 			UsuarioDTO usuarioDTO = new UsuarioDTO();
 			try
 			{
-				Usuario usuario = _usuarioLogic.UsuarioByCorreoContrasena(correo, contrasena);
+				Usuario usuario = _usuarioLogic.UsuarioPorCorreoContrasena(correo, contrasena);
 				usuarioDTO.Nombre = usuario.Nombre;
 				usuarioDTO.Correo = usuario.Correo;
 				usuarioDTO.Apellido = usuario.Apellido;
@@ -44,7 +44,7 @@ namespace Controlador
 				usuarioDTO.Contrasena = usuario.Contrasena;
 				usuarioDTO.IdEspacioPrincipal = usuario.IdEspacioPrincipal;
 			}
-			catch (BussinesLogicUsuarioException ex)
+			catch (LogicaNegocioUsuarioExcepcion ex)
 			{
 				usuarioDTO = null;
 			}
@@ -53,7 +53,7 @@ namespace Controlador
 
 		public EspacioDTO EspacioActual(int idEspacio)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(idEspacio);
 			UsuarioDTO adminDTO = new UsuarioDTO()
 			{
 				Nombre = espacio.Admin.Nombre,

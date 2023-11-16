@@ -1,6 +1,6 @@
 ﻿using Excepcion;
 
-namespace Domain
+namespace Dominio
 {
 	public enum TipoCuenta
 	{
@@ -23,7 +23,7 @@ namespace Domain
 			{
 				if (value < DateTime.Now)
 				{
-					throw new DomainEspacioException("La fecha de cierre no puede ser menor a la fecha actual");
+					throw new DominioEspacioExcepcion("La fecha de cierre no puede ser menor a la fecha actual");
 				}
 				_fechaCierre = value;
 			}
@@ -38,7 +38,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainEspacioException("El banco emisor no puede ser vacío");
+					throw new DominioEspacioExcepcion("El banco emisor no puede ser vacío");
 				}
 				_bancoEmisor = value;
 			}
@@ -56,15 +56,15 @@ namespace Domain
 
 				if (!CaracterEsNumero(value))
 				{
-					throw new DomainEspacioException("El número de tarjeta debe ser numérico");
+					throw new DominioEspacioExcepcion("El número de tarjeta debe ser numérico");
 				}
 				if (value.Length < LARGONUMEROTARJETA)
 				{
-					throw new DomainEspacioException("El número de tarjeta no puede tener menos de 4 caracteres");
+					throw new DominioEspacioExcepcion("El número de tarjeta no puede tener menos de 4 caracteres");
 				}
 				if (value.Length > LARGONUMEROTARJETA)
 				{
-					throw new DomainEspacioException("El número de tarjeta no puede tener mas de 4 caracteres");
+					throw new DominioEspacioExcepcion("El número de tarjeta no puede tener mas de 4 caracteres");
 				}
 				_numeroTarjeta = value;
 			}

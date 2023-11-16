@@ -1,6 +1,6 @@
-﻿using Repository;
+﻿using Repositorio;
 
-namespace RepositoryTest
+namespace RepositorioTest
 {
 	[TestClass]
 	public class InMemoryDbContextFactoryTest

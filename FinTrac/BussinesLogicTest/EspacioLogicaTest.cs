@@ -1,16 +1,16 @@
 ﻿using Excepcion;
-using Domain;
-using Repository;
-using BussinesLogic;
+using Dominio;
+using Repositorio;
+using LogicaNegocio;
 
 
-namespace BussinesLogicTest
+namespace LogicaNegocioTest
 {
 	[TestClass]
-	public class EspacioLogicTest
+	public class EspacioLogicaTest
 	{
-		private IRepository<Espacio> _repository;
-		private EspacioLogic espacioLogic;
+		private IRepositorio<Espacio> _repository;
+		private EspacioLogica espacioLogic;
 		private Espacio espacio1;
 		private Espacio espacio2;
 		private FintracDbContext _context;
@@ -21,8 +21,8 @@ namespace BussinesLogicTest
 		public void Setup()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repository = new EspacioMemoryRepository(_context);
-			espacioLogic = new EspacioLogic(_repository);
+			_repository = new EspacioMemoriaRepositorio(_context);
+			espacioLogic = new EspacioLogica(_repository);
 
 			usuario1 = new Usuario()
 			{
@@ -72,40 +72,40 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void Agregar_Espacio()
 		{
-			espacioLogic.AddEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio1);
 			Assert.IsTrue(_repository.FindAll().Contains(espacio1));
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(BusinessLogicEspacioException))]
+		[ExpectedException(typeof(LogicaNegocioEspacioExcepcion))]
 		public void Agregar_Espacio_Duplicado()
 		{
-			espacioLogic.AddEspacio(espacio1);
-			espacioLogic.AddEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio1);
 		}
 
 		[TestMethod]
 		public void Eliminar_Espacio()
 		{
-			espacioLogic.AddEspacio(espacio1);
-			espacioLogic.DeleteEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio1);
+			espacioLogic.BorrarEspacio(espacio1);
 			Assert.IsFalse(_repository.FindAll().Contains(espacio1));
 		}
 
 		[TestMethod]
 		public void Buscar_Todos_Espacios()
 		{
-			espacioLogic.AddEspacio(espacio1);
-			espacioLogic.AddEspacio(espacio2);
-			Assert.IsTrue(espacioLogic.FindAllEspacios().Contains(espacio1));
-			Assert.IsTrue(espacioLogic.FindAllEspacios().Contains(espacio2));
+			espacioLogic.AgregarEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio2);
+			Assert.IsTrue(espacioLogic.DarEspacios().Contains(espacio1));
+			Assert.IsTrue(espacioLogic.DarEspacios().Contains(espacio2));
 		}
 
 		[TestMethod]
 		public void Buscar_Espacio()
 		{
-			espacioLogic.AddEspacio(espacio1);
-			espacioLogic.AddEspacio(espacio2);
+			espacioLogic.AgregarEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio2);
 			Espacio espacio = new Espacio();
 			espacio.Nombre = "Espacio";
 			espacio.Admin = new Usuario()
@@ -116,21 +116,21 @@ namespace BussinesLogicTest
 				Correo = "c@c.com",
 				Contrasena = "123456789C",
 			};
-			espacioLogic.AddEspacio(espacio);
-			Espacio resultado1 = espacioLogic.FindEspacio(espacio.Id);
+			espacioLogic.AgregarEspacio(espacio);
+			Espacio resultado1 = espacioLogic.EncontrarEspacio(espacio.Id);
 			Assert.AreEqual(espacio.Nombre, resultado1.Nombre);
 		}
 
 		[TestMethod]
 		public void Retorna_Lista_Espacios_Recibiendo_Correo_Valido()
 		{
-			espacioLogic.AddEspacio(espacio1);
-			espacioLogic.AddEspacio(espacio2);
+			espacioLogic.AgregarEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio2);
 			Espacio espacio = new Espacio();
 			espacio.Nombre = "Espacio";
 			espacio.Admin = usuario1;
-			espacioLogic.AddEspacio(espacio);
-			List<Espacio> espacios = espacioLogic.EspaciosByCorreo("xx@yy.com");
+			espacioLogic.AgregarEspacio(espacio);
+			List<Espacio> espacios = espacioLogic.EspaciosPorCorreo("xx@yy.com");
 			Assert.IsTrue(espacios.Count == 2);
 		}
 
@@ -151,11 +151,11 @@ namespace BussinesLogicTest
 					Direccion = "Direccion1",
 				}
 			};
-			espacioLogic.AddEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio1);
 			espacio1.Nombre = "Espacio 2";
 			espacioLogic.UpdateEspacio(espacio1);
-			Assert.IsTrue(espacioLogic.FindAllEspacios().Contains(espacio1));
-			Assert.AreEqual(espacio1.Nombre, espacioLogic.FindEspacio(espacio1.Id).Nombre);
+			Assert.IsTrue(espacioLogic.DarEspacios().Contains(espacio1));
+			Assert.AreEqual(espacio1.Nombre, espacioLogic.EncontrarEspacio(espacio1.Id).Nombre);
 		}
 
 		[TestMethod]
@@ -168,8 +168,8 @@ namespace BussinesLogicTest
 		[TestMethod]
 		public void EspacioMayorId_Retorna_El_Id_Mayor_De_Espacio()
 		{
-			espacioLogic.AddEspacio(espacio1);
-			espacioLogic.AddEspacio(espacio2);
+			espacioLogic.AgregarEspacio(espacio1);
+			espacioLogic.AgregarEspacio(espacio2);
 			int resultado = espacioLogic.EspacioMayorId();
 			Assert.AreEqual(2, resultado);
 		}
@@ -178,8 +178,8 @@ namespace BussinesLogicTest
 		public void CrearEspacio_Crea_Espacio_Correctamente()
 		{
 			espacioLogic.CrearEspacio("Espacio1", usuario1);
-			Assert.IsTrue(espacioLogic.FindAllEspacios().Count == 1);
-			Assert.AreEqual("Espacio1", espacioLogic.FindAllEspacios()[0].Nombre);
+			Assert.IsTrue(espacioLogic.DarEspacios().Count == 1);
+			Assert.AreEqual("Espacio1", espacioLogic.DarEspacios()[0].Nombre);
 		}
 
 		[TestMethod]
@@ -201,10 +201,10 @@ namespace BussinesLogicTest
 			};
 			string nombreAnterior = espacio.Nombre;
 
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.ModificarNombreEspacio(espacio.Id, "EspacioModificado");
 
-			Espacio espacioModificado = espacioLogic.FindEspacio(espacio.Id);
+			Espacio espacioModificado = espacioLogic.EncontrarEspacio(espacio.Id);
 			Assert.AreEqual("EspacioModificado", espacioModificado.Nombre);
 			Assert.AreNotEqual(nombreAnterior, espacioModificado.Nombre);
 		}
@@ -235,9 +235,9 @@ namespace BussinesLogicTest
 				Contrasena = "123456789Caaaa",
 				Correo = "hola@gmail.com"
 			};
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.AgregarUsuarioAEspacio(espacio.Id, usuario);
-			bool resultado = espacioLogic.FindEspacio(espacio.Id).UsuariosInvitados.Contains(usuario);
+			bool resultado = espacioLogic.EncontrarEspacio(espacio.Id).UsuariosInvitados.Contains(usuario);
 			Assert.IsTrue(resultado);
 		}
 
@@ -268,15 +268,15 @@ namespace BussinesLogicTest
 				Correo = "hola@gmail.com"
 			};
 			espacio.UsuariosInvitados.Add(usuario);
-			espacioLogic.AddEspacio(espacio);
-			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).UsuariosInvitados.Contains(usuario));
+			espacioLogic.AgregarEspacio(espacio);
+			Assert.IsTrue(espacioLogic.EncontrarEspacio(espacio.Id).UsuariosInvitados.Contains(usuario));
 			espacioLogic.EliminarUsuarioDeEspacio(espacio.Id, usuario);
-			Assert.IsFalse(espacioLogic.FindEspacio(espacio.Id).UsuariosInvitados.Contains(usuario));
+			Assert.IsFalse(espacioLogic.EncontrarEspacio(espacio.Id).UsuariosInvitados.Contains(usuario));
 		}
 
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void EliminarUsuarioDeEspacio_Lanza_Excepcion_Usuario_Null()
 		{
 			Usuario admin = new Usuario
@@ -302,7 +302,7 @@ namespace BussinesLogicTest
 				Contrasena = "123456789Caaaa",
 				Correo = ""
 			};
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.EliminarUsuarioDeEspacio(espacio.Id, null);
 
 		}
@@ -332,10 +332,10 @@ namespace BussinesLogicTest
 				FechaCreacion = DateTime.Now,
 			};
 			espacio.AgregarCuenta(ahorro);
-			espacioLogic.AddEspacio(espacio);
-			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
+			espacioLogic.AgregarEspacio(espacio);
+			Assert.IsTrue(espacioLogic.EncontrarEspacio(espacio.Id).Cuentas.Contains(ahorro));
 			espacioLogic.EliminarCuentaDeEspacio(espacio.Id, ahorro);
-			Assert.IsFalse(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
+			Assert.IsFalse(espacioLogic.EncontrarEspacio(espacio.Id).Cuentas.Contains(ahorro));
 		}
 
 		[TestMethod]
@@ -396,7 +396,7 @@ namespace BussinesLogicTest
 			espacio.AgregarCuenta(ahorro);
 			espacio.AgregarCuenta(credito);
 
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.ModificarCuentaDeEspacio(espacio.Id, ahorroModificada);
 			espacioLogic.ModificarCuentaDeEspacio(espacio.Id, creditoModificada);
 			Assert.IsTrue(ahorro.Equals(ahorroModificada));
@@ -449,13 +449,13 @@ namespace BussinesLogicTest
 				FechaCierre = new DateTime(2026, 1, 1),
 				Moneda = TipoCambiario.Euro,
 			};
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.CrearCuenta(espacio.Id, credito);
 			espacioLogic.CrearCuenta(espacio.Id, credito2);
 			espacioLogic.CrearCuenta(espacio.Id, ahorro);
-			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(ahorro));
-			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(credito));
-			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Cuentas.Contains(credito2));
+			Assert.IsTrue(espacioLogic.EncontrarEspacio(espacio.Id).Cuentas.Contains(ahorro));
+			Assert.IsTrue(espacioLogic.EncontrarEspacio(espacio.Id).Cuentas.Contains(credito));
+			Assert.IsTrue(espacioLogic.EncontrarEspacio(espacio.Id).Cuentas.Contains(credito2));
 		}
 
 		[TestMethod]
@@ -511,14 +511,14 @@ namespace BussinesLogicTest
 				CategoriaTransaccion = cat
 			};
 			espacio.Cuentas.Add(credito);
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.CrearTransaccion(espacio.Id, transaccion);
 
-			Assert.IsTrue(espacioLogic.FindEspacio(espacio.Id).Transacciones.Contains(transaccion));
+			Assert.IsTrue(espacioLogic.EncontrarEspacio(espacio.Id).Transacciones.Contains(transaccion));
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(BusinessLogicEspacioException))]
+		[ExpectedException(typeof(LogicaNegocioEspacioExcepcion))]
 		public void EspacioLogic_Lanza_Excepcion_Al_Crear_Cuenta_Saldo_Menor_Cero()
 		{
 			Usuario admin = new Usuario
@@ -547,7 +547,7 @@ namespace BussinesLogicTest
 				Moneda = TipoCambiario.Dolar,
 			};
 			
-			espacioLogic.AddEspacio(espacio);
+			espacioLogic.AgregarEspacio(espacio);
 			espacioLogic.CrearCuenta(espacio.Id, credito);
 		}
 	}

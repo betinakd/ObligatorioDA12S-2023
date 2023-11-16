@@ -1,6 +1,6 @@
-﻿using BussinesLogic;
-using Domain;
-using Repository;
+﻿using LogicaNegocio;
+using Dominio;
+using Repositorio;
 using Controlador;
 using DTO.EnumsDTO;
 using DTO;
@@ -10,21 +10,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorCategoriasTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 
 			var usuario1 = new Usuario()
 			{
@@ -43,8 +43,8 @@ namespace ControladorTest
 				Contrasena = "123tttt9Aaa",
 				Direccion = "street 67 av white"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
-			_usuarioLogic.AddUsuario(usuario2);
+			_usuarioLogic.AgregarUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario2);
 		}
 
 		[TestCleanup]
@@ -68,9 +68,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			List<CategoriaDTO> categorias = controladorTest.CategoriasDeEspacio(1);
 			Assert.AreEqual(0, categorias.Count);
 		}
@@ -83,7 +83,7 @@ namespace ControladorTest
 			{
 				Id = 1,
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
 			Categoria categoria = new Categoria()
 			{
@@ -103,7 +103,7 @@ namespace ControladorTest
 				FechaCreacion = DateTime.Now
 			};
 			espacio.AgregarCategoria(categoria2);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			List<CategoriaDTO> categorias = controladorTest.CategoriasDeEspacio(1);
 			Assert.AreEqual(2, categorias.Count);
 			Assert.AreEqual(1, categorias[0].Id);
@@ -116,9 +116,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Nombre = "Categoria1",
@@ -137,9 +137,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoria1DTO = new CategoriaDTO()
 			{
 				Nombre = "Categoria1",
@@ -166,9 +166,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Nombre = "Categoria1",
@@ -197,9 +197,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Nombre = "Categoria1",
@@ -228,9 +228,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Nombre = "Categoria1",
@@ -258,9 +258,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Nombre = "Categoria1",
@@ -293,7 +293,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -325,7 +325,7 @@ namespace ControladorTest
 				EstadoActivo = true,
 				FechaCreacion = DateTime.Now
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorCategorias controladorTest = new ControladorCategorias(_espacioLogic);
 			string mensaje = controladorTest.EliminarCategoria(1, catDTO);
 			Assert.AreEqual("No se puede borrar una categoría que asociada a algún objetivo.", mensaje);

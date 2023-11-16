@@ -1,7 +1,7 @@
-﻿using Domain;
+﻿using Dominio;
 using Excepcion;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class CreditoTest
@@ -22,7 +22,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Credito_Tiene_Banco_Emisor_Vacio()
 		{
 			Credito cuentaCredito = new Credito();
@@ -30,7 +30,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Credito_Tiene_Banco_Emisor_Nulo()
 		{
 			Credito cuentaCredito = new Credito();
@@ -50,7 +50,7 @@ namespace DomainTest
 		{
 			Credito cuentaCredito = new Credito();
 
-			Assert.ThrowsException<DomainEspacioException>(() =>
+			Assert.ThrowsException<DominioEspacioExcepcion>(() =>
 			{
 				cuentaCredito.NumeroTarjeta = "123";
 			});
@@ -61,7 +61,7 @@ namespace DomainTest
 		{
 			Credito cuentaCredito = new Credito();
 
-			Assert.ThrowsException<DomainEspacioException>(() =>
+			Assert.ThrowsException<DominioEspacioExcepcion>(() =>
 			{
 				cuentaCredito.NumeroTarjeta = "12345";
 			});
@@ -250,7 +250,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Num_Tarjeta_Es_String()
 		{
 			Credito cuenta = new Credito()
@@ -328,7 +328,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Credito_Tiene_Fecha_Cierre_Menor_Hoy()
 		{
 			Credito cuentaCredito = new Credito();

@@ -1,6 +1,6 @@
-﻿namespace Repository
+﻿namespace Repositorio
 {
-    public interface IRepository <T>
+    public interface IRepositorio <T>
     {
         T Add (T oneElement);
 

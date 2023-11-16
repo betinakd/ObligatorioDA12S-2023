@@ -1,16 +1,16 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using Excepcion;
-using Domain;
+using Dominio;
 using DTO;
 
 namespace Controlador
 {
 	public class ControladorRegistro
 	{
-		private UsuarioLogic _usuarioLogic;
-		private EspacioLogic _espacioLogic;
+		private UsuarioLogica _usuarioLogic;
+		private EspacioLogica _espacioLogic;
 
-		public ControladorRegistro(UsuarioLogic usuarioLogic, EspacioLogic espacioLogic)
+		public ControladorRegistro(UsuarioLogica usuarioLogic, EspacioLogica espacioLogic)
 		{
 			_usuarioLogic = usuarioLogic;
 			_espacioLogic = espacioLogic;
@@ -18,7 +18,7 @@ namespace Controlador
 
 		public void CrearEspacioPrincipal(string correo)
 		{
-			Usuario admin = _usuarioLogic.FindUsuario(correo);
+			Usuario admin = _usuarioLogic.EncontrarUsuario(correo);
 			string nombre = "Principal " + admin.Nombre;
 			_espacioLogic.CrearEspacio(nombre, admin);
 		}
@@ -41,11 +41,11 @@ namespace Controlador
 				_usuarioLogic.CrearUsuario(usuario);
 				CrearEspacioPrincipal(usuarioDTO.Correo);
 			}
-			catch (BussinesLogicUsuarioException e)
+			catch (LogicaNegocioUsuarioExcepcion e)
 			{
 				msjError = e.Message;
 			}
-			catch (DomainUsuarioException e)
+			catch (DominioUsuarioExcepcion e)
 			{
 				msjError = e.Message;
 			}
@@ -54,7 +54,7 @@ namespace Controlador
 
 		public bool RegistradoConExito(UsuarioDTO usuario)
 		{
-			Usuario usuarioEncontrado = _usuarioLogic.FindUsuario(usuario.Correo);
+			Usuario usuarioEncontrado = _usuarioLogic.EncontrarUsuario(usuario.Correo);
 			if (usuarioEncontrado == null)
 			{
 				return false;

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Domain;
+using Dominio;
 
-namespace Repository
+namespace Repositorio
 {
 	public class FintracDbContext : DbContext
 	{

@@ -1,7 +1,7 @@
 ﻿using Excepcion;
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace Dominio
 {
     public class Objetivo
     {
@@ -21,7 +21,7 @@ namespace Domain
             set
             {
                 if (string.IsNullOrEmpty(value))
-                    throw new DomainEspacioException("El titulo es requerido");
+                    throw new DominioEspacioExcepcion("El titulo es requerido");
                 _titulo = value;
             }
         }
@@ -34,7 +34,7 @@ namespace Domain
 			set
             {
 				if (value <= 0)
-					throw new DomainEspacioException("El monto máximo debe ser mayor a 0.");
+					throw new DominioEspacioExcepcion("El monto máximo debe ser mayor a 0.");
 				_montoMaximo = value;
 			}
 		}
@@ -46,7 +46,7 @@ namespace Domain
             set
             {
                 if (value == null || value.Count == 0 )
-					throw new DomainEspacioException("Debe seleccionar al menos una categoría.");
+					throw new DominioEspacioExcepcion("Debe seleccionar al menos una categoría.");
 				_categorias = value;
             }
         }

@@ -1,13 +1,13 @@
-using Domain;
-using Repository;
-namespace RepositoryTest
+using Dominio;
+using Repositorio;
+namespace RepositorioTest
 {
 	[TestClass]
-	public class UsuarioMemoryTest
+	public class UsuarioRepositorioTest
 	{
 		private Usuario _usuario1;
 		private Usuario _usuario2;
-		private UsuarioMemoryRepository _repository;
+		private UsuarioMemoriaRepositorio _repository;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
 
@@ -15,7 +15,7 @@ namespace RepositoryTest
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repository = new UsuarioMemoryRepository(_context);
+			_repository = new UsuarioMemoriaRepositorio(_context);
 
 			_usuario1 = new Usuario
 			{

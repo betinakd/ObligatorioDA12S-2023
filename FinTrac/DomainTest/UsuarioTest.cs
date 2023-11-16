@@ -1,7 +1,7 @@
-﻿using Domain;
+﻿using Dominio;
 using Excepcion;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class UsuarioTest
@@ -25,7 +25,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 
 		public void Contrasena_Maximo_Treinta()
 		{
@@ -37,7 +37,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 
 		public void Contrasena_Contiene_Mayuscula()
 		{
@@ -59,7 +59,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void Validar_Correo_No_Coincide_PuntoCom()
 		{
 			Usuario unUsuario = new Usuario();
@@ -70,7 +70,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void Nombre_Usuario_Vacio()
 		{
 			Usuario unUsuario = new Usuario();
@@ -86,7 +86,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void Apellido_Usuario_Vacio()
 		{
 			Usuario unUsuario = new Usuario();
@@ -238,7 +238,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainUsuarioException))]
+		[ExpectedException(typeof(DominioUsuarioExcepcion))]
 		public void Excepcion_Al_Asignar_Correo_Null()
 		{
 			Usuario usuario = new Usuario()

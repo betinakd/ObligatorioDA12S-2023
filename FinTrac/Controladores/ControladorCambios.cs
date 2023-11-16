@@ -1,23 +1,23 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using DTO;
 using DTO.EnumsDTO;
-using Domain;
+using Dominio;
 using Excepcion;
 
 namespace Controlador
 {
 	public class ControladorCambios
 	{
-		private EspacioLogic _espacioLogic;
+		private EspacioLogica _espacioLogic;
 
-		public ControladorCambios(EspacioLogic espacioLogic)
+		public ControladorCambios(EspacioLogica espacioLogic)
 		{
 			_espacioLogic = espacioLogic;
 		}
 
 		public List<CambioDTO> CambiosDeEspacio(int id)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			List<Cambio> cambios = espacio.Cambios;
 			List<CambioDTO> cambiosDTO = new List<CambioDTO>();
 			foreach (Cambio cambio in cambios)
@@ -37,7 +37,7 @@ namespace Controlador
 		public string CrearCambio(int id, CambioDTO cambioDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			TipoCambiario tipo = Cambiar_TipoCambiario(cambioDTO.Moneda);
 			try
 			{
@@ -50,7 +50,7 @@ namespace Controlador
 				espacio.AgregarCambio(nuevoCambio);
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				msjError = e.Message;
 			}
@@ -60,14 +60,14 @@ namespace Controlador
 		public string ModificarCambio(int id, CambioDTO cambioDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			Cambio cambio = Cambiar_A_Cambio(id, cambioDTO.Id);
 			try
 			{
 				cambio.Pesos = cambioDTO.Pesos;
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				msjError = e.Message;
 			}

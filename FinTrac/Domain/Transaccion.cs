@@ -1,6 +1,6 @@
 ﻿using Excepcion;
 
-namespace Domain
+namespace Dominio
 {
 	public class Transaccion
 	{
@@ -24,7 +24,7 @@ namespace Domain
 			set
 			{
 				if (string.IsNullOrEmpty(value))
-					throw new DomainEspacioException("El titulo no puede ser vacio");
+					throw new DominioEspacioExcepcion("El titulo no puede ser vacio");
 				_titulo = value;
 			}
 		}
@@ -48,7 +48,7 @@ namespace Domain
 			set
 			{
 				if (value <= 0)
-					throw new DomainEspacioException("El monto debe ser mayor a cero");
+					throw new DominioEspacioExcepcion("El monto debe ser mayor a cero");
 				_monto = value;
 			}
 		}
@@ -61,7 +61,7 @@ namespace Domain
 			set
 			{
 				if (value is null)
-					throw new DomainEspacioException("La cuenta monetaria no puede ser nula");
+					throw new DominioEspacioExcepcion("La cuenta monetaria no puede ser nula");
 				_cuentaMonetaria = value;
 			}
 		}
@@ -74,7 +74,7 @@ namespace Domain
 			set
 			{
 				if (value is null)
-					throw new DomainEspacioException("La categoria no puede ser nula");
+					throw new DominioEspacioExcepcion("La categoria no puede ser nula");
 				_categoriaTransaccion = value;
 			}
 		}
@@ -94,17 +94,17 @@ namespace Domain
 		}
 		public virtual void EjecutarTransaccion()
 		{
-			throw new DomainEspacioException("No implementado");
+			throw new DominioEspacioExcepcion("No implementado");
 		}
 
 		public virtual void ModificarMonto(double nuevoMonto)
 		{
-			throw new DomainEspacioException("No implementado");
+			throw new DominioEspacioExcepcion("No implementado");
 		}
 
 		public virtual string Tipo()
 		{
-			throw new DomainEspacioException("No implementado");
+			throw new DominioEspacioExcepcion("No implementado");
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using Excepcion;
 using System.ComponentModel.DataAnnotations;
 
-namespace Domain
+namespace Dominio
 {
 	public class Categoria
 	{
@@ -21,7 +21,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainEspacioException("El nombre de la categoría no puede ser vacío");
+					throw new DominioEspacioExcepcion("El nombre de la categoría no puede ser vacío");
 				}
 				_nombre = value;
 			}

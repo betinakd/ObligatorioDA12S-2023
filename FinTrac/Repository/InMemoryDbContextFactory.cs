@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Repository;
+namespace Repositorio;
 
 public interface IDbContextFactory
 {

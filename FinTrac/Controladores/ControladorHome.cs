@@ -1,22 +1,22 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using DTO;
 using Excepcion;
-using Domain;
+using Dominio;
 
 namespace Controlador
 {
 	public class ControladorHome
 	{
-		private UsuarioLogic _usuarioLogic;
+		private UsuarioLogica _usuarioLogic;
 
-		public ControladorHome(UsuarioLogic usuarioLogic)
+		public ControladorHome(UsuarioLogica usuarioLogic)
 		{
 			_usuarioLogic = usuarioLogic;
 		}
 
 		public UsuarioDTO DarUsuarioDTO(string correo) 
 		{
-			Usuario usuario = _usuarioLogic.FindUsuario(correo);
+			Usuario usuario = _usuarioLogic.EncontrarUsuario(correo);
 
 			UsuarioDTO usuarioDTO = new UsuarioDTO
 			{
@@ -36,7 +36,7 @@ namespace Controlador
 			{
 				_usuarioLogic.ModificarNombre(correo, nombre);
 			}
-			catch (DomainUsuarioException ex)
+			catch (DominioUsuarioExcepcion ex)
 			{
 				errorMsj = ex.Message;
 			}
@@ -50,7 +50,7 @@ namespace Controlador
 			{
 				_usuarioLogic.ModificarApellido(correo, apellido);
 			}
-			catch (DomainUsuarioException ex)
+			catch (DominioUsuarioExcepcion ex)
 			{
 
 				errorMsj = ex.Message;
@@ -65,7 +65,7 @@ namespace Controlador
 			{
 				_usuarioLogic.ModificarContrasena(correo, contrasena);
 			}
-			catch (DomainUsuarioException ex)
+			catch (DominioUsuarioExcepcion ex)
 			{
 				errorMsj = ex.Message;
 			}
