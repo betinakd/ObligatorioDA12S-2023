@@ -342,5 +342,12 @@ namespace Controlador
 			return categoriaRetornar;
 		}
 
+		public CambioDTO EncontrarCambio(int id, TransaccionDTO transaccion)
+		{
+			Espacio espacioActual = _reporte.FindEspacio(id);
+			ControladorEspacio controladorCuenta = new ControladorEspacio(_reporte);
+		controladorCuenta.
+		}
+
 	}
 }

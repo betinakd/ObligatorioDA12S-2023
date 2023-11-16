@@ -5,6 +5,8 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
+@inject ControladorReporte controladorReporte;
+@inject ControladorCuenta controladorCuenta;
 
 <PageTitle>FinTrac Reportes</PageTitle>
 <TituloRosado Titulo="Reporte de Gastos por Tarjeta" Subtitulo=""></TituloRosado>
@@ -57,16 +59,16 @@
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
-					@foreach (Transaccion transaccion in gastosTarjeta)
+					@foreach (TransaccionDTO transaccion in gastosTarjeta)
 					{
-						if (transaccion.Moneda != TipoCambiario.PesosUruguayos)
+						if (transaccion.Moneda != TipoCambiarioDTO.PesosUruguayos)
 						{
 							<tr>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@transaccion.Titulo
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$ @(transaccion.Monto * transaccion.EncontrarCambio(reporte.MiEspacio).Pesos)
+									$ @(transaccion.Monto * controladorReporte.EncontrarCambio(Persistencia.Id, transaccion).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@transaccion.FechaTransaccion
@@ -81,10 +83,10 @@
 									}
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
+									@(transaccion.CuentaMonetaria)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$@transaccion.EncontrarCambio(reporte.MiEspacio).Pesos
+									$@controladorReporte.EncontrarCambio(Persistencia.Id, transaccion).Pesos
 								</td>
 							</tr>
 						}
@@ -104,7 +106,7 @@
 									@transaccion.Moneda
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@(((Credito)transaccion.CuentaMonetaria).BancoEmisor)
+									@transaccion.CuentaMonetaria
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 								</td>
@@ -121,26 +123,23 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	public Espacio espacio { get; set; }
-	public List<Transaccion> gastosTarjeta { get; set; }
-	public Reporte reporte = new Reporte();
-	public List<Cuenta> cuentas { get; set; }
-	public List<Transaccion> transacciones { get; set; }
+	public List<TransaccionDTO> gastosTarjeta { get; set; }
+	public List<CreditoDTO> cuentas { get; set; }
 	public string tarjetaActual { get; set; }
 
 	private void generarReporte()
 	{
-		gastosTarjeta = reporte.ReporteGastosTarjeta(tarjetaActual);
+		gastosTarjeta = controladorReporte.ReporteGastosTarjeta(Persistencia.Id, tarjetaActual);
 	}
 
 	public List<string> generarListaTarjetas()
 	{
 		List<string> toRet = new List<string>();
-		foreach (Cuenta cuenta in cuentas)
+		foreach (CuentaDTO cuenta in cuentas)
 		{
-			if (cuenta is Credito)
+			if (cuenta is CreditoDTO)
 			{
-				string tarjeta = ((Credito)cuenta).NumeroTarjeta;
+				string tarjeta = ((CreditoDTO)cuenta).NumeroTarjeta;
 				if (!(toRet.Contains(tarjeta)))
 				{
 					toRet.Add(tarjeta);
@@ -153,10 +152,7 @@
 	protected override void OnInitialized()
 	{
 		tarjetaActual = "1111";
-		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		reporte = new Reporte() { MiEspacio = espacio };
-		cuentas = reporte.MiEspacio.Cuentas;
-		transacciones = reporte.MiEspacio.Transacciones;
-		gastosTarjeta = new List<Transaccion>();
+		cuentas = controladorCuenta.CreditosDeEspacio(Persistencia.Id);
+		gastosTarjeta = new List<TransaccionDTO>();
 	}
 }

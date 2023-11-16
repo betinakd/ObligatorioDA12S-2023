@@ -5,6 +5,10 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
+@inject ControladorReporte controladorReporte;
+@inject ControladorCuenta controladorCuenta;
+@inject ControladorCategorias controladorCategoria;
+@inject ControladorCambios controladorCambios;
 
 <PageTitle>FinTrac Reportes</PageTitle>
 <TituloRosado Titulo="Listado de Gastos por Categoria" Subtitulo=""></TituloRosado>
@@ -14,7 +18,7 @@
 		<label for="categorySelector" class="text-sm font-medium text-gray-500">Seleccione una Categoria:</label>
 		<select @bind="catElegida" id="accontSelector" name="mes">
 			<option value="" selected>Seleccione una Opcion</option>
-			@foreach (Categoria categoria in categorias)
+			@foreach (CategoriaDTO categoria in categorias)
 			{
 				@if (categoria.EstadoActivo && categoria.Tipo.Equals(TipoCategoria.Costo))
 				{
@@ -39,14 +43,14 @@
 		<label for="accountSelector" class="text-sm font-medium text-gray-500">Seleccione una Cuenta:</label>
 		<select @bind="cuentaElegida" id="accontSelector" name="mes">
 			<option value="" selected>Seleccione una Opcion</option>
-			@foreach (Cuenta accountFiltro in cuentas)
+			@foreach (CuentaDTO accountFiltro in cuentas)
 			{
-				@if (accountFiltro is Ahorro)
+				@if (accountFiltro is AhorroDTO)
 				{
-					<option value="@(((Ahorro)accountFiltro).Nombre)">@(((Ahorro)accountFiltro).Nombre) - @(((Ahorro)accountFiltro).Moneda) </option>
+					<option value="@(((AhorroDTO)accountFiltro).Nombre)">@(((AhorroDTO)accountFiltro).Nombre) - @(((AhorroDTO)accountFiltro).Moneda) </option>
 				} else
 				{
-					<option value="@(((Credito)accountFiltro).NumeroTarjeta)-@(((Credito)accountFiltro).BancoEmisor)"> @(((Credito)accountFiltro).NumeroTarjeta) - @(((Credito)accountFiltro).Moneda) - @(((Credito)accountFiltro).BancoEmisor)</option>
+					<option value="@(((CreditoDTO)accountFiltro).NumeroTarjeta)-@(((CreditoDTO)accountFiltro).BancoEmisor)"> @(((CreditoDTO)accountFiltro).NumeroTarjeta) - @(((CreditoDTO)accountFiltro).Moneda) - @(((CreditoDTO)accountFiltro).BancoEmisor)</option>
 				}
 			}
 		</select>
@@ -88,9 +92,9 @@
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
-					@foreach (var gasto in listaGastos)
+					@foreach (TransaccionDTO gasto in listaGastos)
 					{
-						if (gasto.Moneda != TipoCambiario.PesosUruguayos)
+						if (gasto.Moneda != TipoCambiarioDTO.PesosUruguayos)
 						{
 							<tr>
 								<td class="px-6 py-4 whitespace-nowrap">
@@ -100,15 +104,15 @@
 									@gasto.Moneda
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$@(gasto.Monto * gasto.EncontrarCambio(reporte.MiEspacio).Pesos)
+									$@(gasto.Monto * encontrarCambio(gasto, cambios).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@if (gasto.EncontrarCambio(reporte.MiEspacio).Moneda.Equals(TipoCambiario.Dolar))
+									@if (encontrarCambio(gasto, cambios).Moneda.Equals(TipoCambiario.Dolar))
 									{
-										<div>$@gasto.EncontrarCambio(reporte.MiEspacio).Pesos -  U$D @gasto.Monto</div>
+										<div>$@encontrarCambio(gasto, cambios).Pesos -  U$D @gasto.Monto</div>
 									} else
 									{
-										<div>$@gasto.EncontrarCambio(reporte.MiEspacio).Pesos -  Є @gasto.Monto</div>
+										<div>$@encontrarCambio(gasto, cambios).Pesos -  Є @gasto.Monto</div>
 									}
 								</td>
 							</tr>
@@ -140,16 +144,15 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	public Espacio espacio { get; set; }
-	public List<Transaccion> listaGastos { get; set; }
-	public Categoria categoriaFiltro { get; set; }
+	public List<TransaccionDTO> listaGastos { get; set; }
+	public CategoriaDTO categoriaFiltro { get; set; }
 	public DateTime fechaInicio { get; set; } = DateTime.Now;
 	public DateTime fechaFin { get; set; } = DateTime.Now;
-	public Cuenta cuentaFiltro { get; set; }
+	public CuentaDTO cuentaFiltro { get; set; }
 	bool primeraVez = true;
-	public List<Categoria> categorias = new List<Categoria>();
-	public List<Cuenta> cuentas = new List<Cuenta>();
-	public Reporte reporte { get; set; }
+	public List<CategoriaDTO> categorias = new List<CategoriaDTO>();
+	public List<CuentaDTO> cuentas = new List<CuentaDTO>();
+	public List<CambioDTO> cambios = new List<CambioDTO>();
 	public string catElegida { get; set; }
 	public string cuentaElegida { get; set; }
 	public string[] arrayCuenta { get; set; }
@@ -162,9 +165,9 @@
 		{
 			if (cuentaElegida != "" && catElegida != "")
 			{
-				categoriaFiltro = encontrarCategoria(catElegida, reporte.MiEspacio.Categorias);
-				cuentaFiltro = encontrarCuentaAhorro(cuentaElegida, reporte.MiEspacio.Cuentas);
-				listaGastos = reporte.ListadoGastos(categoriaFiltro, fechaInicio, fechaFin, cuentaFiltro);
+				categoriaFiltro = encontrarCategoria(catElegida, categorias);
+				cuentaFiltro = encontrarCuentaAhorro(cuentaElegida, cuentas);
+				listaGastos = controladorReporte.ReporteDeGastos(Persistencia.Id, categoriaFiltro, fechaInicio, fechaFin, cuentaFiltro);
 			}
 		} else
 		{
@@ -172,50 +175,50 @@
 			{
 				string nroTarjeta = arrayCuenta[0];
 				string banco = arrayCuenta[1];
-				categoriaFiltro = encontrarCategoria(catElegida, reporte.MiEspacio.Categorias);
-				cuentaFiltro = encontrarCuentaCredito(nroTarjeta, banco, reporte.MiEspacio.Cuentas);
-				listaGastos = reporte.ListadoGastos(categoriaFiltro, fechaInicio, fechaFin, cuentaFiltro);
+				categoriaFiltro = encontrarCategoria(catElegida, categorias);
+				cuentaFiltro = encontrarCuentaCredito(nroTarjeta, banco, cuentas);
+				listaGastos = controladorReporte.ReporteDeGastos(Persistencia.Id, categoriaFiltro, fechaInicio, fechaFin, cuentaFiltro);
 			}
 		}
 
 	}
 
-	public Ahorro encontrarCuentaAhorro(string nombreCuenta, List<Cuenta> listaCuentas)
+	public AhorroDTO encontrarCuentaAhorro(string nombreCuenta, List<CuentaDTO> listaCuentas)
 	{
-		Ahorro cuentaRet = new Ahorro();
-		foreach (Cuenta cuenta in listaCuentas)
+		AhorroDTO cuentaRet = new AhorroDTO();
+		foreach (CuentaDTO cuenta in listaCuentas)
 		{
-			if (cuenta is Ahorro)
+			if (cuenta is AhorroDTO)
 			{
-				if (((Ahorro)cuenta).Nombre == nombreCuenta)
+				if (((AhorroDTO)cuenta).Nombre == nombreCuenta)
 				{
-					cuentaRet = (Ahorro)cuenta;
+					cuentaRet = (AhorroDTO)cuenta;
 				}
 			}	
 		}
 		return cuentaRet;
 	}
 
-	public Credito encontrarCuentaCredito(string nroTarjeta, string bancoEmisario, List<Cuenta> listaCuentas)
+	public CreditoDTO encontrarCuentaCredito(string nroTarjeta, string bancoEmisario, List<CuentaDTO> listaCuentas)
 	{
-		Credito cuentaRet = new Credito();
-		foreach (Cuenta cuenta in listaCuentas)
+		CreditoDTO cuentaRet = new CreditoDTO();
+		foreach (CuentaDTO cuenta in listaCuentas)
 		{
-			if (cuenta is Credito)
+			if (cuenta is CreditoDTO)
 			{
-				if ((((Credito)cuenta).NumeroTarjeta == nroTarjeta) && (((Credito)cuenta).BancoEmisor == bancoEmisario))
+				if ((((CreditoDTO)cuenta).NumeroTarjeta == nroTarjeta) && (((CreditoDTO)cuenta).BancoEmisor == bancoEmisario))
 				{
-					cuentaRet = (Credito)cuenta;
+					cuentaRet = (CreditoDTO)cuenta;
 				}
 			}
 		}
 		return cuentaRet;
 	}
 
-	public Categoria encontrarCategoria(string nombreCategoria, List<Categoria> listaCategorias)
+	public CategoriaDTO encontrarCategoria(string nombreCategoria, List<CategoriaDTO> listaCategorias)
 	{
-		Categoria categoriaRet = new Categoria();
-		foreach (Categoria categoria in listaCategorias)
+		CategoriaDTO categoriaRet = new CategoriaDTO();
+		foreach (CategoriaDTO categoria in listaCategorias)
 		{
 			if (categoria.Nombre == nombreCategoria)
 			{
@@ -225,14 +228,34 @@
 		return categoriaRet;
 	}
 
+	public CambioDTO encontrarCambio(TransaccionDTO transaccion, List<CambioDTO> listaCambios)
+	{
+		CambioDTO cambioDTO = new CambioDTO();
+		foreach (CambioDTO cambio in listaCambios)
+		{
+			if (cambio.FechaDeCambio.Day == transaccion.FechaTransaccion.Day && cambio.FechaDeCambio.Month == transaccion.FechaTransaccion.Month && cambio.FechaDeCambio.Year == transaccion.FechaTransaccion.Year && cambio.Moneda.Equals(transaccion.Moneda))
+			{
+				cambioDTO = cambio;
+			}
+		}
+		return cambioDTO;
+	}
+
+
 	protected override void OnInitialized()
 	{
 		catElegida = "";
 		cuentaElegida = "";
-		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		reporte = new Reporte() { MiEspacio = espacio };
-		categorias = reporte.MiEspacio.Categorias;
-		cuentas = reporte.MiEspacio.Cuentas;
-		listaGastos = new List<Transaccion>(); ;
+		cambios = controladorCambios.CambiosDeEspacio(Persistencia.Id);
+		categorias = controladorCategoria.CategoriasDeEspacio(Persistencia.Id);
+		foreach(CuentaDTO cuentaDTO in controladorCuenta.CreditosDeEspacio(Persistencia.Id))
+		{
+			cuentas.Add(cuentaDTO);
+		}
+		foreach(CuentaDTO cuentaDTO in controladorCuenta.AhorrosDeEspacio(Persistencia.Id))
+		{
+			cuentas.Add(cuentaDTO);
+		}
+		listaGastos = new List<TransaccionDTO>(); ;
 	}
 }

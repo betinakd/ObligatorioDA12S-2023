@@ -1,6 +1,7 @@
 ﻿@page "/home/{Id:int}/{Correo}/ReporteF"
 @using MudBlazor 
 @inject NavigationManager navManager
+@inject ControladorReporte controlador;
 
 
 <PageTitle>FinTrac Reportes</PageTitle>
@@ -76,8 +77,7 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	public Espacio espacio { get; set; }
-	public static List<IngresoEgreso> reporteIngresosEgresos { get; set; }
+	public static List<IngresoEgresoDTO> reporteIngresosEgresos { get; set; }
 	public string[] dias { get; set; }
 
 	public static double[] egresos
@@ -93,7 +93,7 @@
 			{
 				double[] egresosTotales = new double[reporteIngresosEgresos.Count];
 				int index = 0;
-				foreach (IngresoEgreso ie in reporteIngresosEgresos)
+				foreach (IngresoEgresoDTO ie in reporteIngresosEgresos)
 				{
 					egresosTotales[index] = ie.Egresos;
 					index++;
@@ -116,7 +116,7 @@
 			{
 				double[] ingresosTotales = new double[reporteIngresosEgresos.Count];
 				int index = 0;
-				foreach (IngresoEgreso ie in reporteIngresosEgresos)
+				foreach (IngresoEgresoDTO ie in reporteIngresosEgresos)
 				{
 					ingresosTotales[index] = ie.Ingresos;
 					index++;
@@ -163,10 +163,10 @@
 	public void generarReporte()
 	{
 		clickDado = true;
-		reporteIngresosEgresos = reporte.ReporteIngresosEgresos(mesEnInt);
+		reporteIngresosEgresos = controlador.ReporteIngresosEgresos(Persistencia.Id, mesEnInt);
 		dias = new string[reporteIngresosEgresos.Count];
 		int index = 0;
-		foreach (IngresoEgreso ie in reporteIngresosEgresos)
+		foreach (IngresoEgresoDTO ie in reporteIngresosEgresos)
 		{
 			dias[index] = (index + 1).ToString();
 			index++;
@@ -177,8 +177,6 @@
 	{
 		clickDado = false;
 		mesElegido = "11";
-		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		reporte.MiEspacio = espacio;
-		reporteIngresosEgresos = reporte.ReporteIngresosEgresos(mesEnInt);
+		reporteIngresosEgresos = controlador.ReporteIngresosEgresos(Persistencia.Id, mesEnInt);
 	}
 }
