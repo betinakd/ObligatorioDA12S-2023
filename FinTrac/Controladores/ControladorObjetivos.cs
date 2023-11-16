@@ -74,7 +74,7 @@ namespace Controlador
 
 		private Objetivo Cambiar_A_Objetivo(int id, int idObjetivoDTO)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			List<Objetivo> objetivos = espacio.Objetivos;
 			Objetivo objetivo = objetivos.Find(o => o.Id == idObjetivoDTO);
 			return objetivo;

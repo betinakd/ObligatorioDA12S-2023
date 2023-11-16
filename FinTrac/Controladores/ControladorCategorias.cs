@@ -8,7 +8,7 @@ namespace Controlador
 {
 	public class ControladorCategorias
 	{
-		private EspacioLogic _espacioLogic;
+		private EspacioLogica _espacioLogic;
 
 		public ControladorCategorias(EspacioLogica categoriaLogic)
 		{
@@ -17,7 +17,7 @@ namespace Controlador
 
 		public List<CategoriaDTO> CategoriasDeEspacio(int id)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			List<Categoria> categorias = espacio.Categorias;
 			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>();
 			foreach (Categoria categoria in categorias)
@@ -38,7 +38,7 @@ namespace Controlador
 		public string CrearCategoria(int id, CategoriaDTO categoriaDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			TipoCategoria tipo = Cambiar_TipoCategoria(categoriaDTO.Tipo);
 			try
 			{
@@ -62,7 +62,7 @@ namespace Controlador
 		public string ModificarNombreCategoria(int id, CategoriaDTO categoriaDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			Categoria categoria = Cambiar_A_Categoria(id, categoriaDTO.Id);
 			List<Categoria> categorias = espacio.Categorias;
 			try
@@ -87,7 +87,7 @@ namespace Controlador
 		public string EliminarCategoria(int Id, CategoriaDTO categoriaDTO)
 		{
 			string errorMsj = "";
-			Espacio espacio = _espacioLogic.FindEspacio(Id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
 			try
 			{
@@ -103,7 +103,7 @@ namespace Controlador
 
 		public void ModificarEstadoCategoria(int Id, CategoriaDTO categoriaDTO)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(Id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
 			categoria.EstadoActivo = categoriaDTO.EstadoActivo;
 			_espacioLogic.UpdateEspacio(espacio);
@@ -129,7 +129,7 @@ namespace Controlador
 
 		private Categoria Cambiar_A_Categoria(int id, int idCategoriaDTO)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			List<Categoria> categorias = espacio.Categorias;
 			Categoria categoria = categorias.Find(c => c.Id == idCategoriaDTO);
 			return categoria;

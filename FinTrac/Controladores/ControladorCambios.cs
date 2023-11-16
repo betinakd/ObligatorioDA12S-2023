@@ -76,7 +76,7 @@ namespace Controlador
 
 		private Cambio Cambiar_A_Cambio(int idEspacio, int idCambio)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(idEspacio);
 			List<Cambio> cambios = espacio.Cambios;
 			Cambio cambio = cambios.Find(c => c.Id == idCambio);
 			return cambio;
