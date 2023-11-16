@@ -8,16 +8,16 @@ namespace Controlador
 {
 	public class ControladorCategorias
 	{
-		private EspacioLogic _categoriaLogic;
+		private EspacioLogic _espacioLogic;
 
 		public ControladorCategorias(EspacioLogic categoriaLogic)
 		{
-			_categoriaLogic = categoriaLogic;
+			_espacioLogic = categoriaLogic;
 		}
 
 		public List<CategoriaDTO> CategoriasDeEspacio(int id)
 		{
-			Espacio espacio = _categoriaLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.FindEspacio(id);
 			List<Categoria> categorias = espacio.Categorias;
 			List<CategoriaDTO> categoriasDTO = new List<CategoriaDTO>();
 			foreach (Categoria categoria in categorias)
@@ -38,7 +38,7 @@ namespace Controlador
 		public string CrearCategoria(int id, CategoriaDTO categoriaDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _categoriaLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.FindEspacio(id);
 			TipoCategoria tipo = Cambiar_TipoCategoria(categoriaDTO.Tipo);
 			try
 			{
@@ -50,7 +50,7 @@ namespace Controlador
 					FechaCreacion = categoriaDTO.FechaCreacion
 				};
 				espacio.AgregarCategoria(nuevaCategoria);
-				_categoriaLogic.UpdateEspacio(espacio);
+				_espacioLogic.UpdateEspacio(espacio);
 			}
 			catch (DomainEspacioException e)
 			{
@@ -59,18 +59,18 @@ namespace Controlador
 			return msjError;
 		}
 
-		public string ModificarNombreCategoria(int id, CategoriaDTO categoriaDTO, string nuevoNombre)
+		public string ModificarNombreCategoria(int id, CategoriaDTO categoriaDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _categoriaLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.FindEspacio(id);
 			Categoria categoria = Cambiar_A_Categoria(id, categoriaDTO.Id);
 			List<Categoria> categorias = espacio.Categorias;
 			try
 			{
-				if (!categorias.Any(c => c.Nombre == nuevoNombre))
+				if (!categorias.Any(c => c.Nombre == categoriaDTO.Nombre))
 				{
-					categoria.Nombre = nuevoNombre;
-					_categoriaLogic.UpdateEspacio(espacio);
+					categoria.Nombre = categoriaDTO.Nombre;
+					_espacioLogic.UpdateEspacio(espacio);
 				}
 				else
 				{
@@ -87,12 +87,12 @@ namespace Controlador
 		public string EliminarCategoria(int Id, CategoriaDTO categoriaDTO)
 		{
 			string errorMsj = "";
-			Espacio espacio = _categoriaLogic.FindEspacio(Id);
+			Espacio espacio = _espacioLogic.FindEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
 			try
 			{
 				espacio.BorrarCategoria(categoria);
-				_categoriaLogic.UpdateEspacio(espacio);
+				_espacioLogic.UpdateEspacio(espacio);
 			}
 			catch (DomainEspacioException e)
 			{
@@ -101,12 +101,12 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public void ModificarEstadoCategoria(int Id, CategoriaDTO categoriaDTO, bool estadoActivo)
+		public void ModificarEstadoCategoria(int Id, CategoriaDTO categoriaDTO)
 		{
-			Espacio espacio = _categoriaLogic.FindEspacio(Id);
+			Espacio espacio = _espacioLogic.FindEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
-			categoria.EstadoActivo = estadoActivo;
-			_categoriaLogic.UpdateEspacio(espacio);
+			categoria.EstadoActivo = categoriaDTO.EstadoActivo;
+			_espacioLogic.UpdateEspacio(espacio);
 		}
 
 		private TipoCategoriaDTO Cambiar_TipoCategoriaDTO(TipoCategoria tipoCategoria)
@@ -129,15 +129,10 @@ namespace Controlador
 
 		private Categoria Cambiar_A_Categoria(int id, int idCategoriaDTO)
 		{
-			Categoria categoriaResultado = null;
-			foreach (Categoria categoria in _categoriaLogic.FindEspacio(id).Categorias)
-			{
-				if (categoria.Id == idCategoriaDTO)
-				{
-					categoriaResultado = categoria;
-				}
-			}
-			return categoriaResultado;
+			Espacio espacio = _espacioLogic.FindEspacio(id);
+			List<Categoria> categorias = espacio.Categorias;
+			Categoria categoria = categorias.Find(c => c.Id == idCategoriaDTO);
+			return categoria;
 		}
 	}
 }

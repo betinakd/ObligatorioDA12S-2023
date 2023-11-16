@@ -185,7 +185,8 @@ namespace ControladorTest
 				EstadoActivo = true,
 				FechaCreacion = DateTime.Now
 			};
-			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2, "Categoria3");
+			categoriaDTO2.Nombre = "Categoria3";
+			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2);
 			Assert.AreEqual("", msjError);
 		}
 
@@ -215,7 +216,8 @@ namespace ControladorTest
 				EstadoActivo = true,
 				FechaCreacion = DateTime.Now
 			};
-			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2, "Categoria1");
+			categoriaDTO2.Nombre = "Categoria1";
+			string msjError = controladorTest.ModificarNombreCategoria(1, categoriaDTO2);
 			Assert.AreEqual("Ya existe una categoría con ese nombre", msjError);
 		}
 
@@ -275,7 +277,8 @@ namespace ControladorTest
 				EstadoActivo = true,
 				FechaCreacion = DateTime.Now
 			};
-			controladorTest.ModificarEstadoCategoria(1, categoriaDTO2, false);
+			categoriaDTO2.EstadoActivo = false;
+			controladorTest.ModificarEstadoCategoria(1, categoriaDTO2);
 			Assert.AreEqual(espacio.Categorias[0].EstadoActivo, false);
 		}
 

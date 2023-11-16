@@ -208,7 +208,7 @@ namespace Domain
 				{
 					if (transaccion.Moneda != TipoCambiario.PesosUruguayos)
 					{
-						cambio = _cambios.Find(c => c.Moneda == transaccion.Moneda).Pesos;
+						cambio = _cambios.Find(c => c.Moneda == transaccion.Moneda & c.FechaDeCambio.Date == transaccion.FechaTransaccion.Date).Pesos;
 						gastos += transaccion.Monto * cambio;
 					}
 					else

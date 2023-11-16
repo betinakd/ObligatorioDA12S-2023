@@ -57,14 +57,14 @@ namespace Controlador
 			return msjError;
 		}
 
-		public string ModificarCambio(int id, CambioDTO cambioDTO, double valor)
+		public string ModificarCambio(int id, CambioDTO cambioDTO)
 		{
 			string msjError = "";
 			Espacio espacio = _espacioLogic.FindEspacio(id);
 			Cambio cambio = Cambiar_A_Cambio(id, cambioDTO.Id);
 			try
 			{
-				cambio.Pesos = valor;
+				cambio.Pesos = cambioDTO.Pesos;
 				_espacioLogic.UpdateEspacio(espacio);
 			}
 			catch (DomainEspacioException e)
@@ -76,17 +76,10 @@ namespace Controlador
 
 		private Cambio Cambiar_A_Cambio(int idEspacio, int idCambio)
 		{
-			Cambio cambioResultado = null;
 			Espacio espacio = _espacioLogic.FindEspacio(idEspacio);
 			List<Cambio> cambios = espacio.Cambios;
-			foreach (Cambio cambio in cambios)
-			{
-				if (cambio.Id == idCambio)
-				{
-					cambioResultado = cambio;
-				}
-			}
-			return cambioResultado;
+			Cambio cambio = cambios.Find(c => c.Id == idCambio);
+			return cambio;
 		}
 
 		private TipoCambiario Cambiar_TipoCambiario(TipoCambiarioDTO tipoDTO)

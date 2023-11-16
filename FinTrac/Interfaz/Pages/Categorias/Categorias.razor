@@ -130,10 +130,17 @@
 
 	private void ModificarNombre(CategoriaDTO categoriaDTO)
 	{
-		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO, nombreValor);
+		CategoriaDTO nuevoDTO = new CategoriaDTO()
+		{
+			Id = categoriaDTO.Id,
+			Nombre = nombreValor,
+			FechaCreacion = categoriaDTO.FechaCreacion,
+			Tipo = categoriaDTO.Tipo,
+			EstadoActivo = categoriaDTO.EstadoActivo
+		};
+		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, nuevoDTO);
 		if (ErrorMsg == "")
 		{
-			categoriaDTO.Nombre = nombreValor;
 			categorias = controlador.CategoriasDeEspacio(Id);
 			mostrarModificar = false;
 			LimpiarInputs();
@@ -142,8 +149,8 @@
 
 	private void ModificarEstado(CategoriaDTO categoriaDTO)
 	{
-		controlador.ModificarEstadoCategoria(Id, categoriaDTO, estadoActivo);
 		categoriaDTO.EstadoActivo = estadoActivo;
+		controlador.ModificarEstadoCategoria(Id, categoriaDTO);
 		categorias = controlador.CategoriasDeEspacio(Id);
 		LimpiarInputs();
 		mostrarModificar = false;
