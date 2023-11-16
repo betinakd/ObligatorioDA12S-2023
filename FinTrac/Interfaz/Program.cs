@@ -5,6 +5,10 @@ using Domain;
 using BussinesLogic;
 using Controlador;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<FintracDbContext>
@@ -20,6 +24,7 @@ builder.Services.AddScoped<UsuarioLogic>();
 builder.Services.AddScoped<IRepository<Espacio>, EspacioMemoryRepository>();
 builder.Services.AddScoped<EspacioLogic>();
 builder.Services.AddSingleton<Persistencia>();
+builder.Services.AddMudServices();
 builder.Services.AddScoped<ControladorRegistro>();
 builder.Services.AddScoped<ControladorUsuarios>();
 builder.Services.AddScoped<ControladorEspacios>();
@@ -30,6 +35,13 @@ builder.Services.AddScoped<ControladorObjetivos>();
 builder.Services.AddScoped<ControladorCategorias>();
 builder.Services.AddScoped<ControladorCambios>();
 builder.Services.AddScoped<ControladorSesion>();
+builder.Services.AddScoped<ControladorReporte>();
+
+builder.Services.AddDbContext<FintracDbContext>
+	(options => options.UseSqlServer
+	(builder.Configuration.GetConnectionString("FintracsDbConection"),
+		providerOptions => providerOptions.EnableRetryOnFailure()));
+
 
 var app = builder.Build();
 

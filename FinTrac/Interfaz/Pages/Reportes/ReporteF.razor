@@ -1,0 +1,182 @@
+﻿@page "/home/{Id:int}/{Correo}/ReporteF"
+@using MudBlazor 
+@inject NavigationManager navManager
+@inject ControladorReporte controlador;
+
+
+<PageTitle>FinTrac Reportes</PageTitle>
+<TituloRosado Titulo="Reporte Ingresos Egresos" Subtitulo=""></TituloRosado>
+<div style="display:flex; flex-direction:column" class="mt-4">
+	<div style="flex-grow: 1; padding-bottom:15px" class="flex flex-col space-y-2">
+		<label for="mesSelector" class="text-sm font-medium text-gray-500">Selecciona un mes:</label>
+		<select id="mesSelector" name="mes" @bind=mesElegido>
+			<option value="1">Enero</option>
+			<option value="2">Febrero</option>
+			<option value="3">Marzo</option>
+			<option value="4">Abril</option>
+			<option value="5">Mayo</option>
+			<option value="6">Junio</option>
+			<option value="7">Julio</option>
+			<option value="8">Agosto</option>
+			<option value="9">Septiembre</option>
+			<option value="10">Octubre</option>
+			<option value="11">Noviembre</option>
+			<option value="12">Diciembre</option>
+		</select>
+	</div>
+	<a style="position:relative; flex-grow:1; cursor:pointer; width:50%; left:23%; align-items:center; justify-content:center; display: flex; font-size: 25px" class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" @onclick="generarReporte">Generar Reporte</a>
+</div>
+<div class="mt-4">
+	<div class="flex flex-col space-y-2">
+		@if (!clickDado)
+		{
+			<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
+				<h1 style="padding-left:6px">Seleccione un mes y de click.</h1>
+			</div>
+		} else
+		{
+			<div style="display: flex; width: 100%; position: relative; left: 20%">
+				<MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" XAxisLabels="@dias" Width="100%" Height="500px"></MudChart>
+			</div>
+			<table class="min-w-full divide-y divide-gray-200">
+				<thead class="bg-gray-50">
+					<tr>
+						<th scope="row" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Dia
+						</th>
+						<th scope="row" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Monto de ingresos
+						</th>
+						<th scope="row" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+							Monto de egresos
+						</th>
+					</tr>
+				</thead>
+				<tbody class="bg-white divide-y divide-gray-200">
+					@foreach (var reporte in reporteIngresosEgresos)
+					{
+						<tr>
+							<td class="px-6 py-4 whitespace-nowrap">
+								@reporte.Fecha.Day
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap">
+								$@(reporte.Ingresos.ToString("F2"))
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap">
+								$@(reporte.Egresos.ToString("F2"))
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter] public int Id { get; set; }
+	[Parameter] public string Correo { get; set; }
+	public string ErrorMsg { get; set; }
+	public static List<IngresoEgresoDTO> reporteIngresosEgresos { get; set; }
+	public string[] dias { get; set; }
+
+	public static double[] egresos
+	{
+		get
+		{
+			if (reporteIngresosEgresos == null)
+			{
+				double[] egresosTotales = new double[1];
+				egresosTotales[0] = 8;
+				return egresosTotales;
+			} else
+			{
+				double[] egresosTotales = new double[reporteIngresosEgresos.Count];
+				int index = 0;
+				foreach (IngresoEgresoDTO ie in reporteIngresosEgresos)
+				{
+					egresosTotales[index] = ie.Egresos;
+					index++;
+				}
+				return egresosTotales;
+			}
+		}
+	}
+	public static double[] ingresos
+	{
+		get
+		{
+			if (reporteIngresosEgresos == null)
+			{
+				double[] ingresosTotales = new double[1];
+				ingresosTotales[0] = 3;
+				return ingresosTotales;
+			}
+			else
+			{
+				double[] ingresosTotales = new double[reporteIngresosEgresos.Count];
+				int index = 0;
+				foreach (IngresoEgresoDTO ie in reporteIngresosEgresos)
+				{
+					ingresosTotales[index] = ie.Ingresos;
+					index++;
+				}
+				return ingresosTotales;
+			}
+		}
+	}
+
+
+	public List<ChartSeries> Series
+	{
+		get
+		{
+			List<ChartSeries> SeriesTotal = new List<ChartSeries>()
+			{
+				new ChartSeries() { Name = "Egresos", Data = egresos },
+				new ChartSeries() { Name = "Ingresos", Data = ingresos },
+			};
+			return SeriesTotal;
+		}
+	}
+
+	public Reporte reporte = new Reporte();
+
+	public bool clickDado { get; set; }
+
+
+	public int Index = 1;
+	public string mesElegido
+	{
+		get;
+		set;
+	}
+	public int mesEnInt
+	{
+		get
+		{
+			int mes = int.Parse(mesElegido);
+			return mes;
+		}
+	}
+
+	public void generarReporte()
+	{
+		clickDado = true;
+		reporteIngresosEgresos = controlador.ReporteIngresosEgresos(Persistencia.Id, mesEnInt);
+		dias = new string[reporteIngresosEgresos.Count];
+		int index = 0;
+		foreach (IngresoEgresoDTO ie in reporteIngresosEgresos)
+		{
+			dias[index] = (index + 1).ToString();
+			index++;
+		}
+	}
+
+	protected override void OnInitialized()
+	{
+		clickDado = false;
+		mesElegido = "11";
+		reporteIngresosEgresos = controlador.ReporteIngresosEgresos(Persistencia.Id, mesEnInt);
+	}
+}

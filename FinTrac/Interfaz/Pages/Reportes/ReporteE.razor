@@ -5,6 +5,9 @@
 @inject UsuarioLogic UsuarioLogic;
 @inject EspacioLogic EspacioLogic;
 @inject Persistencia Persistencia;
+@inject ControladorReporte controladorReporte;
+@inject ControladorCambios controladorCambios;
+@inject ControladorCuenta controladorCuentas;
 
 <PageTitle>FinTrac Reportes</PageTitle>
 <TituloRosado Titulo="Balance de Cuentas" Subtitulo=""></TituloRosado>
@@ -15,11 +18,11 @@
 			<label for="cardSelector" class="text-sm font-medium text-gray-500">Seleccione una cuenta:</label>
 			<select id="cardSelector" name="mes" @bind="cuentaActual">
 				<option value="" selected>Seleccione una Opcion</option>
-				@foreach (Cuenta account in cuentas)
+				@foreach (CuentaDTO account in cuentas)
 				{
-					@if (account is Ahorro)
+					@if (account is AhorroDTO)
 					{
-						<option value="@(((Ahorro)account).Nombre)"> @(((Ahorro)account).Nombre) - @(((Ahorro)account).Moneda) </option>
+						<option value="@(((AhorroDTO)account).Nombre)"> @(((AhorroDTO)account).Nombre) - @(((AhorroDTO)account).Moneda) </option>
 					}
 				}
 			</select>
@@ -34,7 +37,7 @@
 	}
 	else
 	{
-		@if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+		@if (!cuentaBalance.Moneda.Equals(TipoCambiarioDTO.PesosUruguayos))
 		{
 			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -49,25 +52,45 @@
 							Moneda
 						</th>
 						<th scope="col" class="px-6 py-3">
-							Valor dolar
+							Valor moneda
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
 						<td class="px-6 py-4 font-medium text-gray-900 dark:text-white">@cuentaBalance.Nombre</td>
-						<td class="px-6 py-4">$ @balanceCalculado</td>
+						<td class="px-6 py-4">
+							@if (cambioActual.Pesos == 0)
+							{
+								@if (cuentaBalance.Moneda.Equals(TipoCambiarioDTO.Dolar))
+								{
+									<div>U$D @balanceCalculado</div>
+								}
+								else
+								{
+									<div>Є @balanceCalculado</div>
+								}
+
+							} else
+							{
+								<div>$ @balanceCalculado</div>
+							}
+						</td>
 						<td class="px-6 py-4">@cuentaBalance.Moneda</td>
 						<td class="px-6 py-4">
-							$ @if (cuentaBalance.Moneda.Equals(TipoCambiario.Dolar))
+							@if (cambioActual.Pesos == 0)
 							{
-								@cambioActual.Pesos
+								<div>No hay un cambio disponible</div>
+							} else
+							{
+								<div>$ @cambioActual.Pesos</div>
 							}
 						</td>
 					</tr>
 				</tbody>
 			</table>
-		} else
+		}
+		else
 		{
 			<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 				<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -100,16 +123,15 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	private string ErrorMsg { get; set; }
-	private Espacio espacio { get; set; }
 	private double gastosCategoria { get; set; }
-	Reporte reporte { get; set; }
-	Ahorro cuenta { get; set; }
-	private List<Cuenta> cuentas { get; set; }
+	AhorroDTO cuenta { get; set; }
+	private List<CuentaDTO> cuentas = new List<CuentaDTO>();
 	private string cuentaActual { get; set; }
 	private bool cuentaEncontrada = false;
-	private Ahorro cuentaBalance { set; get; }
+	private AhorroDTO cuentaBalance { set; get; }
 	private double balanceCalculado { set; get; }
-	private Cambio cambioActual { get; set; }
+	private CambioDTO cambioActual { get; set; }
+	public List<CambioDTO> cambios = new List<CambioDTO>();
 
 	private void generarBalance()
 	{
@@ -119,36 +141,39 @@
 			cuentaEncontrada = true;
 			//cuentaBalance = cuenta;
 			EncontrarCambio(cuentaBalance);
-			balanceCalculado = reporte.BalanceCuentas(cuentaBalance);
-		} else
+			balanceCalculado = controladorReporte.BalanceDeCuentas(Persistencia.Id, cuentaBalance);
+		}
+		else
 		{
 			cuentaEncontrada = false;
 		}
 	}
 
-	private Ahorro encontrarCuenta(string nombreCuenta, List<Cuenta> listaCuentas)
+	private AhorroDTO encontrarCuenta(string nombreCuenta, List<CuentaDTO> listaCuentas)
 	{
-		Ahorro cuentaRet = new Ahorro();
-		foreach (Cuenta cuenta in listaCuentas)
+		AhorroDTO cuentaRet = new AhorroDTO();
+		foreach (CuentaDTO cuenta in listaCuentas)
 		{
-			if (cuenta is Ahorro)
+			if (cuenta is AhorroDTO)
 			{
-				if (((Ahorro)cuenta).Nombre == nombreCuenta)
+				if (((AhorroDTO)cuenta).Nombre == nombreCuenta)
 				{
-					cuentaRet = (Ahorro)cuenta;
+					cuentaRet = (AhorroDTO)cuenta;
 				}
 			}
 		}
 		return cuentaRet;
 	}
 
-	private void EncontrarCambio(Ahorro cuenta)
+	private void EncontrarCambio(AhorroDTO cuenta)
 	{
-		Cambio cambioRet = new Cambio();
-		foreach (Cambio cambio in reporte.MiEspacio.Cambios)
+		CambioDTO cambioRet = new CambioDTO();
+		bool cambioEncontrado = false;
+		foreach (CambioDTO cambio in cambios)
 		{
-			if (cambio.FechaDeCambio.Day == cuenta.FechaCreacion.Day && cambio.FechaDeCambio.Month == cuenta.FechaCreacion.Month && cambio.FechaDeCambio.Year == cuenta.FechaCreacion.Year)
+			if (!cambioEncontrado && cuenta.Moneda.Equals(cambio.Moneda))
 			{
+				cambioEncontrado = true;
 				cambioRet = cambio;
 			}
 		}
@@ -158,8 +183,10 @@
 	protected override void OnInitialized()
 	{
 		cuentaActual = "";
-		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		reporte = new Reporte() { MiEspacio = espacio };
-		cuentas = reporte.MiEspacio.Cuentas;
+		cambios = controladorCambios.CambiosDeEspacio(Persistencia.Id);
+		foreach (CuentaDTO cuentaDTO in controladorCuentas.AhorrosDeEspacio(Persistencia.Id))
+		{
+			cuentas.Add(cuentaDTO);
+		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿@page "/home/{Id:int}/{Correo}/ReporteB"
+@inject ControladorReporte controlador;
 
 <PageTitle>FinTrac Reportes</PageTitle>
 <TituloRosado Titulo="Reporte de gasto por Categoría por mes" Subtitulo=""></TituloRosado>
@@ -15,8 +16,8 @@
 			<option value="7">Julio</option>
 			<option value="8">Agosto</option>
 			<option value="9">Septiembre</option>
-			<option value="10" selected>Octubre</option>
-			<option value="11">Noviembre</option>
+			<option value="10">Octubre</option>
+			<option value="11" selected>Noviembre</option>
 			<option value="12">Diciembre</option>
 		</select>
 	</div>
@@ -32,7 +33,6 @@
 				<div style="border: solid; border-color: #d4d4d4; width: 32%; border-radius:9px; left:0%; position:relative; align-items:center; justify-content:center; left:32%">
 					<h1 style="padding-left:6px">No hay transacciones que permitan esta operacion.</h1>
 				</div>
-
 			}
 			else
 			{
@@ -50,7 +50,7 @@
 					</tr>
 				</thead>
 				<tbody class="bg-white divide-y divide-gray-200">
-					@foreach (var categoriaGasto in gastosCategoria)
+					@foreach (CategoriaGastoDTO categoriaGasto in gastosCategoria)
 					{
 					<tr>
 						<td class="px-6 py-4 whitespace-nowrap">
@@ -74,10 +74,8 @@
 	[Parameter] public int Id { get; set; }
 	[Parameter] public string Correo { get; set; }
 	public string ErrorMsg { get; set; }
-	public Espacio espacio { get; set; }
-	public List<CategoriaGasto> gastosCategoria { get; set; }
-	public Reporte reporte = new Reporte();
-	private int mesSeleccionado = 10; // Valor predeterminado a 10
+	public List<CategoriaGastoDTO> gastosCategoria { get; set; }
+	private int mesSeleccionado = DateTime.Today.Month; // Valor predeterminado a 10
 	public string mesElegido {
 		get;
 		set;
@@ -91,15 +89,12 @@
 
 	public void generarReporte()
 	{
-		gastosCategoria = reporte.ReporteGastosCategoriaPorMes(mesEnInt);
+		gastosCategoria = controlador.ReporteCategroriaPorMes(Persistencia.Id, mesEnInt);
 	}
 
 	protected override void OnInitialized()
 	{
-		mesElegido = "10";
-		espacio = EspacioLogic.FindEspacio(Persistencia.Id);
-		reporte.MiEspacio = espacio;
-		//gastosCategoria = new List<CategoriaGasto>();
-		gastosCategoria = reporte.ReporteGastosCategoriaPorMes(mesEnInt);
+		mesElegido = DateTime.Today.Month.ToString();
+		gastosCategoria = controlador.ReporteCategroriaPorMes(Persistencia.Id, mesEnInt);
 	}
 }

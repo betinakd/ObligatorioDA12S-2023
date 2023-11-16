@@ -146,7 +146,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.AreEqual(cambioRet, miCambio);
 		}
 
@@ -165,7 +165,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsNotNull(cambioRet);
 		}
 
@@ -183,7 +183,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsFalse(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
@@ -201,7 +201,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsFalse(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
@@ -219,7 +219,7 @@ namespace DomainTest
 			};
 			espacio.AgregarCambio(miCambio);
 			Reporte reporte = new Reporte { MiEspacio = espacio };
-			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today);
+			Cambio cambioRet = reporte.BuscarCambioActual(DateTime.Today, TipoCambiario.Dolar);
 			Assert.IsTrue(cambioRet.Equals(espacio.Cambios.First()));
 		}
 
@@ -266,7 +266,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
-			double monto = reporte.SumatoriaCostos(cuenta, miCambio);
+			double monto = reporte.SumatoriaCostos(cuenta);
 			Assert.IsTrue(monto == 40);
 		}
 		[TestMethod]
@@ -312,7 +312,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
-			double monto = reporte.SumatoriaIngresos(cuenta, miCambio);
+			double monto = reporte.SumatoriaIngresos(cuenta);
 			Assert.IsTrue(monto == 40);
 		}
 
@@ -406,7 +406,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(t);
 			Reporte reporte = new Reporte { MiEspacio = _miEspacio };
-			double monto = reporte.Calcular_MontoTotal(10);
+			double monto = reporte.Calcular_MontoTotal(DateTime.Today.Month);
 			Assert.IsTrue(40 == monto);
 		}
 
@@ -1146,7 +1146,7 @@ namespace DomainTest
 			_miEspacio.AgregarCambio(cambio);
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			Assert.IsTrue(toAnalize.First().MontoUsado == 40);
 		}
 
@@ -1181,7 +1181,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			double montoTotal = 10;
 			CategoriaGasto cg = new CategoriaGasto
 			{
@@ -1222,7 +1222,7 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			Assert.IsTrue(toAnalize.First().Porcentaje == 100);
 		}
 
@@ -1272,7 +1272,7 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(transaccion);
 			_miEspacio.AgregarTransaccion(transaccion2);
 			_reporte.MiEspacio = _miEspacio;
-			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(10);
+			List<CategoriaGasto> toAnalize = _reporte.ReporteGastosCategoriaPorMes(DateTime.Today.Month);
 			Assert.IsTrue(toAnalize.First().Porcentaje == 50);
 		}
 
@@ -1333,8 +1333,8 @@ namespace DomainTest
 			};
 			_miEspacio.AgregarTransaccion(transaccion);
 			_reporte.MiEspacio = _miEspacio;
-			DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-			DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+			DateTime fIni = new DateTime(2023, 9, 1);
+			DateTime fEnd = new DateTime(2023, 12, 31);
 			List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria, fIni, fEnd, _cuenta);
 			Assert.IsTrue(toAnalize.Count != 0);
 		}
@@ -1385,8 +1385,8 @@ namespace DomainTest
 			_miEspacio.AgregarTransaccion(transaccion1);
 			_miEspacio.AgregarTransaccion(transaccion2);
 			_reporte.MiEspacio = _miEspacio;
-			DateTime fIni = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-			DateTime fEnd = new DateTime(fIni.Year, fIni.Month, 30);
+			DateTime fIni = new DateTime(2023, 9, 1);
+			DateTime fEnd = new DateTime(2023, 12, 31);
 			List<Transaccion> toAnalize = _reporte.ListadoGastos(_categoria1, fIni, fEnd, _cuenta);
 			Assert.IsTrue(toAnalize.Count == 1);
 		}
@@ -1818,7 +1818,7 @@ namespace DomainTest
 			};
 			_reporte.MiEspacio = _miEspacio;
 			DateTime fecha = new DateTime(2024, DateTime.Now.Month, DateTime.Now.Day);
-			Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
+			Assert.IsTrue(!_reporte.TransaccionMismoAnioYMes(transaccion1, fecha));
 		}
 
 		[TestMethod]
@@ -1858,7 +1858,254 @@ namespace DomainTest
 			};
 			_reporte.MiEspacio = _miEspacio;
 			DateTime fecha = new DateTime(DateTime.Now.Year, 1, DateTime.Now.Day);
-			Assert.IsTrue(!_reporte.TransaccionMismoYearYMes(transaccion1, fecha));
+			Assert.IsTrue(!_reporte.TransaccionMismoAnioYMes(transaccion1, fecha));
+		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_No_Vacio()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
+			Assert.IsNotNull(ingresoEgreso);
+		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_Noviembre_Treinta_Datos()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(11);
+			Assert.IsTrue(ingresoEgreso.Count == 30);
+		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_Transaccion_Pesos()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				Saldo = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Categoria _categoriaCosto = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaCosto);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaCosto,
+				Monto = 10,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			double totalGastado = 10;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			Assert.IsTrue(ingresoEgreso.First().Egresos == totalGastado);
+		}
+
+		[TestMethod]
+		public void ReporteIngresosEgresos_Meses_Distintos()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				Saldo = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Categoria _categoriaCosto = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaCosto);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaCosto,
+				Monto = 10,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month+1, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			double totalGastado = 0;
+			foreach (IngresoEgreso ie in ingresoEgreso)
+			{
+				totalGastado += ie.Egresos;
+			}
+			Assert.IsTrue(totalGastado == 0);
+		}
+
+		[TestMethod]
+		public void ReporteIngresoEgreso_Solo_Ingreso()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				Saldo = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.PesosUruguayos,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Categoria _categoriaIngreso = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Ingreso,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaIngreso);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaIngreso,
+				Monto = 10,
+				Moneda = TipoCambiario.PesosUruguayos,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			double totalIngresado = 0;
+			foreach (IngresoEgreso ie in ingresoEgreso)
+			{
+				totalIngresado += ie.Ingresos;
+			}
+			Assert.IsTrue(totalIngresado == 10);
+		}
+
+		[TestMethod]
+		public void ReporteIngresoEgreso_Ingreso_Euro()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				Saldo = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.Euro,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Cambio euro = new Cambio
+			{
+				Pesos = 40,
+				Moneda = TipoCambiario.Euro,
+				FechaDeCambio = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+			};
+			_miEspacio.AgregarCambio(euro);
+			Cambio euro2 = new Cambio
+			{
+				Pesos = 40,
+				Moneda = TipoCambiario.Euro,
+			};
+			_miEspacio.AgregarCambio(euro2);
+			Categoria _categoriaIngreso = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Ingreso,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaIngreso);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaIngreso,
+				Monto = 1,
+				Moneda = TipoCambiario.Euro,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			double total = 0;
+			foreach (IngresoEgreso ie in ingresoEgreso)
+			{
+				total += ie.Ingresos;
+			}
+			Assert.IsTrue(total == 40);
+		}
+
+		[TestMethod]
+		public void ReporteIngresoEgreso_Ingreso_Dolar()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Credito credit = new Credito
+			{
+				BancoEmisor = "Santander",
+				Saldo = 1000,
+				FechaCierre = DateTime.Now.AddDays(+5),
+				Moneda = TipoCambiario.Euro,
+				NumeroTarjeta = "1234",
+			};
+			_miEspacio.AgregarCuenta(credit);
+			Categoria _categoriaIngreso = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Ingreso,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaIngreso);
+			Cambio dolar = new Cambio
+			{
+				Pesos = 40,
+				Moneda = TipoCambiario.Dolar,
+				FechaDeCambio = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
+			};
+			_miEspacio.AgregarCambio(dolar);
+			Cambio dolar2 = new Cambio
+			{
+				Moneda = TipoCambiario.Dolar,
+				Pesos = 33,
+			};
+			_miEspacio.AgregarCambio(dolar2);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaIngreso,
+				Monto = 1,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = credit,
+				FechaTransaccion = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			_reporte.MiEspacio = _miEspacio;
+			List<IngresoEgreso> ingresoEgreso = _reporte.ReporteIngresosEgresos(DateTime.Today.Month);
+			double total = 0;
+			foreach (IngresoEgreso ie in ingresoEgreso)
+			{
+				total += ie.Ingresos;
+			}
+			Assert.IsTrue(total == 40);
 		}
 	}
 }
