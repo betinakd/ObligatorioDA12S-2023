@@ -275,7 +275,8 @@ namespace ControladorTest
 				EstadoActivo = true,
 				FechaCreacion = DateTime.Now
 			};
-			controladorTest.ModificarEstadoCategoria(1, categoriaDTO2, false);
+			categoriaDTO2.EstadoActivo = false;
+			controladorTest.ModificarEstadoCategoria(1, categoriaDTO2);
 			Assert.AreEqual(espacio.Categorias[0].EstadoActivo, false);
 		}
 

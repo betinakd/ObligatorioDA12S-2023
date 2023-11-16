@@ -101,11 +101,11 @@ namespace Controlador
 			return errorMsj;
 		}
 
-		public void ModificarEstadoCategoria(int Id, CategoriaDTO categoriaDTO, bool estadoActivo)
+		public void ModificarEstadoCategoria(int Id, CategoriaDTO categoriaDTO)
 		{
 			Espacio espacio = _espacioLogic.FindEspacio(Id);
 			Categoria categoria = Cambiar_A_Categoria(Id, categoriaDTO.Id);
-			categoria.EstadoActivo = estadoActivo;
+			categoria.EstadoActivo = categoriaDTO.EstadoActivo;
 			_espacioLogic.UpdateEspacio(espacio);
 		}
 

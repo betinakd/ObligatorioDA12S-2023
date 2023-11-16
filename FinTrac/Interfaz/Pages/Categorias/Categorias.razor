@@ -142,8 +142,8 @@
 
 	private void ModificarEstado(CategoriaDTO categoriaDTO)
 	{
-		controlador.ModificarEstadoCategoria(Id, categoriaDTO, estadoActivo);
 		categoriaDTO.EstadoActivo = estadoActivo;
+		controlador.ModificarEstadoCategoria(Id, categoriaDTO);
 		categorias = controlador.CategoriasDeEspacio(Id);
 		LimpiarInputs();
 		mostrarModificar = false;
