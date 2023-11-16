@@ -37,11 +37,6 @@ builder.Services.AddScoped<ControladorCambios>();
 builder.Services.AddScoped<ControladorSesion>();
 builder.Services.AddScoped<ControladorReporte>();
 
-builder.Services.AddDbContext<FintracDbContext>
-	(options => options.UseSqlServer
-	(builder.Configuration.GetConnectionString("FintracsDbConection"),
-		providerOptions => providerOptions.EnableRetryOnFailure()));
-
 
 var app = builder.Build();
 
