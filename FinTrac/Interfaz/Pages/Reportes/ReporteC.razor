@@ -16,7 +16,7 @@
 			<option value="" selected>Seleccione una Opcion</option>
 			@foreach (CategoriaDTO categoria in categorias)
 			{
-				@if (categoria.EstadoActivo && categoria.Tipo.Equals(TipoCategoria.Costo))
+				@if (categoria.EstadoActivo && categoria.Tipo.Equals(TipoCategoriaDTO.Costo))
 				{
 					<option value="@categoria.Nombre">@categoria.Nombre - @categoria.Tipo</option>
 				}
@@ -103,7 +103,7 @@
 									$@(gasto.Monto * encontrarCambio(gasto, cambios).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@if (encontrarCambio(gasto, cambios).Moneda.Equals(TipoCambiario.Dolar))
+									@if (encontrarCambio(gasto, cambios).Moneda.Equals(TipoCambiarioDTO.Dolar))
 									{
 										<div>$@encontrarCambio(gasto, cambios).Pesos -  U$D @gasto.Monto</div>
 									} else

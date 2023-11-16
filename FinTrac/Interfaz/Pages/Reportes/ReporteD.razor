@@ -72,7 +72,7 @@
 									@transaccion.FechaTransaccion
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									@if (transaccion.Moneda.Equals(TipoCambiario.Euro))
+									@if (transaccion.Moneda.Equals(TipoCambiarioDTO.Euro))
 									{
 										<div>@transaccion.Moneda - Є @transaccion.Monto</div>
 									} else
