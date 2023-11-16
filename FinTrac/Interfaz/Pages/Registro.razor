@@ -63,7 +63,7 @@
 			};
 
 		ErrorMensaje = controlador.RegistrarUsuario(usuario);
-		if (controlador.RegistradoConExito(usuario))
+		if (controlador.RegistradoConExito(usuario) && ErrorMensaje.Equals(""))
 		{
 			Persistencia.Id = usuario.IdEspacioPrincipal;
 			Persistencia.Correo = usuario.Correo;
