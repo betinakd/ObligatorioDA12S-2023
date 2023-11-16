@@ -7,6 +7,7 @@
 @inject Persistencia Persistencia;
 @inject ControladorReporte controladorReporte;
 @inject ControladorCuenta controladorCuenta;
+@inject ControladorCambios controladorCambios;
 
 <PageTitle>FinTrac Reportes</PageTitle>
 <TituloRosado Titulo="Reporte de Gastos por Tarjeta" Subtitulo=""></TituloRosado>
@@ -68,7 +69,7 @@
 									@transaccion.Titulo
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$ @(transaccion.Monto * controladorReporte.EncontrarCambio(Persistencia.Id, transaccion).Pesos)
+									$ @(transaccion.Monto * encontrarCambio(transaccion, cambios).Pesos)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
 									@transaccion.FechaTransaccion
@@ -86,7 +87,7 @@
 									@(transaccion.CuentaMonetaria)
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									$@controladorReporte.EncontrarCambio(Persistencia.Id, transaccion).Pesos
+									$@encontrarCambio(transaccion, cambios).Pesos
 								</td>
 							</tr>
 						}
@@ -125,6 +126,7 @@
 	public string ErrorMsg { get; set; }
 	public List<TransaccionDTO> gastosTarjeta { get; set; }
 	public List<CreditoDTO> cuentas { get; set; }
+	public List<CambioDTO> cambios = new List<CambioDTO>();
 	public string tarjetaActual { get; set; }
 
 	private void generarReporte()
@@ -149,9 +151,23 @@
 		return toRet;
 	}
 
+	public CambioDTO encontrarCambio(TransaccionDTO transaccion, List<CambioDTO> listaCambios)
+	{
+		CambioDTO cambioDTO = new CambioDTO();
+		foreach (CambioDTO cambio in listaCambios)
+		{
+			if (cambio.FechaDeCambio.Day == transaccion.FechaTransaccion.Day && cambio.FechaDeCambio.Month == transaccion.FechaTransaccion.Month && cambio.FechaDeCambio.Year == transaccion.FechaTransaccion.Year && cambio.Moneda.Equals(transaccion.Moneda))
+			{
+				cambioDTO = cambio;
+			}
+		}
+		return cambioDTO;
+	}
+
 	protected override void OnInitialized()
 	{
 		tarjetaActual = "1111";
+		cambios = controladorCambios.CambiosDeEspacio(Persistencia.Id);
 		cuentas = controladorCuenta.CreditosDeEspacio(Persistencia.Id);
 		gastosTarjeta = new List<TransaccionDTO>();
 	}
