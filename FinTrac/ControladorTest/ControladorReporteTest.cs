@@ -918,5 +918,57 @@ namespace ControladorTest
 			List<IngresoEgresoDTO> reporte = controladorReporte.ReporteIngresosEgresos(1, mes);
 			Assert.IsTrue(reporte.ToArray()[fechaHoy.Day - 1].Ingresos == transaccion.Monto);
 		}
+
+		[TestMethod]
+		public void ReporteCategoriaGastoPorMes_Funciona()
+		{
+			Usuario usuario = new Usuario
+			{
+				Nombre = "Usuario",
+				Apellido = "Test",
+				Correo = "test@gmail.com",
+				Contrasena = "TestTest12",
+				Direccion = "Av test"
+			};
+			_usuarioLogic.AddUsuario(usuario);
+			Espacio espacio = new Espacio
+			{
+				Nombre = "Espacio",
+				Id = 1,
+				Admin = usuario
+			};
+			Ahorro ahorro1 = new Ahorro
+			{
+				Nombre = "AhorroTest1",
+				Saldo = 100,
+				FechaCreacion = DateTime.Now,
+				Moneda = TipoCambiario.PesosUruguayos
+			};
+			espacio.AgregarCuenta(ahorro1);
+			Categoria categoria = new Categoria()
+			{
+				Id = 1,
+				Nombre = "Categoria1",
+				Tipo = TipoCategoria.Costo,
+				EstadoActivo = true,
+				FechaCreacion = DateTime.Now
+			};
+			espacio.AgregarCategoria(categoria);
+			Transaccion transaccion1 = new Transaccion()
+			{
+				Id = 1,
+				Moneda = ahorro1.Moneda,
+				Monto = 1000,
+				CategoriaTransaccion = categoria,
+				CuentaMonetaria = ahorro1,
+				Titulo = "hola",
+				FechaTransaccion = DateTime.Today,
+			};
+			espacio.AgregarTransaccion(transaccion1);
+			_espacioLogic.AddEspacio(espacio);
+			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
+			List<CategoriaGastoDTO> reporte = controladorReporte.ReporteCategroriaPorMes(1, DateTime.Today.Month);
+			Assert.IsTrue(reporte.Count != 1);
+		}
 	}
 }

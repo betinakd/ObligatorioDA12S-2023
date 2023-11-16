@@ -43,6 +43,32 @@ namespace Controlador
 			return reporteEnDTO;
 		}
 
+		public List<CategoriaGastoDTO> ReporteCategroriaPorMes(int id, int mes)
+		{
+			Espacio espacio = _reporte.FindEspacio(id);
+			Reporte reporte = new Reporte(espacio);
+			List<CategoriaGasto> reporteObjetivoGasto = reporte.ReporteGastosCategoriaPorMes(mes);
+			List<CategoriaGastoDTO> reporteEnDTO = new List<CategoriaGastoDTO>();
+			foreach (CategoriaGasto categoriaGasto in reporteObjetivoGasto)
+			{
+				CategoriaGastoDTO categoriaGastoDTO = new CategoriaGastoDTO()
+				{
+					Categoria = new CategoriaDTO()
+					{
+						EstadoActivo = categoriaGasto.Categoria.EstadoActivo,
+						FechaCreacion = categoriaGasto.Categoria.FechaCreacion,
+						Id = categoriaGasto.Categoria.Id,
+						Nombre = categoriaGasto.Categoria.Nombre,
+						Tipo = TipoCategoriaDTO.Costo,
+					},
+					MontoUsado = categoriaGasto.MontoUsado,
+					Porcentaje = categoriaGasto.Porcentaje,
+				};
+				reporteEnDTO.Add(categoriaGastoDTO);
+			}
+			return reporteEnDTO;
+		}
+
 		public List<TransaccionDTO> ReporteDeGastos(int id, CategoriaDTO _catFiltro, DateTime _fechaIni, DateTime _fechaFin, CuentaDTO _cuentaFiltro)
 		{
 			Espacio espacio = _reporte.FindEspacio(id);
