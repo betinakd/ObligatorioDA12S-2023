@@ -1674,7 +1674,7 @@ namespace DominioTest
 			_reporte.MiEspacio = _miEspacio;
 			double balance = _reporte.BalanceCuentas(ahorro);
 			Console.WriteLine(balance);
-			Assert.IsTrue(balance != montoInicial);
+			Assert.IsTrue(balance == montoInicial);
 		}
 
 		[TestMethod]
