@@ -968,7 +968,7 @@ namespace ControladorTest
 			_espacioLogic.AddEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<CategoriaGastoDTO> reporte = controladorReporte.ReporteCategroriaPorMes(1, DateTime.Today.Month);
-			Assert.IsTrue(reporte.Count != 1);
+			Assert.IsTrue(reporte.Count == 1);
 		}
 	}
 }
