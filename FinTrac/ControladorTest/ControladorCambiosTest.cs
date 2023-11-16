@@ -133,7 +133,8 @@ namespace ControladorTest
 			};
 			double valor = 200;
 			controladorTest.CrearCambio(1, cambioDTO);
-			string msjError = controladorTest.ModificarCambio(1, cambioDTO, valor);
+			cambioDTO.Pesos = valor;
+			string msjError = controladorTest.ModificarCambio(1, cambioDTO);
 			Assert.AreEqual("", msjError);
 		}
 
@@ -150,7 +151,8 @@ namespace ControladorTest
 			};
 			controladorTest.CrearCambio(1, cambioDTO);
 			double valor = 0;
-			string msjError = controladorTest.ModificarCambio(1, cambioDTO, valor);
+			cambioDTO.Pesos = valor;
+			string msjError = controladorTest.ModificarCambio(1, cambioDTO);
 			Assert.AreEqual("El monto en pesos uruguayos debe ser mayor a 0", msjError);
 		}
 	}

@@ -111,10 +111,10 @@
 
 	private void ModificarValor(CambioDTO cambio)
 	{
-		ErrorMsg = controlador.ModificarCambio(Id, cambioModificar, inputValor);
+		cambioModificar.Pesos = inputValor;
+		ErrorMsg = controlador.ModificarCambio(Id, cambioModificar);
 		if (cambioModificar != null && ErrorMsg == "")
-		{
-			cambioModificar.Pesos = inputValor;
+		{	
 			modificarValor = !modificarValor;
 			LimpiarInputs();
 		}
