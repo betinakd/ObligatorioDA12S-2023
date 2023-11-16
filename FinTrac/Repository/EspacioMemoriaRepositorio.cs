@@ -1,13 +1,13 @@
-﻿using Domain;
+﻿using Dominio;
 using Microsoft.EntityFrameworkCore;
 
-namespace Repository
+namespace Repositorio
 {
-    public class EspacioMemoryRepository : IRepository<Espacio>
+    public class EspacioMemoriaRepositorio : IRepositorio<Espacio>
     {
 		private readonly FintracDbContext _context;
 
-		public EspacioMemoryRepository(FintracDbContext context)
+		public EspacioMemoriaRepositorio(FintracDbContext context)
 		{
 			_context = context;
 		}

@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Repository\Repository.csproj" />
+    <ProjectReference Include="..\BussinesLogic\LogicaNegocio.csproj" />
+    <ProjectReference Include="..\Domain\Dominio.csproj" />
+    <ProjectReference Include="..\Excepcion\Excepcion.csproj" />
+    <ProjectReference Include="..\Repository\Repositorio.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using Controlador;
-using Domain;
-using Repository;
+using Dominio;
+using Repositorio;
 using DTO;
 
 namespace ControladorTest
@@ -9,21 +9,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorUsuariosTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 		}
 
 		[TestCleanup]
@@ -64,8 +64,8 @@ namespace ControladorTest
 				Nombre = "Principal " + admin.Nombre,
 				Admin = admin
 			};
-			_usuarioLogic.AddUsuario(admin);
-			_espacioLogic.AddEspacio(espacio);
+			_usuarioLogic.AgregarUsuario(admin);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
 			
 			UsuarioDTO usuarioDTO = controladorTest.DatosAdminEspacio(1);
@@ -101,9 +101,9 @@ namespace ControladorTest
 				Admin = invitado1
 			};
 			espacio.InvitarUsuario(invitado2);
-			_usuarioLogic.AddUsuario(invitado1);
-			_usuarioLogic.AddUsuario(invitado2);
-			_espacioLogic.AddEspacio(espacio);
+			_usuarioLogic.AgregarUsuario(invitado1);
+			_usuarioLogic.AgregarUsuario(invitado2);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
 			List<UsuarioDTO> resultado = controladorTest.DatosUsuariosInvitadosEspacio(1);
 			UsuarioDTO usuario = resultado.FirstOrDefault();
@@ -140,9 +140,9 @@ namespace ControladorTest
 				Contrasena = "HOLeeehola123",
 				Direccion = "Bv España 546"
 			};
-			_usuarioLogic.AddUsuario(usuario);
-			_usuarioLogic.AddUsuario(usuarioTest1);
-			_usuarioLogic.AddUsuario(usuarioTest2);
+			_usuarioLogic.AgregarUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuarioTest1);
+			_usuarioLogic.AgregarUsuario(usuarioTest2);
 			Espacio espacio = new Espacio()
 			{
 				Id = 1,
@@ -150,7 +150,7 @@ namespace ControladorTest
 				Admin = usuario
 			};
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			List<UsuarioDTO> resultado = controladorTest.DatosUsuariosNoPresentesEspacio(1);
 			Assert.AreEqual("Roberto", resultado[0].Nombre);
 			Assert.AreEqual("Ramirez", resultado[0].Apellido);
@@ -188,9 +188,9 @@ namespace ControladorTest
 				Contrasena = "HOLeeehola123",
 				Direccion = "Bv España 546"
 			};
-			_usuarioLogic.AddUsuario(usuario);
-			_usuarioLogic.AddUsuario(usuarioTest1);
-			_usuarioLogic.AddUsuario(usuarioTest2);
+			_usuarioLogic.AgregarUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuarioTest1);
+			_usuarioLogic.AgregarUsuario(usuarioTest2);
 			Espacio espacio = new Espacio()
 			{
 				Id = 1,
@@ -198,7 +198,7 @@ namespace ControladorTest
 				Admin = usuario
 			};
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			controladorTest.AgregarUsuarioAEspacio(1, "test3@gmail.com");
 			controladorTest.AgregarUsuarioAEspacio(1, "test2@gmail.com");
 			Assert.AreEqual(2, espacio.UsuariosInvitados.Count);
@@ -231,9 +231,9 @@ namespace ControladorTest
 				Contrasena = "HOLeeehola123",
 				Direccion = "Bv España 546"
 			};
-			_usuarioLogic.AddUsuario(usuario);
-			_usuarioLogic.AddUsuario(usuarioTest1);
-			_usuarioLogic.AddUsuario(usuarioTest2);
+			_usuarioLogic.AgregarUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuarioTest1);
+			_usuarioLogic.AgregarUsuario(usuarioTest2);
 			Espacio espacio = new Espacio()
 			{
 				Id = 1,
@@ -243,7 +243,7 @@ namespace ControladorTest
 			espacio.InvitarUsuario(usuarioTest1);
 			espacio.InvitarUsuario(usuarioTest2);
 			ControladorUsuarios controladorTest = new ControladorUsuarios(_usuarioLogic, _espacioLogic);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			Assert.IsTrue(espacio.UsuariosInvitados.Contains(usuarioTest2));
 			controladorTest.EliminarUsuarioDeEspacio(1, "test3@gmail.com");
 			Assert.IsTrue(espacio.UsuariosInvitados.Contains(usuarioTest1));

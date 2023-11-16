@@ -1,10 +1,10 @@
 ﻿using Controlador;
 using DTO;
-using Domain;
+using Dominio;
 using EspacioReporte;
 using DTO.EnumsDTO;
-using BussinesLogic;
-using Repository;
+using LogicaNegocio;
+using Repositorio;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,21 +16,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorReporteTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 		}
 
 		[TestCleanup]
@@ -59,7 +59,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -105,7 +105,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<ObjetivoGastoDTO> reporte = controladorReporte.ReporteObjetivosGastos(1);
 			Assert.IsTrue(reporte.Count == 1);
@@ -122,7 +122,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -156,7 +156,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -188,7 +188,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -229,7 +229,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -261,7 +261,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -302,7 +302,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -334,7 +334,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -369,7 +369,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -402,7 +402,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -444,7 +444,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -477,7 +477,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -519,7 +519,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -552,7 +552,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -594,7 +594,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -627,7 +627,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -669,7 +669,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -702,7 +702,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -737,7 +737,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoriaDTO = new CategoriaDTO()
 			{
 				Id = categoria.Id,
@@ -770,7 +770,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -803,7 +803,7 @@ namespace ControladorTest
 				CategoriaTransaccion = categoria,
 			};
 			espacio.AgregarTransaccion(transaccion);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			AhorroDTO ahorroEnDTO = new AhorroDTO()
 			{
 				Moneda = TipoCambiarioDTO.PesosUruguayos,
@@ -827,7 +827,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -860,7 +860,7 @@ namespace ControladorTest
 				CategoriaTransaccion = categoria,
 			};
 			espacio.AgregarTransaccion(transaccion);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			int mes = DateTime.Today.Month;
 			List<IngresoEgresoDTO> reporte = controladorReporte.ReporteIngresosEgresos(1, mes);
@@ -878,7 +878,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -911,7 +911,7 @@ namespace ControladorTest
 				CategoriaTransaccion = categoria,
 			};
 			espacio.AgregarTransaccion(transaccion);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			int mes = DateTime.Today.Month;
 			DateTime fechaHoy = DateTime.Today;
@@ -930,7 +930,7 @@ namespace ControladorTest
 				Contrasena = "TestTest12",
 				Direccion = "Av test"
 			};
-			_usuarioLogic.AddUsuario(usuario);
+			_usuarioLogic.AgregarUsuario(usuario);
 			Espacio espacio = new Espacio
 			{
 				Nombre = "Espacio",
@@ -965,7 +965,7 @@ namespace ControladorTest
 				FechaTransaccion = DateTime.Today,
 			};
 			espacio.AgregarTransaccion(transaccion1);
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			ControladorReporte controladorReporte = new ControladorReporte(_espacioLogic);
 			List<CategoriaGastoDTO> reporte = controladorReporte.ReporteCategroriaPorMes(1, DateTime.Today.Month);
 			Assert.IsTrue(reporte.Count == 1);

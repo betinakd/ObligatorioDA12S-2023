@@ -1,22 +1,22 @@
 ﻿using DTO;
-using Domain;
+using Dominio;
 using Excepcion;
-using BussinesLogic;
+using LogicaNegocio;
 using DTO.EnumsDTO;
 
 namespace Controlador
 {
 	public class ControladorCuenta
 	{
-		private EspacioLogic _espacioLogic;
-		public ControladorCuenta(EspacioLogic espacioLogic)
+		private EspacioLogica _espacioLogic;
+		public ControladorCuenta(EspacioLogica espacioLogic)
 		{
 			_espacioLogic = espacioLogic;
 		}
 
 		public List<AhorroDTO> AhorrosDeEspacio(int espacioId)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<AhorroDTO> ahorros = new List<AhorroDTO>();
 
 			ahorros = espacio.Cuentas
@@ -35,7 +35,7 @@ namespace Controlador
 
 		public List<CreditoDTO> CreditosDeEspacio(int espacioId)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 			List<CreditoDTO> creditos = new List<CreditoDTO>();
 
 			creditos = espacio.Cuentas
@@ -66,7 +66,7 @@ namespace Controlador
 				};
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, ahorro);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -87,7 +87,7 @@ namespace Controlador
 				};
 				_espacioLogic.EliminarCuentaDeEspacio(espacioId, credito);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -106,7 +106,7 @@ namespace Controlador
 				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -127,7 +127,7 @@ namespace Controlador
 				};
 				_espacioLogic.ModificarCuentaDeEspacio(espacioId, cuenta);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -139,12 +139,12 @@ namespace Controlador
 			string mensaje = "";
 			try
 			{
-				Espacio espacio = _espacioLogic.FindEspacio(espacioId);
+				Espacio espacio = _espacioLogic.EncontrarEspacio(espacioId);
 				Cuenta cuenta = espacio.Cuentas.Find(cuenta => cuenta.Id == ahorroModificado.Id);
 				cuenta.ModificarFecha(ahorroModificado.FechaCierre);
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -201,11 +201,11 @@ namespace Controlador
 				};
 				_espacioLogic.CrearCuenta(espacioId, ahorroDTO);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
-			catch (BusinessLogicEspacioException e)
+			catch (LogicaNegocioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
@@ -228,11 +228,11 @@ namespace Controlador
 				};
 				_espacioLogic.CrearCuenta(espacioId, creditoDTO);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}
-			catch(BusinessLogicEspacioException e)
+			catch(LogicaNegocioEspacioExcepcion e)
 			{
 				mensaje = e.Message;
 			}

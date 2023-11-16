@@ -1,7 +1,7 @@
-﻿using Domain;
+﻿using Dominio;
 using Excepcion;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class TransaccionIngresoTest

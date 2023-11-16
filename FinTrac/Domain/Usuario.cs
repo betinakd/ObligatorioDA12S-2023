@@ -1,6 +1,6 @@
 ﻿using Excepcion;
 using System.Text.RegularExpressions;
-namespace Domain
+namespace Dominio
 {
 	public class Usuario
 	{
@@ -24,7 +24,7 @@ namespace Domain
 			{
 				if (!Validar_Contrasena(value))
 				{
-					throw new DomainUsuarioException("La contraseña no es válida, debe contener al menos una mayúscula, largo mayor igual a 10 y menor igual a 30");
+					throw new DominioUsuarioExcepcion("La contraseña no es válida, debe contener al menos una mayúscula, largo mayor igual a 10 y menor igual a 30");
 				}
 				_contrasena = value;
 			}
@@ -36,7 +36,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainUsuarioException("El correo electrónico es requerido");
+					throw new DominioUsuarioExcepcion("El correo electrónico es requerido");
 				}
 				if (Validar_Correo(value))
 				{
@@ -44,7 +44,7 @@ namespace Domain
 				}
 				else
 				{
-					throw new DomainUsuarioException("El correo electrónico no es válido, debe terminar en .com y tener @ entre carácteres.");
+					throw new DominioUsuarioExcepcion("El correo electrónico no es válido, debe terminar en .com y tener @ entre carácteres.");
 				}
 			}
 		}
@@ -58,7 +58,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainUsuarioException("El nombre es requerido");
+					throw new DominioUsuarioExcepcion("El nombre es requerido");
 				}
 				_nombre = value;
 			}
@@ -73,7 +73,7 @@ namespace Domain
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					throw new DomainUsuarioException("El apellido es requerido");
+					throw new DominioUsuarioExcepcion("El apellido es requerido");
 				}
 				_apellido = value;
 			}

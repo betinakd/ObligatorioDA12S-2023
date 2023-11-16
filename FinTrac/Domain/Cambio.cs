@@ -1,6 +1,6 @@
 ﻿using Excepcion;
 
-namespace Domain
+namespace Dominio
 {
 	public class Cambio
 	{
@@ -24,7 +24,7 @@ namespace Domain
 			set
 			{
 				if (value <= 0)
-					throw new DomainEspacioException("El monto en pesos uruguayos debe ser mayor a 0");
+					throw new DominioEspacioExcepcion("El monto en pesos uruguayos debe ser mayor a 0");
 				_pesos = value;
 			}
 		}

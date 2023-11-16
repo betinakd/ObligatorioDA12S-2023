@@ -1,6 +1,6 @@
-﻿using BussinesLogic;
-using Domain;
-using Repository;
+﻿using LogicaNegocio;
+using Dominio;
+using Repositorio;
 using Controlador;
 using DTO;
 using DTO.EnumsDTO;
@@ -10,22 +10,22 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorCambiosTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 		private Espacio _espacio;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 
 			var usuario1 = new Usuario()
 			{
@@ -35,14 +35,14 @@ namespace ControladorTest
 				Contrasena = "123456789Aaa",
 				Direccion = "street 56 av rety"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario1);
 
 			_espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(_espacio);
+			_espacioLogic.AgregarEspacio(_espacio);
 		}
 
 		[TestCleanup]

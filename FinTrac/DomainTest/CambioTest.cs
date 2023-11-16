@@ -1,7 +1,7 @@
 ﻿using Excepcion;
-using Domain;
+using Dominio;
 
-namespace DomainTest
+namespace DominioTest
 {
     [TestClass]
     public class CambioTest
@@ -95,7 +95,7 @@ namespace DomainTest
 		}
 
         [TestMethod]
-        [ExpectedException(typeof(DomainEspacioException))]
+        [ExpectedException(typeof(DominioEspacioExcepcion))]
         public void Valor_Moneda_PesosUy_Negativo()
         {
 			var tipoDeCambio = new Cambio();

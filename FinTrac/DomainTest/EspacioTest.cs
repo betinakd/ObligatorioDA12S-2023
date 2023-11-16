@@ -1,7 +1,7 @@
-﻿using Domain;
+﻿using Dominio;
 using Excepcion;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class EspacioTest
@@ -57,7 +57,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Espacio_Tiene_Admin_Nulo()
 		{
 			var espacio = new Espacio();
@@ -76,7 +76,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Espacio_Admin_En_UsuariosInvitados()
 		{
 			var espacio = new Espacio();
@@ -88,7 +88,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 
 		public void Espacio_Invitar_Usuario()
 		{
@@ -105,7 +105,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Espacio_Invitar_Usuario_Ya_Presente()
 		{
 			espacio1.InvitarUsuario(usuario2);
@@ -248,7 +248,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Agregar_Cuenta_Ahorro_Repetida()
 		{
 			var espacio = new Espacio();
@@ -268,7 +268,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Agregar_Cuenta_Credito_Repetida()
 		{
 			var espacio = new Espacio();
@@ -290,7 +290,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Se_Agrega_Admin_Como_Invitado()
 		{
 			var espacio = new Espacio();
@@ -304,7 +304,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Se_Agrega_Transaccion_Dolares_Sin_Cambio_Fecha()
 		{
 			Transaccion transaccion = new Transaccion()
@@ -365,7 +365,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Espacio_Tiene_Nombre_Nulo()
 		{
 			var espacio = new Espacio();
@@ -373,7 +373,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Espacio_Tiene_Nombre_Vacio()
 		{
 			var espacio = new Espacio();
@@ -412,7 +412,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Borrar_Categoria_Asociada_Transaccion()
 		{
 			espacio1.AgregarCategoria(categoria1);
@@ -440,7 +440,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Recibe_Cambio_Dos_Fechas_Iguales()
 		{
 			Cambio cambio1 = new Cambio()
@@ -493,7 +493,7 @@ namespace DomainTest
 
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Al_Agregar_Dos_Categorias_Mismo_Nombre()
 		{
 			espacio1.AgregarCategoria(categoria1);
@@ -535,7 +535,7 @@ namespace DomainTest
 			Assert.IsTrue(resultado);
 		}
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Al_Borrar_Categoria_Contenida_En_Objetivos()
 		{
 			List<Categoria> categorias = new List<Categoria>();
@@ -552,7 +552,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Borrar_Transaccion_Contiene_Cuenta_True()
 		{
 			Ahorro CuentaMonetaria = new Ahorro()
@@ -599,7 +599,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Excepcion_Modificar_Cuenta_Con_Nombre_Repetido()
 		{ 
 			var ahorro1 = new Ahorro() { Nombre = "Ahorro", Moneda = TipoCambiario.Dolar };

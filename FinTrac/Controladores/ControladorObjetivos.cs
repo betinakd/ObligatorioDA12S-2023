@@ -1,7 +1,7 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using DTO;
 using DTO.EnumsDTO;
-using Domain;
+using Dominio;
 using Excepcion;
 using EspacioReporte;
 
@@ -9,16 +9,16 @@ namespace Controlador
 {
 	public class ControladorObjetivos
 	{
-		private EspacioLogic _espacioLogic;
+		private EspacioLogica _espacioLogic;
 
-		public ControladorObjetivos(EspacioLogic objetivoLogic)
+		public ControladorObjetivos(EspacioLogica objetivoLogic)
 		{
 			_espacioLogic = objetivoLogic;
 		}
 
 		public List<ObjetivoDTO> ObjetivosDeEspacio(int id)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			List<Objetivo> objetivos = espacio.Objetivos;
 			List<ObjetivoDTO> objetivosDTO = new List<ObjetivoDTO>();
 			foreach (Objetivo objetivo in objetivos)
@@ -39,7 +39,7 @@ namespace Controlador
 		public string CrearObjetivo(int id, ObjetivoDTO objetivoDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			try
 			{
 				Objetivo nuevoObjetivo = new Objetivo()
@@ -52,7 +52,7 @@ namespace Controlador
 				espacio.AgregarObjetivo(nuevoObjetivo);
 				_espacioLogic.UpdateEspacio(espacio);
 			}
-			catch (DomainEspacioException e)
+			catch (DominioEspacioExcepcion e)
 			{
 				msjError = e.Message;
 			}
@@ -62,7 +62,7 @@ namespace Controlador
 		public string ModificarObjetivo(int id, ObjetivoDTO objetivoDTO)
 		{
 			string msjError = "";
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			Objetivo objetivo = Cambiar_A_Objetivo(id, objetivoDTO.Id);
 			objetivo.Titulo = objetivoDTO.Titulo;
 			objetivo.MontoMaximo = objetivoDTO.MontoMaximo;
@@ -75,7 +75,7 @@ namespace Controlador
 		private Objetivo Cambiar_A_Objetivo(int id, int idObjetivoDTO)
 		{
 			Objetivo objetivoResultado = null;
-			foreach (Objetivo objetivo in _espacioLogic.FindEspacio(id).Objetivos)
+			foreach (Objetivo objetivo in _espacioLogic.EncontrarEspacio(id).Objetivos)
 			{
 				if (objetivo.Id == idObjetivoDTO)
 				{
@@ -87,7 +87,7 @@ namespace Controlador
 
 		private List<Categoria> Cambiar_Categorias(int id, List<CategoriaDTO> categoriasDTO)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			List<Categoria> categoriasDeEspacio = espacio.Categorias;
 			List<Categoria> categorias = new List<Categoria>();
 			foreach (Categoria categoria in categoriasDeEspacio)
@@ -126,14 +126,14 @@ namespace Controlador
 		public string EspacioActual(int Id)
 		{
 			string nombreEspacio = "";
-			Espacio espacio = _espacioLogic.FindEspacio(Id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(Id);
 			nombreEspacio = espacio.Nombre;
 			return nombreEspacio;
 		}
 
 		public double ObjetivosDeGastos(int id, int objetivoDTO)
 		{
-			Espacio espacio = _espacioLogic.FindEspacio(id);
+			Espacio espacio = _espacioLogic.EncontrarEspacio(id);
 			Objetivo objetivo = Cambiar_A_Objetivo(id, objetivoDTO);
 			double objetivosDeGasto = espacio.GastosDeObjetivo(objetivo);
 			return objetivosDeGasto;

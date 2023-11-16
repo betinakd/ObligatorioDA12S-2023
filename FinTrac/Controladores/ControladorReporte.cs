@@ -1,7 +1,7 @@
-﻿using BussinesLogic;
+﻿using LogicaNegocio;
 using DTO;
 using DTO.EnumsDTO;
-using Domain;
+using Dominio;
 using Excepcion;
 using EspacioReporte;
 using System;
@@ -10,16 +10,16 @@ namespace Controlador
 {
 	public class ControladorReporte
 	{
-		private EspacioLogic _reporte;
+		private EspacioLogica _reporte;
 
-		public ControladorReporte(EspacioLogic reporte)
+		public ControladorReporte(EspacioLogica reporte)
 		{
 			_reporte = reporte;
 		}
 
 		public List<ObjetivoGastoDTO> ReporteObjetivosGastos(int id)
 		{
-			Espacio espacio = _reporte.FindEspacio(id);
+			Espacio espacio = _reporte.EncontrarEspacio(id);
 			Reporte reporte = new Reporte(espacio);
 			List<ObjetivoGasto> reporteObjetivoGasto = reporte.ReporteObjetivosDeGastos();
 			List<ObjetivoGastoDTO> reporteEnDTO = new List<ObjetivoGastoDTO>();
@@ -45,7 +45,7 @@ namespace Controlador
 
 		public List<CategoriaGastoDTO> ReporteCategroriaPorMes(int id, int mes)
 		{
-			Espacio espacio = _reporte.FindEspacio(id);
+			Espacio espacio = _reporte.EncontrarEspacio(id);
 			Reporte reporte = new Reporte(espacio);
 			List<CategoriaGasto> reporteObjetivoGasto = reporte.ReporteGastosCategoriaPorMes(mes);
 			List<CategoriaGastoDTO> reporteEnDTO = new List<CategoriaGastoDTO>();
@@ -71,7 +71,7 @@ namespace Controlador
 
 		public List<TransaccionDTO> ReporteDeGastos(int id, CategoriaDTO _catFiltro, DateTime _fechaIni, DateTime _fechaFin, CuentaDTO _cuentaFiltro)
 		{
-			Espacio espacio = _reporte.FindEspacio(id);
+			Espacio espacio = _reporte.EncontrarEspacio(id);
 			Reporte reporte = new Reporte(espacio);
 			Categoria categoria = CategoriaDTO_A_Categoria(_catFiltro);
 			Cuenta cuenta;
@@ -181,7 +181,7 @@ namespace Controlador
 
 		public List<TransaccionDTO> ReporteGastosTarjeta(int id, string nroTarjeta)
 		{
-			Espacio espacio = _reporte.FindEspacio(id);
+			Espacio espacio = _reporte.EncontrarEspacio(id);
 			Reporte reporte = new Reporte(espacio);
 			List<Transaccion> reporteTransacciones = reporte.ReporteGastosTarjeta(nroTarjeta);
 			List<TransaccionDTO> transaccionesDTO = new List<TransaccionDTO>();
@@ -234,7 +234,7 @@ namespace Controlador
 
 		public double BalanceDeCuentas(int id, AhorroDTO account)
 		{
-			Espacio espacio = _reporte.FindEspacio(id);
+			Espacio espacio = _reporte.EncontrarEspacio(id);
 			Reporte reporte = new Reporte(espacio);
 			Ahorro accountNormal = AhorroDTO_A_Ahorro(account);
 			double balance = reporte.BalanceCuentas(accountNormal);
@@ -243,7 +243,7 @@ namespace Controlador
 
 		public List<IngresoEgresoDTO> ReporteIngresosEgresos(int id, int mes)
 		{
-			Espacio espacio = _reporte.FindEspacio(id);
+			Espacio espacio = _reporte.EncontrarEspacio(id);
 			Reporte reporte = new Reporte(espacio);
 			List<IngresoEgreso> reporteIngresoEgreso = reporte.ReporteIngresosEgresos(mes);
 			List<IngresoEgresoDTO> reporteEnDTO = new List<IngresoEgresoDTO>();

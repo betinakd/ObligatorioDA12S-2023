@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using Dominio;
 
 namespace EspacioReporte
 {

@@ -1,6 +1,6 @@
-﻿using BussinesLogic;
-using Domain;
-using Repository;
+﻿using LogicaNegocio;
+using Dominio;
+using Repositorio;
 using Controlador;
 using DTO;
 using DTO.EnumsDTO;
@@ -11,21 +11,21 @@ namespace ControladorTest
 	[TestClass]
 	public class ControladorObjetivosTest
 	{
-		private IRepository<Usuario> _repositorioUsuario;
-		private UsuarioLogic _usuarioLogic;
+		private IRepositorio<Usuario> _repositorioUsuario;
+		private UsuarioLogica _usuarioLogic;
 		private FintracDbContext _context;
 		private readonly IDbContextFactory _contextFactory = new InMemoryDbContextFactory();
-		private IRepository<Espacio> _repositorioEspacio;
-		private EspacioLogic _espacioLogic;
+		private IRepositorio<Espacio> _repositorioEspacio;
+		private EspacioLogica _espacioLogic;
 
 		[TestInitialize]
 		public void TestInitialize()
 		{
 			_context = _contextFactory.CreateDbContext();
-			_repositorioUsuario = new UsuarioMemoryRepository(_context);
-			_usuarioLogic = new UsuarioLogic(_repositorioUsuario);
-			_repositorioEspacio = new EspacioMemoryRepository(_context);
-			_espacioLogic = new EspacioLogic(_repositorioEspacio);
+			_repositorioUsuario = new UsuarioMemoriaRepositorio(_context);
+			_usuarioLogic = new UsuarioLogica(_repositorioUsuario);
+			_repositorioEspacio = new EspacioMemoriaRepositorio(_context);
+			_espacioLogic = new EspacioLogica(_repositorioEspacio);
 
 			var usuario1 = new Usuario()
 			{
@@ -44,8 +44,8 @@ namespace ControladorTest
 				Contrasena = "123tttt9Aaa",
 				Direccion = "street 67 av white"
 			};
-			_usuarioLogic.AddUsuario(usuario1);
-			_usuarioLogic.AddUsuario(usuario2);
+			_usuarioLogic.AgregarUsuario(usuario1);
+			_usuarioLogic.AgregarUsuario(usuario2);
 		}
 
 		[TestCleanup]
@@ -69,9 +69,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			List<ObjetivoDTO> categorias = controladorTest.ObjetivosDeEspacio(espacio.Id);
 			Assert.AreEqual(0, categorias.Count);
 		}
@@ -83,9 +83,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			List<Categoria> categorias = new List<Categoria>()
 			{
 				new Categoria()
@@ -118,9 +118,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoria = new CategoriaDTO()
 			{
 				Id = 1,
@@ -180,9 +180,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoria = new CategoriaDTO()
 			{
 				Id = 1,
@@ -218,9 +218,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			string nombre = controladorTest.EspacioActual(espacio.Id);
 			Assert.AreEqual("Espacio1", nombre);
 		}
@@ -232,9 +232,9 @@ namespace ControladorTest
 			Espacio espacio = new Espacio()
 			{
 				Nombre = "Espacio1",
-				Admin = _usuarioLogic.FindUsuario("Juan@a.com")
+				Admin = _usuarioLogic.EncontrarUsuario("Juan@a.com")
 			};
-			_espacioLogic.AddEspacio(espacio);
+			_espacioLogic.AgregarEspacio(espacio);
 			CategoriaDTO categoria = new CategoriaDTO()
 			{
 				Id = 1,

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BussinesLogic\BussinesLogic.csproj" />
-    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\BussinesLogic\LogicaNegocio.csproj" />
+    <ProjectReference Include="..\Domain\Dominio.csproj" />
     <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Excepcion\Excepcion.csproj" />
     <ProjectReference Include="..\Reporte\EspacioReporte.csproj" />

@@ -1,7 +1,7 @@
 ﻿using Excepcion;
-using Domain;
+using Dominio;
 
-namespace DomainTest
+namespace DominioTest
 {
 	[TestClass]
 	public class TransaccionesTest
@@ -30,7 +30,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Titulo_Transaccion_Vacio()
 		{
 			var transaccion = new Transaccion();
@@ -55,7 +55,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Monto_Mayor_Cero()
 		{
 			var transaccion = new Transaccion();
@@ -221,7 +221,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Transaccion_Tipo_No_Implmenetado()
 		{
 			Transaccion transaccion = new Transaccion()
@@ -249,7 +249,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Transaccion_EjecutarTransaccion_No_Implmenetado()
 		{
 			Transaccion transaccion = new Transaccion()
@@ -277,7 +277,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Transaccion_Tiene_Cuenta_Nula_Excepcion()
 		{
 			Transaccion transaccion = new Transaccion();
@@ -285,7 +285,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Transaccion_Tiene_Categoria_Nula_Excepcion()
 		{
 			Transaccion transaccion = new Transaccion();
@@ -293,7 +293,7 @@ namespace DomainTest
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(DomainEspacioException))]
+		[ExpectedException(typeof(DominioEspacioExcepcion))]
 		public void Transaccion_ModificarMonto_Excepcion()
 		{
 			Transaccion transaccion = new Transaccion();

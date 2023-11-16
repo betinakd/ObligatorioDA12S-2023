@@ -1,31 +1,31 @@
 ﻿using Excepcion;
-using Domain;
-using Repository;
+using Dominio;
+using Repositorio;
 
-namespace BussinesLogic
+namespace LogicaNegocio
 {
-	public class UsuarioLogic
+	public class UsuarioLogica
 	{
-		private readonly IRepository<Usuario> _repository;
+		private readonly IRepositorio<Usuario> _repository;
 
-		public UsuarioLogic(IRepository<Usuario> repository)
+		public UsuarioLogica(IRepositorio<Usuario> repository)
 		{
 			_repository = repository;
 		}
 
-		public Usuario AddUsuario(Usuario oneElement)
+		public Usuario AgregarUsuario(Usuario oneElement)
 		{
 			IList<Usuario> usuarios = _repository.FindAll();
 			bool existe = usuarios.Contains(oneElement);
 			if (existe)
 			{
-				throw new BussinesLogicUsuarioException("El usuario ya existe");
+				throw new LogicaNegocioUsuarioExcepcion("El usuario ya existe");
 			}
 			_repository.Add(oneElement);
 			return oneElement;
 		}
 
-		public Usuario UsuarioByCorreoContrasena(string correo, string contrasena)
+		public Usuario UsuarioPorCorreoContrasena(string correo, string contrasena)
 		{
 			Usuario usuario = _repository.Find(u => u.Correo == correo);
 
@@ -35,61 +35,61 @@ namespace BussinesLogic
 			}
 			else
 			{
-				throw new BussinesLogicUsuarioException("El usuario o la contraseña no son válidos.");
+				throw new LogicaNegocioUsuarioExcepcion("El usuario o la contraseña no son válidos.");
 			}
 		}
 
-		public IList<Usuario> FindAllUsuario()
+		public IList<Usuario> DarUsuarios()
 		{
 			return _repository.FindAll();
 		}
 
-		public void DeleteUsuario(string id)
+		public void BorrarUsuario(string id)
 		{
 			_repository.Delete(id);
 		}
 
-		public Usuario? FindUsuario(string correo)
+		public Usuario? EncontrarUsuario(string correo)
 		{
 			return _repository.Find(u => u.Correo == correo);
 		}
 
 		public void ModificarNombre(string correo, string nombre)
 		{
-			Usuario usuario = FindUsuario(correo);
+			Usuario usuario = EncontrarUsuario(correo);
 			usuario.Nombre = nombre;
 			_repository.Update(usuario);
 		}
 
 		public void ModificarApellido(string correo, string apellido)
 		{
-			Usuario usuario = FindUsuario(correo);
+			Usuario usuario = EncontrarUsuario(correo);
 			usuario.Apellido = apellido;
 			_repository.Update(usuario);
 		}
 
 		public void ModificarContrasena(string correo, string contrasena)
 		{
-			Usuario usuario = FindUsuario(correo);
+			Usuario usuario = EncontrarUsuario(correo);
 			usuario.Contrasena = contrasena;
 			_repository.Update(usuario);
 		}
 
 		public void ModificarDireccion(string correo, string direccion)
 		{
-			Usuario usuario = FindUsuario(correo);
+			Usuario usuario = EncontrarUsuario(correo);
 			usuario.Direccion = direccion;
 			_repository.Update(usuario);
 		}
 
 		public void CrearUsuario(Usuario usuario)
 		{
-			AddUsuario(usuario);
+			AgregarUsuario(usuario);
 		}
 
 		public List<Usuario> UsuariosNoPresentesEspacio(Espacio espacio)
 		{
-			IList<Usuario> usuarios = FindAllUsuario();
+			IList<Usuario> usuarios = DarUsuarios();
 			List<Usuario> usuariosNoPresentes = new List<Usuario>();
 
 			foreach (var usuario in usuarios)

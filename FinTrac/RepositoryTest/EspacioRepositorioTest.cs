@@ -1,10 +1,10 @@
-﻿using Domain;
-using Repository;
+﻿using Dominio;
+using Repositorio;
 
-namespace RepositoryTest
+namespace RepositorioTest
 {
     [TestClass]
-    public class EspacioRepositoryTest
+    public class EspacioRepositorioTest
     {
         private List<Cambio> _cambios;
         private List<Objetivo> _objetivos;
@@ -47,7 +47,7 @@ namespace RepositoryTest
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
 			espacio1.Nombre = "Espacio1";
-			var repository = new EspacioMemoryRepository(_context);
+			var repository = new EspacioMemoriaRepositorio(_context);
             var espacioAgregado1 = repository.Add(espacio1);
             var espacioInDb = _context.Espacios.First();
             Assert.AreEqual(espacio1, espacioInDb);
@@ -61,7 +61,7 @@ namespace RepositoryTest
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
 			espacio1.Nombre = "Espacio1";
-			var repository = new EspacioMemoryRepository(_context);
+			var repository = new EspacioMemoriaRepositorio(_context);
             var espacioAgregado1 = repository.Add(espacio1);
             var espacioAgregado2 = repository.Find(e => e.Admin == _admin);
 			var espacioInDb = _context.Espacios.First();
@@ -79,7 +79,7 @@ namespace RepositoryTest
             var espacio2 = new Espacio();
             espacio2.Admin = _admin;
             espacio2.Nombre = "Espacio2";
-            var repository = new EspacioMemoryRepository(_context);
+            var repository = new EspacioMemoriaRepositorio(_context);
             repository.Add(espacio1);
             repository.Add(espacio2);
             var espacios = repository.FindAll();
@@ -102,7 +102,7 @@ namespace RepositoryTest
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
             espacio1.Nombre = "Espacio1";
-            var repository = new EspacioMemoryRepository(_context);        
+            var repository = new EspacioMemoriaRepositorio(_context);        
             repository.Add(espacio1);
             espacio1.Nombre = "Espacio2";
             var espacioAgregado2 = repository.Update(espacio1);
@@ -118,7 +118,7 @@ namespace RepositoryTest
             var espacio1 = new Espacio();
             espacio1.Admin = _admin;
             espacio1.Nombre = "Espacio1";
-            var repository = new EspacioMemoryRepository(_context);
+            var repository = new EspacioMemoriaRepositorio(_context);
             var espacioAgregado1 = repository.Add(espacio1);
             repository.Delete(espacioAgregado1.Admin.Correo);
             var espacioAgregado2 = repository.Find(e => e.Admin == _admin);
