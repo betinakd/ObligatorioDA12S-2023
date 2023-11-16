@@ -74,15 +74,10 @@ namespace Controlador
 
 		private Objetivo Cambiar_A_Objetivo(int id, int idObjetivoDTO)
 		{
-			Objetivo objetivoResultado = null;
-			foreach (Objetivo objetivo in _espacioLogic.FindEspacio(id).Objetivos)
-			{
-				if (objetivo.Id == idObjetivoDTO)
-				{
-					objetivoResultado = objetivo;
-				}
-			}
-			return objetivoResultado;
+			Espacio espacio = _espacioLogic.FindEspacio(id);
+			List<Objetivo> objetivos = espacio.Objetivos;
+			Objetivo objetivo = objetivos.Find(o => o.Id == idObjetivoDTO);
+			return objetivo;
 		}
 
 		private List<Categoria> Cambiar_Categorias(int id, List<CategoriaDTO> categoriasDTO)
