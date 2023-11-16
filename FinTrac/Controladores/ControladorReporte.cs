@@ -261,7 +261,7 @@ namespace Controlador
 		}
 
 
-		public Ahorro AhorroDTO_A_Ahorro(AhorroDTO account)
+		private Ahorro AhorroDTO_A_Ahorro(AhorroDTO account)
 		{
 			Ahorro cuenta;
 			if (account.Moneda.Equals(TipoCambiarioDTO.Euro))
