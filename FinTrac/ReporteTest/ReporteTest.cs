@@ -1615,6 +1615,69 @@ namespace DominioTest
 		}
 
 		[TestMethod]
+		public void BalanceCuenta_Dolar_Sin_Cambio()
+		{
+			var _reporte = new Reporte();
+			Espacio _miEspacio = new Espacio();
+			Usuario _admin = new Usuario
+			{
+				Contrasena = "1234567890Yuu",
+				Correo = "mateo@gmail.com",
+			};
+			_miEspacio.Admin = _admin;
+			Ahorro ahorro = new Ahorro
+			{
+				Moneda = TipoCambiario.Dolar,
+				Saldo = 1,
+				Nombre = "Cuenta Ahorro",
+			};
+			Categoria _categoriaCosto = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Costo,
+				Nombre = "Una categoria",
+			};
+			_miEspacio.AgregarCategoria(_categoriaCosto);
+			Categoria _categoriaIngreso = new Categoria
+			{
+				EstadoActivo = true,
+				Tipo = TipoCategoria.Ingreso,
+				Nombre = "Una categoria 2",
+			};
+			_miEspacio.AgregarCategoria(_categoriaIngreso);
+			Cambio cambio = new Cambio()
+			{
+				Moneda = TipoCambiario.Dolar,
+				FechaDeCambio = DateTime.Today,
+			};
+			_miEspacio.AgregarCambio(cambio);
+			Transaccion transaccion1 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaCosto,
+				Monto = 10,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba 1",
+				CuentaMonetaria = ahorro,
+			};
+			_miEspacio.AgregarTransaccion(transaccion1);
+			Transaccion transaccion2 = new Transaccion
+			{
+				CategoriaTransaccion = _categoriaIngreso,
+				Monto = 10,
+				Moneda = TipoCambiario.Dolar,
+				Titulo = "Transaccion Prueba 2",
+				CuentaMonetaria = ahorro,
+			};
+			_miEspacio.AgregarTransaccion(transaccion2);
+			double montoInicial = ahorro.Saldo;
+			_miEspacio.AgregarCuenta(ahorro);
+			_reporte.MiEspacio = _miEspacio;
+			double balance = _reporte.BalanceCuentas(ahorro);
+			Console.WriteLine(balance);
+			Assert.IsTrue(balance != montoInicial);
+		}
+
+		[TestMethod]
 		public void ReporteGastosTarjeta_Vacio()
 		{
 			var _reporte = new Reporte();
