@@ -130,10 +130,10 @@
 
 	private void ModificarNombre(CategoriaDTO categoriaDTO)
 	{
-		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO, nombreValor);
+		categoriaDTO.Nombre = nombreValor;
+		ErrorMsg = controlador.ModificarNombreCategoria(Persistencia.Id, categoriaDTO);
 		if (ErrorMsg == "")
 		{
-			categoriaDTO.Nombre = nombreValor;
 			categorias = controlador.CategoriasDeEspacio(Id);
 			mostrarModificar = false;
 			LimpiarInputs();

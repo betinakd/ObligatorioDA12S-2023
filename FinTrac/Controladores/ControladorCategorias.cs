@@ -59,7 +59,7 @@ namespace Controlador
 			return msjError;
 		}
 
-		public string ModificarNombreCategoria(int id, CategoriaDTO categoriaDTO, string nuevoNombre)
+		public string ModificarNombreCategoria(int id, CategoriaDTO categoriaDTO)
 		{
 			string msjError = "";
 			Espacio espacio = _espacioLogic.FindEspacio(id);
@@ -67,9 +67,9 @@ namespace Controlador
 			List<Categoria> categorias = espacio.Categorias;
 			try
 			{
-				if (!categorias.Any(c => c.Nombre == nuevoNombre))
+				if (!categorias.Any(c => c.Nombre == categoriaDTO.Nombre))
 				{
-					categoria.Nombre = nuevoNombre;
+					categoria.Nombre = categoriaDTO.Nombre;
 					_espacioLogic.UpdateEspacio(espacio);
 				}
 				else
