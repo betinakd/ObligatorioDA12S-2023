@@ -1,5 +1,6 @@
 ﻿@page "/home/{Id:int}/{Correo}/CrearObjetivos"
 @inject ControladorObjetivos controlador;
+@inject ControladorCategorias controladorCategorias;
 
 <PageTitle>FinTrac Crear Objetivo</PageTitle>
 <TituloRosado Titulo="Crear Objetivo" Subtitulo="Cree un objetivo rellenando los datos y seleccione una o varias categorias usando Ctrl+Click."></TituloRosado>
@@ -56,13 +57,12 @@
 	private List<string> categoriasSeleccionadas = new List<string>();
 	private List<CategoriaDTO> categorias;
 	private List<CategoriaDTO> categorias2 = new List<CategoriaDTO>();
-	private ControladorCategorias controladorCategorias;
+
 	private List<ObjetivoDTO> objetivos = new List<ObjetivoDTO>();
 
 	protected override void OnInitialized()
 	{
 		objetivos = controlador.ObjetivosDeEspacio(Id);
-		controladorCategorias = new ControladorCategorias(EspacioLogic);
 		categorias = controladorCategorias.CategoriasDeEspacio(Id);
 	}
 
